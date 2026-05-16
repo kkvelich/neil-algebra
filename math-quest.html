@@ -1924,6 +1924,101 @@ function resetIfWanted() {
   }
 }
 
+
+// =========================================================
+// Lessons (Interactive Tutor Mode)
+// =========================================================
+const LESSONS = {"6": [{"type": "concept", "title": "What's an exponent?", "body": "An <b>exponent</b> tells you how many times to multiply a number by itself.<br><br>5<sup>3</sup> means 5 × 5 × 5 = 125.<br><br>The bottom number is the <b>base</b>. The top number is the <b>exponent</b> or <b>power</b>."}, {"type": "concept", "title": "Rule 1: Product of Powers", "body": "When you multiply two powers with the <b>same base</b>, <b>add</b> the exponents:<br><br><span style='font-family:monospace;font-size:1.2em;color:#FBBF24;'>x<sup>a</sup> · x<sup>b</sup> = x<sup>a+b</sup></span><br><br>Why? x<sup>3</sup> · x<sup>2</sup> = (x·x·x)(x·x) = x·x·x·x·x = x<sup>5</sup>.<br>That's 3 + 2 = 5 x's."}, {"type": "example", "title": "Worked Example: Product", "body": "<b>Simplify:</b> x<sup>4</sup> · x<sup>7</sup><br><br>Step 1: Same base (x), so add exponents.<br>Step 2: 4 + 7 = 11.<br><br>✅ Answer: <b>x<sup>11</sup></b>"}, {"type": "try", "title": "Your Turn", "problem": "Simplify: y<sup>5</sup> · y<sup>3</sup>", "hint": "Add the exponents.", "answer": "y<sup>8</sup>"}, {"type": "concept", "title": "Rule 2: Quotient of Powers", "body": "When you <b>divide</b> two powers with the same base, <b>subtract</b> the exponents:<br><br><span style='font-family:monospace;font-size:1.2em;color:#FBBF24;'>x<sup>a</sup> / x<sup>b</sup> = x<sup>a−b</sup></span><br><br>Watch the subtraction direction: top − bottom."}, {"type": "concept", "title": "Rule 3: Power of a Power", "body": "When a power is raised to another power, <b>multiply</b> the exponents:<br><br><span style='font-family:monospace;font-size:1.2em;color:#FBBF24;'>(x<sup>a</sup>)<sup>b</sup> = x<sup>a·b</sup></span><br><br>Example: (x<sup>3</sup>)<sup>4</sup> = x<sup>12</sup>."}, {"type": "concept", "title": "Zero & Negative Exponents", "body": "<b>Zero exponent:</b> anything to the 0 power is 1.<br><span style='font-family:monospace;color:#FBBF24;'>x<sup>0</sup> = 1</span><br><br><b>Negative exponent:</b> flip to the denominator.<br><span style='font-family:monospace;color:#FBBF24;'>x<sup>−a</sup> = 1 / x<sup>a</sup></span><br><br>Example: 2<sup>−3</sup> = 1/2<sup>3</sup> = 1/8."}, {"type": "try", "title": "Your Turn", "problem": "Evaluate: 4<sup>0</sup> + 2<sup>−2</sup>", "hint": "4<sup>0</sup> = 1.  2<sup>−2</sup> = 1/4.", "answer": "1 + 1/4 = 5/4"}], "7": [{"type": "concept", "title": "Multiplying Binomials (FOIL)", "body": "FOIL = <b>F</b>irst, <b>O</b>uter, <b>I</b>nner, <b>L</b>ast.<br><br>(a + b)(c + d) = ac + ad + bc + bd<br><br>Then combine like terms."}, {"type": "example", "title": "Worked Example: FOIL", "body": "<b>Multiply:</b> (x + 4)(x − 2)<br><br>F: x · x = x²<br>O: x · (−2) = −2x<br>I: 4 · x = 4x<br>L: 4 · (−2) = −8<br><br>Combine: x² − 2x + 4x − 8 = <b>x² + 2x − 8</b>"}, {"type": "concept", "title": "Factoring — The Big Idea", "body": "Factoring is the <b>reverse of FOIL</b>. You're given a polynomial, and you have to find which two binomials multiply to it.<br><br>x² + 5x + 6 → which two numbers multiply to 6 AND add to 5? <b>2 and 3</b>.<br><br>So: x² + 5x + 6 = (x + 2)(x + 3)"}, {"type": "concept", "title": "Step 0: ALWAYS check for a GCF first", "body": "Before any other factoring, look for a number or variable that divides every term.<br><br>3x² − 12x → pull out 3x → <b>3x(x − 4)</b><br><br>If you skip the GCF, you'll get the right answer but in a messier form. Just check first."}, {"type": "concept", "title": "Factor x² + bx + c", "body": "Find two numbers with:<br>• <b>Product = c</b> (last term)<br>• <b>Sum = b</b> (middle coefficient)<br><br>The signs of those numbers follow the signs of c and b:<br>• c positive, b positive → both + (e.g. 3,4)<br>• c positive, b negative → both − (e.g. −3,−4)<br>• c negative → one of each (one +, one −)"}, {"type": "try", "title": "Your Turn", "problem": "Factor: x² + 7x + 12", "hint": "Two numbers: product 12, sum 7.", "answer": "(x + 3)(x + 4)"}, {"type": "try", "title": "Tricky One", "problem": "Factor: x² − 5x − 14", "hint": "Two numbers: product −14, sum −5. Product is negative → one is +, one is −.", "answer": "(x − 7)(x + 2)"}, {"type": "concept", "title": "AC Method — for ax² + bx + c (a > 1)", "body": "1. Multiply A·C (first × last coefficient).<br>2. Find two numbers: product A·C, sum b.<br>3. Split the middle term using those two numbers.<br>4. Group in pairs and factor each pair.<br>5. Pull the common binomial out."}, {"type": "example", "title": "Worked AC Example", "body": "<b>Factor:</b> 2x² + 7x + 3<br><br>AC = 2·3 = 6. Need product 6, sum 7 → <b>6 and 1</b>.<br>Split: 2x² + 6x + x + 3<br>Group: 2x(x + 3) + 1(x + 3)<br>Factor out (x + 3): <b>(2x + 1)(x + 3)</b>"}, {"type": "concept", "title": "Difference of Squares Pattern", "body": "If you see <b>a² − b²</b> (no middle term, both perfect squares with a minus):<br><br><span style='font-family:monospace;font-size:1.2em;color:#FBBF24;'>a² − b² = (a + b)(a − b)</span><br><br>Example: x² − 36 = (x + 6)(x − 6).<br><br>This pattern saves you the factor-pair search."}], "8": [{"type": "concept", "title": "What's a Quadratic?", "body": "A quadratic has an <b>x² term</b> (nothing higher). Its graph is a <b>parabola</b>.<br><br>Three forms:<br>• <b>Standard:</b> y = ax² + bx + c<br>• <b>Vertex:</b> y = a(x − h)² + k<br>• <b>Factored:</b> y = a(x − r₁)(x − r₂)"}, {"type": "concept", "title": "The Vertex", "body": "Every parabola has one <b>vertex</b> — the lowest or highest point.<br><br>From vertex form y = a(x − h)² + k:<br>• Vertex is at <b>(h, k)</b><br>• <b>Sign of h flips!</b> y = (x + 2)² − 5 → h = −2, vertex (−2, −5)<br><br>From standard form ax² + bx + c:<br>• Axis: x = −b / (2a)<br>• Plug back in for y."}, {"type": "try", "title": "Find the Vertex", "problem": "Identify the vertex of y = (x − 5)² + 3", "hint": "Match to y = (x − h)² + k. What are h and k?", "answer": "(5, 3)"}, {"type": "concept", "title": "Transformations from y = x²", "body": "y = a(x − h)² + k transforms parent y = x²:<br><br>• <b>h</b> shifts right (positive) or left (negative — sign flips!)<br>• <b>k</b> shifts up or down<br>• <b>a > 1</b> stretches vertically<br>• <b>|a| < 1</b> compresses<br>• <b>a is negative</b> reflects (opens down)"}, {"type": "example", "title": "Worked Transformations", "body": "<b>Describe:</b> y = −2(x − 3)² + 4 from y = x²<br><br>• a = −2 → reflect over x-axis, vertical stretch by 2<br>• h = 3 → right 3<br>• k = 4 → up 4<br><br>Vertex (3, 4), opens downward."}, {"type": "concept", "title": "The Discriminant", "body": "How many real solutions WITHOUT solving?<br><br>Compute <b>D = b² − 4ac</b>.<br><br>• <b>D > 0</b>: two real solutions<br>• <b>D = 0</b>: one (double) solution<br>• <b>D < 0</b>: no real solutions"}, {"type": "try", "title": "Discriminant Check", "problem": "Find D for x² + 4x + 5. How many real solutions?", "hint": "D = b² − 4ac = 4² − 4(1)(5)", "answer": "D = 16 − 20 = −4. ZERO real solutions."}], "9": [{"type": "concept", "title": "Four Ways to Solve a Quadratic", "body": "When ax² + bx + c = 0, pick the easiest method:<br><br>1. <b>Factoring</b> — fastest if it factors.<br>2. <b>Square roots</b> — when NO middle x-term.<br>3. <b>Completing the square</b> — when a=1, b even.<br>4. <b>Quadratic formula</b> — ALWAYS works."}, {"type": "concept", "title": "Method 1: Factoring", "body": "Set = 0. Factor. Use <b>zero-product property</b>: if a·b = 0, then a=0 or b=0.<br><br>Example: x² − 5x + 6 = 0<br>→ (x − 2)(x − 3) = 0<br>→ <b>x = 2 or x = 3</b>"}, {"type": "try", "title": "Try Factoring", "problem": "Solve: x² − 6x − 16 = 0", "hint": "Factor: product −16, sum −6.", "answer": "(x − 8)(x + 2) = 0 → x = 8 or x = −2"}, {"type": "concept", "title": "Method 2: Square Roots", "body": "When there's no middle x term, isolate x² and take √. <b>Don't forget ±!</b><br><br>(x − 4)² = 49<br>→ x − 4 = ±7<br>→ x = 11 or x = −3"}, {"type": "concept", "title": "Method 4: Quadratic Formula", "body": "<b>Always works.</b> Memorize:<br><br><span style='font-family:monospace;font-size:1.15em;color:#FBBF24;'>x = (−b ± √(b² − 4ac)) / 2a</span><br><br>Plug in a, b, c carefully."}, {"type": "example", "title": "Worked QF Example", "body": "<b>Solve:</b> 2x² − 5x + 1 = 0<br><br>a=2, b=−5, c=1.<br>D = 25 − 8 = 17.<br>x = (5 ± √17) / 4"}, {"type": "concept", "title": "Projectile Motion", "body": "Object thrown up:<br><br><span style='font-family:monospace;color:#FBBF24;'>h(t) = −16t² + v₀·t + h₀</span><br><br>• <b>Max height:</b> at t = −b/(2a). Plug back for h.<br>• <b>Hits ground:</b> solve h(t) = 0. Positive t."}, {"type": "try", "title": "Word Problem", "problem": "Ball thrown up at 32 ft/s from 4 ft. h(t) = −16t² + 32t + 4. Max height?", "hint": "Max at t = −32/(2·−16) = 1 sec.", "answer": "h(1) = −16 + 32 + 4 = 20 ft"}], "10": [{"type": "concept", "title": "What's a Rational Expression?", "body": "A <b>rational expression</b> is just a fraction with variables.<br><br>3/4 is a number.<br>(x+2)/(x−5) is a rational expression.<br><br>Same rules: simplify, multiply, divide, add, subtract."}, {"type": "concept", "title": "Simplifying — Factor and Cancel", "body": "Step 1: Factor numerator and denominator.<br>Step 2: Cancel any common factor.<br><br>Example: (x² − 1)/(x − 1) = (x+1)(x−1)/(x−1) = <b>x + 1</b><br><br>⚠️ Cancel FACTORS, not terms. (x+2)/2 ≠ x+1!"}, {"type": "try", "title": "Simplify", "problem": "Simplify: 6x²/(3x)", "hint": "Cancel the 3 and one x.", "answer": "2x"}, {"type": "concept", "title": "Multiplying Rationals", "body": "Multiply numerators, multiply denominators, simplify.<br><br>Often easier: factor everything first, cancel, then multiply.<br><br>(x/2) · (4/x²) = 4x / (2x²) = <b>2/x</b>"}, {"type": "concept", "title": "Dividing Rationals", "body": "<b>Flip the second one, then multiply.</b><br><br>(a/b) ÷ (c/d) = (a/b) · (d/c)<br><br>(x/3) ÷ (x/6) = (x/3) · (6/x) = 6/3 = <b>2</b>"}, {"type": "concept", "title": "Adding/Subtracting — Same Denominator", "body": "Denominators match → combine numerators.<br><br>3/x + 4/x = 7/x ✓<br><br>Different denominators → need a common denominator first."}, {"type": "try", "title": "Add Rationals", "problem": "Add: 5/(x−2) − 3/(x−2)", "hint": "Same denominator → subtract numerators.", "answer": "2/(x − 2)"}, {"type": "concept", "title": "Solving Rational Equations", "body": "Most direct: <b>cross-multiply</b>.<br><br>(a/b) = (c/d) → a·d = b·c<br><br>(x+2)/6 = (2x−10)/8<br>→ 8(x+2) = 6(2x−10)<br>→ 8x + 16 = 12x − 60<br>→ <b>x = 19</b>"}], "11": [{"type": "concept", "title": "What's a Radical?", "body": "√ asks: what number squared gives this?<br><br>√25 = 5  (5² = 25)<br>√144 = 12<br><br>Cube root ∛:<br>∛64 = 4  (4³ = 64)"}, {"type": "concept", "title": "Perfect Squares & Cubes — Memorize", "body": "<b>Perfect squares:</b><br>1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144<br><br><b>Perfect cubes:</b><br>1, 8, 27, 64, 125, 216, 343, 512, 729, 1000<br><br>Recognizing these instantly = simplify faster."}, {"type": "concept", "title": "Simplifying — Pull Out Perfect Squares", "body": "Look for a perfect-square factor inside:<br><br>√50 = √(<b>25</b>·2) = √25·√2 = <b>5√2</b><br><br>√72 = √(<b>36</b>·2) = <b>6√2</b><br><br>Always pull out the LARGEST perfect square."}, {"type": "try", "title": "Simplify", "problem": "Simplify: √48", "hint": "48 = 16 · 3.", "answer": "4√3"}, {"type": "concept", "title": "Adding/Subtracting Like Radicals", "body": "Same number inside √ → combine.<br><br>3√2 + 5√2 = <b>8√2</b> ✓<br>3√2 + 5√3 = <b>cannot combine</b> ✗<br><br>If they don't match, simplify first:<br>√20 + √45 = 2√5 + 3√5 = <b>5√5</b>"}, {"type": "concept", "title": "Multiplying Radicals", "body": "<span style='font-family:monospace;color:#FBBF24;'>√a · √b = √(ab)</span><br><br>√6 · √8 = √48 = <b>4√3</b><br><br>Distributive: √2(3 + √5) = 3√2 + √10."}, {"type": "concept", "title": "Rationalizing the Denominator", "body": "Don't leave a √ in the denominator.<br><br><b>Multiply top and bottom by the radical:</b><br>10/√5 · √5/√5 = 10√5/5 = <b>2√5</b><br><br>For (a + √b), multiply by conjugate (a − √b)."}, {"type": "concept", "title": "Solving Radical Equations", "body": "1. <b>Isolate</b> the radical.<br>2. <b>Square both sides</b>.<br>3. Solve the resulting equation.<br>4. <b>CHECK</b> — squaring can create extraneous solutions."}, {"type": "try", "title": "Solve a Radical Eq", "problem": "Solve: √x = 8", "hint": "Square both sides.", "answer": "x = 64"}, {"type": "concept", "title": "When Squaring Creates a Quadratic", "body": "Sometimes squaring → quadratic. Solve it normally.<br><br>x = √(56 − x)<br>x² = 56 − x<br>x² + x − 56 = 0<br>(x + 8)(x − 7) = 0<br>x = −8 or x = 7<br><br>CHECK: x = −8 fails. <b>Answer: x = 7</b>"}]};
+let lesson = { ch: null, cards: [], idx: 0, revealed: false };
+let chooserCh = null;
+
+function openChooser(ch) {
+  chooserCh = ch;
+  const info = CHAPTERS[String(ch)];
+  document.getElementById('chooserTitle').textContent = 'Chapter ' + ch + ': ' + info.title;
+  document.getElementById('chooserOverlay').classList.add('show');
+}
+function closeChooser() {
+  document.getElementById('chooserOverlay').classList.remove('show');
+  chooserCh = null;
+}
+function startLessons() {
+  const ch = chooserCh;
+  closeChooser();
+  const cards = LESSONS[String(ch)] || [];
+  if (cards.length === 0) { toast("No lessons for this chapter yet."); return; }
+  lesson = { ch, cards, idx: 0, revealed: false };
+  document.getElementById('lessonOverlay').classList.add('show');
+  renderLesson();
+}
+function startPracticeFromChooser() {
+  const ch = chooserCh;
+  closeChooser();
+  startChapter(ch);
+}
+function closeLessons() {
+  document.getElementById('lessonOverlay').classList.remove('show');
+}
+function renderLesson() {
+  const c = lesson.cards[lesson.idx];
+  const total = lesson.cards.length;
+  document.getElementById('lessonProgress').style.width = ((lesson.idx + 1) / total * 100) + '%';
+  document.getElementById('lessonCounter').textContent = (lesson.idx + 1) + ' / ' + total;
+  const typeLabel = c.type === 'concept' ? '📘 Concept' : c.type === 'example' ? '✨ Worked Example' : '🎯 Try It';
+  const tag = '<span class="lesson-type-tag ' + c.type + '">' + typeLabel + '</span>';
+  let body = tag + '<h1 class="lesson-title">' + (c.title || '') + '</h1>';
+  if (c.type === 'try') {
+    body += '<div class="lesson-body">' + (c.body || '') + '</div>';
+    body += '<div class="lesson-try-q">' + c.problem + '</div>';
+    if (c.hint) body += '<div class="lesson-try-hint">💡 Hint: ' + c.hint + '</div>';
+    body += '<input type="text" class="lesson-try-input" id="lessonInput" placeholder="Try it before revealing…" autocomplete="off" autocapitalize="off">';
+    const revealClass = lesson.revealed ? 'lesson-try-reveal show' : 'lesson-try-reveal';
+    body += '<div class="' + revealClass + '" id="lessonReveal"><span class="ans-label">Answer:</span> ' + c.answer + '</div>';
+  } else {
+    body += '<div class="lesson-body">' + (c.body || '') + '</div>';
+  }
+  document.getElementById('lessonContent').innerHTML = body;
+  const prevBtn = document.getElementById('lessonPrevBtn');
+  const nextBtn = document.getElementById('lessonNextBtn');
+  prevBtn.style.visibility = lesson.idx === 0 ? 'hidden' : 'visible';
+  const isLast = lesson.idx === total - 1;
+  if (c.type === 'try' && !lesson.revealed) {
+    nextBtn.textContent = '👁️ Reveal answer';
+  } else {
+    nextBtn.textContent = isLast ? '🎯 Ready to Practice' : 'Continue →';
+  }
+  document.getElementById('lessonContent').scrollTop = 0;
+}
+function lessonPrev() {
+  if (lesson.idx > 0) { lesson.idx -= 1; lesson.revealed = false; renderLesson(); }
+}
+function lessonNext() {
+  const c = lesson.cards[lesson.idx];
+  if (c.type === 'try' && !lesson.revealed) {
+    lesson.revealed = true;
+    renderLesson();
+    return;
+  }
+  const total = lesson.cards.length;
+  if (lesson.idx === total - 1) {
+    const ch = lesson.ch;
+    closeLessons();
+    if (typeof state !== 'undefined' && typeof checkLevelUp === 'function') {
+      state.xp += 25;
+      checkLevelUp();
+      saveState();
+      refreshHeader();
+      if (typeof mascotSay === 'function') mascotSay(null, "Lesson complete! +25 XP 🎓");
+    }
+    setTimeout(() => startChapter(ch), 400);
+    return;
+  }
+  lesson.idx += 1;
+  lesson.revealed = false;
+  renderLesson();
+}
+
+
 // =========================================================
 // Init
 // =========================================================
