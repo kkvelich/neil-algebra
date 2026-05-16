@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neil Velicheti — Tutor Briefing</title>
+  <style>
+:root {
+  --navy: #1F4E79;
+  --blue: #2E75B6;
+  --light: #E7EEF7;
+  --soft: #F2F6FA;
+  --border: #D4DCE5;
+  --grey: #555;
+  --grey-soft: #888;
+  --green: #2E7D32;
+  --green-soft: #E8F5E9;
+  --orange: #E67E22;
+  --orange-soft: #FFF4E6;
+  --bg: #FFFFFF;
+  --text: #1A1A1A;
+  --code-bg: #F4F6F8;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1A1B1E; --text: #E8E8E8;
+    --navy: #6FB1E2; --blue: #5DA4D9;
+    --light: #2A2D33; --soft: #22252B; --border: #3A3D44;
+    --grey: #B0B0B0;
+    --green: #66BB6A; --green-soft: #1F2A1F;
+    --orange: #FFB366; --orange-soft: #2A2316;
+    --code-bg: #2A2D33;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+               "Helvetica Neue", Arial, sans-serif;
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: var(--text);
+  background: var(--bg);
+  margin: 0; padding: 0;
+}
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 5rem;
+}
+header.title { border-bottom: 2px solid var(--navy); padding-bottom: 0.75rem; margin-bottom: 1.5rem; }
+h1 { font-size: 1.85rem; color: var(--navy); margin: 0 0 0.35rem; letter-spacing: -0.01em; }
+.subtitle { font-style: italic; color: var(--grey); margin: 0; font-size: 0.95rem; }
+
+h2 {
+  font-size: 1.3rem;
+  color: var(--navy);
+  background: var(--light);
+  padding: 0.55rem 1rem;
+  border-radius: 4px;
+  border-left: 4px solid var(--blue);
+  margin: 2.5rem 0 1rem;
+  scroll-margin-top: 1rem;
+}
+h3 { font-size: 1.05rem; color: var(--blue); margin: 1.25rem 0 0.5rem; }
+h4 { font-size: 0.95rem; color: var(--navy); margin: 0.85rem 0 0.3rem; font-weight: 700; }
+
+p, li { margin: 0.4rem 0; }
+ul, ol { padding-left: 1.5rem; }
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--text); }
+
+.intro-block {
+  background: var(--soft);
+  border-left: 4px solid var(--blue);
+  padding: 1rem 1.1rem;
+  margin: 1.25rem 0;
+  border-radius: 4px;
+  font-size: 0.97rem;
+}
+.intro-block p:last-child { margin-bottom: 0; }
+.intro-block strong { color: var(--navy); }
+
+.callout {
+  background: var(--orange-soft);
+  border-left: 4px solid var(--orange);
+  padding: 0.85rem 1rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+  font-size: 0.95rem;
+}
+.callout strong { color: var(--orange); }
+.callout-note {
+  background: var(--green-soft);
+  border-left: 4px solid var(--green);
+  padding: 0.85rem 1rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+  font-size: 0.95rem;
+}
+
+nav.toc {
+  background: var(--soft);
+  padding: 1rem 1.25rem;
+  border-radius: 6px;
+  margin: 1.5rem 0 2rem;
+}
+nav.toc h2 {
+  margin: 0 0 0.6rem;
+  font-size: 1.05rem;
+  background: transparent;
+  border-left: none;
+  padding: 0;
+  color: var(--navy);
+}
+nav.toc ol, nav.toc ul { list-style: none; padding: 0; margin: 0; }
+nav.toc li {
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding: 0.4rem 0;
+}
+nav.toc li:last-child { border-bottom: none; }
+nav.toc a { color: var(--text); font-weight: 500; }
+nav.toc a:hover { color: var(--blue); }
+nav.toc .count { font-size: 0.85rem; color: var(--grey); }
+
+.formula {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  background: var(--code-bg);
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  border-left: 3px solid var(--blue);
+  margin: 0.5rem 0 0.75rem 1rem;
+  font-size: 0.95rem;
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.mistake { color: var(--orange); }
+.mistake li { color: var(--orange); }
+
+.btn {
+  background: var(--blue); color: white; border: none;
+  padding: 0.5rem 1rem; border-radius: 4px; font-size: 0.9rem;
+  cursor: pointer; font-family: inherit; text-decoration: none;
+  display: inline-block;
+}
+.btn:hover { background: var(--navy); text-decoration: none; }
+.btn.secondary { background: transparent; color: var(--blue); border: 1px solid var(--blue); }
+.btn.secondary:hover { background: var(--light); }
+.controls { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0 0 1.5rem; }
+.cross-link {
+  display: inline-block; margin: 0.5rem 0;
+  padding: 0.4rem 0.8rem;
+  background: var(--light);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: var(--navy);
+}
+.cross-link:hover { background: var(--blue); color: white; text-decoration: none; }
+
+table.practice {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.95rem;
+}
+table.practice thead {
+  background: var(--navy);
+  color: white;
+}
+table.practice th, table.practice td {
+  border: 1px solid var(--border);
+  padding: 0.55rem 0.7rem;
+  text-align: left;
+  vertical-align: top;
+}
+table.practice tbody tr:nth-child(even) { background: var(--soft); }
+table.practice th:first-child, table.practice td:first-child {
+  width: 36px; text-align: center; font-weight: 600;
+}
+table.practice td:nth-child(3) {
+  background: var(--green-soft);
+  font-weight: 500;
+  color: var(--green);
+}
+@media (prefers-color-scheme: dark) {
+  table.practice td:nth-child(3) { color: var(--green); }
+}
+
+.controls.section-controls {
+  margin: 0.5rem 0 1rem;
+  font-size: 0.9rem;
+}
+
+details.pdf-embed {
+  margin: 1rem 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  overflow: hidden;
+}
+details.pdf-embed > summary {
+  cursor: pointer;
+  padding: 0.85rem 1rem;
+  background: var(--soft);
+  font-weight: 600;
+  color: var(--navy);
+  list-style: none;
+  user-select: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+details.pdf-embed > summary::before {
+  content: "▶";
+  color: var(--blue);
+  font-size: 0.7rem;
+  margin-right: 0.5rem;
+  transition: transform 0.15s ease;
+}
+details.pdf-embed[open] > summary::before { transform: rotate(90deg); }
+details.pdf-embed > summary::after {
+  content: "";
+  background: var(--blue);
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42L17.59 5H14V3zM5 5h5v2H7v10h10v-3h2v5H5V5z'/></svg>") no-repeat center;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42L17.59 5H14V3zM5 5h5v2H7v10h10v-3h2v5H5V5z'/></svg>") no-repeat center;
+  width: 16px; height: 16px;
+  margin-left: auto;
+  display: none;
+}
+details.pdf-embed .pdf-meta {
+  padding: 0.75rem 1rem 0.5rem;
+  font-size: 0.9rem;
+  color: var(--grey);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+details.pdf-embed .pdf-meta a {
+  display: inline-block;
+  margin-top: 0.4rem;
+  padding: 0.3rem 0.7rem;
+  background: var(--blue);
+  color: white;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+details.pdf-embed .pdf-meta a:hover { background: var(--navy); }
+details.pdf-embed iframe {
+  width: 100%;
+  height: 700px;
+  border: none;
+  display: block;
+}
+.pdf-list-note {
+  background: var(--orange-soft);
+  border-left: 4px solid var(--orange);
+  padding: 0.85rem 1rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+  font-size: 0.92rem;
+}
+.pdf-list-note strong { color: var(--orange); }
+
+footer {
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+  color: var(--grey);
+  text-align: center;
+}
+.back-to-top {
+  position: fixed; bottom: 1.25rem; right: 1.25rem;
+  background: var(--navy); color: white;
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none; font-size: 1.2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  opacity: 0.85;
+}
+.back-to-top:hover { opacity: 1; text-decoration: none; }
+
+@media print {
+  body { font-size: 10.5pt; }
+  .container { max-width: 100%; padding: 0; }
+  .controls, .back-to-top { display: none !important; }
+  .cross-link { background: transparent !important; }
+  h2 { background: var(--light) !important; -webkit-print-color-adjust: exact; }
+  table.practice thead { background: var(--navy) !important; -webkit-print-color-adjust: exact; }
+  a { color: var(--text); text-decoration: none; }
+}
+</style>
+</head>
+<body>
+  <div class="container">
+
+    <header class="title">
+      <h1>Neil Velicheti — Tutor Briefing</h1>
+      <p class="subtitle">Algebra 1 · 6th grade · Chandler Unified (AMS) · April 2026</p>
+    </header>
+
+    <div class="controls">
+      <a class="btn" href="tutor-packet.html">Open Math Packet →</a>
+      <button class="btn secondary" onclick="window.print()">Print</button>
+    </div>
+
+    <nav class="toc">
+      <h2>Contents</h2>
+      <ul>
+        <li><a href="#ctx">1. Quick context</a></li>
+        <li><a href="#class">2. Class details</a></li>
+        <li><a href="#gaps">3. Known and suspected gaps</a></li>
+        <li><a href="#scope">4. Q4 / final exam scope</a></li>
+        <li><a href="#session">5. Suggested session structure</a></li>
+        <li><a href="#goals">6. Goals &amp; checkpoints</a></li>
+        <li><a href="#materials">7. Teacher's source materials (embedded)</a></li>
+        <li><a href="#tools">8. Tools and references</a></li>
+        <li><a href="#contact">9. Contact</a></li>
+      </ul>
+    </nav>
+
+    <section id="ctx">
+      <h2>1. Quick context</h2>
+      <p>Neil is a 6th grader, but he is on an accelerated math path — the family chose to skip the second half of Pre-Algebra and place him directly into Algebra 1 (a 9th-grade-level course). That decision means he did not get the full Pre-Algebra foundation, and some of his current struggles trace back to gaps from that skipped material. He's bright, the acceleration was the right call ambition-wise, but the missing prereq layer is now showing.</p>
+
+      <p>He's currently carrying a D in the class. He took the Chapter 8 (Quadratic Equations) test on April 23 and did poorly. The Q4 / final exam is in mid-to-late May (last day of school is May 20).</p>
+
+      <h3>Family goals — short and long</h3>
+      <ol>
+        <li><strong>Stabilize the Q4 / final exam.</strong> Target: <strong>80%+ on the final.</strong> The exam will most likely cover <a href="#scope">Chapters 6–9 only</a> (not comprehensive). We don't have direct contact with the teacher; best confirm scope by watching the Classroom Stream for an exam-info post in early May, or having Neil ask in class.</li>
+        <li><strong>Rebuild the foundations over summer.</strong> School ends May 20, restarts July 16. Phase 2 of the family plan covers Algebra 1 chapters 1–9 from scratch — including the Pre-Algebra second half he skipped.</li>
+        <li><strong>Bigger goal:</strong> keep his math skill above grade level — ideally at or above 8th-grade math (i.e., 2+ grade levels ahead). The accelerated track is worth keeping; we just need to fix the gaps so he's actually operating there, not just enrolled there.</li>
+        <li><strong>Real concern — Geometry next year.</strong> Neil himself <strong>does NOT want to repeat Algebra 1</strong>; he wants to move on to Geometry in 7th grade. The family supports that, but is worried that without solid Algebra 1 basics he'll also struggle in Geometry (which leans hard on algebra for coordinate geometry, proofs, and equations of lines/circles), and then in Algebra 2 the year after. <strong>So the goal of summer isn't just "don't have to repeat" — it's "actually be ready for Geometry."</strong> Use that as the bar for tutoring success, not just the final-exam grade.</li>
+        <li><strong>Decision point on July 14</strong> (before school restarts July 16): Is he genuinely ready for Geometry? Score on the comprehensive mock final + your honest read of his fluency on Ch 7–8 fundamentals. If yes, push forward. If clearly not, repeating Algebra 1 stays as the reset option — but only if the gap is severe enough to make Geometry a likely failure. Neil's preference matters and we'd rather avoid the repeat.</li>
+      </ol>
+    </section>
+
+    <section id="class">
+      <h2>2. Class details</h2>
+      <ul>
+        <li><strong>Class:</strong> MAT100B-616 — Algebra 1 — Period 6 at AMS (Chandler Unified, CUSD80)</li>
+        <li><strong>Teacher:</strong> Ashley Mcconnell</li>
+        <li><strong>District-adopted textbook:</strong> Big Ideas Math: Algebra 1 (Larson / Boswell)</li>
+        <li><strong>Teacher's worksheet/test curriculum:</strong> Gina Wilson's "All Things Algebra" — bought from Teachers Pay Teachers; her unit-test layout mirrors that curriculum exactly.</li>
+        <li><strong>Free publisher practice site:</strong> <a href="https://bim.easyaccessmaterials.com/" target="_blank">bim.easyaccessmaterials.com</a> (no login needed; matches the textbook chapters)</li>
+        <li><strong>Online textbook (login):</strong> Neil has a CUSD80 student login that unlocks the full digital textbook with adaptive practice. Ask him for the login URL or it's on a class handout.</li>
+      </ul>
+    </section>
+
+    <section id="gaps">
+      <h2>3. Known and suspected gaps</h2>
+      <p>From his April 23 Chapter 8 test (which he scored poorly on) and the year-long D, the picture is:</p>
+
+      <h3>Strongly suspected weak topics</h3>
+      <ul>
+        <li><strong>Chapter 7 — Factoring</strong>, especially trinomials with leading coefficient &gt; 1 and mixed factoring. Factoring is the prereq for Ch 8 quadratics, so Ch 8 going badly almost always means Ch 7 was shaky. (See <a href="tutor-packet.html#ch7">Math Packet Ch 7</a>.)</li>
+        <li><strong>Chapter 8 — All 7 sub-topics on the test went poorly:</strong> graphing quadratic equations, vertex form &amp; transformations, converting forms / identifying zeros, discriminant, solving quadratics (4 methods), word problems, linear vs. quadratic models. (See <a href="tutor-packet.html#ch8">Math Packet Ch 8</a>.)</li>
+      </ul>
+
+      <h3>Likely shaky (worth diagnostics in early sessions)</h3>
+      <ul>
+        <li>Chapter 6 — Exponent rules, scientific notation, exponential growth/decay. Less concept-heavy but easy to make sign / negative-exponent mistakes. (See <a href="tutor-packet.html#ch6">Math Packet Ch 6</a>.)</li>
+        <li>Chapter 9 (radicals, Pythagorean, distance) — class is starting now; he'll need to pick it up alongside catch-up. (See <a href="tutor-packet.html#ch9">Math Packet Ch 9</a>.)</li>
+      </ul>
+
+      <h3>Foundational risks (probably need summer attention, not Q4)</h3>
+      <ul>
+        <li>Fraction arithmetic and integer operations — if he drops sign errors on simple problems, this is where it's coming from.</li>
+        <li>Solving multi-step linear equations (Ch 2) — the workhorse of every chapter that follows.</li>
+      </ul>
+
+      <div class="callout-note">
+        <p><strong>Highest-leverage diagnostic for session 1:</strong> have Neil work 5–8 problems from <a href="tutor-packet.html#ch7">Chapter 7 (factoring)</a> without help. Score them. The pattern of mistakes will tell you whether the issue is conceptual (he doesn't know the method) or procedural (he knows the method but makes arithmetic / sign errors). Different problems → different teaching strategies.</p>
+      </div>
+    </section>
+
+    <section id="scope">
+      <h2>4. Q4 / final exam — what's likely on it</h2>
+      <p>Best guess: <strong>Chapters 6 onwards only</strong> (exponents, polynomials/factoring, quadratics, radicals). NOT comprehensive Algebra 1. Last day of school May 20; the exam is sometime that week. Watch the Classroom Stream for an exam-info post in early May, or have Neil ask in class — that's how we'll confirm the actual scope.</p>
+
+      <h3>If Q4 is Ch 6–9 (likely):</h3>
+      <ul>
+        <li><a href="tutor-packet.html#ch6"><strong>Ch 6</strong></a> — Exponent rules, scientific notation, exponential growth/decay, geometric sequences.</li>
+        <li><a href="tutor-packet.html#ch7"><strong>Ch 7</strong></a> — Adding/subtracting/multiplying polynomials, factoring (GCF, a=1, a&gt;1, difference of squares, perfect-square trinomials, mixed).</li>
+        <li><a href="tutor-packet.html#ch8"><strong>Ch 8</strong></a> — Graphing from standard and vertex form, transformations, discriminant, solving by all 4 methods, word problems (area / consecutive integers / projectile motion), linear vs. quadratic models.</li>
+        <li><a href="tutor-packet.html#ch9"><strong>Ch 9</strong></a> — Simplifying radicals, operations on radicals, Pythagorean theorem, distance &amp; midpoint formulas.</li>
+      </ul>
+
+      <div class="callout">
+        <p><strong>If Q4 is comprehensive (less likely):</strong> Add Ch 1 expressions / order of operations, Ch 2 solving linear equations &amp; inequalities, Ch 3 functions &amp; notation, Ch 4 graphing linear, Ch 5 systems of equations. Family plan handles all of these in Phase 2 (summer) regardless.</p>
+      </div>
+    </section>
+
+    <section id="session">
+      <h2>5. Suggested 60-minute session structure</h2>
+      <p>Built around how struggling middle-schoolers actually learn. Adjust to taste — this is a recommendation, not a requirement.</p>
+
+      <table class="practice">
+        <thead>
+          <tr><th style="width:90px;">Time</th><th>Activity</th><th>Why</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>0–5</strong></td><td>Quick warm-up: 3 problems on last week's weakest topic</td><td>Brain warm-up; reactivates the topic that needs the most reinforcement.</td></tr>
+          <tr><td><strong>5–15</strong></td><td>Review last session's homework / error notebook entries</td><td>Catches stuck points before they compound.</td></tr>
+          <tr><td><strong>15–35</strong></td><td>New concept teaching: cover one topic from the current week's focus (use the <a href="tutor-packet.html">Math Packet</a>'s Concept page)</td><td>Direct instruction on the topic the class is currently on. About 20 minutes is the right depth.</td></tr>
+          <tr><td><strong>35–55</strong></td><td>Guided + independent practice on that concept (use the <a href="tutor-packet.html">Math Packet</a>'s Practice page)</td><td>Tutor watches Neil work the first 2–3 problems, jumps in only when he gets stuck. Then Neil works independently while tutor is silent.</td></tr>
+          <tr><td><strong>55–60</strong></td><td>Wrap-up: name 1 thing he learned today, 1 thing to practice this week</td><td>Metacognition / accountability. Sets the homework focus.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>What works well with Neil specifically</h3>
+      <ul>
+        <li>He doesn't always bring graded work home, so don't rely on him to surface what went wrong in class — use the diagnostic problems in your packet to find weak topics yourself.</li>
+        <li>He's a 6th grader doing 9th-grade math — and the family skipped the second half of Pre-Algebra to get him there. Framing matters. Avoid "this is easy" or "you should know this." Use "this is a 9th-grade topic and you're handling it as a 6th-grader — let's fill in the bridge that the skipped Pre-Algebra would've covered."</li>
+        <li>If he gets stuck on a problem for more than 90 seconds without progress, jump in. Don't let him spin and lose confidence.</li>
+        <li>End every session with a single sentence in his error notebook: "This week I struggled with X; next time I'll remember to Y." That's the bridge to the next session.</li>
+      </ul>
+    </section>
+
+    <section id="goals">
+      <h2>6. Goals &amp; checkpoints</h2>
+
+      <h3>Phase 1 (now → May 20)</h3>
+      <ul>
+        <li>Pass the Q4 / final exam at 80%+.</li>
+        <li>By the end of each tutoring week, score ≥ 80% on a 10-problem mixed quiz on that week's topic (use the Math Packet's practice section).</li>
+      </ul>
+
+      <h3>Phase 2 (summer, June 1 → July 15)</h3>
+      <ul>
+        <li>8 chapters, one per week. Score ≥ 80% on each chapter's mixed practice by the end of that week.</li>
+        <li>End-of-summer comprehensive mock final ≥ 85% AND fluent on Ch 7–8 fundamentals → move to 7th-grade Geometry as planned. <strong>Neil's first choice and the family's preferred outcome.</strong></li>
+        <li>70–84% → ready for Geometry but fragile; continue weekly tutoring through 7th grade. The risk is real but manageable with ongoing support.</li>
+        <li>&lt; 70% or still shaky on basic factoring / solving / linear equations → revisit the repeat conversation. Neil doesn't want this, so we only go there if the gap is severe enough to make Geometry a near-certain failure. Decision by July 15.</li>
+      </ul>
+
+      <p>Kiran will share weekly progress notes from the family-built tracker (a separate spreadsheet that Neil fills out daily). Suggest a quick weekly email exchange between you and Kiran — 2-3 sentences each on what's working, what's stuck.</p>
+    </section>
+
+    <section id="materials">
+      <h2>7. Teacher's source materials (embedded)</h2>
+      <p>These are the actual study guides and answer keys Ashley Mcconnell posted to Google Classroom for Neil. They're embedded below — click any title to expand and view inline, or use the "Open in new tab" button to view full-size. <strong>Note:</strong> these PDFs are scanned images of handwritten work in places, so text won't be selectable. The handwriting is the teacher's own (mostly worked solutions in red pen).</p>
+
+      <div class="pdf-list-note">
+        <p><strong>For this to work locally:</strong> the PDFs need to be in the SAME folder as this HTML file. If you received a ZIP, make sure you extracted it. If you received a Google Drive link, download the whole folder. If only the HTML loads but the PDFs don't show up, you're missing the PDF files in the folder — ask Kiran to resend the full folder.</p>
+      </div>
+
+      <h3>Chapter 6 — Exponents</h3>
+      <details class="pdf-embed">
+        <summary>📄 Chapter 6 Part 1 Study Guide — KEY (8 MB, handwritten worked solutions)</summary>
+        <div class="pdf-meta">
+          <p>The teacher's worked answer key for Chapter 6 (exponent rules, scientific notation, exponential functions). Use this to see the exact problem types from the unit and how she expects them to be worked out.</p>
+          <a href="ch6-study-guide-key.pdf" target="_blank">Open in new tab ↗</a>
+        </div>
+        <iframe src="ch6-study-guide-key.pdf#view=FitH" loading="lazy" title="Chapter 6 Study Guide Key"></iframe>
+      </details>
+
+      <h3>Chapter 7 — Polynomials &amp; Factoring</h3>
+      <details class="pdf-embed">
+        <summary>📄 Chapter 7 Study Guide — BLANK (100 KB, problems only)</summary>
+        <div class="pdf-meta">
+          <p>The blank student version of the Chapter 7 study guide. Have Neil work through this fresh; compare to the KEY below to grade.</p>
+          <a href="ch7-study-guide.pdf" target="_blank">Open in new tab ↗</a>
+        </div>
+        <iframe src="ch7-study-guide.pdf#view=FitH" loading="lazy" title="Chapter 7 Study Guide blank"></iframe>
+      </details>
+      <details class="pdf-embed">
+        <summary>📄 Chapter 7 Part 2 Study Guide — KEY (7 MB, worked solutions)</summary>
+        <div class="pdf-meta">
+          <p>Worked answer key for Chapter 7 Part 2 (factoring patterns, mixed factoring, dividing polynomials). This is the prereq chapter for Ch 8 quadratics — strongly suspected weak spot.</p>
+          <a href="ch7-part2-key.pdf" target="_blank">Open in new tab ↗</a>
+        </div>
+        <iframe src="ch7-part2-key.pdf#view=FitH" loading="lazy" title="Chapter 7 Part 2 Key"></iframe>
+      </details>
+      <details class="pdf-embed">
+        <summary>📄 Unit 7 Test Study Guide — KEY (5 MB, full test review with answers)</summary>
+        <div class="pdf-meta">
+          <p>The Unit 7 test review with full answer key. Excellent diagnostic — if Neil can't reproduce these, factoring is the weak spot to focus on.</p>
+          <a href="ch7-test-key.pdf" target="_blank">Open in new tab ↗</a>
+        </div>
+        <iframe src="ch7-test-key.pdf#view=FitH" loading="lazy" title="Unit 7 Test Key"></iframe>
+      </details>
+
+      <h3>Chapter 8 — Quadratics (the chapter Neil bombed)</h3>
+      <details class="pdf-embed">
+        <summary>📄 Unit 8 Study Guide — BLANK (260 KB, problems only — for retake practice)</summary>
+        <div class="pdf-meta">
+          <p><strong>Highest-priority diagnostic.</strong> This is the blank version of the test review for the chapter Neil bombed on April 23. Have him work through it as a fresh test (no calculator, on paper). Time it for 60 minutes. Then grade against the KEY below. The pattern of misses by topic block tells you exactly what to focus on.</p>
+          <a href="ch8-study-guide.pdf" target="_blank">Open in new tab ↗</a>
+        </div>
+        <iframe src="ch8-study-guide.pdf#view=FitH" loading="lazy" title="Unit 8 blank Study Guide"></iframe>
+      </details>
+      <details class="pdf-embed">
+        <summary>📄 Chapter 8 Test Study Guide — KEY (19 MB, full worked solutions)</summary>
+        <div class="pdf-meta">
+          <p>The teacher's full answer key for the Chapter 8 test, 5 pages of handwritten worked solutions. Covers all 7 topic blocks: graphing quadratics, vertex form &amp; transformations, converting forms / zeros, discriminant, solving by 4 methods, word problems, linear vs. quadratic models. Use this to grade Neil's retake of the blank version above.</p>
+          <a href="ch8-test-study-guide-key.pdf" target="_blank">Open in new tab ↗</a>
+        </div>
+        <iframe src="ch8-test-study-guide-key.pdf#view=FitH" loading="lazy" title="Chapter 8 Test Key"></iframe>
+      </details>
+    </section>
+
+    <section id="tools">
+      <h2>8. Tools and references</h2>
+
+      <h3>Practice &amp; teaching tools</h3>
+      <ul>
+        <li><strong>Big Ideas Math practice:</strong> <a href="https://bim.easyaccessmaterials.com/" target="_blank">bim.easyaccessmaterials.com</a></li>
+        <li><strong>Khan Academy Algebra 1:</strong> <a href="https://www.khanacademy.org/math/algebra" target="_blank">khanacademy.org/math/algebra</a> (free; auto-grades; parent dashboard available)</li>
+        <li><strong>Desmos graphing calculator:</strong> <a href="https://www.desmos.com/calculator" target="_blank">desmos.com/calculator</a> (great for exploring quadratic transformations visually)</li>
+        <li><strong>All Things Algebra (teacher's curriculum):</strong> <a href="https://www.teacherspayteachers.com/Store/All-Things-Algebra" target="_blank">teacherspayteachers.com/Store/All-Things-Algebra</a> &mdash; Buying Unit 7 &amp; 8 (~$25) gives the exact-style practice tests Neil sees in class.</li>
+      </ul>
+
+      <h3>From the family — companion materials in this folder</h3>
+      <ul>
+        <li><a href="tutor-packet.html"><strong>Math Packet (HTML)</strong></a> — concept teaching + practice problems for Ch 6–9, with answer keys.</li>
+        <li><a href="tutor-packet.pdf">Math Packet (PDF version)</a></li>
+        <li><a href="cheat-sheet.pdf">Algebra 1 Cheat Sheet</a> (one-page formula reference, two-sided)</li>
+        <li><a href="workbook.pdf">Full Algebra 1 Practice Workbook (PDF)</a> — 53 problems with worked solutions across all 9 chapters</li>
+        <li><a href="workbook.html">Full Algebra 1 Practice Workbook (HTML)</a> — same content, with collapsible solutions</li>
+        <li><a href="ch8-practice-workbook.pdf">Chapter 8 Practice Workbook</a> — 23 problems mirroring the Apr 23 test he bombed, with full worked solutions</li>
+      </ul>
+    </section>
+
+    <section id="contact">
+      <h2>9. Contact</h2>
+      <p>Kiran will be the primary point of contact for scheduling and questions. Email and questions about the materials are welcome anytime.</p>
+      <p>Thank you for working with Neil. The 6th-grade-in-Algebra-1 spot is genuinely hard, and the right tutor can make the difference between a struggle that closes doors and a struggle that builds resilience.</p>
+    </section>
+
+    <footer>
+      <p>Neil Velicheti — Tutor Briefing · v1.0 · April 2026</p>
+    </footer>
+
+  </div>
+  <a href="#" class="back-to-top" aria-label="Back to top" title="Back to top">↑</a>
+</body>
+</html>

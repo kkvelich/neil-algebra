@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neil's Algebra 1 Hub</title>
+<style>
+* { box-sizing: border-box; }
+:root {
+  --bg: #0F172A;
+  --bg-card: #1E293B;
+  --bg-elevated: #334155;
+  --text: #F1F5F9;
+  --text-dim: #94A3B8;
+  --primary: #6366F1;
+  --gold: #FBBF24;
+  --green: #10B981;
+  --pink: #EC4899;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #F8FAFC;
+    --bg-card: #FFFFFF;
+    --bg-elevated: #F1F5F9;
+    --text: #1A1A1A;
+    --text-dim: #64748B;
+    --border: #E2E8F0;
+  }
+}
+html, body {
+  margin: 0; padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+}
+.container { max-width: 760px; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
+.hero {
+  background: linear-gradient(135deg, #6366F1, #EC4899);
+  border-radius: 24px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: white;
+  margin: 0.5rem 0 2rem;
+  box-shadow: 0 8px 28px rgba(99,102,241,0.3);
+}
+.hero h1 { font-size: 2rem; margin: 0 0 0.5rem; font-weight: 800; }
+.hero p { margin: 0; opacity: 0.92; font-size: 1.05rem; }
+.countdown {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  margin-top: 0.8rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  margin: 2rem 0 0.75rem 0.25rem;
+  font-weight: 700;
+}
+.featured {
+  background: linear-gradient(135deg, #6366F1, #EC4899);
+  border-radius: 18px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: white;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  transition: transform 0.15s;
+}
+.featured:hover { transform: translateY(-2px); }
+.featured-emoji { font-size: 3rem; }
+.featured-text { flex: 1; }
+.featured h3 { margin: 0 0 0.3rem; font-size: 1.3rem; font-weight: 800; }
+.featured p { margin: 0; opacity: 0.92; font-size: 0.95rem; }
+
+.card-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+@media (min-width: 600px) { .card-grid { grid-template-columns: 1fr 1fr; } }
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  text-decoration: none;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: transform 0.1s, border-color 0.15s;
+}
+.card:hover { transform: translateY(-2px); border-color: var(--primary); }
+.card-emoji { font-size: 1.8rem; }
+.card-text { flex: 1; }
+.card-title { font-weight: 700; font-size: 0.95rem; margin: 0 0 0.15rem; }
+.card-desc { color: var(--text-dim); font-size: 0.8rem; margin: 0; line-height: 1.4; }
+.card-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--bg-elevated);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  color: var(--text-dim);
+}
+
+.study-list {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 0.5rem 0;
+}
+.study-row {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.study-row:last-child { border-bottom: none; }
+.study-row a { color: var(--text); text-decoration: none; flex: 1; font-size: 0.92rem; font-weight: 500; }
+.study-row a:hover { color: var(--primary); }
+.study-row .badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  background: var(--bg-elevated);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+.study-row .key { background: rgba(16,185,129,0.18); color: var(--green); }
+
+footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="hero">
+    <h1>🦉 Neil's Algebra 1 Hub</h1>
+    <p>Everything for the COA Algebra I Sem 2 final on June 11.</p>
+    <div class="countdown" id="cd"></div>
+  </div>
+
+  <a class="featured" href="math-quest.html">
+    <div class="featured-emoji">⚔️</div>
+    <div class="featured-text">
+      <h3>Math Quest App</h3>
+      <p>Daily gamified practice — streaks, XP, badges. 91 problems across Ch 6-11. Start here every day.</p>
+    </div>
+    <div style="font-size:1.5rem;">→</div>
+  </a>
+
+  <h2>For Neil — Practice &amp; Reference</h2>
+  <div class="card-grid">
+    <a class="card" href="workbook.html">
+      <span class="card-emoji">📘</span>
+      <div class="card-text">
+        <div class="card-title">Practice Workbook</div>
+        <p class="card-desc">53 problems w/ collapsible worked solutions</p>
+      </div>
+    </a>
+    <a class="card" href="ch8-practice-workbook.pdf">
+      <span class="card-emoji">📈</span>
+      <div class="card-text">
+        <div class="card-title">Ch 8 Workbook (PDF)</div>
+        <p class="card-desc">23 quadratics problems w/ solutions</p>
+      </div>
+    </a>
+    <a class="card" href="cheat-sheet.pdf">
+      <span class="card-emoji">🧾</span>
+      <div class="card-text">
+        <div class="card-title">Cheat Sheet (2 pages)</div>
+        <p class="card-desc">Print &amp; tape above the desk</p>
+      </div>
+    </a>
+    <a class="card" href="workbook.pdf">
+      <span class="card-emoji">📄</span>
+      <div class="card-text">
+        <div class="card-title">Workbook (PDF)</div>
+        <p class="card-desc">Printable version of the practice workbook</p>
+      </div>
+    </a>
+  </div>
+
+  <h2>For Tutor</h2>
+  <div class="card-grid">
+    <a class="card" href="tutor-briefing.html">
+      <span class="card-emoji">📝</span>
+      <div class="card-text">
+        <div class="card-title">Tutor Briefing</div>
+        <p class="card-desc">Context, goals, gaps, embedded study guides</p>
+      </div>
+    </a>
+    <a class="card" href="tutor-packet.html">
+      <span class="card-emoji">🧠</span>
+      <div class="card-text">
+        <div class="card-title">Math Packet</div>
+        <p class="card-desc">Concept teaching + practice for Ch 6–11</p>
+      </div>
+    </a>
+  </div>
+
+  <h2>For Parents</h2>
+  <div class="card-grid">
+    <a class="card" href="recovery-plan.docx">
+      <span class="card-emoji">🗺️</span>
+      <div class="card-text">
+        <div class="card-title">Recovery Plan</div>
+        <p class="card-desc">Phase 1 + Phase 2 schedule &amp; strategy</p>
+      </div>
+    </a>
+    <a class="card" href="tracker.xlsx">
+      <span class="card-emoji">📊</span>
+      <div class="card-text">
+        <div class="card-title">Progress Tracker</div>
+        <p class="card-desc">Daily log + mastery + checkpoints</p>
+      </div>
+    </a>
+  </div>
+
+  <h2>Teacher's Study Guides (Ashley Mcconnell, AMS)</h2>
+  <div class="study-list">
+    <div class="study-row">
+      <a href="ch6-7-rad-review.pdf">📋 Ch 6, 7 &amp; Radicals Review (blank)</a>
+      <span class="badge">Blank</span>
+    </div>
+    <div class="study-row">
+      <a href="ch6-7-rad-review-key.pdf">📋 Ch 6, 7 &amp; Radicals Review</a>
+      <span class="badge key">Key</span>
+    </div>
+    <div class="study-row">
+      <a href="ch8-9-review.pdf">📋 Ch 8 &amp; 9 Review (blank)</a>
+      <span class="badge">Blank</span>
+    </div>
+    <div class="study-row">
+      <a href="ch8-9-review-key.pdf">📋 Ch 8 &amp; 9 Review</a>
+      <span class="badge key">Key</span>
+    </div>
+    <div class="study-row">
+      <a href="ch6-study-guide-key.pdf">⚡ Ch 6 Study Guide</a>
+      <span class="badge key">Key</span>
+    </div>
+    <div class="study-row">
+      <a href="ch7-study-guide.pdf">🧩 Ch 7 Study Guide (blank)</a>
+      <span class="badge">Blank</span>
+    </div>
+    <div class="study-row">
+      <a href="ch7-part2-key.pdf">🧩 Ch 7 Part 2 Study Guide</a>
+      <span class="badge key">Key</span>
+    </div>
+    <div class="study-row">
+      <a href="ch7-test-key.pdf">🧩 Ch 7 Test Study Guide</a>
+      <span class="badge key">Key</span>
+    </div>
+    <div class="study-row">
+      <a href="ch8-study-guide.pdf">📈 Ch 8 Study Guide (blank)</a>
+      <span class="badge">Blank</span>
+    </div>
+    <div class="study-row">
+      <a href="ch8-test-study-guide-key.pdf">📈 Ch 8 Test Study Guide</a>
+      <span class="badge key">Key</span>
+    </div>
+    <div class="study-row">
+      <a href="ch10-study-guide-key.pdf">➗ Ch 10 (Rational Expressions) Study Guide</a>
+      <span class="badge key">Key</span>
+    </div>
+    <div class="study-row">
+      <a href="ch11-study-guide.pdf">√ Ch 11 (Radicals) Study Guide (blank)</a>
+      <span class="badge">Blank</span>
+    </div>
+    <div class="study-row">
+      <a href="ch11-study-guide-key.pdf">√ Ch 11 (Radicals) Study Guide</a>
+      <span class="badge key">Key</span>
+    </div>
+  </div>
+
+  <footer>
+    <p>Neil's Algebra 1 — v1.0 — built for the COA Algebra I Semester 2 final, June 11, 2026.</p>
+    <p>Open this page on your iPhone/iPad and tap Share → Add to Home Screen for one-tap access.</p>
+  </footer>
+
+</div>
+
+<script>
+const exam = new Date('2026-06-11T08:00:00');
+const days = Math.max(0, Math.ceil((exam - new Date()) / 86400000));
+document.getElementById('cd').textContent = days === 0 ? 'EXAM DAY!' : `${days} days until the exam`;
+</script>
+</body>
+</html>
