@@ -891,6 +891,27 @@ header.top {
 }
 .lesson-footer .btn { flex: 1; padding: 0.85rem; font-size: 0.95rem; font-weight: 700; }
 
+
+.math-keys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0.4rem 0;
+}
+.math-key {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.55rem 0.7rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: -apple-system, "SF Mono", monospace;
+  cursor: pointer;
+  min-width: 38px;
+}
+.math-key:active { background: var(--primary); color: white; }
+
 </style>
 </head>
 <body>
@@ -1546,8 +1567,8 @@ function startDailyChallenge() {
     toast("Already done today! Come back tomorrow.");
     return;
   }
-  // 5 problems weighted toward weak topics
-  const probs = pickRandomBy(p => true, 5);
+  // 5 multiple-choice problems (no typing required for the daily)
+  const probs = pickRandomBy(p => p.type === 'mc', 5);
   session = { problems: probs, idx: 0, correct: 0, mode: 'daily', startTime: Date.now() };
   showScreen('practice');
   renderProblem();
@@ -1584,6 +1605,30 @@ function renderProblem() {
     });
     body.appendChild(choices);
   } else {
+    // Math keyboard above the input
+    const keyboard = document.createElement('div');
+    keyboard.className = 'math-keys';
+    const keys = [
+      { l: 'x²', c: '²' },
+      { l: 'x³', c: '³' },
+      { l: '^', c: '^' },
+      { l: '√', c: '√' },
+      { l: '∛', c: '∛' },
+      { l: '−', c: '−' },
+      { l: '±', c: '±' },
+      { l: '⁄', c: '/' },
+      { l: '(', c: '(' },
+      { l: ')', c: ')' },
+    ];
+    keys.forEach(k => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'math-key';
+      b.textContent = k.l;
+      b.onclick = (e) => { e.preventDefault(); insertAtCursor('typedInput', k.c); };
+      keyboard.appendChild(b);
+    });
+    body.appendChild(keyboard);
     const inp = document.createElement('input');
     inp.type = 'text';
     inp.id = 'typedInput';
@@ -1679,9 +1724,47 @@ function selectMC(btn, choice, p) {
   recordAnswer(p, correct);
 }
 
+
+function insertAtCursor(inputId, text) {
+  const el = document.getElementById(inputId);
+  if (!el) return;
+  const start = el.selectionStart || el.value.length;
+  const end = el.selectionEnd || el.value.length;
+  el.value = el.value.slice(0, start) + text + el.value.slice(end);
+  el.focus();
+  const newPos = start + text.length;
+  try { el.setSelectionRange(newPos, newPos); } catch(e) {}
+}
+
 function normalizeAnswer(s) {
   if (s == null) return '';
-  return String(s).toLowerCase().replace(/\s+/g, '').replace(/['"]/g, '').replace(/[−–—]/g, '-');
+  let n = String(s).toLowerCase().trim();
+  n = n.replace(/\s+/g, '').replace(/['"]/g, '');
+  // dashes and minus signs
+  n = n.replace(/[−–—]/g, '-');
+  // unicode superscripts → ^N
+  const sup = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+  for (let i = 0; i < 10; i++) {
+    n = n.split(sup[i]).join('^' + i);
+  }
+  // <sup>N</sup> → ^N
+  n = n.replace(/<sup>([^<]+)<\/sup>/g, '^$1');
+  // <sub>N</sub> → _N
+  n = n.replace(/<sub>([^<]+)<\/sub>/g, '_$1');
+  // radical symbols → ascii
+  n = n.replace(/√/g, 'sqrt');
+  n = n.replace(/∛/g, 'cbrt');
+  // multiplication symbols → *
+  n = n.replace(/[×⋅·]/g, '*');
+  // strip the * for forgiving comparison (12*x^7 == 12x^7)
+  n = n.replace(/\*/g, '');
+  // strip parentheses around single answers like "(x+1)" vs "x+1"
+  // (only if outer matches)
+  if (n.startsWith('(') && n.endsWith(')')) {
+    const inner = n.slice(1, -1);
+    if (!inner.includes('(') && !inner.includes(')')) n = inner;
+  }
+  return n;
 }
 
 function submitTyped(p) {
