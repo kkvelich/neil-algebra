@@ -717,6 +717,180 @@ header.top {
   z-index: 20;
 }
 
+
+/* Lesson chooser modal */
+.chooser-overlay {
+  position: fixed; inset: 0; background: rgba(15,23,42,0.85);
+  display: none; align-items: center; justify-content: center;
+  z-index: 100; padding: 1rem; backdrop-filter: blur(4px);
+}
+.chooser-overlay.show { display: flex; }
+.chooser-card {
+  background: var(--bg-card);
+  border-radius: 20px;
+  padding: 1.5rem;
+  width: 100%; max-width: 400px;
+  text-align: center;
+  animation: popIn 0.25s ease;
+}
+.chooser-card h2 {
+  background: transparent; border: none; padding: 0;
+  margin: 0 0 1rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text);
+}
+.chooser-buttons { display: flex; flex-direction: column; gap: 0.6rem; }
+.chooser-btn {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 1rem;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-align: left;
+}
+.chooser-btn:hover { transform: translateY(-2px); border-color: var(--primary); }
+.chooser-btn.learn { background: linear-gradient(135deg, #10B981, #059669); border: none; color: white; }
+.chooser-btn.practice { background: linear-gradient(135deg, var(--primary), #4F46E5); border: none; color: white; }
+.chooser-btn .emoji { font-size: 1.8rem; }
+.chooser-btn .text { flex: 1; }
+.chooser-btn .text small { display: block; opacity: 0.85; font-size: 0.78rem; font-weight: 500; margin-top: 0.15rem; }
+.chooser-cancel {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  padding: 0.5rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 0.6rem;
+}
+
+/* Lesson screen */
+.lesson-overlay {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  display: none;
+  flex-direction: column;
+  z-index: 95;
+}
+.lesson-overlay.show { display: flex; }
+.lesson-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-card);
+}
+.lesson-back {
+  background: none; border: none; color: var(--text);
+  font-size: 1.4rem; cursor: pointer; padding: 0.3rem 0.7rem;
+}
+.lesson-progress {
+  flex: 1; margin: 0 1rem;
+  height: 6px;
+  background: var(--bg-elevated);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.lesson-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), #EC4899);
+  transition: width 0.3s;
+}
+.lesson-counter { font-size: 0.85rem; color: var(--text-dim); font-weight: 700; }
+.lesson-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  max-width: 540px;
+  margin: 0 auto;
+  width: 100%;
+}
+.lesson-type-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  margin-bottom: 0.7rem;
+}
+.lesson-type-tag.concept { background: rgba(99,102,241,0.2); color: var(--primary); }
+.lesson-type-tag.example { background: rgba(16,185,129,0.2); color: var(--green); }
+.lesson-type-tag.try { background: rgba(245,158,11,0.2); color: var(--warning); }
+.lesson-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin: 0 0 1rem;
+  color: var(--text);
+}
+.lesson-body {
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: var(--text);
+}
+.lesson-body sup, .lesson-body sub { font-size: 0.7em; }
+.lesson-try-q {
+  background: var(--bg-card);
+  border: 2px solid var(--warning);
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.lesson-try-hint {
+  background: rgba(245,158,11,0.12);
+  border-left: 3px solid var(--warning);
+  padding: 0.6rem 0.9rem;
+  border-radius: 6px;
+  margin: 0.6rem 0;
+  font-size: 0.92rem;
+  color: var(--warning);
+}
+.lesson-try-input {
+  width: 100%;
+  background: var(--bg-elevated);
+  border: 2px solid var(--border);
+  color: var(--text);
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: inherit;
+  margin-top: 0.5rem;
+}
+.lesson-try-reveal {
+  background: rgba(16,185,129,0.12);
+  border-left: 3px solid var(--green);
+  padding: 0.7rem 1rem;
+  border-radius: 6px;
+  margin-top: 0.7rem;
+  display: none;
+  font-size: 0.95rem;
+}
+.lesson-try-reveal.show { display: block; }
+.lesson-try-reveal .ans-label { color: var(--green); font-weight: 700; }
+.lesson-footer {
+  padding: 1rem;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 0.5rem;
+  max-width: 540px;
+  margin: 0 auto;
+  width: 100%;
+}
+.lesson-footer .btn { flex: 1; padding: 0.85rem; font-size: 0.95rem; font-weight: 700; }
+
 </style>
 </head>
 <body>
@@ -813,6 +987,39 @@ header.top {
   </div>
 </div>
 
+
+<!-- Chapter chooser modal -->
+<div class="chooser-overlay" id="chooserOverlay" onclick="if(event.target===this)closeChooser()">
+  <div class="chooser-card">
+    <h2 id="chooserTitle">Chapter</h2>
+    <div class="chooser-buttons">
+      <button class="chooser-btn learn" onclick="startLessons()">
+        <span class="emoji">📚</span>
+        <span class="text">Learn this chapter<small>Step-by-step concepts, examples, and guided tries</small></span>
+      </button>
+      <button class="chooser-btn practice" onclick="startPracticeFromChooser()">
+        <span class="emoji">🎯</span>
+        <span class="text">Practice<small>10 problems, scored, earns XP</small></span>
+      </button>
+      <button class="chooser-cancel" onclick="closeChooser()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Lesson viewer -->
+<div class="lesson-overlay" id="lessonOverlay">
+  <div class="lesson-header">
+    <button class="lesson-back" onclick="closeLessons()">←</button>
+    <div class="lesson-progress"><div class="lesson-progress-fill" id="lessonProgress"></div></div>
+    <div class="lesson-counter" id="lessonCounter">1 / 1</div>
+  </div>
+  <div class="lesson-content" id="lessonContent"></div>
+  <div class="lesson-footer">
+    <button class="btn btn-skip" id="lessonPrevBtn" onclick="lessonPrev()">← Back</button>
+    <button class="btn btn-submit" id="lessonNextBtn" onclick="lessonNext()">Continue →</button>
+  </div>
+</div>
+
 <!-- Bottom Nav -->
 <nav class="bottom-nav">
   <button class="nav-item active" data-screen="home" onclick="navTo('home')">
@@ -872,7 +1079,9 @@ header.top {
 const PROBLEMS = [{"id": "6.1.1", "ch": 6, "topic": "Product of powers", "diff": 1, "type": "mc", "q": "Simplify: x² · x³", "choices": ["x⁵", "x⁶", "x⁹", "x²+x³"], "ans": "x⁵", "hint": "Same base → add exponents.", "solution": ["x² · x³ = x^(2+3) = x⁵"]}, {"id": "6.1.2", "ch": 6, "topic": "Product of powers", "diff": 1, "type": "mc", "q": "Simplify: y⁴ · y⁷", "choices": ["y¹¹", "y²⁸", "y³", "y³⁵"], "ans": "y¹¹", "hint": "Add the exponents.", "solution": ["y⁴ · y⁷ = y^(4+7) = y¹¹"]}, {"id": "6.1.3", "ch": 6, "topic": "Product of powers", "diff": 2, "type": "typed", "q": "Simplify: (3x²y³)(4x⁵y). Type the simplified form.", "ans": "12x⁷y⁴", "accept": ["12x^7y^4", "12 x⁷ y⁴", "12*x^7*y^4"], "hint": "Multiply coefficients, then add exponents on each variable.", "solution": ["3·4 = 12", "x²·x⁵ = x⁷", "y³·y¹ = y⁴", "Final: 12x⁷y⁴"]}, {"id": "6.2.1", "ch": 6, "topic": "Power of a power", "diff": 1, "type": "mc", "q": "Simplify: (x³)⁴", "choices": ["x⁷", "x¹²", "x⁸¹", "x³⁴"], "ans": "x¹²", "hint": "Power of a power: multiply exponents.", "solution": ["(x³)⁴ = x^(3·4) = x¹²"]}, {"id": "6.2.2", "ch": 6, "topic": "Power of a power", "diff": 2, "type": "typed", "q": "Simplify: (2x³)⁴. Type the simplified form.", "ans": "16x¹²", "accept": ["16x^12", "16 x¹²"], "hint": "Apply the power to each factor inside.", "solution": ["2⁴ = 16", "(x³)⁴ = x¹²", "Final: 16x¹²"]}, {"id": "6.3.1", "ch": 6, "topic": "Quotient of powers", "diff": 1, "type": "mc", "q": "Simplify: x⁹ / x³", "choices": ["x³", "x⁶", "x¹²", "x²⁷"], "ans": "x⁶", "hint": "Same base in division → subtract exponents.", "solution": ["x⁹ / x³ = x^(9-3) = x⁶"]}, {"id": "6.3.2", "ch": 6, "topic": "Quotient of powers", "diff": 2, "type": "typed", "q": "Simplify: (a⁵b²) / (a²b⁻¹). Type the simplified form.", "ans": "a³b³", "accept": ["a^3 b^3", "a³ b³", "a^3*b^3"], "hint": "Subtract exponents on each base. Watch the negative.", "solution": ["a^(5-2) = a³", "b^(2-(-1)) = b^(2+1) = b³", "Final: a³b³"]}, {"id": "6.4.1", "ch": 6, "topic": "Zero & negative exponents", "diff": 1, "type": "mc", "q": "What is 5⁰?", "choices": ["0", "1", "5", "undefined"], "ans": "1", "hint": "Anything (nonzero) to the zero power is 1.", "solution": ["By definition: x⁰ = 1 for x ≠ 0."]}, {"id": "6.4.2", "ch": 6, "topic": "Zero & negative exponents", "diff": 1, "type": "mc", "q": "Simplify: x⁻³", "choices": ["−x³", "1/x³", "−3x", "x³"], "ans": "1/x³", "hint": "Negative exponent → flip to denominator.", "solution": ["x⁻³ = 1/x³"]}, {"id": "6.4.3", "ch": 6, "topic": "Zero & negative exponents", "diff": 2, "type": "typed", "q": "Evaluate: 5⁰ + 3⁻². Type as a fraction or decimal.", "ans": "10/9", "accept": ["10/9", "1.111", "1 1/9", "1.11"], "hint": "5⁰ = 1. 3⁻² = 1/9.", "solution": ["5⁰ = 1", "3⁻² = 1/3² = 1/9", "1 + 1/9 = 9/9 + 1/9 = 10/9"]}, {"id": "6.5.1", "ch": 6, "topic": "Scientific notation", "diff": 1, "type": "mc", "q": "Write 4,200,000 in scientific notation.", "choices": ["4.2 × 10⁶", "42 × 10⁵", "4.2 × 10⁻⁶", "0.42 × 10⁷"], "ans": "4.2 × 10⁶", "hint": "Move decimal so first number is between 1 and 10.", "solution": ["4,200,000 → 4.2 (moved decimal 6 places left)", "Exponent is +6.", "Answer: 4.2 × 10⁶"]}, {"id": "6.5.2", "ch": 6, "topic": "Scientific notation", "diff": 2, "type": "typed", "q": "Write 0.00067 in scientific notation. Format: a × 10^n", "ans": "6.7 × 10⁻⁴", "accept": ["6.7×10⁻⁴", "6.7 x 10^-4", "6.7*10^-4", "6.7 × 10^-4"], "hint": "Small numbers (< 1) have NEGATIVE exponents.", "solution": ["Move decimal 4 places right → 6.7", "Exponent is −4.", "Answer: 6.7 × 10⁻⁴"]}, {"id": "6.6.1", "ch": 6, "topic": "Exponential growth/decay", "diff": 2, "type": "mc", "q": "A car worth $20,000 depreciates 8% per year. Which equation models its value after t years?", "choices": ["y = 20000(0.92)ᵗ", "y = 20000(1.08)ᵗ", "y = 20000(0.08)ᵗ", "y = 20000 − 0.08t"], "ans": "y = 20000(0.92)ᵗ", "hint": "Decay uses (1 − r) raised to t.", "solution": ["Starting value a = 20000", "Rate r = 0.08 (decay)", "y = a(1−r)ᵗ = 20000(0.92)ᵗ"]}, {"id": "6.6.2", "ch": 6, "topic": "Exponential growth/decay", "diff": 3, "type": "typed", "q": "Population starts at 5,000 and grows 3% per year. What's the population after 10 years? Round to whole number.", "ans": "6720", "accept": ["6,720", "6720", "6719", "6721"], "hint": "y = 5000(1.03)^10. Use a calculator if needed.", "solution": ["y = a(1+r)ᵗ", "y = 5000(1.03)¹⁰", "(1.03)¹⁰ ≈ 1.3439", "y ≈ 5000 × 1.3439 ≈ 6,720"]}, {"id": "6.7.1", "ch": 6, "topic": "Geometric sequences", "diff": 1, "type": "mc", "q": "What is the next term of: 3, 12, 48, 192, ___?", "choices": ["240", "576", "768", "960"], "ans": "768", "hint": "Find the common ratio: each term divided by the previous.", "solution": ["12/3 = 4, 48/12 = 4, 192/48 = 4", "Ratio = 4", "192 × 4 = 768"]}, {"id": "7.1.1", "ch": 7, "topic": "Multiply binomials", "diff": 1, "type": "mc", "q": "Multiply: (x + 4)(x − 2)", "choices": ["x² + 2x − 8", "x² − 2x − 8", "x² + 6x − 8", "x² + 2x + 8"], "ans": "x² + 2x − 8", "hint": "FOIL: First, Outer, Inner, Last.", "solution": ["First: x·x = x²", "Outer: x·(−2) = −2x", "Inner: 4·x = 4x", "Last: 4·(−2) = −8", "Combine: x² − 2x + 4x − 8 = x² + 2x − 8"]}, {"id": "7.1.2", "ch": 7, "topic": "Multiply binomials", "diff": 2, "type": "typed", "q": "Multiply: (2x − 3)(x + 5). Type the simplified form.", "ans": "2x² + 7x − 15", "accept": ["2x^2 + 7x - 15", "2x²+7x−15"], "hint": "FOIL carefully with signs.", "solution": ["2x·x = 2x²", "2x·5 = 10x", "−3·x = −3x", "−3·5 = −15", "Combine: 2x² + 10x − 3x − 15 = 2x² + 7x − 15"]}, {"id": "7.2.1", "ch": 7, "topic": "Add/subtract polynomials", "diff": 1, "type": "mc", "q": "Add: (3x² + 2x − 5) + (x² − 4x + 1)", "choices": ["4x² − 2x − 4", "4x² + 6x − 4", "2x² + 6x − 6", "4x² − 2x − 6"], "ans": "4x² − 2x − 4", "hint": "Combine like terms.", "solution": ["x² terms: 3 + 1 = 4 → 4x²", "x terms: 2 + (−4) = −2 → −2x", "constants: −5 + 1 = −4", "Result: 4x² − 2x − 4"]}, {"id": "7.2.2", "ch": 7, "topic": "Add/subtract polynomials", "diff": 2, "type": "typed", "q": "Subtract: (5x² − 3x) − (2x² − x + 7). Type the simplified form.", "ans": "3x² − 2x − 7", "accept": ["3x^2 - 2x - 7", "3x²−2x−7"], "hint": "Distribute the minus sign to ALL terms in the second polynomial.", "solution": ["Distribute −: 5x² − 3x − 2x² + x − 7", "Combine: (5−2)x² + (−3+1)x − 7", "= 3x² − 2x − 7"]}, {"id": "7.3.1", "ch": 7, "topic": "Factor x²+bx+c", "diff": 1, "type": "mc", "q": "Factor: x² + 7x + 12", "choices": ["(x+3)(x+4)", "(x+2)(x+6)", "(x+1)(x+12)", "(x−3)(x−4)"], "ans": "(x+3)(x+4)", "hint": "Two numbers: product 12, sum 7.", "solution": ["Product 12, sum 7", "3 × 4 = 12 ✓ and 3 + 4 = 7 ✓", "Answer: (x+3)(x+4)"]}, {"id": "7.3.2", "ch": 7, "topic": "Factor x²+bx+c", "diff": 1, "type": "mc", "q": "Factor: x² − 5x − 14", "choices": ["(x−7)(x+2)", "(x+7)(x−2)", "(x−2)(x+7)", "(x−1)(x+14)"], "ans": "(x−7)(x+2)", "hint": "Two numbers: product −14, sum −5.", "solution": ["Product −14, sum −5", "−7 × 2 = −14 ✓ and −7 + 2 = −5 ✓", "Answer: (x−7)(x+2)"]}, {"id": "7.3.3", "ch": 7, "topic": "Factor x²+bx+c", "diff": 2, "type": "typed", "q": "Factor: x² − 11x + 30. Type in form (x−a)(x−b).", "ans": "(x−5)(x−6)", "accept": ["(x-5)(x-6)", "(x-6)(x-5)", "(x−6)(x−5)"], "hint": "Product 30, sum −11. Both factors are negative.", "solution": ["Product 30, sum −11", "−5 × −6 = 30 ✓ and −5 + (−6) = −11 ✓", "Answer: (x−5)(x−6)"]}, {"id": "7.4.1", "ch": 7, "topic": "Factor ax²+bx+c", "diff": 2, "type": "mc", "q": "Factor: 2x² + 7x + 3", "choices": ["(2x+1)(x+3)", "(2x+3)(x+1)", "(x+1)(x+3)", "(2x−1)(x−3)"], "ans": "(2x+1)(x+3)", "hint": "AC = 2·3 = 6. Find two numbers product 6, sum 7.", "solution": ["AC method: 2·3 = 6", "Numbers: 6 and 1 (product 6, sum 7)", "Split: 2x² + 6x + x + 3", "Group: 2x(x+3) + 1(x+3) = (2x+1)(x+3)"]}, {"id": "7.4.2", "ch": 7, "topic": "Factor ax²+bx+c", "diff": 3, "type": "typed", "q": "Factor: 6x² + 17x + 12", "ans": "(2x+3)(3x+4)", "accept": ["(3x+4)(2x+3)"], "hint": "AC = 72. Two numbers product 72, sum 17.", "solution": ["AC = 6·12 = 72", "Numbers: 8 and 9 (product 72, sum 17)", "Split: 6x² + 8x + 9x + 12", "Group: 2x(3x+4) + 3(3x+4) = (2x+3)(3x+4)"]}, {"id": "7.5.1", "ch": 7, "topic": "Difference of squares", "diff": 1, "type": "mc", "q": "Factor: x² − 36", "choices": ["(x+6)(x−6)", "(x−6)²", "(x+6)²", "cannot factor"], "ans": "(x+6)(x−6)", "hint": "a² − b² = (a+b)(a−b)", "solution": ["x² − 36 = x² − 6²", "Apply pattern: (x+6)(x−6)"]}, {"id": "7.5.2", "ch": 7, "topic": "Difference of squares", "diff": 2, "type": "typed", "q": "Factor: 16x² − 25", "ans": "(4x+5)(4x−5)", "accept": ["(4x-5)(4x+5)", "(4x−5)(4x+5)"], "hint": "(4x)² − 5² is a difference of squares.", "solution": ["16x² = (4x)²", "25 = 5²", "(4x)² − 5² = (4x+5)(4x−5)"]}, {"id": "7.6.1", "ch": 7, "topic": "Perfect square trinomial", "diff": 2, "type": "mc", "q": "Factor: x² + 12x + 36", "choices": ["(x+6)²", "(x+6)(x−6)", "(x+12)(x+3)", "(x+4)(x+9)"], "ans": "(x+6)²", "hint": "Check if middle term = 2·a·b where a²=x² and b²=36.", "solution": ["a = x, b = 6 → 2ab = 12x ✓", "Perfect square: (x+6)²"]}, {"id": "7.7.1", "ch": 7, "topic": "GCF + complete factoring", "diff": 2, "type": "mc", "q": "Factor completely: 4x³ − 36x", "choices": ["4x(x+3)(x−3)", "4x(x²−9)", "(2x+6)(2x−6)", "4(x³−9x)"], "ans": "4x(x+3)(x−3)", "hint": "Always pull GCF first, then check if the rest factors.", "solution": ["GCF = 4x: 4x(x² − 9)", "x² − 9 is a difference of squares", "= 4x(x+3)(x−3)"]}, {"id": "7.7.2", "ch": 7, "topic": "GCF + complete factoring", "diff": 3, "type": "typed", "q": "Factor completely: 2x² − 8x − 24", "ans": "2(x−6)(x+2)", "accept": ["2(x+2)(x-6)", "2(x−6)(x+2)"], "hint": "GCF is 2. Factor the trinomial inside.", "solution": ["GCF = 2: 2(x² − 4x − 12)", "Factor: product −12, sum −4 → −6 and 2", "= 2(x−6)(x+2)"]}, {"id": "7.8.1", "ch": 7, "topic": "Factor x²+bx+c", "diff": 2, "type": "mc", "q": "Factor: x² + 9x + 20", "choices": ["(x+4)(x+5)", "(x+2)(x+10)", "(x+1)(x+20)", "(x−4)(x−5)"], "ans": "(x+4)(x+5)", "hint": "Product 20, sum 9.", "solution": ["4 × 5 = 20, 4 + 5 = 9", "(x+4)(x+5)"]}, {"id": "8.1", "ch": 8, "topic": "Vertex from vertex form", "diff": 1, "type": "mc", "q": "Identify the vertex of y = (x − 3)² + 5", "choices": ["(3, 5)", "(−3, 5)", "(3, −5)", "(−3, −5)"], "ans": "(3, 5)", "hint": "Vertex form y = a(x−h)² + k has vertex (h, k).", "solution": ["h = 3, k = 5", "Vertex: (3, 5)"]}, {"id": "8.2", "ch": 8, "topic": "Vertex from vertex form", "diff": 2, "type": "typed", "q": "Find the vertex of y = −2(x + 1)² − 4. Format: (h, k)", "ans": "(−1, −4)", "accept": ["(-1,-4)", "(-1, -4)", "(−1,−4)"], "hint": "(x + 1) means h = −1 (sign flips).", "solution": ["y = −2(x − (−1))² + (−4)", "Vertex: (−1, −4)"]}, {"id": "8.3", "ch": 8, "topic": "Axis of symmetry", "diff": 2, "type": "mc", "q": "Find the axis of symmetry of y = x² − 6x + 8.", "choices": ["x = 3", "x = −3", "x = 6", "x = −6"], "ans": "x = 3", "hint": "Axis: x = −b/(2a)", "solution": ["a=1, b=−6", "x = 6/2 = 3"]}, {"id": "8.4", "ch": 8, "topic": "Transformations", "diff": 1, "type": "mc", "q": "How is y = (x + 2)² − 5 transformed from y = x²?", "choices": ["Left 2, down 5", "Right 2, down 5", "Left 2, up 5", "Right 2, up 5"], "ans": "Left 2, down 5", "hint": "(x + h) shifts LEFT (h's sign flips).", "solution": ["(x + 2)² → h = −2 → left 2", "k = −5 → down 5"]}, {"id": "8.5", "ch": 8, "topic": "Transformations", "diff": 3, "type": "mc", "q": "Describe y = −2(x − 4)² + 5 vs y = x²", "choices": ["Reflect over x-axis, vertical stretch 2, right 4, up 5", "Reflect over x-axis, vertical compress 2, right 4, up 5", "Vertical stretch 2, left 4, down 5", "Right 4, up 5 only"], "ans": "Reflect over x-axis, vertical stretch 2, right 4, up 5", "hint": "a = −2 → reflect & stretch by 2.", "solution": ["a = −2: negative → reflect; |a| = 2 → stretch", "h = 4 → right 4", "k = 5 → up 5"]}, {"id": "8.6", "ch": 8, "topic": "Discriminant", "diff": 2, "type": "mc", "q": "How many real solutions does x² + 4x + 5 = 0 have?", "choices": ["0", "1", "2", "infinite"], "ans": "0", "hint": "D = b² − 4ac. Negative → 0 real.", "solution": ["D = 16 − 20 = −4", "D < 0 → 0 real solutions"]}, {"id": "8.7", "ch": 8, "topic": "Discriminant", "diff": 2, "type": "mc", "q": "How many real solutions does 9x² − 6x + 1 = 0 have?", "choices": ["0", "1", "2", "cannot tell"], "ans": "1", "hint": "Zero discriminant = one (double) solution.", "solution": ["D = 36 − 36 = 0", "D = 0 → 1 real solution"]}, {"id": "8.8", "ch": 8, "topic": "Vertex ↔ standard", "diff": 3, "type": "mc", "q": "Convert to vertex form: y = x² − 8x + 13", "choices": ["y = (x − 4)² − 3", "y = (x − 4)² + 3", "y = (x + 4)² − 3", "y = (x − 8)² − 3"], "ans": "y = (x − 4)² − 3", "hint": "Complete the square. Half of −8 is −4; (−4)² = 16.", "solution": ["y = (x² − 8x + 16) + 13 − 16", "y = (x − 4)² − 3"]}, {"id": "8.9", "ch": 8, "topic": "Vertex from standard", "diff": 2, "type": "mc", "q": "Find the vertex of y = x² − 6x + 8.", "choices": ["(3, −1)", "(−3, −1)", "(3, 1)", "(6, 8)"], "ans": "(3, −1)", "hint": "x = −b/(2a), then plug in.", "solution": ["x = 6/2 = 3", "y = 9 − 18 + 8 = −1", "Vertex (3, −1)"]}, {"id": "8.10", "ch": 8, "topic": "Find zeros", "diff": 2, "type": "typed", "q": "Find the zeros of f(x) = (x − 1)(x + 7). List separated by commas.", "ans": "1, −7", "accept": ["-7,1", "1,-7", "−7,1"], "hint": "Zero-product: each factor = 0.", "solution": ["x − 1 = 0 → x = 1", "x + 7 = 0 → x = −7"]}, {"id": "9.1", "ch": 9, "topic": "Solve by factoring", "diff": 1, "type": "mc", "q": "Solve: x² − 6x − 16 = 0", "choices": ["x = 8, −2", "x = −8, 2", "x = 4, −4", "x = 6, −16"], "ans": "x = 8, −2", "hint": "Factor: product −16, sum −6.", "solution": ["(x − 8)(x + 2) = 0", "x = 8 OR x = −2"]}, {"id": "9.2", "ch": 9, "topic": "Solve by factoring", "diff": 2, "type": "typed", "q": "Solve: 2x² + 5x − 3 = 0. List solutions separated by commas.", "ans": "1/2, −3", "accept": ["1/2,-3", "0.5,-3", "-3,1/2"], "hint": "AC = −6. Find two numbers product −6 sum 5.", "solution": ["AC = −6 → 6 and −1", "Split: 2x² + 6x − x − 3", "Group: (2x−1)(x+3) = 0", "x = 1/2 or x = −3"]}, {"id": "9.3", "ch": 9, "topic": "Solve by factoring", "diff": 2, "type": "typed", "q": "Solve by factoring: x² − 7x + 12 = 0. List solutions.", "ans": "3, 4", "accept": ["4,3", "3,4"], "hint": "Product 12, sum −7. Both negatives.", "solution": ["(x − 3)(x − 4) = 0", "x = 3 or x = 4"]}, {"id": "9.4", "ch": 9, "topic": "Solve by square roots", "diff": 1, "type": "mc", "q": "Solve: (x − 4)² = 49", "choices": ["x = 11, −3", "x = 11, 3", "x = 53, −45", "x = 3, −11"], "ans": "x = 11, −3", "hint": "Square root both sides — don't forget ±!", "solution": ["x − 4 = ±7", "x = 11 or x = −3"]}, {"id": "9.5", "ch": 9, "topic": "Solve by square roots", "diff": 2, "type": "typed", "q": "Solve: 3(x − 2)² = 48. List solutions.", "ans": "6, −2", "accept": ["-2,6", "6,-2", "-2, 6"], "hint": "Divide by 3 first, then square root.", "solution": ["(x − 2)² = 16", "x − 2 = ±4", "x = 6 or x = −2"]}, {"id": "9.6", "ch": 9, "topic": "Completing the square", "diff": 3, "type": "typed", "q": "Solve by completing the square: x² + 8x − 9 = 0. List solutions.", "ans": "1, −9", "accept": ["-9,1", "1,-9"], "hint": "Move c, then add (b/2)² to both sides.", "solution": ["x² + 8x = 9", "Add (8/2)² = 16: x² + 8x + 16 = 25", "(x + 4)² = 25", "x + 4 = ±5", "x = 1 or x = −9"]}, {"id": "9.7", "ch": 9, "topic": "Quadratic formula", "diff": 2, "type": "mc", "q": "Quadratic formula: 3x² + 5x − 2 = 0", "choices": ["x = 1/3, −2", "x = −1/3, 2", "x = 1, −2/3", "x = 2, −1/3"], "ans": "x = 1/3, −2", "hint": "x = (−b ± √D)/(2a)", "solution": ["a=3, b=5, c=−2", "D = 25 + 24 = 49 → √49 = 7", "x = (−5 ± 7)/6", "x = 1/3 or x = −2"]}, {"id": "9.8", "ch": 9, "topic": "Quadratic formula", "diff": 3, "type": "mc", "q": "Quadratic formula: 2x² − 5x + 1 = 0", "choices": ["x = (5 ± √17)/4", "x = (5 ± √33)/4", "x = (−5 ± √17)/4", "x = (5 ± √7)/4"], "ans": "x = (5 ± √17)/4", "hint": "a=2, b=−5, c=1. D = 25 − 8.", "solution": ["D = 25 − 8 = 17", "x = (5 ± √17)/4"]}, {"id": "9.9", "ch": 9, "topic": "Word: area", "diff": 3, "type": "typed", "q": "Rectangle: length is 5 more than width. Area = 84. Find the width.", "ans": "7", "accept": ["7 cm", "width = 7"], "hint": "w(w + 5) = 84.", "solution": ["w² + 5w − 84 = 0", "(w + 12)(w − 7) = 0", "w = 7 (reject −12)"]}, {"id": "9.10", "ch": 9, "topic": "Word: projectile", "diff": 3, "type": "mc", "q": "Ball thrown up from 4 ft at 32 ft/s: h(t) = −16t² + 32t + 4. Max height?", "choices": ["20 ft", "16 ft", "32 ft", "36 ft"], "ans": "20 ft", "hint": "Max at t = −b/(2a). Plug in.", "solution": ["t = −32/(2·−16) = 1 sec", "h(1) = −16 + 32 + 4 = 20 ft"]}, {"id": "9.11", "ch": 9, "topic": "Pick the method", "diff": 2, "type": "mc", "q": "Best method to solve 3x² − 12 = 0?", "choices": ["Square roots (no x-term)", "Factoring", "Completing the square", "Quadratic formula"], "ans": "Square roots (no x-term)", "hint": "No middle term → isolate x² and take √.", "solution": ["3x² = 12 → x² = 4 → x = ±2"]}, {"id": "9.12", "ch": 9, "topic": "Solve by factoring", "diff": 2, "type": "typed", "q": "Solve: x² − 9 = 0. List solutions.", "ans": "3, −3", "accept": ["3,-3", "-3,3", "±3"], "hint": "Difference of squares: factor it.", "solution": ["(x − 3)(x + 3) = 0", "x = 3 or x = −3"]}, {"id": "10.1", "ch": 10, "topic": "Simplify", "diff": 1, "type": "mc", "q": "Simplify: 6x / (3x²)", "choices": ["2/x", "x/2", "2x", "6/x"], "ans": "2/x", "hint": "Cancel common factors. x in num cancels one x in denom.", "solution": ["6x / (3x²) = (6/3)·(x/x²) = 2·(1/x) = 2/x"]}, {"id": "10.2", "ch": 10, "topic": "Simplify", "diff": 2, "type": "typed", "q": "Simplify: (x² − 1) / (x − 1). (Assume x ≠ 1.)", "ans": "x + 1", "accept": ["x+1", "(x+1)"], "hint": "Factor the top first.", "solution": ["x² − 1 = (x+1)(x−1)", "(x+1)(x−1)/(x−1) = x+1"]}, {"id": "10.3", "ch": 10, "topic": "Simplify", "diff": 2, "type": "mc", "q": "Simplify: (x² − 4) / (x² + 4x + 4)", "choices": ["(x − 2)/(x + 2)", "(x + 2)/(x − 2)", "(x − 2)²", "x − 2"], "ans": "(x − 2)/(x + 2)", "hint": "Factor both numerator and denominator.", "solution": ["Top: (x−2)(x+2)", "Bottom: (x+2)²", "Cancel one (x+2): (x−2)/(x+2)"]}, {"id": "10.4", "ch": 10, "topic": "Multiply", "diff": 1, "type": "mc", "q": "Multiply: (x/2) · (4/x²)", "choices": ["2/x", "x/2", "4x/(2x²)", "2x"], "ans": "2/x", "hint": "Multiply numerators and denominators, then simplify.", "solution": ["(x · 4)/(2 · x²) = 4x/(2x²) = 2/x"]}, {"id": "10.5", "ch": 10, "topic": "Multiply", "diff": 2, "type": "typed", "q": "Multiply and simplify: (3x²/4) · (8/(9x))", "ans": "2x/3", "accept": ["(2x)/3", "2x÷3"], "hint": "Multiply numerators (24x²) and denominators (36x), then simplify.", "solution": ["(3x² · 8)/(4 · 9x) = 24x²/36x = (24/36)·x = (2/3)x = 2x/3"]}, {"id": "10.6", "ch": 10, "topic": "Divide", "diff": 2, "type": "mc", "q": "Divide: (x/3) ÷ (x/6)", "choices": ["2", "x/2", "1/2", "x²/18"], "ans": "2", "hint": "To divide, multiply by the reciprocal.", "solution": ["(x/3) · (6/x) = 6x/(3x) = 6/3 = 2"]}, {"id": "10.7", "ch": 10, "topic": "Divide", "diff": 3, "type": "typed", "q": "Divide: (2x/5) ÷ (4x²/15)", "ans": "3/(2x)", "accept": ["3/2x", "(3)/(2x)"], "hint": "Multiply by the reciprocal of the second fraction.", "solution": ["(2x/5) · (15/(4x²)) = 30x/(20x²) = 3/(2x)"]}, {"id": "10.8", "ch": 10, "topic": "Add same denom", "diff": 1, "type": "mc", "q": "Add: 3/x + 4/x", "choices": ["7/x", "12/x", "7/(2x)", "7"], "ans": "7/x", "hint": "Same denominator → just add numerators.", "solution": ["3/x + 4/x = (3+4)/x = 7/x"]}, {"id": "10.9", "ch": 10, "topic": "Add different denom", "diff": 2, "type": "mc", "q": "Add: 1/2 + 1/x. Common denominator is 2x.", "choices": ["(x + 2)/(2x)", "(1 + 1)/(2 + x)", "2/(2 + x)", "(2x + 2)/(2x)"], "ans": "(x + 2)/(2x)", "hint": "Convert each to /2x.", "solution": ["1/2 = x/(2x)", "1/x = 2/(2x)", "Sum: (x + 2)/(2x)"]}, {"id": "10.10", "ch": 10, "topic": "Subtract", "diff": 3, "type": "typed", "q": "Subtract: 5/(x−2) − 3/(x−2). Simplify if possible.", "ans": "2/(x−2)", "accept": ["2/(x-2)", "2÷(x−2)"], "hint": "Same denominator → subtract numerators.", "solution": ["(5 − 3)/(x − 2) = 2/(x − 2)"]}, {"id": "10.11", "ch": 10, "topic": "Solve rational eq", "diff": 1, "type": "mc", "q": "Solve: x/3 = 12", "choices": ["x = 36", "x = 4", "x = 9", "x = 15"], "ans": "x = 36", "hint": "Multiply both sides by 3.", "solution": ["x = 12 · 3 = 36"]}, {"id": "10.12", "ch": 10, "topic": "Solve rational eq", "diff": 2, "type": "typed", "q": "Solve: 2/x = 5", "ans": "2/5", "accept": ["0.4", "x = 2/5", "x=2/5"], "hint": "Cross-multiply.", "solution": ["2 = 5x → x = 2/5"]}, {"id": "10.13", "ch": 10, "topic": "Solve rational eq", "diff": 3, "type": "typed", "q": "Solve: (x + 2)/6 = (2x − 10)/8", "ans": "19", "accept": ["x = 19", "x=19"], "hint": "Cross-multiply: 8(x+2) = 6(2x−10).", "solution": ["8(x + 2) = 6(2x − 10)", "8x + 16 = 12x − 60", "76 = 4x", "x = 19", "Check: (19+2)/6 = 21/6 = 3.5; (2·19−10)/8 = 28/8 = 3.5 ✓"]}, {"id": "10.14", "ch": 10, "topic": "Solve rational eq", "diff": 3, "type": "typed", "q": "Solve: (r + 1)/4 = 14/r. Give positive solution.", "ans": "7", "accept": ["r=7", "-8,7", "7,-8"], "hint": "Cross-multiply: r(r+1) = 56.", "solution": ["r(r + 1) = 56", "r² + r − 56 = 0", "(r + 8)(r − 7) = 0", "r = 7 (or r = −8)"]}, {"id": "10.15", "ch": 10, "topic": "Excluded values", "diff": 2, "type": "mc", "q": "For (x + 3)/(x − 5), what value of x is excluded?", "choices": ["x = 5", "x = −3", "x = −5", "x = 3"], "ans": "x = 5", "hint": "Denominator cannot be zero.", "solution": ["Set denominator = 0: x − 5 = 0 → x = 5", "Exclude x = 5"]}, {"id": "11.1", "ch": 11, "topic": "Simplify square root", "diff": 1, "type": "mc", "q": "Simplify: √50", "choices": ["5√2", "10√5", "25√2", "√10"], "ans": "5√2", "hint": "50 = 25 · 2", "solution": ["√50 = √25 · √2 = 5√2"]}, {"id": "11.2", "ch": 11, "topic": "Simplify square root", "diff": 1, "type": "mc", "q": "Simplify: √72", "choices": ["6√2", "8√3", "12√6", "36√2"], "ans": "6√2", "hint": "72 = 36 · 2", "solution": ["√72 = √36 · √2 = 6√2"]}, {"id": "11.3", "ch": 11, "topic": "Simplify square root", "diff": 2, "type": "typed", "q": "Simplify: √112", "ans": "4√7", "accept": ["4 sqrt(7)", "4√7"], "hint": "112 = 16 · 7.", "solution": ["√112 = √16 · √7 = 4√7"]}, {"id": "11.4", "ch": 11, "topic": "Simplify with variables", "diff": 2, "type": "mc", "q": "Simplify: √(48x⁴)", "choices": ["4x²√3", "2x²√12", "4x√3", "√48x"], "ans": "4x²√3", "hint": "48 = 16·3, √(x⁴) = x².", "solution": ["√48 = 4√3", "√(x⁴) = x²", "Product: 4x²√3"]}, {"id": "11.5", "ch": 11, "topic": "Simplify cube root", "diff": 1, "type": "mc", "q": "Simplify: ∛64", "choices": ["4", "8", "6", "16"], "ans": "4", "hint": "What number cubed is 64?", "solution": ["4³ = 4·4·4 = 64", "∛64 = 4"]}, {"id": "11.6", "ch": 11, "topic": "Simplify cube root", "diff": 2, "type": "mc", "q": "Simplify: ∛189", "choices": ["3∛7", "9∛21", "∛189", "3∛9"], "ans": "3∛7", "hint": "189 = 27 · 7. ∛27 = 3.", "solution": ["189 = 27 · 7", "∛189 = ∛27 · ∛7 = 3∛7"]}, {"id": "11.7", "ch": 11, "topic": "Simplify cube root", "diff": 2, "type": "typed", "q": "Simplify: ∛(−8a³)", "ans": "−2a", "accept": ["-2a", "−2·a"], "hint": "∛(−8) = −2 (cube roots can be negative).", "solution": ["∛(−8) = −2", "∛(a³) = a", "Product: −2a"]}, {"id": "11.8", "ch": 11, "topic": "Add/subtract radicals", "diff": 1, "type": "mc", "q": "Simplify: 5√7 + 2√7", "choices": ["7√7", "7√14", "10√7", "√49"], "ans": "7√7", "hint": "Like radicals: add coefficients.", "solution": ["(5 + 2)√7 = 7√7"]}, {"id": "11.9", "ch": 11, "topic": "Add/subtract radicals", "diff": 2, "type": "mc", "q": "Simplify: √72 − √18", "choices": ["3√2", "√54", "6√2 − 3√2", "2√36"], "ans": "3√2", "hint": "Simplify each radical first.", "solution": ["√72 = 6√2", "√18 = 3√2", "6√2 − 3√2 = 3√2"]}, {"id": "11.10", "ch": 11, "topic": "Add/subtract radicals", "diff": 2, "type": "typed", "q": "Simplify: 3√5 + 7√125 − 2√45", "ans": "32√5", "accept": ["32 sqrt(5)", "32√5"], "hint": "Simplify each first: √125 and √45.", "solution": ["√125 = 5√5; √45 = 3√5", "3√5 + 7(5√5) − 2(3√5)", "= 3√5 + 35√5 − 6√5", "= 32√5"]}, {"id": "11.11", "ch": 11, "topic": "Multiply radicals", "diff": 1, "type": "mc", "q": "Multiply: √6 · √8", "choices": ["4√3", "√14", "2√12", "√48"], "ans": "4√3", "hint": "√a · √b = √(ab), then simplify.", "solution": ["√6 · √8 = √48", "√48 = √(16·3) = 4√3"]}, {"id": "11.12", "ch": 11, "topic": "Multiply radicals", "diff": 3, "type": "mc", "q": "Multiply: √6(7√3 + 6)", "choices": ["21√2 + 6√6", "7√18 + 6√6", "7√6·3 + 6√6", "6 + 21√2"], "ans": "21√2 + 6√6", "hint": "Distribute. √6·√3 = √18 = 3√2.", "solution": ["√6·7√3 = 7√18 = 7·3√2 = 21√2", "√6·6 = 6√6", "Sum: 21√2 + 6√6"]}, {"id": "11.13", "ch": 11, "topic": "Rationalize denom", "diff": 2, "type": "mc", "q": "Rationalize: 10/√5", "choices": ["2√5", "√50", "10√5", "√2"], "ans": "2√5", "hint": "Multiply top and bottom by √5.", "solution": ["10/√5 · √5/√5 = 10√5/5 = 2√5"]}, {"id": "11.14", "ch": 11, "topic": "Divide radicals", "diff": 2, "type": "mc", "q": "Simplify: √48/√3", "choices": ["4", "√16", "√45", "16"], "ans": "4", "hint": "√a/√b = √(a/b).", "solution": ["√48/√3 = √(48/3) = √16 = 4"]}, {"id": "11.15", "ch": 11, "topic": "Solve radical eq", "diff": 2, "type": "mc", "q": "Solve: √x = 8", "choices": ["x = 64", "x = 16", "x = 4", "x = 2.83"], "ans": "x = 64", "hint": "Square both sides.", "solution": ["(√x)² = 8²", "x = 64"]}, {"id": "11.16", "ch": 11, "topic": "Solve radical eq", "diff": 3, "type": "typed", "q": "Solve: √(4x + 1) + 6 = 11", "ans": "6", "accept": ["x=6", "x = 6"], "hint": "Isolate the radical first.", "solution": ["√(4x + 1) = 5", "Square: 4x + 1 = 25", "4x = 24 → x = 6", "Check: √25 + 6 = 11 ✓"]}, {"id": "11.17", "ch": 11, "topic": "Multiply binomials w/ radicals", "diff": 3, "type": "mc", "q": "Multiply: (5 + 2√7)(4 − √7)", "choices": ["6 + 3√7", "20 + 3√7 − 14", "20 + 3√7", "6 + 3√14"], "ans": "6 + 3√7", "hint": "FOIL. Remember (√7)² = 7.", "solution": ["F: 5·4 = 20", "O: 5·(−√7) = −5√7", "I: 2√7·4 = 8√7", "L: 2√7·(−√7) = −2·7 = −14", "Sum: 20 − 5√7 + 8√7 − 14 = 6 + 3√7"]}, {"id": "11.18", "ch": 11, "topic": "Square of (a+b√c)", "diff": 3, "type": "typed", "q": "Expand: (1 + 2√8)². Simplify radicals.", "ans": "33 + 8√2", "accept": ["33+8√2", "33 + 8 sqrt(2)"], "hint": "FOIL or use (a+b)² = a² + 2ab + b². Then simplify √8.", "solution": ["(1 + 2√8)² = 1 + 2·1·2√8 + (2√8)²", "= 1 + 4√8 + 4·8", "= 1 + 4√8 + 32 = 33 + 4√8", "√8 = 2√2 → 4√8 = 8√2", "Final: 33 + 8√2"]}, {"id": "11.19", "ch": 11, "topic": "Divide radicals", "diff": 2, "type": "mc", "q": "Simplify: √(48/3)", "choices": ["4", "√16", "2", "√45"], "ans": "4", "hint": "Divide first, then √.", "solution": ["48/3 = 16", "√16 = 4"]}, {"id": "11.20", "ch": 11, "topic": "Rationalize (single)", "diff": 2, "type": "typed", "q": "Rationalize and simplify: 2/(6√2)", "ans": "√2/6", "accept": ["sqrt(2)/6", "(√2)/6"], "hint": "Multiply top and bottom by √2.", "solution": ["2/(6√2) · √2/√2 = 2√2/(6·2) = 2√2/12 = √2/6"]}, {"id": "11.21", "ch": 11, "topic": "Rationalize w/ conjugate", "diff": 3, "type": "mc", "q": "Rationalize: 1/(3 + √2). Multiply by conjugate.", "choices": ["(3 − √2)/7", "(3 + √2)/7", "(3 − √2)/(3+√2)", "(3 − √2)/11"], "ans": "(3 − √2)/7", "hint": "Conjugate of (3 + √2) is (3 − √2). Multiply top and bottom.", "solution": ["1/(3+√2) · (3−√2)/(3−√2)", "Bottom: (3+√2)(3−√2) = 9 − 2 = 7", "Top: 3 − √2", "Result: (3 − √2)/7"]}, {"id": "11.22", "ch": 11, "topic": "Solve radical eq", "diff": 2, "type": "mc", "q": "Solve: −2√x = −16", "choices": ["x = 64", "x = 16", "x = 8", "x = 256"], "ans": "x = 64", "hint": "Divide by −2 first, then square.", "solution": ["√x = 8", "Square: x = 64", "Check: −2(8) = −16 ✓"]}, {"id": "11.23", "ch": 11, "topic": "Radical eq → quadratic", "diff": 3, "type": "typed", "q": "Solve: x = √(56 − x). Give the positive solution.", "ans": "7", "accept": ["x=7", "x = 7"], "hint": "Square both sides. You'll get a quadratic. Reject negative roots.", "solution": ["x² = 56 − x", "x² + x − 56 = 0", "(x + 8)(x − 7) = 0", "x = −8 (reject — √ must be non-negative) or x = 7", "Check: 7 = √49 ✓"]}, {"id": "11.24", "ch": 11, "topic": "Radical eq → quadratic", "diff": 3, "type": "typed", "q": "Solve: p − 3 = √(5p − 15). List ALL solutions.", "ans": "3, 8", "accept": ["8,3", "3,8", "p=3,8"], "hint": "Square both sides. The quadratic factors nicely.", "solution": ["(p − 3)² = 5p − 15", "p² − 6p + 9 = 5p − 15", "p² − 11p + 24 = 0", "(p − 3)(p − 8) = 0", "p = 3 or p = 8 (both check)"]}];
 const CHAPTERS = {"6": {"title": "Exponents & Exponential Fns", "emoji": "\u26a1", "color": "#FF6B6B"}, "7": {"title": "Polynomials & Factoring", "emoji": "\ud83e\udde9", "color": "#4ECDC4"}, "8": {"title": "Quadratics \u2014 Graphing", "emoji": "\ud83d\udcc8", "color": "#FFD93D"}, "9": {"title": "Quadratics \u2014 Solving", "emoji": "\ud83c\udfaf", "color": "#F97316"}, "10": {"title": "Rational Expressions", "emoji": "\u2797", "color": "#A78BFA"}, "11": {"title": "Radicals (\u221a & \u221b)", "emoji": "\u221a", "color": "#95E1D3"}};
 const BADGE_LIST = [{"id": "first-solve", "name": "First Solve", "desc": "Solve your first problem", "emoji": "\ud83c\udf31"}, {"id": "streak-3", "name": "On Fire", "desc": "3-day streak", "emoji": "\ud83d\udd25"}, {"id": "streak-7", "name": "Week Warrior", "desc": "7-day streak", "emoji": "\u2694\ufe0f"}, {"id": "streak-14", "name": "Unstoppable", "desc": "14-day streak", "emoji": "\ud83d\udcaa"}, {"id": "streak-30", "name": "Math Monk", "desc": "30-day streak", "emoji": "\ud83e\uddd8"}, {"id": "combo-5", "name": "Combo x5", "desc": "5 correct in a row", "emoji": "\u2728"}, {"id": "combo-10", "name": "Combo x10", "desc": "10 correct in a row", "emoji": "\ud83d\udcab"}, {"id": "combo-20", "name": "Combo x20", "desc": "20 correct in a row", "emoji": "\ud83c\udf1f"}, {"id": "level-5", "name": "Apprentice", "desc": "Reach level 5", "emoji": "\ud83c\udf93"}, {"id": "level-10", "name": "Scholar", "desc": "Reach level 10", "emoji": "\ud83d\udcda"}, {"id": "level-20", "name": "Master", "desc": "Reach level 20", "emoji": "\ud83d\udc51"}, {"id": "master-ch6", "name": "Exponent Expert", "desc": "Master Chapter 6", "emoji": "\u26a1"}, {"id": "master-ch7", "name": "Factor Wizard", "desc": "Master Chapter 7", "emoji": "\ud83e\udde9"}, {"id": "master-ch8", "name": "Quadratic King", "desc": "Master Chapter 8", "emoji": "\ud83d\udcc8"}, {"id": "master-ch9", "name": "Solver Sensei", "desc": "Master Chapter 9", "emoji": "\ud83c\udfaf"}, {"id": "master-ch10", "name": "Rational Ruler", "desc": "Master Chapter 10", "emoji": "\u2797"}, {"id": "master-ch11", "name": "Radical Royalty", "desc": "Master Chapter 11", "emoji": "\u221a"}, {"id": "mock-pass", "name": "Exam Ready", "desc": "Pass a mock exam at 80%+", "emoji": "\ud83c\udfaf"}, {"id": "mock-perfect", "name": "Perfect Score", "desc": "Perfect score on mock exam", "emoji": "\ud83d\udc8e"}, {"id": "total-50", "name": "Half Century", "desc": "Solve 50 problems total", "emoji": "\ud83c\udfc5"}, {"id": "total-100", "name": "Centurion", "desc": "Solve 100 problems total", "emoji": "\ud83c\udfc6"}, {"id": "total-250", "name": "Math Marathoner", "desc": "Solve 250 problems", "emoji": "\ud83d\ude80"}, {"id": "speed-demon", "name": "Speed Demon", "desc": "Solve a problem in under 10 seconds", "emoji": "\u26a1"}, {"id": "comeback-kid", "name": "Comeback Kid", "desc": "Get correct after 3 wrong", "emoji": "\ud83e\udd85"}];
-const EXAM_DATE = new Date('2026-06-11T08:00:00');
+// Use number args (not ISO string) — Safari parses ISO strings inconsistently.
+// Note: month is 0-indexed (5 = June).
+const EXAM_DATE = new Date(2026, 5, 11, 8, 0, 0);
 
 // =========================================================
 // State (localStorage)
@@ -1316,7 +1525,7 @@ function renderHome() {
       </div>
       <div class="progress-bar"><div class="progress-fill" style="width:${m}%"></div></div>
     `;
-    div.onclick = () => startChapter(parseInt(ch));
+    div.onclick = () => openChooser(parseInt(ch));
     list.appendChild(div);
   });
 }

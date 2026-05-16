@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neil's Progress Tracker</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A;
+  --bg-card: #1E293B;
+  --bg-elevated: #334155;
+  --text: #F1F5F9;
+  --text-dim: #94A3B8;
+  --primary: #6366F1;
+  --green: #10B981;
+  --green-soft: #064E3B;
+  --yellow: #FBBF24;
+  --yellow-soft: #422006;
+  --red: #EF4444;
+  --red-soft: #450A0A;
+  --pink: #EC4899;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #F8FAFC;
+    --bg-card: #FFFFFF;
+    --bg-elevated: #F1F5F9;
+    --text: #1A1A1A;
+    --text-dim: #64748B;
+    --green-soft: #ECFDF5;
+    --yellow-soft: #FEF3C7;
+    --red-soft: #FEE2E2;
+    --border: #E2E8F0;
+  }
+}
+html, body {
+  margin: 0; padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.5;
+}
+.container { max-width: 880px; margin: 0 auto; padding: 1rem 1rem 4rem; }
+
+.hero {
+  background: linear-gradient(135deg, #6366F1, #EC4899);
+  border-radius: 18px;
+  padding: 1.25rem;
+  color: white;
+  margin: 0.5rem 0 1.5rem;
+  text-align: center;
+}
+.hero h1 { margin: 0 0 0.3rem; font-size: 1.4rem; font-weight: 800; }
+.hero p { margin: 0; opacity: 0.92; font-size: 0.92rem; }
+.countdown {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  margin-top: 0.5rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 0.4rem;
+  background: var(--bg-card);
+  padding: 0.4rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+}
+.tab {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.tab.active { background: var(--primary); color: white; }
+
+.panel { display: none; }
+.panel.active { display: block; }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+@media (min-width: 600px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.85rem;
+  text-align: center;
+}
+.stat-num {
+  font-size: 1.6rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--pink));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.stat-label { font-size: 0.75rem; color: var(--text-dim); font-weight: 600; }
+
+h2 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-dim);
+  margin: 1.5rem 0 0.6rem 0.2rem;
+}
+
+/* Daily log */
+.day-row {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.7rem 0.9rem;
+  margin-bottom: 0.4rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+  align-items: center;
+}
+.day-row.today {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(99,102,241,0.2);
+}
+.day-row.past.unmarked { opacity: 0.5; }
+.day-row.rest { background: var(--yellow-soft); }
+.day-date {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+.day-date strong { color: var(--text); font-weight: 700; }
+.day-focus {
+  font-size: 0.88rem;
+  margin-top: 0.15rem;
+  line-height: 1.35;
+}
+.status-buttons {
+  display: flex;
+  gap: 0.25rem;
+}
+.status-btn {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 0.35rem 0.55rem;
+  border-radius: 7px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+}
+.status-btn.active.done { background: var(--green); border-color: var(--green); color: white; }
+.status-btn.active.partial { background: var(--yellow); border-color: var(--yellow); color: #1A1A1A; }
+.status-btn.active.skipped { background: var(--red); border-color: var(--red); color: white; }
+
+.week-label {
+  background: var(--bg-elevated);
+  border-radius: 8px;
+  padding: 0.55rem 0.85rem;
+  margin: 1rem 0 0.5rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--primary);
+}
+
+/* Mastery */
+.ch-row {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+.ch-row-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+.ch-name { font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem; }
+.ch-emoji { font-size: 1.3rem; }
+.mastery-pill {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: var(--bg-elevated);
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.mastery-pill.mastered { background: var(--green); color: white; }
+.mastery-pill.strong { background: rgba(16,185,129,0.3); color: var(--green); }
+.mastery-pill.okay { background: var(--yellow); color: #1A1A1A; }
+.mastery-pill.weak { background: var(--red); color: white; }
+.mastery-buttons {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+.mb {
+  flex: 1;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 0.4rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border-radius: 7px;
+  cursor: pointer;
+  font-family: inherit;
+  min-width: 0;
+}
+.mb.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+/* Weekly checkpoints */
+.quiz-row {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+.quiz-week { font-size: 0.78rem; color: var(--text-dim); font-weight: 700; }
+.quiz-focus { font-size: 0.92rem; margin: 0.2rem 0 0.5rem; }
+.quiz-input {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.quiz-input input {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 7px;
+  padding: 0.4rem 0.6rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  width: 90px;
+}
+.quiz-input input:focus { outline: none; border-color: var(--primary); }
+.quiz-verdict {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.quiz-verdict.pass { background: var(--green); color: white; }
+.quiz-verdict.retry { background: var(--red); color: white; }
+
+/* Error log */
+.errlog {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+.errlog-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.3rem;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  font-weight: 700;
+}
+.errlog-text { font-size: 0.92rem; }
+.errlog .delete-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.2rem 0.5rem;
+}
+.errlog .delete-btn:hover { color: var(--red); }
+
+.add-err {
+  background: var(--bg-card);
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+}
+.add-err textarea {
+  width: 100%;
+  min-height: 60px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 7px;
+  padding: 0.5rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  resize: vertical;
+}
+.add-err textarea:focus { outline: none; border-color: var(--primary); }
+.add-err input[type="text"] {
+  width: 100%;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 7px;
+  padding: 0.45rem 0.6rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+}
+.btn {
+  background: linear-gradient(135deg, var(--primary), #4F46E5);
+  border: none;
+  color: white;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-family: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+.btn:hover { transform: translateY(-1px); }
+
+/* How-to-use panel */
+.howto {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.2rem;
+}
+.howto h3 { margin: 1rem 0 0.4rem; color: var(--primary); font-size: 1rem; }
+.howto h3:first-child { margin-top: 0; }
+.howto ol, .howto ul { padding-left: 1.4rem; }
+.howto li { margin: 0.25rem 0; font-size: 0.93rem; }
+
+.empty-state {
+  text-align: center;
+  color: var(--text-dim);
+  padding: 2rem 1rem;
+  font-size: 0.9rem;
+}
+
+footer {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+footer a { color: var(--primary); text-decoration: none; }
+
+.reset-btn {
+  background: transparent;
+  border: 1px solid var(--red);
+  color: var(--red);
+  padding: 0.45rem 0.85rem;
+  border-radius: 7px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="hero">
+    <h1>📊 Neil's Progress Tracker</h1>
+    <p>Daily plan + chapter mastery + weekly quizzes</p>
+    <div class="countdown" id="cd"></div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-num" id="statDays">0</div><div class="stat-label">Days Done</div></div>
+    <div class="stat-card"><div class="stat-num" id="statStreak">0</div><div class="stat-label">Current Streak</div></div>
+    <div class="stat-card"><div class="stat-num" id="statMastered">0</div><div class="stat-label">Chapters Mastered</div></div>
+    <div class="stat-card"><div class="stat-num" id="statAvgQuiz">—</div><div class="stat-label">Quiz Avg</div></div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" data-panel="daily" onclick="switchTab('daily')">Daily Log</button>
+    <button class="tab" data-panel="mastery" onclick="switchTab('mastery')">Mastery</button>
+    <button class="tab" data-panel="quizzes" onclick="switchTab('quizzes')">Weekly Quizzes</button>
+    <button class="tab" data-panel="errors" onclick="switchTab('errors')">Error Log</button>
+    <button class="tab" data-panel="howto" onclick="switchTab('howto')">Help</button>
+  </div>
+
+  <!-- Daily Log Panel -->
+  <div class="panel active" id="panel-daily">
+    <div id="dailyList"></div>
+  </div>
+
+  <!-- Mastery Panel -->
+  <div class="panel" id="panel-mastery">
+    <div id="masteryList"></div>
+  </div>
+
+  <!-- Quizzes Panel -->
+  <div class="panel" id="panel-quizzes">
+    <div id="quizList"></div>
+  </div>
+
+  <!-- Error Log Panel -->
+  <div class="panel" id="panel-errors">
+    <div class="add-err">
+      <input type="text" id="errTopic" placeholder="Topic (e.g., Ch 7 factoring)">
+      <textarea id="errText" placeholder="What went wrong? What to remember next time?"></textarea>
+      <button class="btn" onclick="addError()">+ Add to Error Log</button>
+    </div>
+    <div id="errList"></div>
+  </div>
+
+  <!-- How-to Panel -->
+  <div class="panel" id="panel-howto">
+    <div class="howto">
+      <h3>EACH DAY (45–60 min session):</h3>
+      <ol>
+        <li>Open the Daily Log tab. Today's row is highlighted.</li>
+        <li>Tap <strong style="color:var(--green);">Done</strong>, <strong style="color:var(--yellow);">Partial</strong>, or <strong style="color:var(--red);">Skip</strong> when you finish.</li>
+        <li>Log any mistakes in the Error Log tab (60 seconds, single line).</li>
+      </ol>
+
+      <h3>EVERY WEEK (Sunday, ~15 min):</h3>
+      <ol>
+        <li>Take the scheduled quiz from the Weekly Quizzes tab. Enter the score as a decimal (0.80 = 80%).</li>
+        <li>Update Chapter Mastery for chapters covered this week.</li>
+        <li>Flip through the Error Log. Mistakes seen 3+ times → next week's theme.</li>
+      </ol>
+
+      <h3>END OF SUMMER (mid-July):</h3>
+      <ol>
+        <li>Take the comprehensive mock final (Week 8 of Phase 2 — already scheduled in the Daily Log).</li>
+        <li>If score ≥ 85% AND solid on Ch 7-8 fundamentals → ready for 7th-grade Geometry.</li>
+        <li>If 70-84% → ready but fragile, continue tutoring through the year.</li>
+        <li>If &lt; 70% → revisit the repeat conversation.</li>
+      </ol>
+
+      <h3>Color codes:</h3>
+      <ul>
+        <li>Highlighted blue border = today's session</li>
+        <li>Yellow rows = rest days (school's out, take the break)</li>
+        <li>Faded rows = past days you didn't mark</li>
+      </ul>
+
+      <h3>Data &amp; reset:</h3>
+      <p style="font-size:0.9rem;color:var(--text-dim);">All progress is saved automatically on this device only (in your browser's local storage). If you clear browser data, the tracker resets.</p>
+      <button class="reset-btn" onclick="if (confirm('Reset ALL progress?')) { localStorage.removeItem('neil_tracker_v1'); location.reload(); }">Reset all progress</button>
+    </div>
+  </div>
+
+  <footer>
+    <p><a href="index.html">← Back to Algebra 1 Hub</a></p>
+  </footer>
+
+</div>
+
+<script>
+// =========================================================
+// Data — plan schedule
+// =========================================================
+const EXAM_DATE = new Date(2026, 5, 11); // June 11, 2026
+
+const CHAPTERS = [
+  { num: 6, title: "Exponents & Exponential Fns", emoji: "⚡" },
+  { num: 7, title: "Polynomials & Factoring", emoji: "🧩" },
+  { num: 8, title: "Quadratics — Graphing", emoji: "📈" },
+  { num: 9, title: "Quadratics — Solving", emoji: "🎯" },
+  { num: 10, title: "Rational Expressions", emoji: "➗" },
+  { num: 11, title: "Radicals (√ & ∛)", emoji: "√" },
+];
+
+// Generate daily plan based on COA Session 1: May 26 – June 11
+// Plus pre-session warm-up: now → May 25
+// Plus post-exam summer if needed (skipped for now)
+function buildPlan() {
+  const plan = [];
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  // Phase 1: pre-COA warm-up (today → May 25)
+  let d = new Date(today);
+  const may25 = new Date(2026, 4, 25); // May 25
+  const may26 = new Date(2026, 4, 26); // COA Session 1 starts
+  const jun11 = new Date(2026, 5, 11); // COA exam
+
+  // Pre-COA warm-up: simple weekly focus
+  const warmupFocus = [
+    "Ch 8 retake — review the test you took",
+    "Ch 6 exponents fluency",
+    "Ch 7 factoring practice",
+    "Ch 8 solving methods",
+    "Ch 9 (radicals quick intro) + review",
+  ];
+  let week = 0;
+  while (d < may26) {
+    const label = "Warm-up week " + (week + 1);
+    const focus = warmupFocus[Math.min(week, warmupFocus.length - 1)];
+    plan.push({ date: new Date(d), phase: "pre", label, focus, weekIdx: week });
+    d.setDate(d.getDate() + 1);
+    if (d.getDay() === 1) week++; // monday = new week
+  }
+
+  // COA Session 1: May 26 – June 11 (~16 days)
+  const coaFocus = [
+    "COA Algebra I Sem 2 — Week 1",
+    "COA — Week 2",
+    "Final review — Ch 6-11",
+  ];
+  let coaWeek = 0;
+  while (d <= jun11) {
+    const label = "COA Session 1";
+    let focus;
+    const daysIn = Math.floor((d - may26) / 86400000);
+    if (daysIn < 5) focus = "COA Week 1: Exponents + Polynomials";
+    else if (daysIn < 10) focus = "COA Week 2: Quadratics (graphing + solving)";
+    else focus = "COA Final review — Ch 6-11 mixed practice";
+    plan.push({ date: new Date(d), phase: "coa", label, focus });
+    d.setDate(d.getDate() + 1);
+  }
+
+  // Exam day
+  plan.push({ date: new Date(2026, 5, 11), phase: "exam", label: "EXAM DAY", focus: "COA Algebra I Sem 2 final — show up rested" });
+
+  return plan;
+}
+
+// =========================================================
+// State
+// =========================================================
+const STORAGE_KEY = 'neil_tracker_v1';
+const defaultState = {
+  days: {},      // dateStr -> "done" | "partial" | "skipped"
+  mastery: {},   // chapter num (str) -> "untested" | "weak" | "okay" | "strong" | "mastered"
+  quizzes: {},   // quizId -> score (0-1)
+  errors: [],    // [{id, ts, topic, text}]
+};
+let state = loadState();
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return { ...defaultState, ...JSON.parse(raw) };
+  } catch (e) {}
+  return JSON.parse(JSON.stringify(defaultState));
+}
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+const todayStr = () => new Date().toISOString().slice(0, 10);
+const dateStr = (d) => {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const da = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${da}`;
+};
+
+// =========================================================
+// Stats + countdown
+// =========================================================
+function refreshStats() {
+  const days = Math.max(0, Math.ceil((EXAM_DATE - new Date()) / 86400000));
+  document.getElementById('cd').textContent = days === 0 ? 'EXAM DAY!' : `${days} days until June 11 exam`;
+  document.getElementById('statDays').textContent = Object.values(state.days).filter(v => v === 'done').length;
+  // streak: count consecutive done days back from today
+  let streak = 0;
+  const cd = new Date(); cd.setHours(0,0,0,0);
+  for (;;) {
+    const k = dateStr(cd);
+    if (state.days[k] === 'done') {
+      streak++;
+      cd.setDate(cd.getDate() - 1);
+    } else { break; }
+  }
+  document.getElementById('statStreak').textContent = streak;
+  document.getElementById('statMastered').textContent = Object.values(state.mastery).filter(v => v === 'mastered').length;
+  // quiz avg
+  const scores = Object.values(state.quizzes).map(Number).filter(x => !isNaN(x) && x > 0);
+  document.getElementById('statAvgQuiz').textContent = scores.length === 0 ? '—' :
+    Math.round(scores.reduce((a, b) => a + b, 0) / scores.length * 100) + '%';
+}
+
+// =========================================================
+// Daily log
+// =========================================================
+function renderDaily() {
+  const list = document.getElementById('dailyList');
+  list.innerHTML = '';
+  const plan = buildPlan();
+  const today = todayStr();
+  let lastWeek = -1;
+  plan.forEach(p => {
+    const ds = dateStr(p.date);
+    const status = state.days[ds] || '';
+    const isToday = ds === today;
+    const isPast = ds < today;
+    const isFuture = ds > today;
+    // Week label (Monday)
+    if (p.date.getDay() === 1 || lastWeek === -1) {
+      const wk = document.createElement('div');
+      wk.className = 'week-label';
+      const wkOf = new Date(p.date);
+      const wkStr = wkOf.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      wk.textContent = `Week of ${wkStr}`;
+      list.appendChild(wk);
+      lastWeek = p.date.getDay();
+    }
+    const row = document.createElement('div');
+    row.className = 'day-row' + (isToday ? ' today' : '') + (isPast && !status ? ' past unmarked' : '');
+    const dayShort = p.date.toLocaleDateString('en-US', { weekday: 'short' });
+    const dStr = p.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const phaseTag = p.phase === 'exam' ? '🎯 EXAM DAY' :
+                     p.phase === 'coa' ? '📚 COA Session' :
+                     '🏃 Warm-up';
+    row.innerHTML = `
+      <div>
+        <div class="day-date"><strong>${dayShort} ${dStr}</strong> · ${phaseTag}</div>
+        <div class="day-focus">${p.focus}</div>
+      </div>
+      <div class="status-buttons">
+        <button class="status-btn ${status === 'done' ? 'active done' : ''}" onclick="setStatus('${ds}','done')">✓</button>
+        <button class="status-btn ${status === 'partial' ? 'active partial' : ''}" onclick="setStatus('${ds}','partial')">½</button>
+        <button class="status-btn ${status === 'skipped' ? 'active skipped' : ''}" onclick="setStatus('${ds}','skipped')">✗</button>
+      </div>
+    `;
+    list.appendChild(row);
+  });
+  // Scroll to today
+  setTimeout(() => {
+    const todayRow = document.querySelector('.day-row.today');
+    if (todayRow) todayRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 50);
+}
+function setStatus(ds, s) {
+  if (state.days[ds] === s) delete state.days[ds];
+  else state.days[ds] = s;
+  saveState(); refreshStats(); renderDaily();
+}
+
+// =========================================================
+// Mastery
+// =========================================================
+const MASTERY_LEVELS = ['untested', 'weak', 'okay', 'strong', 'mastered'];
+function renderMastery() {
+  const list = document.getElementById('masteryList');
+  list.innerHTML = '';
+  CHAPTERS.forEach(ch => {
+    const m = state.mastery[String(ch.num)] || 'untested';
+    const row = document.createElement('div');
+    row.className = 'ch-row';
+    row.innerHTML = `
+      <div class="ch-row-head">
+        <div class="ch-name"><span class="ch-emoji">${ch.emoji}</span>Chapter ${ch.num}: ${ch.title}</div>
+        <div class="mastery-pill ${m}">${m}</div>
+      </div>
+      <div class="mastery-buttons">
+        ${MASTERY_LEVELS.map(lv => `<button class="mb${m === lv ? ' active' : ''}" onclick="setMastery(${ch.num}, '${lv}')">${lv}</button>`).join('')}
+      </div>
+    `;
+    list.appendChild(row);
+  });
+}
+function setMastery(ch, lv) {
+  state.mastery[String(ch)] = lv;
+  saveState(); refreshStats(); renderMastery();
+}
+
+// =========================================================
+// Weekly quizzes
+// =========================================================
+const QUIZZES = [
+  { id: 'q1', label: 'Ch 6 — Exponents mixed (10 problems)' },
+  { id: 'q2', label: 'Ch 7 — Factoring mixed (10 problems)' },
+  { id: 'q3', label: 'Ch 8 — Quadratics graphing (10 problems)' },
+  { id: 'q4', label: 'Ch 9 — Quadratics solving — all 4 methods' },
+  { id: 'q5', label: 'Ch 10 — Rational expressions (10 problems)' },
+  { id: 'q6', label: 'Ch 11 — Radicals (10 problems)' },
+  { id: 'q7', label: 'Mock COA exam — 20-problem mixed' },
+  { id: 'q8', label: 'Final review mock — full exam simulation' },
+];
+function renderQuizzes() {
+  const list = document.getElementById('quizList');
+  list.innerHTML = '';
+  QUIZZES.forEach(q => {
+    const score = state.quizzes[q.id] || '';
+    const pct = score ? Math.round(score * 100) : null;
+    const verdict = pct === null ? '' : (pct >= 80 ? 'pass' : 'retry');
+    const row = document.createElement('div');
+    row.className = 'quiz-row';
+    row.innerHTML = `
+      <div class="quiz-week">${q.id.toUpperCase()}</div>
+      <div class="quiz-focus">${q.label}</div>
+      <div class="quiz-input">
+        <input type="number" min="0" max="1" step="0.01" placeholder="0-1" value="${score}" onchange="setQuiz('${q.id}', this.value)">
+        ${pct === null ? '' : `<div class="quiz-verdict ${verdict}">${verdict.toUpperCase()} (${pct}%)</div>`}
+      </div>
+    `;
+    list.appendChild(row);
+  });
+}
+function setQuiz(id, val) {
+  const v = parseFloat(val);
+  if (isNaN(v) || v <= 0) delete state.quizzes[id];
+  else state.quizzes[id] = Math.min(1, Math.max(0, v));
+  saveState(); refreshStats(); renderQuizzes();
+}
+
+// =========================================================
+// Errors
+// =========================================================
+function renderErrors() {
+  const list = document.getElementById('errList');
+  list.innerHTML = '';
+  if (state.errors.length === 0) {
+    list.innerHTML = '<div class="empty-state">No mistakes logged yet. After each session, write down what tripped you up.</div>';
+    return;
+  }
+  state.errors.slice().reverse().forEach(e => {
+    const row = document.createElement('div');
+    row.className = 'errlog';
+    const dStr = new Date(e.ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    row.innerHTML = `
+      <div class="errlog-head">
+        <div><strong>${dStr}</strong> · ${e.topic || 'General'}</div>
+        <button class="delete-btn" onclick="delError(${e.id})">🗑️</button>
+      </div>
+      <div class="errlog-text">${e.text.replace(/</g,'&lt;')}</div>
+    `;
+    list.appendChild(row);
+  });
+}
+function addError() {
+  const topic = document.getElementById('errTopic').value.trim();
+  const text = document.getElementById('errText').value.trim();
+  if (!text) return;
+  state.errors.push({ id: Date.now(), ts: Date.now(), topic, text });
+  document.getElementById('errTopic').value = '';
+  document.getElementById('errText').value = '';
+  saveState(); renderErrors();
+}
+function delError(id) {
+  state.errors = state.errors.filter(e => e.id !== id);
+  saveState(); renderErrors();
+}
+
+// =========================================================
+// Tabs
+// =========================================================
+function switchTab(panel) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.panel === panel));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + panel));
+  if (panel === 'daily') renderDaily();
+  if (panel === 'mastery') renderMastery();
+  if (panel === 'quizzes') renderQuizzes();
+  if (panel === 'errors') renderErrors();
+}
+
+// Init
+refreshStats();
+renderDaily();
+</script>
+</body>
+</html>
