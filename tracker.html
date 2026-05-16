@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neil's Progress Tracker</title>
+<title>Neil's Progress · Math Quest Tracker</title>
 <style>
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 :root {
@@ -14,11 +14,9 @@
   --text-dim: #94A3B8;
   --primary: #6366F1;
   --green: #10B981;
-  --green-soft: #064E3B;
   --yellow: #FBBF24;
-  --yellow-soft: #422006;
   --red: #EF4444;
-  --red-soft: #450A0A;
+  --orange: #F59E0B;
   --pink: #EC4899;
   --border: #334155;
 }
@@ -29,9 +27,6 @@
     --bg-elevated: #F1F5F9;
     --text: #1A1A1A;
     --text-dim: #64748B;
-    --green-soft: #ECFDF5;
-    --yellow-soft: #FEF3C7;
-    --red-soft: #FEE2E2;
     --border: #E2E8F0;
   }
 }
@@ -53,312 +48,294 @@ html, body {
   margin: 0.5rem 0 1.5rem;
   text-align: center;
 }
-.hero h1 { margin: 0 0 0.3rem; font-size: 1.4rem; font-weight: 800; }
+.hero h1 { margin: 0 0 0.3rem; font-size: 1.5rem; font-weight: 800; }
 .hero p { margin: 0; opacity: 0.92; font-size: 0.92rem; }
 .countdown {
   display: inline-block;
   background: rgba(255,255,255,0.2);
-  padding: 0.35rem 0.8rem;
+  padding: 0.4rem 0.9rem;
   border-radius: 999px;
-  margin-top: 0.5rem;
+  margin-top: 0.6rem;
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.88rem;
 }
-
-.tabs {
-  display: flex;
-  gap: 0.4rem;
-  background: var(--bg-card);
-  padding: 0.4rem;
-  border-radius: 12px;
-  margin-bottom: 1rem;
-  overflow-x: auto;
-  border: 1px solid var(--border);
-}
-.tab {
-  flex: 1;
-  background: none;
-  border: none;
-  color: var(--text-dim);
-  padding: 0.6rem 0.8rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  font-weight: 700;
-  font-family: inherit;
-  white-space: nowrap;
-  transition: background 0.15s;
-}
-.tab.active { background: var(--primary); color: white; }
-
-.panel { display: none; }
-.panel.active { display: block; }
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-@media (min-width: 600px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
-.stat-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 0.85rem;
-  text-align: center;
-}
-.stat-num {
-  font-size: 1.6rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, var(--primary), var(--pink));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.stat-label { font-size: 0.75rem; color: var(--text-dim); font-weight: 600; }
 
 h2 {
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.07em;
   color: var(--text-dim);
-  margin: 1.5rem 0 0.6rem 0.2rem;
+  margin: 1.75rem 0 0.7rem 0.2rem;
 }
 
-/* Daily log */
-.day-row {
+.empty {
+  background: var(--bg-card);
+  border: 2px dashed var(--border);
+  border-radius: 14px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+.empty h3 { margin: 0 0 0.6rem; font-size: 1.05rem; }
+.empty p { margin: 0 0 1rem; color: var(--text-dim); font-size: 0.95rem; }
+.empty .btn {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--primary), var(--pink));
+  color: white;
+  text-decoration: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+@media (min-width: 640px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+.stat-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 0.7rem 0.9rem;
-  margin-bottom: 0.4rem;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 0.5rem;
-  align-items: center;
+  border-radius: 14px;
+  padding: 0.95rem 0.8rem;
+  text-align: center;
 }
-.day-row.today {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(99,102,241,0.2);
+.stat-num {
+  font-size: 1.75rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--pink));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
-.day-row.past.unmarked { opacity: 0.5; }
-.day-row.rest { background: var(--yellow-soft); }
-.day-date {
-  font-size: 0.78rem;
+.stat-label {
+  font-size: 0.74rem;
   color: var(--text-dim);
   font-weight: 600;
-}
-.day-date strong { color: var(--text); font-weight: 700; }
-.day-focus {
-  font-size: 0.88rem;
   margin-top: 0.15rem;
-  line-height: 1.35;
 }
-.status-buttons {
-  display: flex;
-  gap: 0.25rem;
-}
-.status-btn {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  color: var(--text-dim);
-  padding: 0.35rem 0.55rem;
-  border-radius: 7px;
+.stat-card .sub {
   font-size: 0.7rem;
-  font-weight: 700;
-  font-family: inherit;
-  cursor: pointer;
+  color: var(--text-dim);
+  margin-top: 0.1rem;
+  font-weight: 500;
 }
-.status-btn.active.done { background: var(--green); border-color: var(--green); color: white; }
-.status-btn.active.partial { background: var(--yellow); border-color: var(--yellow); color: #1A1A1A; }
-.status-btn.active.skipped { background: var(--red); border-color: var(--red); color: white; }
+.stat-card.hot .stat-num {
+  background: linear-gradient(135deg, #F59E0B, #EF4444);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-.week-label {
+/* XP progress */
+.xp-bar-wrap {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 0.9rem 1.1rem;
+}
+.xp-bar-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+.xp-bar-head .lvl { color: var(--primary); }
+.xp-bar-head .xp { color: var(--text-dim); font-weight: 500; }
+.xp-bar {
   background: var(--bg-elevated);
-  border-radius: 8px;
-  padding: 0.55rem 0.85rem;
-  margin: 1rem 0 0.5rem;
-  font-weight: 700;
-  font-size: 0.85rem;
-  color: var(--primary);
+  height: 10px;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.xp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--pink));
+  border-radius: 999px;
+  transition: width 0.3s ease;
 }
 
-/* Mastery */
+/* Chapter mastery */
 .ch-row {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 0.85rem;
-  margin-bottom: 0.5rem;
-}
-.ch-row-head {
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  margin-bottom: 0.45rem;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.4rem;
+  gap: 0.7rem;
 }
-.ch-name { font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem; }
-.ch-emoji { font-size: 1.3rem; }
-.mastery-pill {
-  font-size: 0.7rem;
-  font-weight: 700;
-  padding: 0.2rem 0.55rem;
-  border-radius: 999px;
+.ch-emoji { font-size: 1.5rem; }
+.ch-info { flex: 1; min-width: 0; }
+.ch-name { font-weight: 700; font-size: 0.96rem; }
+.ch-sub { font-size: 0.75rem; color: var(--text-dim); margin-top: 0.15rem; }
+.ch-bar {
   background: var(--bg-elevated);
+  height: 6px;
+  border-radius: 6px;
+  margin-top: 0.4rem;
+  overflow: hidden;
+}
+.ch-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--yellow));
+}
+.ch-pct {
+  font-size: 1.1rem;
+  font-weight: 800;
   color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  min-width: 50px;
+  text-align: right;
 }
-.mastery-pill.mastered { background: var(--green); color: white; }
-.mastery-pill.strong { background: rgba(16,185,129,0.3); color: var(--green); }
-.mastery-pill.okay { background: var(--yellow); color: #1A1A1A; }
-.mastery-pill.weak { background: var(--red); color: white; }
-.mastery-buttons {
-  display: flex;
-  gap: 0.25rem;
-  flex-wrap: wrap;
-}
-.mb {
-  flex: 1;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  color: var(--text-dim);
-  padding: 0.4rem;
-  font-size: 0.7rem;
-  font-weight: 700;
-  border-radius: 7px;
-  cursor: pointer;
-  font-family: inherit;
-  min-width: 0;
-}
-.mb.active { background: var(--primary); color: white; border-color: var(--primary); }
+.ch-pct.mastered { color: var(--green); }
+.ch-pct.strong { color: var(--primary); }
+.ch-pct.weak { color: var(--red); }
 
-/* Weekly checkpoints */
-.quiz-row {
+/* Activity calendar */
+.calendar {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 0.85rem;
-  margin-bottom: 0.5rem;
-}
-.quiz-week { font-size: 0.78rem; color: var(--text-dim); font-weight: 700; }
-.quiz-focus { font-size: 0.92rem; margin: 0.2rem 0 0.5rem; }
-.quiz-input {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-.quiz-input input {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  color: var(--text);
-  border-radius: 7px;
-  padding: 0.4rem 0.6rem;
-  font-family: inherit;
-  font-size: 0.9rem;
-  width: 90px;
-}
-.quiz-input input:focus { outline: none; border-color: var(--primary); }
-.quiz-verdict {
-  padding: 0.2rem 0.6rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 700;
-}
-.quiz-verdict.pass { background: var(--green); color: white; }
-.quiz-verdict.retry { background: var(--red); color: white; }
-
-/* Error log */
-.errlog {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 0.9rem;
-  margin-bottom: 0.5rem;
-}
-.errlog-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.3rem;
-  font-size: 0.78rem;
-  color: var(--text-dim);
-  font-weight: 700;
-}
-.errlog-text { font-size: 0.92rem; }
-.errlog .delete-btn {
-  background: none;
-  border: none;
-  color: var(--text-dim);
-  cursor: pointer;
-  font-size: 1rem;
-  padding: 0.2rem 0.5rem;
-}
-.errlog .delete-btn:hover { color: var(--red); }
-
-.add-err {
-  background: var(--bg-card);
-  border: 2px dashed var(--border);
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 1rem;
-  margin-bottom: 0.5rem;
 }
-.add-err textarea {
-  width: 100%;
-  min-height: 60px;
+.cal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+.cal-month { font-weight: 700; font-size: 0.95rem; }
+.cal-legend {
+  display: flex;
+  gap: 0.6rem;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+.cal-legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  vertical-align: middle;
+  margin-right: 3px;
+}
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.cal-day-label {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  text-align: center;
+  font-weight: 600;
+  padding-bottom: 0.3rem;
+}
+.cal-cell {
+  aspect-ratio: 1 / 1;
+  border-radius: 5px;
   background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  color: var(--text);
-  border-radius: 7px;
-  padding: 0.5rem;
-  font-family: inherit;
-  font-size: 0.9rem;
-  resize: vertical;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  font-weight: 600;
 }
-.add-err textarea:focus { outline: none; border-color: var(--primary); }
-.add-err input[type="text"] {
-  width: 100%;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  color: var(--text);
-  border-radius: 7px;
-  padding: 0.45rem 0.6rem;
-  font-family: inherit;
-  font-size: 0.9rem;
-  margin-bottom: 0.4rem;
-}
-.btn {
-  background: linear-gradient(135deg, var(--primary), #4F46E5);
-  border: none;
+.cal-cell.active {
+  background: var(--green);
   color: white;
-  padding: 0.55rem 1rem;
-  border-radius: 8px;
   font-weight: 700;
-  font-family: inherit;
-  font-size: 0.85rem;
-  cursor: pointer;
-  margin-top: 0.5rem;
 }
-.btn:hover { transform: translateY(-1px); }
+.cal-cell.empty { background: transparent; }
+.cal-cell.today { box-shadow: 0 0 0 2px var(--primary); }
+.cal-cell.exam {
+  background: linear-gradient(135deg, #EC4899, #BE185D);
+  color: white;
+}
 
-/* How-to-use panel */
-.howto {
+/* Badges */
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.45rem;
+}
+@media (min-width: 540px) { .badges-grid { grid-template-columns: repeat(6, 1fr); } }
+.badge {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 0.6rem 0.3rem;
+  text-align: center;
+  border: 1px solid var(--border);
+  opacity: 0.3;
+}
+.badge.earned {
+  opacity: 1;
+  border-color: var(--yellow);
+  box-shadow: 0 0 12px rgba(251,191,36,0.18);
+}
+.badge .emoji { font-size: 1.65rem; line-height: 1; }
+.badge .name { font-size: 0.65rem; font-weight: 700; margin-top: 0.3rem; line-height: 1.2; }
+
+/* Recent activity */
+.recent {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.2rem;
+  border-radius: 14px;
+  padding: 0.95rem;
 }
-.howto h3 { margin: 1rem 0 0.4rem; color: var(--primary); font-size: 1rem; }
-.howto h3:first-child { margin-top: 0; }
-.howto ol, .howto ul { padding-left: 1.4rem; }
-.howto li { margin: 0.25rem 0; font-size: 0.93rem; }
-
-.empty-state {
-  text-align: center;
+.recent-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+}
+.recent-row:last-child { border-bottom: none; }
+.recent-row .left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+.recent-row .indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.recent-row .indicator.correct { background: var(--green); }
+.recent-row .indicator.wrong { background: var(--red); }
+.recent-row .ts {
+  font-size: 0.75rem;
   color: var(--text-dim);
-  padding: 2rem 1rem;
-  font-size: 0.9rem;
+}
+
+.refresh-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.4rem 0.85rem;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 0.5rem;
 }
 
 footer {
@@ -366,422 +343,300 @@ footer {
   padding-top: 1rem;
   border-top: 1px solid var(--border);
   text-align: center;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--text-dim);
 }
 footer a { color: var(--primary); text-decoration: none; }
-
-.reset-btn {
-  background: transparent;
-  border: 1px solid var(--red);
-  color: var(--red);
-  padding: 0.45rem 0.85rem;
-  border-radius: 7px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: inherit;
-}
 </style>
 </head>
 <body>
 <div class="container">
 
   <div class="hero">
-    <h1>📊 Neil's Progress Tracker</h1>
-    <p>Daily plan + chapter mastery + weekly quizzes</p>
+    <h1>📊 Neil's Progress</h1>
+    <p>Live data from the Math Quest app</p>
     <div class="countdown" id="cd"></div>
   </div>
 
-  <!-- Stats -->
-  <div class="stats-grid">
-    <div class="stat-card"><div class="stat-num" id="statDays">0</div><div class="stat-label">Days Done</div></div>
-    <div class="stat-card"><div class="stat-num" id="statStreak">0</div><div class="stat-label">Current Streak</div></div>
-    <div class="stat-card"><div class="stat-num" id="statMastered">0</div><div class="stat-label">Chapters Mastered</div></div>
-    <div class="stat-card"><div class="stat-num" id="statAvgQuiz">—</div><div class="stat-label">Quiz Avg</div></div>
+  <div class="actions">
+    <a href="math-quest.html" style="color: var(--primary); text-decoration:none; font-weight:700; font-size:0.9rem;">→ Open Math Quest</a>
+    <button class="refresh-btn" onclick="render()">🔄 Refresh</button>
   </div>
 
-  <!-- Tabs -->
-  <div class="tabs">
-    <button class="tab active" data-panel="daily" onclick="switchTab('daily')">Daily Log</button>
-    <button class="tab" data-panel="mastery" onclick="switchTab('mastery')">Mastery</button>
-    <button class="tab" data-panel="quizzes" onclick="switchTab('quizzes')">Weekly Quizzes</button>
-    <button class="tab" data-panel="errors" onclick="switchTab('errors')">Error Log</button>
-    <button class="tab" data-panel="howto" onclick="switchTab('howto')">Help</button>
-  </div>
-
-  <!-- Daily Log Panel -->
-  <div class="panel active" id="panel-daily">
-    <div id="dailyList"></div>
-  </div>
-
-  <!-- Mastery Panel -->
-  <div class="panel" id="panel-mastery">
-    <div id="masteryList"></div>
-  </div>
-
-  <!-- Quizzes Panel -->
-  <div class="panel" id="panel-quizzes">
-    <div id="quizList"></div>
-  </div>
-
-  <!-- Error Log Panel -->
-  <div class="panel" id="panel-errors">
-    <div class="add-err">
-      <input type="text" id="errTopic" placeholder="Topic (e.g., Ch 7 factoring)">
-      <textarea id="errText" placeholder="What went wrong? What to remember next time?"></textarea>
-      <button class="btn" onclick="addError()">+ Add to Error Log</button>
-    </div>
-    <div id="errList"></div>
-  </div>
-
-  <!-- How-to Panel -->
-  <div class="panel" id="panel-howto">
-    <div class="howto">
-      <h3>EACH DAY (45–60 min session):</h3>
-      <ol>
-        <li>Open the Daily Log tab. Today's row is highlighted.</li>
-        <li>Tap <strong style="color:var(--green);">Done</strong>, <strong style="color:var(--yellow);">Partial</strong>, or <strong style="color:var(--red);">Skip</strong> when you finish.</li>
-        <li>Log any mistakes in the Error Log tab (60 seconds, single line).</li>
-      </ol>
-
-      <h3>EVERY WEEK (Sunday, ~15 min):</h3>
-      <ol>
-        <li>Take the scheduled quiz from the Weekly Quizzes tab. Enter the score as a decimal (0.80 = 80%).</li>
-        <li>Update Chapter Mastery for chapters covered this week.</li>
-        <li>Flip through the Error Log. Mistakes seen 3+ times → next week's theme.</li>
-      </ol>
-
-      <h3>END OF SUMMER (mid-July):</h3>
-      <ol>
-        <li>Take the comprehensive mock final (Week 8 of Phase 2 — already scheduled in the Daily Log).</li>
-        <li>If score ≥ 85% AND solid on Ch 7-8 fundamentals → ready for 7th-grade Geometry.</li>
-        <li>If 70-84% → ready but fragile, continue tutoring through the year.</li>
-        <li>If &lt; 70% → revisit the repeat conversation.</li>
-      </ol>
-
-      <h3>Color codes:</h3>
-      <ul>
-        <li>Highlighted blue border = today's session</li>
-        <li>Yellow rows = rest days (school's out, take the break)</li>
-        <li>Faded rows = past days you didn't mark</li>
-      </ul>
-
-      <h3>Data &amp; reset:</h3>
-      <p style="font-size:0.9rem;color:var(--text-dim);">All progress is saved automatically on this device only (in your browser's local storage). If you clear browser data, the tracker resets.</p>
-      <button class="reset-btn" onclick="if (confirm('Reset ALL progress?')) { localStorage.removeItem('neil_tracker_v1'); location.reload(); }">Reset all progress</button>
-    </div>
-  </div>
+  <div id="content"></div>
 
   <footer>
     <p><a href="index.html">← Back to Algebra 1 Hub</a></p>
+    <p style="margin-top:0.5rem;font-size:0.72rem;opacity:0.7;">
+      Data syncs from this device's browser. If Neil practices on a different device, that progress shows on that device only.
+    </p>
   </footer>
 
 </div>
 
 <script>
 // =========================================================
-// Data — plan schedule
+// Constants
 // =========================================================
 const EXAM_DATE = new Date(2026, 5, 11); // June 11, 2026
+const MATH_QUEST_KEY = 'neil_math_quest_v1';
 
-const CHAPTERS = [
-  { num: 6, title: "Exponents & Exponential Fns", emoji: "⚡" },
-  { num: 7, title: "Polynomials & Factoring", emoji: "🧩" },
-  { num: 8, title: "Quadratics — Graphing", emoji: "📈" },
-  { num: 9, title: "Quadratics — Solving", emoji: "🎯" },
-  { num: 10, title: "Rational Expressions", emoji: "➗" },
-  { num: 11, title: "Radicals (√ & ∛)", emoji: "√" },
+const CHAPTERS = {
+  6:  { title: "Exponents & Exponential Fns",  emoji: "⚡" },
+  7:  { title: "Polynomials & Factoring",       emoji: "🧩" },
+  8:  { title: "Quadratics — Graphing",         emoji: "📈" },
+  9:  { title: "Quadratics — Solving",          emoji: "🎯" },
+  10: { title: "Rational Expressions",          emoji: "➗" },
+  11: { title: "Radicals (√ & ∛)",              emoji: "√" },
+};
+
+const BADGES = [
+  { id: "first-solve",    name: "First Solve",      emoji: "🌱" },
+  { id: "streak-3",       name: "On Fire",           emoji: "🔥" },
+  { id: "streak-7",       name: "Week Warrior",      emoji: "⚔️" },
+  { id: "streak-14",      name: "Unstoppable",       emoji: "💪" },
+  { id: "streak-30",      name: "Math Monk",         emoji: "🧘" },
+  { id: "combo-5",        name: "Combo x5",          emoji: "✨" },
+  { id: "combo-10",       name: "Combo x10",         emoji: "💫" },
+  { id: "combo-20",       name: "Combo x20",         emoji: "🌟" },
+  { id: "level-5",        name: "Apprentice",        emoji: "🎓" },
+  { id: "level-10",       name: "Scholar",           emoji: "📚" },
+  { id: "level-20",       name: "Master",            emoji: "👑" },
+  { id: "master-ch6",     name: "Exponent Expert",   emoji: "⚡" },
+  { id: "master-ch7",     name: "Factor Wizard",     emoji: "🧩" },
+  { id: "master-ch8",     name: "Quadratic King",    emoji: "📈" },
+  { id: "master-ch9",     name: "Solver Sensei",     emoji: "🎯" },
+  { id: "master-ch10",    name: "Rational Ruler",    emoji: "➗" },
+  { id: "master-ch11",    name: "Radical Royalty",   emoji: "√" },
+  { id: "mock-pass",      name: "Exam Ready",        emoji: "🎯" },
+  { id: "mock-perfect",   name: "Perfect Score",     emoji: "💎" },
+  { id: "total-50",       name: "Half Century",      emoji: "🏅" },
+  { id: "total-100",      name: "Centurion",         emoji: "🏆" },
+  { id: "total-250",      name: "Math Marathoner",   emoji: "🚀" },
+  { id: "speed-demon",    name: "Speed Demon",       emoji: "⚡" },
+  { id: "comeback-kid",   name: "Comeback Kid",      emoji: "🦅" },
 ];
 
-// Generate daily plan based on COA Session 1: May 26 – June 11
-// Plus pre-session warm-up: now → May 25
-// Plus post-exam summer if needed (skipped for now)
-function buildPlan() {
-  const plan = [];
-  const today = new Date(); today.setHours(0,0,0,0);
-
-  // Phase 1: pre-COA warm-up (today → May 25)
-  let d = new Date(today);
-  const may25 = new Date(2026, 4, 25); // May 25
-  const may26 = new Date(2026, 4, 26); // COA Session 1 starts
-  const jun11 = new Date(2026, 5, 11); // COA exam
-
-  // Pre-COA warm-up: simple weekly focus
-  const warmupFocus = [
-    "Ch 8 retake — review the test you took",
-    "Ch 6 exponents fluency",
-    "Ch 7 factoring practice",
-    "Ch 8 solving methods",
-    "Ch 9 (radicals quick intro) + review",
-  ];
-  let week = 0;
-  while (d < may26) {
-    const label = "Warm-up week " + (week + 1);
-    const focus = warmupFocus[Math.min(week, warmupFocus.length - 1)];
-    plan.push({ date: new Date(d), phase: "pre", label, focus, weekIdx: week });
-    d.setDate(d.getDate() + 1);
-    if (d.getDay() === 1) week++; // monday = new week
-  }
-
-  // COA Session 1: May 26 – June 11 (~16 days)
-  const coaFocus = [
-    "COA Algebra I Sem 2 — Week 1",
-    "COA — Week 2",
-    "Final review — Ch 6-11",
-  ];
-  let coaWeek = 0;
-  while (d <= jun11) {
-    const label = "COA Session 1";
-    let focus;
-    const daysIn = Math.floor((d - may26) / 86400000);
-    if (daysIn < 5) focus = "COA Week 1: Exponents + Polynomials";
-    else if (daysIn < 10) focus = "COA Week 2: Quadratics (graphing + solving)";
-    else focus = "COA Final review — Ch 6-11 mixed practice";
-    plan.push({ date: new Date(d), phase: "coa", label, focus });
-    d.setDate(d.getDate() + 1);
-  }
-
-  // Exam day
-  plan.push({ date: new Date(2026, 5, 11), phase: "exam", label: "EXAM DAY", focus: "COA Algebra I Sem 2 final — show up rested" });
-
-  return plan;
-}
-
 // =========================================================
-// State
+// Load Math Quest state
 // =========================================================
-const STORAGE_KEY = 'neil_tracker_v1';
-const defaultState = {
-  days: {},      // dateStr -> "done" | "partial" | "skipped"
-  mastery: {},   // chapter num (str) -> "untested" | "weak" | "okay" | "strong" | "mastered"
-  quizzes: {},   // quizId -> score (0-1)
-  errors: [],    // [{id, ts, topic, text}]
-};
-let state = loadState();
-
-function loadState() {
+function loadMQ() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return { ...defaultState, ...JSON.parse(raw) };
-  } catch (e) {}
-  return JSON.parse(JSON.stringify(defaultState));
-}
-function saveState() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    const raw = localStorage.getItem(MATH_QUEST_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch (e) {
+    return null;
+  }
 }
 
-const todayStr = () => new Date().toISOString().slice(0, 10);
-const dateStr = (d) => {
+function xpForLevel(lvl) { return lvl * 100; }
+function dateStr(d) {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, '0');
   const da = String(d.getDate()).padStart(2, '0');
-  return `${y}-${m}-${da}`;
-};
+  return y + '-' + m + '-' + da;
+}
 
 // =========================================================
-// Stats + countdown
+// Render
 // =========================================================
-function refreshStats() {
+function render() {
+  // Countdown
   const days = Math.max(0, Math.ceil((EXAM_DATE - new Date()) / 86400000));
-  document.getElementById('cd').textContent = days === 0 ? 'EXAM DAY!' : `${days} days until June 11 exam`;
-  document.getElementById('statDays').textContent = Object.values(state.days).filter(v => v === 'done').length;
-  // streak: count consecutive done days back from today
-  let streak = 0;
-  const cd = new Date(); cd.setHours(0,0,0,0);
-  for (;;) {
-    const k = dateStr(cd);
-    if (state.days[k] === 'done') {
-      streak++;
-      cd.setDate(cd.getDate() - 1);
-    } else { break; }
-  }
-  document.getElementById('statStreak').textContent = streak;
-  document.getElementById('statMastered').textContent = Object.values(state.mastery).filter(v => v === 'mastered').length;
-  // quiz avg
-  const scores = Object.values(state.quizzes).map(Number).filter(x => !isNaN(x) && x > 0);
-  document.getElementById('statAvgQuiz').textContent = scores.length === 0 ? '—' :
-    Math.round(scores.reduce((a, b) => a + b, 0) / scores.length * 100) + '%';
-}
+  document.getElementById('cd').textContent = days === 0 ? 'EXAM DAY!' : days + ' days until June 11 exam';
 
-// =========================================================
-// Daily log
-// =========================================================
-function renderDaily() {
-  const list = document.getElementById('dailyList');
-  list.innerHTML = '';
-  const plan = buildPlan();
-  const today = todayStr();
-  let lastWeek = -1;
-  plan.forEach(p => {
-    const ds = dateStr(p.date);
-    const status = state.days[ds] || '';
-    const isToday = ds === today;
-    const isPast = ds < today;
-    const isFuture = ds > today;
-    // Week label (Monday)
-    if (p.date.getDay() === 1 || lastWeek === -1) {
-      const wk = document.createElement('div');
-      wk.className = 'week-label';
-      const wkOf = new Date(p.date);
-      const wkStr = wkOf.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-      wk.textContent = `Week of ${wkStr}`;
-      list.appendChild(wk);
-      lastWeek = p.date.getDay();
-    }
-    const row = document.createElement('div');
-    row.className = 'day-row' + (isToday ? ' today' : '') + (isPast && !status ? ' past unmarked' : '');
-    const dayShort = p.date.toLocaleDateString('en-US', { weekday: 'short' });
-    const dStr = p.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    const phaseTag = p.phase === 'exam' ? '🎯 EXAM DAY' :
-                     p.phase === 'coa' ? '📚 COA Session' :
-                     '🏃 Warm-up';
-    row.innerHTML = `
-      <div>
-        <div class="day-date"><strong>${dayShort} ${dStr}</strong> · ${phaseTag}</div>
-        <div class="day-focus">${p.focus}</div>
-      </div>
-      <div class="status-buttons">
-        <button class="status-btn ${status === 'done' ? 'active done' : ''}" onclick="setStatus('${ds}','done')">✓</button>
-        <button class="status-btn ${status === 'partial' ? 'active partial' : ''}" onclick="setStatus('${ds}','partial')">½</button>
-        <button class="status-btn ${status === 'skipped' ? 'active skipped' : ''}" onclick="setStatus('${ds}','skipped')">✗</button>
+  const s = loadMQ();
+  const content = document.getElementById('content');
+
+  if (!s || s.totalSolved === 0) {
+    content.innerHTML = `
+      <div class="empty">
+        <h3>🦉 No app activity yet on this device</h3>
+        <p>When Neil opens Math Quest and solves problems, his progress shows up here automatically.<br><br>If he's been practicing on a different device or browser, the data lives there — this dashboard reads what's stored in <b>this</b> browser.</p>
+        <a class="btn" href="math-quest.html">Open Math Quest →</a>
       </div>
     `;
-    list.appendChild(row);
-  });
-  // Scroll to today
-  setTimeout(() => {
-    const todayRow = document.querySelector('.day-row.today');
-    if (todayRow) todayRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, 50);
-}
-function setStatus(ds, s) {
-  if (state.days[ds] === s) delete state.days[ds];
-  else state.days[ds] = s;
-  saveState(); refreshStats(); renderDaily();
-}
-
-// =========================================================
-// Mastery
-// =========================================================
-const MASTERY_LEVELS = ['untested', 'weak', 'okay', 'strong', 'mastered'];
-function renderMastery() {
-  const list = document.getElementById('masteryList');
-  list.innerHTML = '';
-  CHAPTERS.forEach(ch => {
-    const m = state.mastery[String(ch.num)] || 'untested';
-    const row = document.createElement('div');
-    row.className = 'ch-row';
-    row.innerHTML = `
-      <div class="ch-row-head">
-        <div class="ch-name"><span class="ch-emoji">${ch.emoji}</span>Chapter ${ch.num}: ${ch.title}</div>
-        <div class="mastery-pill ${m}">${m}</div>
-      </div>
-      <div class="mastery-buttons">
-        ${MASTERY_LEVELS.map(lv => `<button class="mb${m === lv ? ' active' : ''}" onclick="setMastery(${ch.num}, '${lv}')">${lv}</button>`).join('')}
-      </div>
-    `;
-    list.appendChild(row);
-  });
-}
-function setMastery(ch, lv) {
-  state.mastery[String(ch)] = lv;
-  saveState(); refreshStats(); renderMastery();
-}
-
-// =========================================================
-// Weekly quizzes
-// =========================================================
-const QUIZZES = [
-  { id: 'q1', label: 'Ch 6 — Exponents mixed (10 problems)' },
-  { id: 'q2', label: 'Ch 7 — Factoring mixed (10 problems)' },
-  { id: 'q3', label: 'Ch 8 — Quadratics graphing (10 problems)' },
-  { id: 'q4', label: 'Ch 9 — Quadratics solving — all 4 methods' },
-  { id: 'q5', label: 'Ch 10 — Rational expressions (10 problems)' },
-  { id: 'q6', label: 'Ch 11 — Radicals (10 problems)' },
-  { id: 'q7', label: 'Mock COA exam — 20-problem mixed' },
-  { id: 'q8', label: 'Final review mock — full exam simulation' },
-];
-function renderQuizzes() {
-  const list = document.getElementById('quizList');
-  list.innerHTML = '';
-  QUIZZES.forEach(q => {
-    const score = state.quizzes[q.id] || '';
-    const pct = score ? Math.round(score * 100) : null;
-    const verdict = pct === null ? '' : (pct >= 80 ? 'pass' : 'retry');
-    const row = document.createElement('div');
-    row.className = 'quiz-row';
-    row.innerHTML = `
-      <div class="quiz-week">${q.id.toUpperCase()}</div>
-      <div class="quiz-focus">${q.label}</div>
-      <div class="quiz-input">
-        <input type="number" min="0" max="1" step="0.01" placeholder="0-1" value="${score}" onchange="setQuiz('${q.id}', this.value)">
-        ${pct === null ? '' : `<div class="quiz-verdict ${verdict}">${verdict.toUpperCase()} (${pct}%)</div>`}
-      </div>
-    `;
-    list.appendChild(row);
-  });
-}
-function setQuiz(id, val) {
-  const v = parseFloat(val);
-  if (isNaN(v) || v <= 0) delete state.quizzes[id];
-  else state.quizzes[id] = Math.min(1, Math.max(0, v));
-  saveState(); refreshStats(); renderQuizzes();
-}
-
-// =========================================================
-// Errors
-// =========================================================
-function renderErrors() {
-  const list = document.getElementById('errList');
-  list.innerHTML = '';
-  if (state.errors.length === 0) {
-    list.innerHTML = '<div class="empty-state">No mistakes logged yet. After each session, write down what tripped you up.</div>';
     return;
   }
-  state.errors.slice().reverse().forEach(e => {
-    const row = document.createElement('div');
-    row.className = 'errlog';
-    const dStr = new Date(e.ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    row.innerHTML = `
-      <div class="errlog-head">
-        <div><strong>${dStr}</strong> · ${e.topic || 'General'}</div>
-        <button class="delete-btn" onclick="delError(${e.id})">🗑️</button>
+
+  // Stats
+  const accuracy = s.totalSolved > 0 ? Math.round(s.totalCorrect / s.totalSolved * 100) : 0;
+  const xpNext = xpForLevel(s.level);
+  const xpPct = Math.min(100, Math.round(s.xp / xpNext * 100));
+  const streakHotClass = s.streak >= 3 ? 'hot' : '';
+  const earnedBadges = (s.badges || []).length;
+
+  let html = `
+    <div class="stats-grid">
+      <div class="stat-card ${streakHotClass}">
+        <div class="stat-num">${s.streak || 0}</div>
+        <div class="stat-label">Current Streak</div>
+        <div class="sub">Best: ${s.bestStreak || 0}</div>
       </div>
-      <div class="errlog-text">${e.text.replace(/</g,'&lt;')}</div>
+      <div class="stat-card">
+        <div class="stat-num">${s.totalSolved || 0}</div>
+        <div class="stat-label">Problems Solved</div>
+        <div class="sub">${accuracy}% accuracy</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">${s.level || 1}</div>
+        <div class="stat-label">Level</div>
+        <div class="sub">${s.xp || 0} / ${xpNext} XP</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">${s.bestCombo || 0}</div>
+        <div class="stat-label">Best Combo</div>
+        <div class="sub">${earnedBadges} badges</div>
+      </div>
+    </div>
+
+    <h2>Level Progress</h2>
+    <div class="xp-bar-wrap">
+      <div class="xp-bar-head">
+        <span class="lvl">Level ${s.level} → ${s.level + 1}</span>
+        <span class="xp">${s.xp} / ${xpNext} XP (${xpPct}%)</span>
+      </div>
+      <div class="xp-bar"><div class="xp-bar-fill" style="width:${xpPct}%"></div></div>
+    </div>
+
+    <h2>Chapter Mastery</h2>
+  `;
+
+  // Chapter mastery
+  Object.keys(CHAPTERS).forEach(ch => {
+    const info = CHAPTERS[ch];
+    const m = Math.round((s.chapterMastery || {})[ch] || 0);
+    let pctClass = 'weak';
+    let label = 'Untested';
+    if (m >= 80)      { pctClass = 'mastered'; label = 'Mastered'; }
+    else if (m >= 60) { pctClass = 'strong';   label = 'Strong'; }
+    else if (m >= 40) { pctClass = '';         label = 'Okay'; }
+    else if (m > 0)   { pctClass = 'weak';     label = 'Weak'; }
+    else              { pctClass = '';         label = 'Untested'; }
+    html += `
+      <div class="ch-row">
+        <span class="ch-emoji">${info.emoji}</span>
+        <div class="ch-info">
+          <div class="ch-name">Ch ${ch}: ${info.title}</div>
+          <div class="ch-sub">${label}</div>
+          <div class="ch-bar"><div class="ch-bar-fill" style="width:${m}%"></div></div>
+        </div>
+        <div class="ch-pct ${pctClass}">${m}%</div>
+      </div>
     `;
-    list.appendChild(row);
   });
-}
-function addError() {
-  const topic = document.getElementById('errTopic').value.trim();
-  const text = document.getElementById('errText').value.trim();
-  if (!text) return;
-  state.errors.push({ id: Date.now(), ts: Date.now(), topic, text });
-  document.getElementById('errTopic').value = '';
-  document.getElementById('errText').value = '';
-  saveState(); renderErrors();
-}
-function delError(id) {
-  state.errors = state.errors.filter(e => e.id !== id);
-  saveState(); renderErrors();
+
+  // Calendar — last 30 days
+  html += `<h2>Activity (last 30 days)</h2>`;
+  const today = new Date(); today.setHours(0,0,0,0);
+  // Build a set of dates Neil played
+  const playedDates = new Set();
+  (s.attempts || []).forEach(a => {
+    if (a.ts) {
+      const d = new Date(a.ts);
+      d.setHours(0,0,0,0);
+      playedDates.add(dateStr(d));
+    }
+  });
+  if (s.lastPlayedDate) playedDates.add(s.lastPlayedDate);
+
+  // Build last 30 days starting from a Monday so columns align
+  const cells = [];
+  const cursor = new Date(today);
+  cursor.setDate(cursor.getDate() - 27); // ~4 weeks
+  // Roll back to Sunday
+  while (cursor.getDay() !== 0) cursor.setDate(cursor.getDate() - 1);
+  const examStr = dateStr(EXAM_DATE);
+  for (let i = 0; i < 35; i++) {
+    const cellDate = new Date(cursor);
+    cellDate.setDate(cellDate.getDate() + i);
+    const ds = dateStr(cellDate);
+    const isToday = ds === dateStr(today);
+    const isFuture = cellDate > today;
+    const isPlayed = playedDates.has(ds);
+    const isExam = ds === examStr;
+    let cls = 'cal-cell';
+    if (isPlayed) cls += ' active';
+    if (isToday) cls += ' today';
+    if (isExam) cls += ' exam';
+    if (isFuture && !isExam) cls += ' empty';
+    cells.push({ date: cellDate, cls, isExam, isPlayed });
+  }
+  html += `
+    <div class="calendar">
+      <div class="cal-head">
+        <div class="cal-month">${cursor.toLocaleDateString('en-US',{month:'short'})} — ${today.toLocaleDateString('en-US',{month:'short', day:'numeric'})}</div>
+        <div class="cal-legend">
+          <span><span class="cal-legend-dot" style="background:var(--green);"></span>Played</span>
+          <span><span class="cal-legend-dot" style="background:linear-gradient(135deg,#EC4899,#BE185D);"></span>Exam</span>
+        </div>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-day-label">S</div>
+        <div class="cal-day-label">M</div>
+        <div class="cal-day-label">T</div>
+        <div class="cal-day-label">W</div>
+        <div class="cal-day-label">T</div>
+        <div class="cal-day-label">F</div>
+        <div class="cal-day-label">S</div>
+        ${cells.map(c => `<div class="${c.cls}" title="${c.date.toLocaleDateString()}">${c.isExam ? '🎯' : c.date.getDate()}</div>`).join('')}
+      </div>
+    </div>
+  `;
+
+  // Recent attempts (last 8)
+  const recent = (s.attempts || []).slice(-8).reverse();
+  if (recent.length > 0) {
+    html += `<h2>Recent Problems</h2><div class="recent">`;
+    recent.forEach(a => {
+      const t = new Date(a.ts);
+      const ago = timeAgo(t);
+      const cls = a.correct ? 'correct' : 'wrong';
+      const icon = a.correct ? '✓' : '✗';
+      html += `
+        <div class="recent-row">
+          <div class="left">
+            <span class="indicator ${cls}"></span>
+            <span>${a.id || 'Problem'}</span>
+          </div>
+          <span class="ts">${icon} ${ago}</span>
+        </div>
+      `;
+    });
+    html += `</div>`;
+  }
+
+  // Badges
+  const earned = new Set(s.badges || []);
+  html += `<h2>Badges (${earned.size} / ${BADGES.length})</h2><div class="badges-grid">`;
+  BADGES.forEach(b => {
+    const isEarned = earned.has(b.id);
+    html += `
+      <div class="badge ${isEarned ? 'earned' : ''}">
+        <div class="emoji">${b.emoji}</div>
+        <div class="name">${b.name}</div>
+      </div>
+    `;
+  });
+  html += `</div>`;
+
+  content.innerHTML = html;
 }
 
-// =========================================================
-// Tabs
-// =========================================================
-function switchTab(panel) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.panel === panel));
-  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + panel));
-  if (panel === 'daily') renderDaily();
-  if (panel === 'mastery') renderMastery();
-  if (panel === 'quizzes') renderQuizzes();
-  if (panel === 'errors') renderErrors();
+function timeAgo(d) {
+  const diff = Math.round((Date.now() - d.getTime()) / 1000);
+  if (diff < 60) return `${diff}s ago`;
+  if (diff < 3600) return `${Math.round(diff/60)}m ago`;
+  if (diff < 86400) return `${Math.round(diff/3600)}h ago`;
+  return `${Math.round(diff/86400)}d ago`;
 }
 
-// Init
-refreshStats();
-renderDaily();
+// Auto-refresh when tab gets focus (so if Neil practices then comes back here, it's fresh)
+window.addEventListener('focus', render);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) render(); });
+
+render();
 </script>
 </body>
 </html>
