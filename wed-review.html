@@ -253,13 +253,29 @@ footer a { color: var(--primary); text-decoration: none; }
 // =========================================================
 const STORAGE_KEY = 'neil_wed_review_v1';
 const defaultState = {
-  answers: {},      // questionIdx -> chosen letter ("A"/"B"/"C"/"D")
+  answers: {},          // ORIGINAL questionIdx -> chosen letter ("A"/"B"/"C"/"D")
   submitted: false,
   attempts: 0,
   bestScore: 0,
   lastScore: 0,
   startedAt: null,
+  questionOrder: null,  // array of original indices; null = default order
 };
+
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function getOrder() {
+  if (Array.isArray(state.questionOrder) && state.questionOrder.length === QUESTIONS.length) {
+    return state.questionOrder;
+  }
+  return QUESTIONS.map((_, i) => i);
+}
 let state = loadState();
 
 function loadState() {
@@ -501,14 +517,16 @@ function renderQuestions() {
 
   let html = `<div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>`;
 
-  QUESTIONS.forEach((q, i) => {
-    const selected = state.answers[i];
+  const order = getOrder();
+  order.forEach((origIdx, displayIdx) => {
+    const q = QUESTIONS[origIdx];
+    const selected = state.answers[origIdx];
     const showFeedback = state.submitted;
-    const isRight = selected === q.ans;
+    const i = origIdx; // keep variable name for backwards compatibility inside block
 
     html += `<div class="q-card">
       <div class="q-meta">
-        <span><strong>${i+1} / 40</strong></span>
+        <span><strong>${displayIdx+1} / 40</strong></span>
         <span class="topic">${q.topic}</span>
       </div>
       <div class="q-text">${q.q}</div>`;
@@ -518,8 +536,8 @@ function renderQuestions() {
 
     // Hint button (always available before submit)
     if (!showFeedback && q.hint) {
-      const hintShown = (state.hintsShown || {})[i];
-      html += `<button class="hint-btn" onclick="toggleHint(${i})">${hintShown ? '🙈 Hide hint' : '💡 Get a hint'}</button>`;
+      const hintShown = (state.hintsShown || {})[origIdx];
+      html += `<button class="hint-btn" onclick="toggleHint(${origIdx})">${hintShown ? '🙈 Hide hint' : '💡 Get a hint'}</button>`;
       if (hintShown) html += `<div class="hint-box">💡 ${q.hint}</div>`;
     }
 
@@ -533,7 +551,7 @@ function renderQuestions() {
       } else if (selected === letter) {
         cls += ' selected';
       }
-      html += `<button class="${cls}" onclick="selectChoice(${i}, '${letter}')"${showFeedback ? ' disabled' : ''}>
+      html += `<button class="${cls}" onclick="selectChoice(${origIdx}, '${letter}')"${showFeedback ? ' disabled' : ''}>
         <span class="letter">${letter}</span><span>${c}</span>
       </button>`;
     });
@@ -621,9 +639,22 @@ function retakeQuiz() {
   state.submitted = false;
   state.hintsShown = {};
   state.hintsCount = 0;
+  // Shuffle questions for retake (only after the first attempt)
+  if ((state.attempts || 0) >= 1) {
+    state.questionOrder = shuffleArray(QUESTIONS.map((_, i) => i));
+    toast("🔀 Questions reshuffled — same 40, new order");
+  }
   saveState();
   renderQuestions();
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toast(msg) {
+  const t = document.createElement('div');
+  t.style.cssText = 'position:fixed;top:1rem;left:50%;transform:translateX(-50%);background:var(--orange);color:white;padding:0.6rem 1rem;border-radius:999px;font-weight:700;z-index:200;box-shadow:0 4px 16px rgba(0,0,0,0.25);font-size:0.88rem;';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2400);
 }
 function resetQuiz() {
   if (!confirm("Clear all answers (no submit)?")) return;
