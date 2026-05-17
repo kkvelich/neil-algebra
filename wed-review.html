@@ -516,6 +516,13 @@ function renderQuestions() {
     if (q.graph) html += `<div class="q-graph-note">📊 ${q.graph}</div>`;
     if (q.extra) html += `<div class="q-extra">${q.extra.replace(/\n/g, '<br>')}</div>`;
 
+    // Hint button (always available before submit)
+    if (!showFeedback && q.hint) {
+      const hintShown = (state.hintsShown || {})[i];
+      html += `<button class="hint-btn" onclick="toggleHint(${i})">${hintShown ? '🙈 Hide hint' : '💡 Get a hint'}</button>`;
+      if (hintShown) html += `<div class="hint-box">💡 ${q.hint}</div>`;
+    }
+
     html += `<div class="choices">`;
     q.choices.forEach((c, j) => {
       const letter = "ABCD"[j];
