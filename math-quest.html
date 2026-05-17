@@ -1123,6 +1123,7 @@ const defaultState = {
   topicHistory: {}, // problem.id => [last 10 attempts: true/false]
   chapterMastery: {}, // chapter num => % mastered
   dailyDone: {}, // dateStr => true
+  dailyBonusRounds: {}, // dateStr => count
   attempts: [], // [{id, correct, ts}] last 200
 };
 
@@ -1518,17 +1519,25 @@ function renderHome() {
   const hr = new Date().getHours();
   const greet = hr < 12 ? "Good morning, Neil!" : hr < 18 ? "Afternoon, Neil!" : "Evening, Neil!";
   document.getElementById('heroGreeting').textContent = greet + " 👋";
-  // daily
-  const todayDone = state.dailyDone[todayStr()];
+  // daily — supports first round + unlimited bonus rounds
+  const today = todayStr();
+  const todayDone = state.dailyDone[today];
+  const bonusCount = (state.dailyBonusRounds || {})[today] || 0;
   const dailyTile = document.getElementById('dailyTile');
-  if (todayDone) {
-    dailyTile.classList.add('completed');
-    document.getElementById('dailyStatus').textContent = "✓ Done today. Streak protected!";
-    document.getElementById('dailyIcon').textContent = '✅';
-  } else {
+  const dailyStatus = document.getElementById('dailyStatus');
+  const dailyIcon = document.getElementById('dailyIcon');
+  const dailyTitle = dailyTile.querySelector('h3');
+  if (!todayDone) {
     dailyTile.classList.remove('completed');
-    document.getElementById('dailyStatus').textContent = "5 mixed problems · Earn 50 XP";
-    document.getElementById('dailyIcon').textContent = '🎯';
+    if (dailyTitle) dailyTitle.textContent = "Today's Challenge";
+    dailyStatus.textContent = "5 mixed problems · Earn 50 XP";
+    dailyIcon.textContent = '🎯';
+  } else {
+    // First round done — show next bonus round option
+    dailyTile.classList.remove('completed');
+    if (dailyTitle) dailyTitle.textContent = bonusCount === 0 ? "✓ Daily done — Bonus Round?" : `Bonus Round ${bonusCount + 1}`;
+    dailyStatus.textContent = `5 more problems · Earn 25 XP · Streak ${bonusCount === 0 ? 'already' : 'still'} protected`;
+    dailyIcon.textContent = '🎁';
   }
   // chapter list
   const list = document.getElementById('chapterList');
@@ -1563,13 +1572,16 @@ function startChapter(ch) {
 }
 
 function startDailyChallenge() {
-  if (state.dailyDone[todayStr()]) {
-    toast("Already done today! Come back tomorrow.");
-    return;
-  }
-  // 5 multiple-choice problems (no typing required for the daily)
+  // First round of the day = streak + 50 XP bonus.
+  // Bonus rounds same day = +25 XP each, still good practice.
+  const isBonusRound = !!state.dailyDone[todayStr()];
   const probs = pickRandomBy(p => p.type === 'mc', 5);
-  session = { problems: probs, idx: 0, correct: 0, mode: 'daily', startTime: Date.now() };
+  session = {
+    problems: probs, idx: 0, correct: 0,
+    mode: 'daily',
+    isBonus: isBonusRound,
+    startTime: Date.now(),
+  };
   showScreen('practice');
   renderProblem();
 }
@@ -1867,12 +1879,26 @@ function finishSession() {
   const total = session.problems.length;
   const pct = Math.round(session.correct / total * 100);
   if (session.mode === 'daily') {
-    state.dailyDone[todayStr()] = true;
-    state.xp += 50; // daily bonus
+    const today = todayStr();
+    const isBonus = session.isBonus === true;
+    let bonusXP;
+    if (!state.dailyBonusRounds) state.dailyBonusRounds = {};
+    if (isBonus) {
+      bonusXP = 25;
+      state.dailyBonusRounds[today] = (state.dailyBonusRounds[today] || 0) + 1;
+    } else {
+      bonusXP = 50;
+      state.dailyDone[today] = true;
+    }
+    state.xp += bonusXP;
     checkLevelUp();
     saveState();
-    showFeedback(pct >= 80, `Daily Done! ${session.correct}/${total}`, `+50 bonus XP`,
-      pct >= 80 ? "Streak protected. See you tomorrow!" : "Streak protected, but those misses are next week's homework.");
+    const rNum = (state.dailyBonusRounds[today] || 0);
+    const title = isBonus ? `Bonus Round ${rNum} Done! ${session.correct}/${total}` : `Daily Done! ${session.correct}/${total}`;
+    const subline = isBonus
+      ? (pct >= 80 ? "More XP banked. Streak still protected." : "More practice in. Streak protected.")
+      : (pct >= 80 ? "Streak protected. Want a Bonus Round? Tap the tile again." : "Streak protected. Bonus rounds available — try another.");
+    showFeedback(pct >= 80, title, `+${bonusXP} bonus XP`, subline);
   } else if (session.mode === 'exam') {
     showResults();
   } else {
