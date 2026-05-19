@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Targeted Practice — 10 problems · Your weak spots</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #6366F1; --green: #10B981; --green-soft: rgba(16,185,129,0.18);
+  --red: #EF4444; --red-soft: rgba(239,68,68,0.18);
+  --yellow: #FBBF24; --orange: #F59E0B; --pink: #EC4899;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg:#F8FAFC; --bg-card:#FFFFFF; --bg-elevated:#F1F5F9; --text:#1A1A1A; --text-dim:#64748B; --border:#E2E8F0; }
+}
+html, body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:16px; line-height:1.5; }
+.container { max-width:700px; margin:0 auto; padding:1rem 1rem 4rem; }
+header.top { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1rem; }
+.logo { font-size:1.2rem; font-weight:800; background:linear-gradient(135deg, #F59E0B, #EC4899); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+.score-pill { background:var(--bg-card); border:1px solid var(--border); border-radius:999px; padding:0.35rem 0.85rem; font-size:0.85rem; font-weight:700; }
+.hero { background:linear-gradient(135deg, #F59E0B, #EC4899); border-radius:18px; padding:1.1rem 1.25rem; color:white; margin-bottom:1.5rem; }
+.hero h1 { margin:0 0 0.3rem; font-size:1.25rem; font-weight:800; }
+.hero p { margin:0; font-size:0.92rem; opacity:0.95; }
+.topics-tag { display:inline-block; background:rgba(255,255,255,0.22); padding:0.3rem 0.7rem; border-radius:999px; margin-top:0.5rem; font-weight:700; font-size:0.78rem; }
+.progress-bar { height:8px; background:var(--bg-elevated); border-radius:8px; overflow:hidden; margin-bottom:0.85rem; }
+.progress-fill { height:100%; background:linear-gradient(90deg, var(--orange), var(--pink)); transition:width 0.3s ease; }
+.q-meta { display:flex; justify-content:space-between; font-size:0.8rem; color:var(--text-dim); font-weight:600; margin-bottom:0.5rem; }
+.q-meta .topic { color:var(--orange); }
+.q-card { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:1.1rem 1.2rem; margin-bottom:1.5rem; }
+.q-text { font-size:1.05rem; font-weight:600; line-height:1.55; margin-bottom:0.6rem; }
+.q-text sup { font-size:0.75em; vertical-align:super; }
+.q-extra { background:var(--bg-elevated); padding:0.5rem 0.85rem; border-radius:8px; font-family:'SF Mono',Menlo,monospace; font-size:0.92rem; margin:0.5rem 0; }
+.choices { display:flex; flex-direction:column; gap:0.5rem; margin-top:0.85rem; }
+.choice { background:var(--bg-elevated); border:2px solid transparent; color:var(--text); padding:0.85rem 1rem; border-radius:10px; font-size:0.98rem; font-family:inherit; font-weight:500; cursor:pointer; text-align:left; transition:all 0.15s; display:flex; align-items:center; gap:0.7rem; }
+.choice .letter { flex-shrink:0; width:28px; height:28px; border-radius:50%; background:var(--bg-card); display:flex; align-items:center; justify-content:center; font-size:0.82rem; font-weight:700; color:var(--text-dim); }
+.choice:hover { border-color:var(--orange); }
+.choice.selected { border-color:var(--orange); background:rgba(245,158,11,0.12); }
+.choice.selected .letter { background:var(--orange); color:white; }
+.choice.correct { border-color:var(--green); background:var(--green-soft); }
+.choice.correct .letter { background:var(--green); color:white; }
+.choice.wrong { border-color:var(--red); background:var(--red-soft); }
+.choice.wrong .letter { background:var(--red); color:white; }
+.choice:disabled { cursor:not-allowed; }
+.feedback { margin-top:1rem; padding:0.8rem 1rem; border-radius:10px; font-size:0.95rem; font-weight:600; }
+.feedback.right { background:var(--green-soft); color:var(--green); border-left:3px solid var(--green); }
+.feedback.wrong { background:var(--red-soft); color:var(--red); border-left:3px solid var(--red); }
+.feedback strong { display:block; margin-bottom:0.2rem; }
+.hint-btn { background:rgba(245,158,11,0.12); border:1px solid var(--orange); color:var(--orange); padding:0.45rem 0.85rem; border-radius:8px; font-size:0.85rem; font-weight:700; cursor:pointer; font-family:inherit; margin:0.4rem 0; }
+.hint-btn:hover { background:rgba(245,158,11,0.2); }
+.hint-box { background:rgba(245,158,11,0.1); border-left:3px solid var(--orange); padding:0.6rem 0.9rem; border-radius:0 8px 8px 0; font-size:0.92rem; color:var(--text); margin:0.3rem 0 0.7rem; line-height:1.5; }
+.nav-row { display:flex; gap:0.5rem; margin-top:1rem; }
+.nav-row .btn { flex:1; padding:0.85rem; font-size:0.95rem; font-weight:700; }
+.btn { border:none; border-radius:10px; cursor:pointer; font-family:inherit; }
+.btn-primary { background:linear-gradient(135deg, var(--orange), var(--pink)); color:white; }
+.btn-primary:hover { transform:translateY(-1px); }
+.btn-secondary { background:var(--bg-elevated); color:var(--text); border:1px solid var(--border); }
+.results { background:var(--bg-card); border-radius:18px; padding:1.5rem; border:1px solid var(--border); margin-bottom:1rem; }
+.results.pass { background:linear-gradient(135deg, rgba(16,185,129,0.18), var(--bg-card)); border-color:var(--green); }
+.results.fail { background:linear-gradient(135deg, rgba(245,158,11,0.18), var(--bg-card)); border-color:var(--orange); }
+.results h2 { margin:0 0 0.5rem; font-size:1.6rem; }
+.big-score { font-size:4rem; font-weight:900; line-height:1; margin:0.5rem 0; }
+.big-score.pass { color:var(--green); }
+.big-score.fail { color:var(--orange); }
+.results .verdict { font-size:1.05rem; font-weight:700; margin-bottom:0.8rem; }
+.results .summary { color:var(--text-dim); font-size:0.95rem; line-height:1.6; }
+.actions { display:flex; flex-direction:column; gap:0.5rem; margin-top:1rem; }
+.actions .btn { padding:0.9rem; font-size:0.95rem; font-weight:700; }
+footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center; font-size:0.8rem; color:var(--text-dim); }
+footer a { color:var(--primary); text-decoration:none; }
+.qmark { color:var(--text-dim); font-size:0.78rem; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="top">
+    <a href="index.html" class="logo">🎯 Targeted 10</a>
+    <div class="score-pill" id="scorePill">— / 10</div>
+  </header>
+
+  <div class="hero">
+    <h1>Your weak spots — 10 problems</h1>
+    <p>Targeted at exactly what you missed on the mock test. Get 8 of 10 and you're locked in.</p>
+    <div class="topics-tag">Axis · Quad Formula · Vertex · Exponential Table · Compound Interest</div>
+  </div>
+
+  <div id="quiz"></div>
+
+  <footer>
+    <p><a href="index.html">← Back to Hub</a> · <a href="mock-test.html">Mock Test →</a> · <a href="wed-review.html">Wed Review →</a></p>
+  </footer>
+
+</div>
+
+<script>
+const STORAGE_KEY = 'neil_targeted_v1';
+const defaultState = {
+  answers: {},
+  submitted: false,
+  attempts: 0,
+  bestScore: 0,
+  lastScore: 0,
+  hintsShown: {},
+  hintsCount: 0,
+};
+let state = loadState();
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return { ...defaultState, ...JSON.parse(raw) };
+  } catch(e) {}
+  return JSON.parse(JSON.stringify(defaultState));
+}
+function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+
+const QUESTIONS = [
+  // -------- AXIS OF SYMMETRY (2) --------
+  { topic:"Axis of symmetry",
+    q:"Find the axis of symmetry of y = 3x² − 12x + 7",
+    choices:["x = −2", "x = 2", "x = 4", "x = −4"], ans:"B",
+    hint:"x = −b / (2a). Here a = 3 and b = −12. Watch the sign carefully — −(−12) = +12.",
+    sol:"x = −b/(2a) = −(−12)/(2·3) = 12/6 = 2."},
+
+  { topic:"Axis of symmetry",
+    q:"Find the axis of symmetry of y = −x² + 6x − 4",
+    choices:["x = −3", "x = −6", "x = 3", "x = 6"], ans:"C",
+    hint:"a = −1, b = 6. x = −b/(2a) = −6/(2·−1). A negative divided by a negative is positive.",
+    sol:"x = −b/(2a) = −6/(2·−1) = −6/−2 = 3."},
+
+  // -------- QUADRATIC FORMULA (2) --------
+  { topic:"Quadratic formula",
+    q:"Use the quadratic formula to solve x² + 5x + 2 = 0",
+    choices:["(5 ± √17)/2", "(−5 ± √17)/2", "(−5 ± √33)/2", "(−5 ± √17)/4"], ans:"B",
+    hint:"a=1, b=5, c=2. Discriminant = b² − 4ac = 25 − 4(1)(2) = 25 − 8 = 17. Denominator is 2a = 2.",
+    sol:"a=1, b=5, c=2 → x = (−5 ± √(25−8))/2 = (−5 ± √17)/2."},
+
+  { topic:"Quadratic formula",
+    q:"Use the quadratic formula to solve 2x² − 3x − 4 = 0",
+    choices:["(3 ± √41)/4", "(−3 ± √41)/4", "(3 ± √23)/4", "(3 ± √41)/2"], ans:"A",
+    hint:"a=2, b=−3, c=−4. b² − 4ac = 9 − 4(2)(−4). That second part is −4·2·−4 = +32. Denominator = 2a = 4.",
+    sol:"x = (3 ± √(9−4·2·−4))/4 = (3 ± √(9+32))/4 = (3 ± √41)/4."},
+
+  // -------- VERTEX FROM FACTORED FORM (2) --------
+  { topic:"Vertex from factored form",
+    q:"Find the vertex of y = (x − 2)(x − 8)",
+    choices:["(5, −9)", "(5, 9)", "(−5, −9)", "(3, −5)"], ans:"A",
+    hint:"Zeros are x = 2 and x = 8. Vertex x-coordinate is halfway between them: (2+8)/2 = 5. Then plug x = 5 back in.",
+    sol:"Zeros at 2 and 8 → axis x = 5. y = (5−2)(5−8) = (3)(−3) = −9. Vertex: (5, −9)."},
+
+  { topic:"Vertex from factored form",
+    q:"Find the vertex of y = −(x + 4)(x − 2)",
+    choices:["(−1, 9)", "(−1, −9)", "(1, 9)", "(−1, 0)"], ans:"A",
+    hint:"Zeros are at x = −4 and x = 2. Midpoint: (−4 + 2)/2 = −1. Don't forget the negative out front when you plug in.",
+    sol:"Zeros at −4 and 2 → axis x = −1. y = −(−1+4)(−1−2) = −(3)(−3) = −(−9) = 9. Vertex: (−1, 9)."},
+
+  // -------- EXPONENTIAL TABLE ID (2) --------
+  { topic:"Identify exponential table",
+    q:"Which table represents an exponential function?",
+    choices:[
+      "x: 0,1,2,3   y: 2, 5, 8, 11",
+      "x: 0,1,2,3   y: 3, 6, 12, 24",
+      "x: 0,1,2,3   y: 0, 1, 4, 9",
+      "x: 0,1,2,3   y: 5, 10, 15, 20"
+    ], ans:"B",
+    hint:"Exponential = constant RATIO between y-values (divide). Check each: is y₂/y₁ = y₃/y₂ = y₄/y₃?",
+    sol:"For B: 6/3 = 2, 12/6 = 2, 24/12 = 2. Constant ratio of 2 → exponential. The others have constant differences (linear) or neither."},
+
+  { topic:"Identify exponential table",
+    q:"The table shows x: 0, 1, 2, 3 and y: 100, 80, 64, 51.2. Which function fits?",
+    choices:["y = 100 + 20x", "y = 100(0.8)^x", "y = 100(1.2)^x", "y = 100(0.2)^x"], ans:"B",
+    hint:"Check the ratio: 80/100 = 0.8, 64/80 = 0.8. The y-values shrink each step → decay. The multiplier is the ratio.",
+    sol:"Ratio between consecutive y's: 80/100 = 0.8. Constant ratio < 1 → exponential decay with base 0.8. y = 100(0.8)^x."},
+
+  // -------- COMPOUND INTEREST (2) --------
+  { topic:"Compound interest",
+    q:"Maria invests $2,000 at 5% annual interest, compounded annually. Which equation gives the amount A after t years?",
+    choices:["A = 2000(0.05)^t", "A = 2000(1.05)^t", "A = 2000(1.5)^t", "A = 2000 + 0.05t"], ans:"B",
+    hint:"Formula: A = P(1 + r)^t. P = 2000, r = 0.05 (5% as a decimal). So the multiplier is 1.05.",
+    sol:"A = P(1 + r)^t = 2000(1 + 0.05)^t = 2000(1.05)^t."},
+
+  { topic:"Compound interest",
+    q:"Sam deposits $1,500 at 4% interest compounded annually. About how much does he have after 6 years? (round to nearest dollar)",
+    choices:["$1,560", "$1,860", "$1,898", "$2,160"], ans:"C",
+    hint:"A = P(1 + r)^t = 1500 × (1.04)^6. Use a calculator: 1.04^6 ≈ 1.2653.",
+    sol:"A = 1500(1.04)^6 ≈ 1500 × 1.2653 ≈ $1,898."},
+];
+
+// =========================================================
+// UI
+// =========================================================
+function refreshHeader() {
+  const answered = Object.keys(state.answers).length;
+  document.getElementById('scorePill').textContent = state.submitted
+    ? `${calcScore()} / ${QUESTIONS.length}`
+    : `${answered} / ${QUESTIONS.length} answered`;
+}
+
+function calcScore() {
+  let s = 0;
+  Object.keys(state.answers).forEach(i => {
+    if (state.answers[i] === QUESTIONS[i].ans) s++;
+  });
+  return s;
+}
+
+function selectChoice(idx, letter) {
+  if (state.submitted) return;
+  state.answers[idx] = letter;
+  saveState();
+  renderQuestions();
+}
+
+function toggleHint(idx) {
+  if (!state.hintsShown) state.hintsShown = {};
+  if (!state.hintsCount) state.hintsCount = 0;
+  if (state.hintsShown[idx]) {
+    delete state.hintsShown[idx];
+  } else {
+    state.hintsShown[idx] = true;
+    state.hintsCount = (state.hintsCount || 0) + 1;
+  }
+  saveState();
+  renderQuestions();
+  setTimeout(() => {
+    const cards = document.querySelectorAll('.q-card');
+    if (cards[idx]) cards[idx].scrollIntoView({ behavior:'smooth', block:'center' });
+  }, 50);
+}
+
+const root = document.getElementById('quiz');
+
+function renderQuestions() {
+  refreshHeader();
+  const answered = Object.keys(state.answers).length;
+  const pct = Math.round(answered / QUESTIONS.length * 100);
+  let html = `<div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>`;
+
+  QUESTIONS.forEach((q, i) => {
+    const selected = state.answers[i];
+    const showFeedback = state.submitted;
+
+    html += `<div class="q-card">
+      <div class="q-meta">
+        <span><strong>${i + 1} / 10</strong></span>
+        <span class="topic">${q.topic}</span>
+      </div>
+      <div class="q-text">${q.q}</div>`;
+
+    if (!showFeedback && q.hint) {
+      const hintShown = (state.hintsShown || {})[i];
+      html += `<button class="hint-btn" onclick="toggleHint(${i})">${hintShown ? '🙈 Hide hint' : '💡 Get a hint'}</button>`;
+      if (hintShown) html += `<div class="hint-box">💡 ${q.hint}</div>`;
+    }
+
+    html += `<div class="choices">`;
+    q.choices.forEach((c, j) => {
+      const letter = "ABCD"[j];
+      let cls = 'choice';
+      if (showFeedback) {
+        if (letter === q.ans) cls += ' correct';
+        else if (selected === letter) cls += ' wrong';
+      } else if (selected === letter) {
+        cls += ' selected';
+      }
+      html += `<button class="${cls}" onclick="selectChoice(${i}, '${letter}')"${showFeedback ? ' disabled' : ''}>
+        <span class="letter">${letter}</span><span>${c}</span>
+      </button>`;
+    });
+    html += `</div>`;
+
+    if (showFeedback) {
+      if (selected === q.ans) {
+        html += `<div class="feedback right"><strong>✓ Correct</strong>${q.sol}</div>`;
+      } else if (selected) {
+        html += `<div class="feedback wrong"><strong>✗ Answer: ${q.ans}</strong>${q.sol}</div>`;
+      } else {
+        html += `<div class="feedback wrong"><strong>Skipped — Answer: ${q.ans}</strong>${q.sol}</div>`;
+      }
+    }
+    html += `</div>`;
+  });
+
+  if (!state.submitted) {
+    html += `<div class="nav-row">
+      <button class="btn btn-secondary" onclick="resetQuiz()">Reset</button>
+      <button class="btn btn-primary" onclick="submitQuiz()">Submit & see results</button>
+    </div>
+    <p class="qmark" style="text-align:center;margin-top:0.5rem;">${answered} of ${QUESTIONS.length} answered. ${answered < QUESTIONS.length ? 'Skipped count as wrong.' : 'All done — submit!'}</p>`;
+  } else {
+    html = renderResults(calcScore()) + html + `<div class="actions">
+      <button class="btn btn-primary" onclick="retakeQuiz()">🔁 Retake</button>
+      <button class="btn btn-secondary" onclick="reviewMode()">🔍 Jump to first wrong</button>
+    </div>`;
+  }
+  root.innerHTML = html;
+}
+
+function renderResults(score) {
+  const pct = Math.round(score / QUESTIONS.length * 100);
+  const passed = pct >= 80;
+  state.lastScore = pct;
+  if (pct > state.bestScore) state.bestScore = pct;
+  saveState();
+
+  let html = `<div class="results ${passed ? 'pass' : 'fail'}">`;
+  if (passed) {
+    html += `<h2>🎯 Locked in</h2>
+      <div class="big-score pass">${pct}%</div>
+      <div class="verdict">${score} / 10 — weak spots aren't weak anymore.</div>
+      <div class="summary">You just nailed the exact patterns you missed on the mock test. Go to sleep with confidence.</div>`;
+  } else {
+    html += `<h2>📚 Keep grinding</h2>
+      <div class="big-score fail">${pct}%</div>
+      <div class="verdict">${score} / 10 — need 8.</div>
+      <div class="summary">Look at the explanations below. Same formulas, just careful arithmetic. Then retake.</div>`;
+  }
+  html += `<div style="margin-top:0.8rem;font-size:0.85rem;color:var(--text-dim);">Best so far: ${state.bestScore}% · Attempt #${state.attempts}${state.hintsCount ? ` · Hints used: ${state.hintsCount}` : ''}</div>`;
+  html += `</div>`;
+  return html;
+}
+
+function submitQuiz() {
+  state.submitted = true;
+  state.attempts += 1;
+  saveState();
+  renderQuestions();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function retakeQuiz() {
+  if (!confirm("Clear all answers and try again?")) return;
+  state.answers = {};
+  state.submitted = false;
+  state.hintsShown = {};
+  state.hintsCount = 0;
+  saveState();
+  renderQuestions();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function resetQuiz() {
+  if (!confirm("Clear all answers (no submit)?")) return;
+  state.answers = {};
+  saveState();
+  renderQuestions();
+}
+function reviewMode() {
+  for (let i = 0; i < QUESTIONS.length; i++) {
+    if (state.answers[i] !== QUESTIONS[i].ans) {
+      const cards = document.querySelectorAll('.q-card');
+      if (cards[i]) cards[i].scrollIntoView({ behavior:'smooth', block:'start' });
+      return;
+    }
+  }
+}
+
+renderQuestions();
+</script>
+</body>
+</html>
