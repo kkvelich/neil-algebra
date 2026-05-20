@@ -4,3 +4,6 @@
 # Kept locally for content reference; do not commit to a public repo.
 Textbookonline/
 textbookonline/
+
+# Personal student data — Neil's grade history. Local only.
+progress-log.md
