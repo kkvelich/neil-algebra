@@ -596,6 +596,231 @@ const LESSONS = {
       final: "10/√5 = 2√5"
     },
     tip: "For something like 1/(3 + √2), use the <strong>conjugate</strong>: multiply top and bottom by (3 − √2). The denominator becomes 9 − 2 = 7."
+  },
+
+  "ch6-product-of-powers": {
+    title: "Product of Powers",
+    src: "§6.1 Big Ideas Algebra 1",
+    concept: "When you multiply two powers with the <strong>same base</strong>, <strong>add</strong> the exponents.",
+    formulas: [
+      "<strong>xᵃ · xᵇ = x^(a+b)</strong>",
+      "",
+      "Why? x³ · x² = (x·x·x)(x·x) = x⁵. Count: 3 + 2 = 5 x's."
+    ],
+    example: {
+      q: "Simplify: x⁴ · x⁷",
+      steps: [
+        ["Same base", "Both have base x → rule applies."],
+        ["Add exponents", "4 + 7 = 11."]
+      ],
+      final: "x⁴ · x⁷ = x¹¹"
+    },
+    tip: "<strong>Bases must MATCH.</strong> x³ · y² stays as x³y² — different bases, no combining."
+  },
+
+  "ch6-quotient-of-powers": {
+    title: "Quotient of Powers",
+    src: "§6.1 Big Ideas Algebra 1",
+    concept: "When you <strong>divide</strong> two powers with the same base, <strong>subtract</strong> the exponents. Top minus bottom.",
+    formulas: [
+      "<strong>xᵃ / xᵇ = x^(a−b)</strong>",
+      "",
+      "Watch the subtraction direction: top exponent − bottom exponent."
+    ],
+    example: {
+      q: "Simplify: x⁹ / x³",
+      steps: [
+        ["Same base", "Both have base x."],
+        ["Subtract", "9 − 3 = 6."]
+      ],
+      final: "x⁹ / x³ = x⁶"
+    },
+    tip: "If the bottom exponent is larger, the result has a <strong>negative exponent</strong> — flip to the denominator. x²/x⁵ = x⁻³ = 1/x³."
+  },
+
+  "ch6-power-of-a-power": {
+    title: "Power of a Power",
+    src: "§6.1 Big Ideas Algebra 1",
+    concept: "When a power is raised to another power, <strong>multiply</strong> the exponents.",
+    formulas: [
+      "<strong>(xᵃ)ᵇ = x^(a·b)</strong>",
+      "<strong>(xy)ⁿ = xⁿ · yⁿ</strong>     (power distributes to each factor)"
+    ],
+    example: {
+      q: "Simplify: (2x³)⁴",
+      steps: [
+        ["Distribute power", "= 2⁴ · (x³)⁴."],
+        ["Compute 2⁴", "= 16."],
+        ["Multiply exponents", "(x³)⁴ = x^(3·4) = x¹²."]
+      ],
+      final: "(2x³)⁴ = 16x¹²"
+    },
+    tip: "Apply the outer exponent to <strong>EVERY</strong> factor inside the parens — including the coefficient. Forgetting the coefficient is the #1 mistake here."
+  },
+
+  "ch6-zero-negative-exponents": {
+    title: "Zero & Negative Exponents",
+    src: "§6.1 Big Ideas Algebra 1",
+    concept: "Two special-case rules that show up everywhere — must be automatic.",
+    formulas: [
+      "<strong>Zero exponent:</strong>  x⁰ = 1   (for x ≠ 0)",
+      "<strong>Negative exponent:</strong>  x⁻ᵃ = 1 / xᵃ   (flip to denominator)",
+      "",
+      "Example: 2⁻³ = 1/2³ = 1/8."
+    ],
+    example: {
+      q: "Evaluate: 5⁰ + 3⁻²",
+      steps: [
+        ["Zero rule", "5⁰ = 1."],
+        ["Negative rule", "3⁻² = 1/3² = 1/9."],
+        ["Combine", "1 + 1/9 = 9/9 + 1/9 = 10/9."]
+      ],
+      final: "5⁰ + 3⁻² = 10/9"
+    },
+    tip: "<strong>Negative exponent ≠ negative answer.</strong> 2⁻³ = 1/8 (positive). The negative just means flip the position."
+  },
+
+  "ch8-discriminant": {
+    title: "The Discriminant",
+    src: "Ch 8 — Quadratic Functions (Algebra 1)",
+    concept: "Tells you how many real solutions a quadratic has <strong>without solving</strong> it. Computed from the radicand of the quadratic formula.",
+    formulas: [
+      "<strong>D = b² − 4ac</strong>",
+      "",
+      "<strong>D &gt; 0</strong>  →  2 real solutions  (parabola crosses x-axis twice)",
+      "<strong>D = 0</strong>  →  1 real (double) solution  (parabola just touches x-axis)",
+      "<strong>D &lt; 0</strong>  →  0 real solutions  (parabola never touches x-axis)"
+    ],
+    example: {
+      q: "Find the discriminant of x² + 4x + 5 = 0 and tell how many real solutions.",
+      steps: [
+        ["Identify", "a = 1, b = 4, c = 5."],
+        ["Compute", "D = 4² − 4(1)(5) = 16 − 20 = −4."],
+        ["Interpret", "D &lt; 0  →  no real solutions."]
+      ],
+      final: "D = −4. Zero real solutions."
+    },
+    tip: "<strong>The sign of D is what matters</strong> — just track the sign (positive, zero, negative). You don't need the exact value to answer 'how many solutions'."
+  },
+
+  "ch8-transformations": {
+    title: "Transformations of Quadratics",
+    src: "§8.4 Big Ideas Algebra 1",
+    concept: "Vertex form y = a(x − h)² + k tells you exactly how y = x² (the parent parabola) has been shifted, stretched, or flipped.",
+    formulas: [
+      "<strong>y = a(x − h)² + k</strong>",
+      "",
+      "<strong>h:</strong> RIGHT if positive, LEFT if negative (sign flips inside the parens — careful!)",
+      "<strong>k:</strong> UP if positive, DOWN if negative",
+      "<strong>|a| &gt; 1:</strong> vertical STRETCH (narrower parabola)",
+      "<strong>|a| &lt; 1:</strong> vertical COMPRESS (wider parabola)",
+      "<strong>a &lt; 0:</strong> REFLECT over x-axis (opens down)"
+    ],
+    example: {
+      q: "Describe y = −2(x − 3)² + 4 vs. the parent y = x².",
+      steps: [
+        ["a = −2", "Reflect over x-axis (opens down) AND stretch vertically by 2."],
+        ["h = 3", "Shift right 3."],
+        ["k = 4", "Shift up 4."]
+      ],
+      final: "Vertex (3, 4), opens downward, narrower than y = x²."
+    },
+    tip: "<strong>h's sign flips inside the parens.</strong> (x − 3) → h = +3 (right). (x + 3) → h = −3 (left). The textbook form is (x − h), so (x + 3) really means (x − (−3))."
+  },
+
+  "ch9-solve-by-factoring": {
+    title: "Solve by Factoring",
+    src: "§9.2 Big Ideas Algebra 1",
+    concept: "The fastest method when the quadratic factors cleanly. Uses the <strong>zero-product property</strong>.",
+    formulas: [
+      "<strong>Zero-product property:</strong>  if a · b = 0, then a = 0 OR b = 0.",
+      "",
+      "Steps:",
+      "  1. Set the equation equal to zero.",
+      "  2. Factor the left side.",
+      "  3. Set each factor to zero separately.",
+      "  4. Solve each."
+    ],
+    example: {
+      q: "Solve x² − 5x + 6 = 0.",
+      steps: [
+        ["Already = 0", "✓"],
+        ["Factor", "(x − 2)(x − 3) = 0."],
+        ["Zero each factor", "x − 2 = 0  OR  x − 3 = 0."],
+        ["Solve", "x = 2  or  x = 3."]
+      ],
+      final: "x = 2 or x = 3"
+    },
+    tip: "If it doesn't factor in ~30 seconds, <strong>switch to the quadratic formula</strong>. Don't grind on factoring when QF would be faster."
+  },
+
+  "ch9-solve-by-square-roots": {
+    title: "Solve by Square Roots",
+    src: "§9.3 Big Ideas Algebra 1",
+    concept: "Use this when there's <strong>no middle x-term</strong>. Isolate the squared piece, then take the square root of both sides.",
+    formulas: [
+      "If x² = k (k ≥ 0), then x = ±√k.",
+      "",
+      "Steps:",
+      "  1. Isolate the squared expression.",
+      "  2. Take √ of both sides.",
+      "  3. <strong>Don't forget the ±!</strong>",
+      "  4. Solve for x."
+    ],
+    example: {
+      q: "Solve (x − 4)² = 49.",
+      steps: [
+        ["Isolated", "(x − 4)² = 49 ✓"],
+        ["Take √", "x − 4 = ±7."],
+        ["Two cases", "x = 4 + 7 = 11,  or  x = 4 − 7 = −3."]
+      ],
+      final: "x = 11 or x = −3"
+    },
+    tip: "<strong>The most-missed step is the ±.</strong> Both 7² and (−7)² equal 49, so √49 splits into two cases."
+  },
+
+  "ch9-pick-the-method": {
+    title: "Picking a Solving Method",
+    src: "Ch 9 — Solving Quadratics (Algebra 1)",
+    concept: "You have four methods. Pick the easiest for the problem in front of you.",
+    formulas: [
+      "<strong>1. Factoring</strong>  — fastest if the quadratic factors. Try this first when a = 1.",
+      "<strong>2. Square roots</strong>  — best when there's NO middle x-term  (ax² + c = 0  or  (x−h)² = k).",
+      "<strong>3. Completing the square</strong>  — works well when a = 1 and b is even.",
+      "<strong>4. Quadratic formula</strong>  — ALWAYS works. The fallback when nothing else is clean."
+    ],
+    example: {
+      q: "Best method for 3x² − 12 = 0?",
+      steps: [
+        ["No middle x-term", "Just ax² + c = 0 — isolate x² and take √."],
+        ["Apply", "3x² = 12  →  x² = 4  →  x = ±2."]
+      ],
+      final: "Square roots. x = ±2."
+    },
+    tip: "<strong>When in doubt, quadratic formula.</strong> It's slower than factoring, but it ALWAYS works and never gets stuck."
+  },
+
+  "ch11-add-subtract-radicals": {
+    title: "Adding & Subtracting Radicals",
+    src: "Ch 11 — Radicals (Algebra 1)",
+    concept: "Treat radicals like variables: only <strong>like radicals</strong> (same number under the √) can be combined. If they don't match, <strong>simplify each first</strong> — often they become like.",
+    formulas: [
+      "Like radicals share the same radicand.",
+      "<strong>a√n ± b√n = (a ± b)√n</strong>",
+      "",
+      "Different radicands? Simplify each, then check again."
+    ],
+    example: {
+      q: "Simplify: √72 − √18",
+      steps: [
+        ["Simplify √72", "= √(36·2) = 6√2."],
+        ["Simplify √18", "= √(9·2) = 3√2."],
+        ["Now like radicals", "Both have √2."],
+        ["Subtract coefficients", "6√2 − 3√2 = 3√2."]
+      ],
+      final: "√72 − √18 = 3√2"
+    },
+    tip: "<strong>You CANNOT combine √2 + √3</strong> — different radicands, no way to merge. Leave them as √2 + √3."
   }
 };
 
