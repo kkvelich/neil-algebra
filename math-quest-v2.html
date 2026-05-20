@@ -821,6 +821,560 @@ const LESSONS = {
       final: "√72 − √18 = 3√2"
     },
     tip: "<strong>You CANNOT combine √2 + √3</strong> — different radicands, no way to merge. Leave them as √2 + √3."
+  },
+
+  "ch6-scientific-notation": {
+    title: "Scientific Notation",
+    src: "§6.5 Big Ideas Algebra 1",
+    concept: "Write very large or very small numbers as <strong>a × 10ⁿ</strong>, where the coefficient a is between 1 and 10 (1 ≤ |a| &lt; 10).",
+    formulas: [
+      "<strong>Form:</strong>  a × 10ⁿ",
+      "  1 ≤ |a| &lt; 10",
+      "  n positive → BIG number",
+      "  n negative → SMALL number (less than 1)"
+    ],
+    example: {
+      q: "Write 4,200,000 in scientific notation.",
+      steps: [
+        ["Locate decimal", "Imaginary decimal sits after the last digit: 4,200,000.0"],
+        ["Move to make a", "Move left until 4.2 (one digit before the point)."],
+        ["Count moves", "Moved 6 places left → exponent is +6."]
+      ],
+      final: "4,200,000 = 4.2 × 10⁶"
+    },
+    tip: "For numbers &lt; 1 (like 0.00067), move decimal RIGHT and the exponent is <strong>NEGATIVE</strong>. 0.00067 = 6.7 × 10⁻⁴."
+  },
+
+  "ch6-geometric-sequences": {
+    title: "Geometric Sequences",
+    src: "§6.6 Big Ideas Algebra 1",
+    concept: "Each term is the previous term <strong>multiplied</strong> by a constant called the <strong>common ratio</strong> r. (Arithmetic sequences ADD; geometric sequences MULTIPLY.)",
+    formulas: [
+      "<strong>Common ratio:</strong>  r = (any term) ÷ (previous term)",
+      "<strong>nth term:</strong>  aₙ = a₁ · r^(n−1)",
+      "",
+      "r &gt; 1 → grows.  0 &lt; r &lt; 1 → shrinks.  r &lt; 0 → alternates signs."
+    ],
+    example: {
+      q: "Find the next term of 3, 12, 48, 192, ___.",
+      steps: [
+        ["Find ratio", "12/3 = 4. Check: 48/12 = 4. 192/48 = 4. ✓"],
+        ["Apply ratio", "Next term = 192 × 4 = 768."]
+      ],
+      final: "Next: 768. (Common ratio r = 4.)"
+    },
+    tip: "Always <strong>verify the ratio with at least 2 pairs</strong>. If the ratio between terms isn't constant, it's not geometric."
+  },
+
+  "ch7-add-subtract-polynomials": {
+    title: "Adding & Subtracting Polynomials",
+    src: "§7.1 Big Ideas Algebra 1",
+    concept: "Combine <strong>like terms</strong> — same variable AND same exponent. Coefficients add; the variable part stays the same.",
+    formulas: [
+      "Like terms: same variable raised to same power.",
+      "  ✓ 3x² and 7x² are like.",
+      "  ✗ 3x² and 7x are NOT like.",
+      "",
+      "<strong>Subtracting? Distribute the minus to EVERY term in the second polynomial first.</strong>"
+    ],
+    example: {
+      q: "Simplify: (5x² − 3x) − (2x² − x + 7)",
+      steps: [
+        ["Distribute the minus", "5x² − 3x − 2x² + x − 7."],
+        ["Group like terms", "(5x² − 2x²) + (−3x + x) + (−7)."],
+        ["Combine", "3x² − 2x − 7."]
+      ],
+      final: "= 3x² − 2x − 7"
+    },
+    tip: "<strong>The #1 mistake on subtraction is forgetting to distribute the minus to ALL terms</strong>, not just the first one. Write the negative signs out explicitly before combining."
+  },
+
+  "ch7-gcf-complete-factoring": {
+    title: "GCF + Complete Factoring",
+    src: "§7.7 Big Ideas Algebra 1",
+    concept: "<strong>Always pull out the Greatest Common Factor FIRST</strong>, then check if the remaining expression matches a known pattern (difference of squares, trinomial). Keep factoring until nothing factors further.",
+    formulas: [
+      "Steps:",
+      "  Step 0 — pull out GCF (largest number AND lowest-power common variable).",
+      "  Step 1 — look at what's left: matches a pattern?",
+      "  Step 2 — factor that pattern.",
+      "  Step 3 — check that NOTHING factors further. That's 'completely.'"
+    ],
+    example: {
+      q: "Factor completely: 4x³ − 36x",
+      steps: [
+        ["GCF", "GCF of 4x³ and 36x is 4x. Pull out: 4x(x² − 9)."],
+        ["Pattern?", "x² − 9 is a difference of squares."],
+        ["Factor it", "x² − 9 = (x + 3)(x − 3)."],
+        ["Combine", "4x(x + 3)(x − 3)."]
+      ],
+      final: "4x³ − 36x = 4x(x + 3)(x − 3)"
+    },
+    tip: "<strong>'Completely' means every factor that CAN be factored, IS.</strong> Don't stop at 4x(x² − 9) — the trinomial inside still factors. Always check the leftover after each step."
+  },
+
+  "ch8-find-zeros": {
+    title: "Finding Zeros of a Quadratic",
+    src: "§8.5 Big Ideas Algebra 1",
+    concept: "The <strong>zeros</strong> of a function are the x-values where y = 0 — i.e. where the graph crosses the x-axis. For factored form, just set each factor to zero.",
+    formulas: [
+      "<strong>Factored form:</strong>  y = a(x − r₁)(x − r₂)  →  zeros at r₁ and r₂",
+      "<strong>Standard form:</strong>  set y = 0, then factor or use quadratic formula",
+      "",
+      "Same thing, different names: zeros = roots = x-intercepts = solutions of f(x) = 0."
+    ],
+    example: {
+      q: "Find the zeros of f(x) = (x − 1)(x + 7).",
+      steps: [
+        ["Set each factor = 0", "x − 1 = 0  OR  x + 7 = 0."],
+        ["Solve each", "x = 1  or  x = −7."]
+      ],
+      final: "Zeros: x = 1 and x = −7"
+    },
+    tip: "<strong>Sign flips inside the parens.</strong> (x + 7) means the zero is x = −7 (not +7). The factor form is (x − r), so (x + 7) = (x − (−7))."
+  },
+
+  "ch8-vertex-standard": {
+    title: "Converting Vertex ↔ Standard Form",
+    src: "§8.4 Big Ideas Algebra 1",
+    concept: "Standard form y = ax² + bx + c and vertex form y = a(x − h)² + k describe the SAME parabola. Convert standard → vertex by <strong>completing the square</strong>; convert vertex → standard by <strong>expanding</strong>.",
+    formulas: [
+      "<strong>Standard → Vertex (complete the square):</strong>",
+      "  • Compute h = −b/(2a)  (also the axis of symmetry)",
+      "  • Compute k = f(h)",
+      "  • Write as y = a(x − h)² + k",
+      "",
+      "<strong>Vertex → Standard (expand):</strong>",
+      "  • Square the binomial: (x − h)² = x² − 2hx + h²",
+      "  • Distribute a, then combine with k"
+    ],
+    example: {
+      q: "Convert y = x² − 8x + 13 to vertex form.",
+      steps: [
+        ["Half of b", "−8/2 = −4; square it: 16."],
+        ["Rewrite", "y = (x² − 8x + 16) + 13 − 16."],
+        ["Factor", "y = (x − 4)² − 3."]
+      ],
+      final: "y = (x − 4)² − 3.  Vertex: (4, −3)."
+    },
+    tip: "<strong>Double-check by computing the vertex BOTH ways.</strong> Standard via h = −b/(2a) = 8/2 = 4, k = f(4) = 16 − 32 + 13 = −3. Matches the vertex form (4, −3). ✓"
+  },
+
+  "ch9-word-area": {
+    title: "Word Problem — Area",
+    src: "§9.2 Big Ideas Algebra 1",
+    concept: "Area word problems usually translate into a <strong>quadratic equation</strong>. Translate the geometry into algebra, solve, then <strong>reject any answer that doesn't make physical sense</strong> (negative widths, etc.).",
+    formulas: [
+      "<strong>Rectangle area:</strong>  A = L · W",
+      "<strong>Common setup:</strong>  'length is X more than width'  →  L = W + X",
+      "  Substitute: W(W + X) = A  →  W² + XW − A = 0",
+      "",
+      "Solve the quadratic. <strong>Reject negative answers</strong> for physical measurements."
+    ],
+    example: {
+      q: "A rectangle's length is 5 more than its width, and area = 84. Find the width.",
+      steps: [
+        ["Variables", "Let w = width. Then length = w + 5."],
+        ["Equation", "w(w + 5) = 84  →  w² + 5w − 84 = 0."],
+        ["Factor", "(w + 12)(w − 7) = 0."],
+        ["Solve & reject", "w = −12 (reject — width must be positive) or w = 7."]
+      ],
+      final: "Width = 7"
+    },
+    tip: "<strong>Always check which answer makes physical sense.</strong> Width, time, length, count — all must be non-negative. Throw out negative solutions."
+  },
+
+  "ch10-simplify": {
+    title: "Simplifying Rational Expressions",
+    src: "Ch 10 — Rational Expressions (Algebra 1)",
+    concept: "A rational expression is just a fraction with polynomials. To simplify: <strong>FACTOR top and bottom, then cancel common FACTORS</strong>. ⚠️ You can only cancel factors (things that MULTIPLY), not terms (things that ADD).",
+    formulas: [
+      "Steps:",
+      "  1. Factor numerator completely.",
+      "  2. Factor denominator completely.",
+      "  3. Cancel any factor that appears in both.",
+      "",
+      "<strong>⚠️ Cancel FACTORS, not TERMS.</strong>",
+      "  ✓  (x+1)(x−1)/(x−1) = x+1   (canceling factor x−1)",
+      "  ✗  (x+2)/2 ≠ x+1   (the 2 is a term in the numerator, not a factor)"
+    ],
+    example: {
+      q: "Simplify: (x² − 1) / (x − 1)",
+      steps: [
+        ["Factor top", "x² − 1 = (x + 1)(x − 1)."],
+        ["Setup", "(x + 1)(x − 1) / (x − 1)."],
+        ["Cancel (x − 1)", "= x + 1."]
+      ],
+      final: "(x² − 1) / (x − 1) = x + 1"
+    },
+    tip: "Watch out for the <strong>cancel-terms trap</strong>. (x + 4)/4 does NOT simplify to x + 1 — that 4 isn't a factor of the entire numerator."
+  },
+
+  "ch10-multiply": {
+    title: "Multiplying Rational Expressions",
+    src: "Ch 10 — Rational Expressions (Algebra 1)",
+    concept: "Multiply numerators, multiply denominators, simplify. <strong>Trick:</strong> factor everything first, cancel before multiplying — less arithmetic.",
+    formulas: [
+      "<strong>(a/b) · (c/d) = (a·c) / (b·d)</strong>",
+      "",
+      "Faster: factor each numerator/denominator, cancel common factors diagonally, THEN multiply what's left."
+    ],
+    example: {
+      q: "Multiply and simplify: (3x²/4) · (8/(9x))",
+      steps: [
+        ["Multiply across", "(3x² · 8) / (4 · 9x) = 24x² / (36x)."],
+        ["Simplify coefficient", "24/36 = 2/3."],
+        ["Simplify variable", "x²/x = x."]
+      ],
+      final: "(3x²/4) · (8/(9x)) = 2x/3"
+    },
+    tip: "Cancel BEFORE multiplying when possible. (3x²/4)·(8/(9x)): the 8 and 4 cancel to 2/1, the 3 and 9 cancel to 1/3, the x² and x cancel to x. Result: 2x/3 — no big numbers."
+  },
+
+  "ch10-divide": {
+    title: "Dividing Rational Expressions",
+    src: "Ch 10 — Rational Expressions (Algebra 1)",
+    concept: "To divide by a fraction, <strong>multiply by its reciprocal</strong> (flip it upside down). Then simplify like a multiplication problem.",
+    formulas: [
+      "<strong>(a/b) ÷ (c/d) = (a/b) · (d/c)</strong>",
+      "",
+      "<strong>KCF:</strong> Keep the first fraction, Change ÷ to ·, Flip the second."
+    ],
+    example: {
+      q: "Divide: (x/3) ÷ (x/6)",
+      steps: [
+        ["Flip the second", "(x/3) · (6/x)."],
+        ["Multiply across", "6x / (3x)."],
+        ["Simplify", "= 6/3 = 2."]
+      ],
+      final: "(x/3) ÷ (x/6) = 2"
+    },
+    tip: "Only the <strong>SECOND</strong> fraction flips. The first stays as-is. (a/b) ÷ (c/d) — flip c/d to d/c."
+  },
+
+  "ch10-add-same-denom": {
+    title: "Adding Rationals — Same Denominator",
+    src: "Ch 10 — Rational Expressions (Algebra 1)",
+    concept: "When denominators match, just <strong>add the numerators</strong>. Denominator stays the same.",
+    formulas: [
+      "<strong>a/c + b/c = (a + b)/c</strong>",
+      "",
+      "Same idea as 3/8 + 4/8 = 7/8."
+    ],
+    example: {
+      q: "Add: 3/x + 4/x",
+      steps: [
+        ["Same denominator", "Just add the tops."],
+        ["Combine numerators", "(3 + 4)/x = 7/x."]
+      ],
+      final: "3/x + 4/x = 7/x"
+    },
+    tip: "Always <strong>simplify the resulting fraction</strong> after combining. If the new numerator has a common factor with the denominator, cancel it."
+  },
+
+  "ch10-add-different-denom": {
+    title: "Adding Rationals — Different Denominators",
+    src: "Ch 10 — Rational Expressions (Algebra 1)",
+    concept: "Different denominators? Find the <strong>Least Common Denominator (LCD)</strong>, rewrite each fraction over the LCD, THEN add numerators.",
+    formulas: [
+      "Steps:",
+      "  1. Find LCD (smallest expression both denominators divide into).",
+      "  2. Multiply top AND bottom of each fraction to convert to LCD.",
+      "  3. Add (or subtract) numerators; keep LCD on bottom.",
+      "  4. Simplify."
+    ],
+    example: {
+      q: "Add: 1/2 + 1/x",
+      steps: [
+        ["Find LCD", "LCD of 2 and x is 2x."],
+        ["Rewrite each", "1/2 = x/(2x).  1/x = 2/(2x)."],
+        ["Add numerators", "(x + 2) / (2x)."]
+      ],
+      final: "1/2 + 1/x = (x + 2) / (2x)"
+    },
+    tip: "When in doubt, <strong>just multiply the denominators together</strong> for a common denominator. It may not be the LEAST common, but it always works — simplify at the end."
+  },
+
+  "ch10-subtract": {
+    title: "Subtracting Rational Expressions",
+    src: "Ch 10 — Rational Expressions (Algebra 1)",
+    concept: "Same as addition: get a common denominator if needed, then subtract the numerators. <strong>Distribute the minus to every term</strong> in the second numerator.",
+    formulas: [
+      "<strong>a/c − b/c = (a − b)/c</strong>   (same denominator)",
+      "",
+      "Different denominators? Find LCD first.",
+      "",
+      "<strong>⚠️ Use parentheses around the second numerator</strong> when distributing the minus."
+    ],
+    example: {
+      q: "Subtract: 5/(x−2) − 3/(x−2)",
+      steps: [
+        ["Same denominator", "Combine numerators."],
+        ["Subtract", "(5 − 3)/(x − 2) = 2/(x − 2)."]
+      ],
+      final: "= 2/(x − 2)"
+    },
+    tip: "If the second numerator has multiple terms (like 2x + 3), put it in parens before subtracting: (5x − 1)/c − (2x + 3)/c becomes (5x − 1 − 2x − 3)/c, NOT (5x − 1 − 2x + 3)/c. Distribute the minus to BOTH terms."
+  },
+
+  "ch10-solve-rational-eq": {
+    title: "Solving Rational Equations",
+    src: "Ch 10 — Rational Expressions (Algebra 1)",
+    concept: "When both sides of the equation are single fractions, <strong>cross-multiply</strong>. The resulting equation is usually linear or quadratic — solve normally, then check.",
+    formulas: [
+      "<strong>If  a/b = c/d,  then  a · d = b · c.</strong>",
+      "",
+      "Steps:",
+      "  1. Cross-multiply.",
+      "  2. Solve the resulting equation.",
+      "  3. CHECK in the original — toss out any solution that makes a denominator zero."
+    ],
+    example: {
+      q: "Solve: (x + 2)/6 = (2x − 10)/8",
+      steps: [
+        ["Cross-multiply", "8(x + 2) = 6(2x − 10)."],
+        ["Expand", "8x + 16 = 12x − 60."],
+        ["Solve", "76 = 4x  →  x = 19."],
+        ["Check", "(19+2)/6 = 21/6 = 3.5;  (2·19−10)/8 = 28/8 = 3.5. ✓"]
+      ],
+      final: "x = 19"
+    },
+    tip: "<strong>Always check.</strong> Any solution that makes an original denominator zero is <strong>extraneous</strong> — throw it out."
+  },
+
+  "ch11-simplify-cube-root": {
+    title: "Simplifying Cube Roots",
+    src: "Ch 11 — Radicals (Algebra 1)",
+    concept: "Same idea as square roots, but look for <strong>perfect CUBE factors</strong> (not square). Pull them out, leave the rest under the ∛.",
+    formulas: [
+      "<strong>∛(a · b) = ∛a · ∛b</strong>",
+      "",
+      "<strong>Perfect cubes to memorize:</strong>",
+      "  1, 8, 27, 64, 125, 216, 343, 512, 729, 1000",
+      "",
+      "Cube roots of NEGATIVE numbers are fine: ∛(−27) = −3."
+    ],
+    example: {
+      q: "Simplify: ∛189",
+      steps: [
+        ["Find a cube factor", "189 = 27 · 7. 27 is a perfect cube."],
+        ["Split", "∛189 = ∛27 · ∛7."],
+        ["Simplify", "= 3∛7."]
+      ],
+      final: "∛189 = 3∛7"
+    },
+    tip: "Unlike square roots, <strong>cube roots can be negative</strong>. ∛(−8) = −2 (no ± needed — only one answer)."
+  },
+
+  "ch11-simplify-with-variables": {
+    title: "Simplifying Radicals with Variables",
+    src: "Ch 11 — Radicals (Algebra 1)",
+    concept: "<strong>Even powers come out of √ cleanly</strong>. √(x²) = x, √(x⁴) = x², √(x⁶) = x³. For odd powers, pull out the largest even chunk and leave one factor under the radical.",
+    formulas: [
+      "<strong>√(xⁿ) = x^(n/2)</strong>   (when n is even)",
+      "",
+      "Odd power example:",
+      "  √(x⁵) = √(x⁴ · x) = x²√x",
+      "",
+      "Combine with numeric coefficients: √(48x⁴) = √48 · √(x⁴) = 4√3 · x² = 4x²√3."
+    ],
+    example: {
+      q: "Simplify: √(48x⁴)",
+      steps: [
+        ["Split numbers and variables", "√48 · √(x⁴)."],
+        ["Simplify √48", "48 = 16·3 → √48 = 4√3."],
+        ["Simplify √(x⁴)", "x⁴ has even exponent → comes out as x²."],
+        ["Combine", "4x²√3."]
+      ],
+      final: "√(48x⁴) = 4x²√3"
+    },
+    tip: "<strong>Halve the exponent</strong> for variables that come out. x⁴ → x². x⁶ → x³. x⁸ → x⁴."
+  },
+
+  "ch11-multiply-radicals": {
+    title: "Multiplying Radicals",
+    src: "Ch 11 — Radicals (Algebra 1)",
+    concept: "Multiply what's under the radicals (the radicands) together. Then simplify the result.",
+    formulas: [
+      "<strong>√a · √b = √(ab)</strong>",
+      "",
+      "Coefficients multiply separately: (3√2)(5√7) = 15√14.",
+      "Distributive: √a · (b + √c) = b√a + √(ac)."
+    ],
+    example: {
+      q: "Multiply: √6 · √8",
+      steps: [
+        ["Combine under one radical", "√6 · √8 = √(6·8) = √48."],
+        ["Simplify √48", "48 = 16·3 → √48 = 4√3."]
+      ],
+      final: "√6 · √8 = 4√3"
+    },
+    tip: "<strong>Multiply FIRST, simplify SECOND.</strong> Combining radicands often produces a perfect-square factor that wouldn't be obvious if you simplified each radical separately."
+  },
+
+  "ch11-divide-radicals": {
+    title: "Dividing Radicals",
+    src: "Ch 11 — Radicals (Algebra 1)",
+    concept: "Divide what's under the radicals; simplify the resulting fraction inside the √ before pulling out perfect squares.",
+    formulas: [
+      "<strong>√a / √b = √(a/b)</strong>",
+      "",
+      "Often the inside fraction simplifies to a perfect square!"
+    ],
+    example: {
+      q: "Simplify: √48 / √3",
+      steps: [
+        ["Combine into one radical", "√48/√3 = √(48/3)."],
+        ["Simplify inside", "48/3 = 16."],
+        ["Take √", "√16 = 4."]
+      ],
+      final: "√48 / √3 = 4"
+    },
+    tip: "<strong>Always try dividing first</strong> — sometimes the fraction inside collapses to a perfect square (like 48/3 = 16 here) and you get a whole number out."
+  },
+
+  "ch11-multiply-binomials-w-radicals": {
+    title: "Multiplying Binomials with Radicals",
+    src: "Ch 11 — Radicals (Algebra 1)",
+    concept: "Use FOIL just like regular binomials. The key trick: <strong>(√a)² = a</strong> — the radical disappears when squared. That's what makes the L (Last) step often produce a constant.",
+    formulas: [
+      "<strong>(√a)² = a</strong>  — radical squared loses the √.",
+      "",
+      "FOIL through the binomials, then combine like terms (including radical terms)."
+    ],
+    example: {
+      q: "Multiply: (5 + 2√7)(4 − √7)",
+      steps: [
+        ["F", "5 · 4 = 20."],
+        ["O", "5 · (−√7) = −5√7."],
+        ["I", "2√7 · 4 = 8√7."],
+        ["L", "2√7 · (−√7) = −2·(√7)² = −2·7 = −14."],
+        ["Combine", "20 − 5√7 + 8√7 − 14 = 6 + 3√7."]
+      ],
+      final: "(5 + 2√7)(4 − √7) = 6 + 3√7"
+    },
+    tip: "<strong>The L step is where the magic happens.</strong> Two radicals multiplied → (√a)² → just the number. Easy to forget you can drop the √."
+  },
+
+  "ch11-square-of-a-b-c": {
+    title: "Squaring a + b√c",
+    src: "Ch 11 — Radicals (Algebra 1)",
+    concept: "Apply the perfect-square pattern (a + b)² = a² + 2ab + b² where one term has a radical. The squared radical loses the √. Then simplify any remaining radicals at the end.",
+    formulas: [
+      "<strong>(a + b√c)² = a² + 2ab√c + b²c</strong>",
+      "",
+      "Why? FOIL: (a + b√c)(a + b√c) = a² + ab√c + ab√c + b²(√c)² = a² + 2ab√c + b²c."
+    ],
+    example: {
+      q: "Expand: (1 + 2√8)²",
+      steps: [
+        ["Apply pattern", "= 1² + 2·1·(2√8) + (2√8)²."],
+        ["Compute pieces", "= 1 + 4√8 + 4·8 = 1 + 4√8 + 32."],
+        ["Add constants", "= 33 + 4√8."],
+        ["Simplify √8", "√8 = 2√2 → 4√8 = 8√2."]
+      ],
+      final: "(1 + 2√8)² = 33 + 8√2"
+    },
+    tip: "<strong>Always simplify the radicals at the very end</strong> — 4√8 isn't 'simplified' because 8 has a perfect-square factor. 4√8 = 4·2√2 = 8√2."
+  },
+
+  "ch11-rationalize-single": {
+    title: "Rationalize — Single Radical",
+    src: "Ch 11 — Radicals (Algebra 1)",
+    concept: "A radical in the denominator isn't in simplest form. To clear it: <strong>multiply numerator AND denominator by that radical</strong>. (√a · √a = a, no more radical.)",
+    formulas: [
+      "<strong>For a/(b√c):</strong>  multiply top and bottom by √c.",
+      "  Result: (a√c) / (b·c).  Then simplify.",
+      "",
+      "Why? Because we're really just multiplying by 1 (√c/√c = 1), which doesn't change the value."
+    ],
+    example: {
+      q: "Rationalize: 2/(6√2)",
+      steps: [
+        ["Multiply by √2/√2", "(2 · √2) / (6√2 · √2)."],
+        ["Simplify bottom", "6√2 · √2 = 6 · 2 = 12."],
+        ["Setup", "2√2 / 12."],
+        ["Reduce", "= √2 / 6."]
+      ],
+      final: "2/(6√2) = √2/6"
+    },
+    tip: "<strong>Look for a common factor in the result</strong> — usually simplifies further (here 2/12 → 1/6)."
+  },
+
+  "ch11-rationalize-w-conjugate": {
+    title: "Rationalize — With Conjugate",
+    src: "Ch 11 — Radicals (Algebra 1)",
+    concept: "If the denominator has the form (a ± √b), single-radical multiplication won't work. Use the <strong>conjugate</strong> (a ∓ √b) — the product (a + √b)(a − √b) = a² − b removes the radical.",
+    formulas: [
+      "<strong>Conjugate of (a + √b)</strong> is <strong>(a − √b)</strong>. Same numbers, opposite middle sign.",
+      "<strong>(a + √b)(a − √b) = a² − b</strong>   (no radical)",
+      "",
+      "Steps:",
+      "  1. Multiply top and bottom by the conjugate of the denominator.",
+      "  2. Expand bottom — radical disappears.",
+      "  3. Simplify if possible."
+    ],
+    example: {
+      q: "Rationalize: 1/(3 + √2)",
+      steps: [
+        ["Conjugate of denom", "(3 − √2)."],
+        ["Multiply top and bottom", "1·(3 − √2) / (3 + √2)(3 − √2)."],
+        ["Top", "3 − √2."],
+        ["Bottom (difference of squares)", "9 − 2 = 7."]
+      ],
+      final: "1/(3 + √2) = (3 − √2)/7"
+    },
+    tip: "The conjugate has the <strong>SAME terms</strong> with the <strong>OPPOSITE middle sign</strong>. Conjugate of (5 − √7) is (5 + √7)."
+  },
+
+  "ch11-solve-radical-eq": {
+    title: "Solving Radical Equations",
+    src: "Ch 11 — Radicals (Algebra 1)",
+    concept: "<strong>Isolate the radical, then square both sides</strong> to kill the √. Solve the resulting equation. <strong>Always check</strong> — squaring can introduce extraneous solutions.",
+    formulas: [
+      "Steps:",
+      "  1. Isolate the radical on one side.",
+      "  2. Square both sides.",
+      "  3. Solve.",
+      "  4. CHECK each candidate in the original."
+    ],
+    example: {
+      q: "Solve: √(4x + 1) + 6 = 11",
+      steps: [
+        ["Isolate", "√(4x + 1) = 5."],
+        ["Square both sides", "4x + 1 = 25."],
+        ["Solve", "4x = 24 → x = 6."],
+        ["Check", "√(4·6 + 1) + 6 = √25 + 6 = 5 + 6 = 11. ✓"]
+      ],
+      final: "x = 6"
+    },
+    tip: "<strong>Why check?</strong> Squaring both sides can produce 'solutions' that don't satisfy the original (because a real square root is always ≥ 0). If the radical-equals-something setup gives a negative right side, no solution."
+  },
+
+  "ch11-radical-eq-quadratic": {
+    title: "Radical Equation → Quadratic",
+    src: "Ch 11 — Radicals (Algebra 1)",
+    concept: "Sometimes after squaring, you get a <strong>quadratic equation</strong>. Solve as a quadratic (factor or use formula), then check EACH candidate.",
+    formulas: [
+      "Steps:",
+      "  1. Isolate the radical.",
+      "  2. Square both sides.",
+      "  3. Move everything to one side → quadratic.",
+      "  4. Solve the quadratic.",
+      "  5. CHECK each root in the original (some may be extraneous)."
+    ],
+    example: {
+      q: "Solve: x = √(56 − x). (Positive solution only.)",
+      steps: [
+        ["Square both sides", "x² = 56 − x."],
+        ["Rearrange", "x² + x − 56 = 0."],
+        ["Factor", "(x + 8)(x − 7) = 0  →  x = −8 or x = 7."],
+        ["Check x = 7", "7 = √(56 − 7) = √49 = 7. ✓"],
+        ["Check x = −8", "−8 = √(56 − (−8)) = √64 = 8. ✗ (left side is negative, right side is positive)"]
+      ],
+      final: "x = 7"
+    },
+    tip: "<strong>Reject any candidate where the original x is supposed to equal a √ but x ends up negative.</strong> Square roots are non-negative, so the variable side must also be non-negative."
   }
 };
 
