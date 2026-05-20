@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>COA Long-Form Prep — Compound Interest & Quadratics</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #0EA5E9; --primary-soft: rgba(14,165,233,0.12);
+  --green: #10B981; --green-soft: rgba(16,185,129,0.18);
+  --red: #EF4444; --red-soft: rgba(239,68,68,0.18);
+  --yellow: #FBBF24; --orange: #F59E0B; --pink: #EC4899;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg:#F8FAFC; --bg-card:#FFFFFF; --bg-elevated:#F1F5F9; --text:#1A1A1A; --text-dim:#64748B; --border:#E2E8F0; }
+}
+html, body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:16px; line-height:1.5; }
+.container { max-width:720px; margin:0 auto; padding:1rem 1rem 4rem; }
+header.top { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1rem; }
+.logo { font-size:1.2rem; font-weight:800; background:linear-gradient(135deg, #0EA5E9, #10B981); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+.score-pill { background:var(--bg-card); border:1px solid var(--border); border-radius:999px; padding:0.35rem 0.85rem; font-size:0.85rem; font-weight:700; }
+.hero { background:linear-gradient(135deg, #0EA5E9, #10B981); border-radius:18px; padding:1.1rem 1.25rem; color:white; margin-bottom:1.25rem; }
+.hero h1 { margin:0 0 0.3rem; font-size:1.25rem; font-weight:800; }
+.hero p { margin:0; font-size:0.92rem; opacity:0.95; }
+.hero .countdown { display:inline-block; background:rgba(255,255,255,0.22); padding:0.3rem 0.7rem; border-radius:999px; margin-top:0.5rem; font-weight:700; font-size:0.82rem; }
+.section-jump { display:flex; gap:0.5rem; margin-bottom:1rem; flex-wrap:wrap; }
+.section-jump a { flex:1; min-width:140px; text-align:center; background:var(--bg-card); border:1px solid var(--border); padding:0.6rem 0.8rem; border-radius:10px; text-decoration:none; color:var(--text); font-size:0.88rem; font-weight:700; }
+.section-jump a:hover { border-color:var(--primary); }
+.section-header { font-size:0.82rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); margin:1.5rem 0 0.6rem 0.25rem; font-weight:700; }
+.q-card { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:1.1rem 1.2rem; margin-bottom:1rem; scroll-margin-top:1rem; }
+.q-card.correct { border-color:var(--green); background:linear-gradient(180deg, var(--green-soft), var(--bg-card)); }
+.q-card.wrong { border-color:var(--red); background:linear-gradient(180deg, var(--red-soft), var(--bg-card)); }
+.q-meta { display:flex; justify-content:space-between; font-size:0.8rem; color:var(--text-dim); font-weight:600; margin-bottom:0.5rem; }
+.q-meta .topic { color:var(--primary); }
+.q-text { font-size:1.05rem; font-weight:600; line-height:1.55; margin-bottom:0.6rem; }
+.q-text sup { font-size:0.75em; vertical-align:super; }
+.q-text sub { font-size:0.75em; vertical-align:sub; }
+.math-keys { display:flex; flex-wrap:wrap; gap:0.3rem; margin:0.6rem 0 0.4rem; }
+.math-key { background:var(--bg-elevated); border:1px solid var(--border); color:var(--text); padding:0.5rem 0.65rem; border-radius:8px; font-size:0.95rem; font-weight:700; font-family:-apple-system,"SF Mono",monospace; cursor:pointer; min-width:36px; }
+.math-key:active { background:var(--primary); color:white; }
+.typed-input { width:100%; background:var(--bg-elevated); border:2px solid var(--border); color:var(--text); padding:0.85rem 1rem; border-radius:10px; font-size:1.05rem; font-family:-apple-system,"SF Mono",monospace; font-weight:600; }
+.typed-input:focus { outline:none; border-color:var(--primary); }
+.typed-input.correct { border-color:var(--green); background:var(--green-soft); }
+.typed-input.wrong { border-color:var(--red); background:var(--red-soft); }
+.typed-input:disabled { opacity:0.95; }
+.q-actions { display:flex; gap:0.5rem; margin-top:0.7rem; flex-wrap:wrap; }
+.btn { border:none; border-radius:10px; cursor:pointer; font-family:inherit; padding:0.7rem 1rem; font-size:0.92rem; font-weight:700; }
+.btn-check { background:linear-gradient(135deg, var(--primary), var(--green)); color:white; flex:1; }
+.btn-check:hover { transform:translateY(-1px); }
+.btn-hint { background:rgba(245,158,11,0.12); border:1px solid var(--orange); color:var(--orange); }
+.btn-hint:hover { background:rgba(245,158,11,0.2); }
+.btn-reveal { background:var(--bg-elevated); color:var(--text); border:1px solid var(--border); }
+.btn-secondary { background:var(--bg-elevated); color:var(--text); border:1px solid var(--border); }
+.hint-box { background:rgba(245,158,11,0.1); border-left:3px solid var(--orange); padding:0.6rem 0.9rem; border-radius:0 8px 8px 0; font-size:0.92rem; margin:0.6rem 0; line-height:1.5; }
+.solution-box { margin-top:0.8rem; background:var(--bg-elevated); border-left:3px solid var(--primary); padding:0.8rem 1rem; border-radius:0 10px 10px 0; }
+.solution-box.right { border-left-color:var(--green); background:var(--green-soft); }
+.solution-box.wrong { border-left-color:var(--red); background:var(--red-soft); }
+.solution-box .sol-head { font-size:0.85rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-dim); margin-bottom:0.4rem; }
+.solution-box ol { margin:0.3rem 0 0.6rem 1.1rem; padding:0; }
+.solution-box li { margin:0.25rem 0; font-size:0.95rem; line-height:1.5; }
+.solution-box .final-ans { font-weight:700; color:var(--green); margin-top:0.4rem; font-size:0.98rem; }
+.solution-box.wrong .final-ans { color:var(--green); }
+.your-ans { font-size:0.88rem; color:var(--text-dim); margin-top:0.4rem; font-style:italic; }
+.bottom-bar { display:flex; gap:0.5rem; margin-top:1.5rem; }
+.bottom-bar .btn { flex:1; padding:0.9rem; }
+footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center; font-size:0.82rem; color:var(--text-dim); }
+footer a { color:var(--primary); text-decoration:none; }
+.tip { background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:0.85rem 1rem; margin-bottom:1rem; font-size:0.9rem; color:var(--text-dim); line-height:1.55; }
+.tip strong { color:var(--text); }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="top">
+    <a href="index.html" class="logo">📐 COA Long-Form</a>
+    <div class="score-pill" id="scorePill">0 / 14</div>
+  </header>
+
+  <div class="hero">
+    <h1>Long-form drill — compound interest &amp; quadratics</h1>
+    <p>The exact two topics that hurt you. Type the answer, hit Check, study the steps. Repeat until automatic.</p>
+    <div class="countdown" id="cd"></div>
+  </div>
+
+  <div class="tip">
+    <strong>How to use:</strong> Work each problem on paper first (this is long-form — write the steps). Then type the final answer. After Check, read the worked solution even if you got it right. Hint = if you're stuck for 60 seconds.
+  </div>
+
+  <div class="section-jump">
+    <a href="#compound">💰 Compound Interest (5)</a>
+    <a href="#quadratics">⚡ Quadratics (9)</a>
+  </div>
+
+  <div id="quiz"></div>
+
+  <div class="bottom-bar">
+    <button class="btn btn-secondary" onclick="resetAll()">🔄 Reset all</button>
+    <button class="btn btn-check" onclick="scrollToFirstUnanswered()">⬇ Next unanswered</button>
+  </div>
+
+  <footer>
+    <p><a href="index.html">← Back to Hub</a> · <a href="workbook.html">Workbook</a> · <a href="cheat-sheet.pdf">Cheat sheet</a></p>
+  </footer>
+
+</div>
+
+<script>
+const STORAGE_KEY = 'neil_coa_longform_v1';
+const defaultState = { answers:{}, checked:{}, hints:{}, hintsCount:0, attempts:0 };
+let state = loadState();
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return { ...defaultState, ...JSON.parse(raw) };
+  } catch(e) {}
+  return JSON.parse(JSON.stringify(defaultState));
+}
+function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+
+// =========================================================
+// PROBLEMS — 5 compound interest, 9 quadratics, all free-response
+// =========================================================
+const QUESTIONS = [
+  // ----- COMPOUND INTEREST / EXPONENTIAL (5) -----
+  { id:1, section:"compound", topic:"Compound interest — write the equation",
+    q:"Maria invests $2,500 at 4.5% annual interest, compounded annually. Write the amount A as a function of t (years).",
+    ans:"A = 2500(1.045)^t",
+    accept:["2500(1.045)^t", "a=2500(1.045)^t"],
+    hint:"Formula: A = P(1 + r)^t. Convert 4.5% to decimal (0.045). The base is 1 + 0.045 = 1.045.",
+    sol:["Use A = P(1 + r)^t.", "P = 2500, r = 0.045 (4.5% as a decimal).", "A = 2500(1 + 0.045)^t = <strong>2500(1.045)^t</strong>."]},
+
+  { id:2, section:"compound", topic:"Compound interest — compute future value",
+    q:"$1,200 is invested at 6% annual interest, compounded annually. To the nearest dollar, what is the balance after 8 years?",
+    ans:"1912",
+    accept:["$1912", "1,912", "$1,912", "1912.42", "1912.43"],
+    hint:"A = 1200(1.06)^8. Compute 1.06^8 first, then multiply by 1200. 1.06^8 ≈ 1.5938.",
+    sol:["A = P(1 + r)^t = 1200(1.06)^8.", "1.06^8 ≈ 1.5938.", "A ≈ 1200 × 1.5938 ≈ 1912.42.", "Rounded: <strong>$1,912</strong>."]},
+
+  { id:3, section:"compound", topic:"Exponential decay — write the equation",
+    q:"A laptop bought for $1,800 loses 18% of its value each year. Write the value V as a function of t (years).",
+    ans:"V = 1800(0.82)^t",
+    accept:["1800(0.82)^t", "v=1800(0.82)^t"],
+    hint:"Decay formula: V = P(1 − r)^t. Here r = 0.18, so the base is 1 − 0.18 = 0.82.",
+    sol:["Decay: V = P(1 − r)^t.", "r = 0.18, so 1 − r = 0.82.", "V = <strong>1800(0.82)^t</strong>."]},
+
+  { id:4, section:"compound", topic:"Exponential decay — compute value",
+    q:"Using V = 1800(0.82)^t, what is the laptop's value after 4 years? (Round to the nearest dollar.)",
+    ans:"813",
+    accept:["$813", "813.07", "813.08"],
+    hint:"Compute 0.82^4 first, then multiply by 1800. 0.82^4 ≈ 0.4521.",
+    sol:["0.82^4 ≈ 0.4521.", "V ≈ 1800 × 0.4521 ≈ 813.07.", "Rounded: <strong>$813</strong>."]},
+
+  { id:5, section:"compound", topic:"Compound interest — solve for t",
+    q:"Sam invests $1,000 at 5% annual compound interest. After how many full years will his balance first exceed $1,500?",
+    ans:"9",
+    accept:["9 years", "t=9"],
+    hint:"Solve 1000(1.05)^t > 1500 → (1.05)^t > 1.5. Try values of t until you cross 1.5.",
+    sol:["1000(1.05)^t > 1500 → (1.05)^t > 1.5.", "1.05^8 ≈ 1.477 — not yet.", "1.05^9 ≈ 1.551 — yes!", "First full year balance exceeds $1,500: <strong>t = 9 years</strong>."]},
+
+  // ----- QUADRATICS (9) -----
+  { id:6, section:"quadratics", topic:"Solve by factoring",
+    q:"Solve by factoring: x² − 9x + 20 = 0",
+    ans:"x = 4, 5",
+    accept:["4,5", "5,4", "x=4,5", "x=5,4", "{4,5}", "{5,4}"],
+    hint:"Need two numbers with product 20 and sum −9. Both negative: try −4 and −5.",
+    sol:["Two numbers with product 20 and sum −9: −4 and −5.", "Factor: (x − 4)(x − 5) = 0.", "Zero-product: x − 4 = 0 or x − 5 = 0.", "<strong>x = 4 or x = 5</strong>."]},
+
+  { id:7, section:"quadratics", topic:"Factor with leading coefficient",
+    q:"Solve by factoring: 2x² + 7x + 3 = 0",
+    ans:"x = -3, -1/2",
+    accept:["-3,-1/2", "-1/2,-3", "x=-3,-1/2", "x=-1/2,-3", "-3,-0.5", "-0.5,-3", "x=-3,-0.5", "x=-0.5,-3"],
+    hint:"AC method: a·c = 2·3 = 6. Need numbers with product 6 and sum 7 → 6 and 1.",
+    sol:["AC = 2·3 = 6. Need product 6, sum 7 → 6 and 1.", "Split the middle: 2x² + 6x + x + 3.", "Group: 2x(x + 3) + 1(x + 3) = (2x + 1)(x + 3).", "(2x + 1)(x + 3) = 0 → x = −1/2 or x = −3.", "<strong>x = −3 or x = −1/2</strong>."]},
+
+  { id:8, section:"quadratics", topic:"Square-root method",
+    q:"Solve: x² = 49",
+    ans:"x = ±7",
+    accept:["±7", "7,-7", "-7,7", "x=±7", "x=7,-7", "x=-7,7"],
+    hint:"Take the square root of both sides. Remember the ± — both roots are solutions.",
+    sol:["Take √ of both sides: x = ±√49.", "<strong>x = ±7</strong> (i.e., x = 7 or x = −7)."]},
+
+  { id:9, section:"quadratics", topic:"Discriminant — compute",
+    q:"Compute the discriminant of x² − 6x + 4 = 0.",
+    ans:"20",
+    accept:["d=20"],
+    hint:"Discriminant = b² − 4ac. Identify a, b, c first. Be careful with signs.",
+    sol:["a = 1, b = −6, c = 4.", "D = b² − 4ac = (−6)² − 4(1)(4).", "= 36 − 16 = <strong>20</strong>."]},
+
+  { id:10, section:"quadratics", topic:"Discriminant — interpret",
+    q:"How many real solutions does 2x² + 3x + 5 = 0 have? (Type a number: 0, 1, or 2.)",
+    ans:"0",
+    accept:["none", "no real solutions", "zero"],
+    hint:"Compute discriminant. If D > 0 → 2 real; D = 0 → 1 real; D < 0 → 0 real (no real solutions).",
+    sol:["a = 2, b = 3, c = 5.", "D = b² − 4ac = 9 − 4(2)(5) = 9 − 40 = −31.", "D < 0 → no real solutions.", "<strong>0 real solutions</strong>."]},
+
+  { id:11, section:"quadratics", topic:"Vertex from standard form",
+    q:"Find the vertex of y = x² − 8x + 11. Type as (h, k).",
+    ans:"(4, -5)",
+    accept:["(4,-5)", "4,-5", "h=4,k=-5"],
+    hint:"x-coordinate: h = −b/(2a). Then plug h back into the equation to find k.",
+    sol:["a = 1, b = −8 → h = −(−8)/(2·1) = 8/2 = 4.", "k = (4)² − 8(4) + 11 = 16 − 32 + 11 = −5.", "Vertex: <strong>(4, −5)</strong>."]},
+
+  { id:12, section:"quadratics", topic:"Axis of symmetry",
+    q:"Find the axis of symmetry of y = 3x² + 12x − 1.",
+    ans:"x = -2",
+    accept:["-2", "x=-2"],
+    hint:"Axis: x = −b/(2a). Here a = 3 and b = 12.",
+    sol:["x = −b/(2a) = −12/(2·3) = −12/6 = −2.", "Axis of symmetry: <strong>x = −2</strong>."]},
+
+  { id:13, section:"quadratics", topic:"Convert standard → vertex form",
+    q:"Convert y = x² + 6x + 5 to vertex form by completing the square.",
+    ans:"y = (x + 3)² - 4",
+    accept:["(x+3)^2-4", "y=(x+3)^2-4", "y=(x+3)²-4", "(x+3)²-4"],
+    hint:"Take half of b, square it. b = 6 → half is 3 → 3² = 9. Add and subtract 9 to complete the square.",
+    sol:["Half of b: 6/2 = 3. Square it: 9.", "y = (x² + 6x + 9) + 5 − 9 = (x + 3)² − 4.", "Vertex form: <strong>y = (x + 3)² − 4</strong>.", "Vertex is at (−3, −4)."]},
+
+  { id:14, section:"quadratics", topic:"Projectile — time of max height",
+    q:"A ball is launched from the ground with height (in feet) h = −16t² + 64t, where t is seconds. At what time t does the ball reach its maximum height?",
+    ans:"t = 2",
+    accept:["2", "2 seconds", "t=2 seconds"],
+    hint:"Max of a parabola is at its vertex. t-coordinate: t = −b/(2a). Here a = −16 and b = 64.",
+    sol:["Vertex t-coordinate: t = −b/(2a) = −64/(2·−16) = −64/−32 = 2.", "Max height occurs at <strong>t = 2 seconds</strong>."]},
+];
+
+// =========================================================
+// Answer normalization
+// =========================================================
+function normalizeAnswer(s) {
+  if (s == null) return '';
+  let n = String(s).toLowerCase().trim();
+  n = n.replace(/\s+/g, '').replace(/['"$,]/g, '');
+  // dashes and minus signs unified
+  n = n.replace(/[−–—]/g, '-');
+  // unicode superscripts → ^N
+  const sup = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+  for (let i = 0; i < 10; i++) n = n.split(sup[i]).join('^' + i);
+  // radicals
+  n = n.replace(/√/g, 'sqrt');
+  // multiplication symbols → drop
+  n = n.replace(/[×⋅·\*]/g, '');
+  // strip leading variable=  (a=, v=, h=, x=, y=, p=, t=, d=, k=)
+  n = n.replace(/^[avhxypstdk]=/, '');
+  // strip outer parens if no inner parens
+  if (n.startsWith('(') && n.endsWith(')')) {
+    const inner = n.slice(1, -1);
+    if (!inner.includes('(') && !inner.includes(')')) n = inner;
+  }
+  // if it's a comma list with no parens, sort the parts so "5,4" == "4,5"
+  if (n.includes(',') && !n.includes('(')) {
+    n = n.split(',').map(s => s.trim()).filter(Boolean).sort().join(',');
+  }
+  return n;
+}
+
+// =========================================================
+// Rendering
+// =========================================================
+const quizEl = document.getElementById('quiz');
+
+function refreshScore() {
+  let correct = 0;
+  Object.keys(state.checked).forEach(i => {
+    if (state.checked[i] === 'correct') correct++;
+  });
+  document.getElementById('scorePill').textContent = `${correct} / ${QUESTIONS.length}`;
+}
+
+function render() {
+  let html = '';
+  let lastSection = '';
+  QUESTIONS.forEach((q, i) => {
+    if (q.section !== lastSection) {
+      const label = q.section === 'compound' ? '💰 Compound Interest & Exponential' : '⚡ Quadratics';
+      html += `<div class="section-header" id="${q.section}">${label}</div>`;
+      lastSection = q.section;
+    }
+
+    const checked = state.checked[i];
+    const userAns = state.answers[i] || '';
+    const hintShown = state.hints[i];
+    const cardCls = checked === 'correct' ? 'q-card correct' : (checked === 'wrong' ? 'q-card wrong' : 'q-card');
+
+    html += `<div class="${cardCls}" id="q${q.id}">
+      <div class="q-meta">
+        <span><strong>${i + 1} / ${QUESTIONS.length}</strong></span>
+        <span class="topic">${q.topic}</span>
+      </div>
+      <div class="q-text">${q.q}</div>`;
+
+    if (!checked && hintShown) {
+      html += `<div class="hint-box">💡 ${q.hint}</div>`;
+    }
+
+    html += `<div class="math-keys">
+      ${mathKeyRow(i)}
+    </div>
+    <input type="text" class="typed-input ${checked || ''}" id="inp${i}" placeholder="Type your answer…"
+      value="${escapeHtml(userAns)}" autocomplete="off" autocapitalize="off" spellcheck="false"
+      ${checked ? 'disabled' : ''} onfocus="lastFocusedInput=this.id" onkeydown="if(event.key==='Enter')checkAnswer(${i})">
+    <div class="q-actions">`;
+
+    if (!checked) {
+      html += `<button class="btn btn-check" onclick="checkAnswer(${i})">✓ Check answer</button>
+        <button class="btn btn-hint" onclick="toggleHint(${i})">${hintShown ? '🙈 Hide hint' : '💡 Hint'}</button>
+        <button class="btn btn-reveal" onclick="revealAnswer(${i})">👁 Show answer</button>`;
+    } else {
+      html += `<button class="btn btn-secondary" onclick="retryQuestion(${i})">🔁 Try again</button>`;
+    }
+    html += `</div>`;
+
+    if (checked) {
+      const right = checked === 'correct';
+      html += `<div class="solution-box ${right ? 'right' : 'wrong'}">
+        <div class="sol-head">${right ? '✓ Correct — worked solution' : '✗ Worked solution'}</div>
+        <ol>${q.sol.map(s => `<li>${s}</li>`).join('')}</ol>
+        <div class="final-ans">Answer: ${q.ans}</div>`;
+      if (!right && userAns) {
+        html += `<div class="your-ans">Your answer: <code>${escapeHtml(userAns)}</code></div>`;
+      }
+      html += `</div>`;
+    }
+
+    html += `</div>`;
+  });
+  quizEl.innerHTML = html;
+  refreshScore();
+}
+
+let lastFocusedInput = null;
+function mathKeyRow(i) {
+  const keys = [
+    {l:'x²', c:'²'}, {l:'x³', c:'³'}, {l:'^', c:'^'}, {l:'√', c:'√'},
+    {l:'±', c:'±'}, {l:'−', c:'-'}, {l:'/', c:'/'}, {l:'(', c:'('}, {l:')', c:')'}, {l:',', c:','},
+  ];
+  return keys.map(k =>
+    `<button type="button" class="math-key" onclick="insertKey(${i}, '${k.c}')">${k.l}</button>`
+  ).join('');
+}
+
+function insertKey(i, ch) {
+  const el = document.getElementById('inp' + i);
+  if (!el || el.disabled) return;
+  const start = el.selectionStart ?? el.value.length;
+  const end = el.selectionEnd ?? el.value.length;
+  el.value = el.value.slice(0, start) + ch + el.value.slice(end);
+  el.focus();
+  const newPos = start + ch.length;
+  try { el.setSelectionRange(newPos, newPos); } catch(e) {}
+}
+
+function checkAnswer(i) {
+  const el = document.getElementById('inp' + i);
+  if (!el) return;
+  const user = el.value;
+  if (!user.trim()) { el.focus(); return; }
+  const q = QUESTIONS[i];
+  state.answers[i] = user;
+  const expected = [q.ans, ...(q.accept || [])].map(normalizeAnswer);
+  const got = normalizeAnswer(user);
+  state.checked[i] = expected.includes(got) ? 'correct' : 'wrong';
+  saveState();
+  render();
+  // Auto-scroll to next unchecked
+  setTimeout(() => {
+    const card = document.getElementById('q' + q.id);
+    if (card) card.scrollIntoView({ behavior:'smooth', block:'start' });
+  }, 60);
+}
+
+function revealAnswer(i) {
+  const q = QUESTIONS[i];
+  state.answers[i] = state.answers[i] || '';
+  state.checked[i] = 'wrong'; // count as not-correct but show solution
+  saveState();
+  render();
+}
+
+function toggleHint(i) {
+  state.hints[i] = !state.hints[i];
+  if (state.hints[i]) state.hintsCount += 1;
+  saveState();
+  render();
+}
+
+function retryQuestion(i) {
+  delete state.checked[i];
+  delete state.answers[i];
+  saveState();
+  render();
+  setTimeout(() => {
+    const inp = document.getElementById('inp' + i);
+    if (inp) inp.focus();
+  }, 60);
+}
+
+function scrollToFirstUnanswered() {
+  for (let i = 0; i < QUESTIONS.length; i++) {
+    if (state.checked[i] !== 'correct') {
+      const card = document.getElementById('q' + QUESTIONS[i].id);
+      if (card) {
+        card.scrollIntoView({ behavior:'smooth', block:'start' });
+        setTimeout(() => {
+          const inp = document.getElementById('inp' + i);
+          if (inp && !inp.disabled) inp.focus();
+        }, 400);
+      }
+      return;
+    }
+  }
+  // all correct
+  alert("All 14 problems correct — you're locked in. 🔒");
+}
+
+function resetAll() {
+  if (!confirm("Reset all 14 problems? (Progress will be lost.)")) return;
+  state = JSON.parse(JSON.stringify(defaultState));
+  state.attempts += 1;
+  saveState();
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// Countdown
+const exam = new Date('2026-06-11T08:00:00');
+const days = Math.max(0, Math.ceil((exam - new Date()) / 86400000));
+document.getElementById('cd').textContent = days === 0 ? 'COA EXAM TODAY' : `${days} days until COA exam`;
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Math Quest v2 — Adaptive Algebra Practice</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #06B6D4; --primary-soft: rgba(6,182,212,0.15);
+  --accent: #8B5CF6;
+  --green: #10B981; --green-soft: rgba(16,185,129,0.18);
+  --red: #EF4444; --red-soft: rgba(239,68,68,0.18);
+  --yellow: #FBBF24; --orange: #F59E0B; --pink: #EC4899;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg:#F8FAFC; --bg-card:#FFFFFF; --bg-elevated:#F1F5F9; --text:#1A1A1A; --text-dim:#64748B; --border:#E2E8F0; }
+}
+html, body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:16px; line-height:1.5; }
+.container { max-width:720px; margin:0 auto; padding:1rem 1rem 4rem; }
+header.top { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1rem; }
+.logo { font-size:1.2rem; font-weight:800; background:linear-gradient(135deg, #06B6D4, #8B5CF6); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; cursor:pointer; }
+.stats-row { display:flex; gap:0.4rem; }
+.stat-pill { background:var(--bg-card); border:1px solid var(--border); border-radius:999px; padding:0.3rem 0.65rem; font-size:0.78rem; font-weight:700; display:flex; align-items:center; gap:0.3rem; }
+.stat-pill .icon { font-size:0.9rem; }
+.stat-pill.streak { color:var(--orange); }
+.stat-pill.xp { color:var(--yellow); }
+.stat-pill.acc { color:var(--green); }
+
+/* HOME */
+.hero { background:linear-gradient(135deg, #06B6D4, #8B5CF6); border-radius:18px; padding:1.4rem 1.5rem; color:white; margin-bottom:1.25rem; }
+.hero h1 { margin:0 0 0.25rem; font-size:1.35rem; font-weight:800; }
+.hero p { margin:0; font-size:0.95rem; opacity:0.95; }
+.hero .countdown { display:inline-block; background:rgba(255,255,255,0.22); padding:0.3rem 0.7rem; border-radius:999px; margin-top:0.5rem; font-weight:700; font-size:0.82rem; }
+
+.cta-btn { display:flex; align-items:center; justify-content:center; gap:0.6rem; width:100%; padding:1.2rem 1.5rem; background:linear-gradient(135deg, #06B6D4, #10B981); color:white; border:none; border-radius:18px; font-size:1.15rem; font-weight:800; cursor:pointer; box-shadow:0 4px 20px rgba(6,182,212,0.3); margin-bottom:1rem; }
+.cta-btn:hover { transform:translateY(-2px); }
+.cta-btn .icon { font-size:1.5rem; }
+
+.queue-banner { background:rgba(245,158,11,0.12); border:1px solid var(--orange); border-radius:14px; padding:0.85rem 1rem; margin-bottom:1rem; display:flex; align-items:center; gap:0.6rem; font-size:0.92rem; }
+.queue-banner .icon { font-size:1.4rem; }
+.queue-banner strong { color:var(--orange); }
+
+.tiles { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; margin-bottom:1.25rem; }
+.tile { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.1rem; text-decoration:none; color:var(--text); cursor:pointer; display:flex; align-items:center; gap:0.6rem; }
+.tile:hover { border-color:var(--primary); }
+.tile-emoji { font-size:1.6rem; }
+.tile-title { font-weight:700; font-size:0.95rem; margin:0 0 0.15rem; }
+.tile-desc { font-size:0.78rem; color:var(--text-dim); margin:0; }
+
+.section-h { font-size:0.82rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); margin:1.4rem 0 0.6rem 0.25rem; font-weight:700; }
+
+.today-stats { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.1rem; display:flex; justify-content:space-around; gap:1rem; margin-bottom:1rem; }
+.today-stat { text-align:center; }
+.today-stat .num { font-size:1.6rem; font-weight:800; color:var(--primary); }
+.today-stat .lbl { font-size:0.72rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-dim); margin-top:0.1rem; }
+
+/* PRACTICE */
+.q-card { background:var(--bg-card); border:1px solid var(--border); border-radius:18px; padding:1.2rem 1.3rem; margin-bottom:1rem; }
+.q-meta { display:flex; justify-content:space-between; align-items:center; font-size:0.78rem; color:var(--text-dim); font-weight:600; margin-bottom:0.6rem; gap:0.5rem; flex-wrap:wrap; }
+.q-meta .topic { color:var(--primary); }
+.q-meta .ch { background:var(--bg-elevated); padding:0.15rem 0.5rem; border-radius:6px; font-size:0.7rem; }
+.remediation-tag { background:rgba(245,158,11,0.18); color:var(--orange); padding:0.15rem 0.5rem; border-radius:6px; font-size:0.7rem; font-weight:700; }
+.q-text { font-size:1.08rem; font-weight:600; line-height:1.55; margin-bottom:0.8rem; }
+.q-text sup { font-size:0.75em; vertical-align:super; }
+.q-text sub { font-size:0.75em; vertical-align:sub; }
+
+.choices { display:flex; flex-direction:column; gap:0.55rem; }
+.choice { background:var(--bg-elevated); border:2px solid transparent; color:var(--text); padding:0.9rem 1rem; border-radius:10px; font-size:0.98rem; font-family:inherit; font-weight:500; cursor:pointer; text-align:left; transition:all 0.15s; display:flex; align-items:center; gap:0.7rem; }
+.choice .letter { flex-shrink:0; width:28px; height:28px; border-radius:50%; background:var(--bg-card); display:flex; align-items:center; justify-content:center; font-size:0.82rem; font-weight:700; color:var(--text-dim); }
+.choice:hover { border-color:var(--primary); }
+.choice.correct { border-color:var(--green); background:var(--green-soft); }
+.choice.correct .letter { background:var(--green); color:white; }
+.choice.wrong { border-color:var(--red); background:var(--red-soft); }
+.choice.wrong .letter { background:var(--red); color:white; }
+.choice:disabled { cursor:not-allowed; }
+
+.math-keys { display:flex; flex-wrap:wrap; gap:0.3rem; margin:0.6rem 0 0.4rem; }
+.math-key { background:var(--bg-elevated); border:1px solid var(--border); color:var(--text); padding:0.5rem 0.65rem; border-radius:8px; font-size:0.95rem; font-weight:700; font-family:-apple-system,"SF Mono",monospace; cursor:pointer; min-width:36px; }
+.math-key:active { background:var(--primary); color:white; }
+.typed-input { width:100%; background:var(--bg-elevated); border:2px solid var(--border); color:var(--text); padding:0.9rem 1rem; border-radius:10px; font-size:1.05rem; font-family:-apple-system,"SF Mono",monospace; font-weight:600; }
+.typed-input:focus { outline:none; border-color:var(--primary); }
+.typed-input.correct { border-color:var(--green); background:var(--green-soft); }
+.typed-input.wrong { border-color:var(--red); background:var(--red-soft); }
+.typed-input:disabled { opacity:0.95; }
+
+.hint-box { background:rgba(245,158,11,0.1); border-left:3px solid var(--orange); padding:0.7rem 0.9rem; border-radius:0 8px 8px 0; font-size:0.92rem; margin:0.6rem 0; line-height:1.55; }
+.solution-box { margin-top:0.9rem; padding:0.8rem 1rem; border-radius:0 12px 12px 0; }
+.solution-box.right { border-left:3px solid var(--green); background:var(--green-soft); }
+.solution-box.wrong { border-left:3px solid var(--red); background:var(--red-soft); }
+.solution-box .sol-head { font-size:0.85rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.4rem; }
+.solution-box.right .sol-head { color:var(--green); }
+.solution-box.wrong .sol-head { color:var(--red); }
+.solution-box ol { margin:0.3rem 0 0.5rem 1.1rem; padding:0; }
+.solution-box li { margin:0.25rem 0; font-size:0.95rem; line-height:1.5; }
+.solution-box .final-ans { font-weight:700; margin-top:0.4rem; font-size:0.98rem; }
+.queued-note { background:rgba(6,182,212,0.12); border-left:3px solid var(--primary); padding:0.55rem 0.85rem; border-radius:0 8px 8px 0; font-size:0.85rem; color:var(--text-dim); margin-top:0.6rem; }
+
+.q-actions { display:flex; gap:0.5rem; margin-top:0.9rem; flex-wrap:wrap; }
+.btn { border:none; border-radius:10px; cursor:pointer; font-family:inherit; padding:0.85rem 1rem; font-size:0.95rem; font-weight:700; }
+.btn-primary { background:linear-gradient(135deg, var(--primary), var(--accent)); color:white; flex:1; }
+.btn-primary:hover { transform:translateY(-1px); }
+.btn-hint { background:rgba(245,158,11,0.12); border:1px solid var(--orange); color:var(--orange); }
+.btn-secondary { background:var(--bg-elevated); color:var(--text); border:1px solid var(--border); }
+.btn-success { background:linear-gradient(135deg, var(--green), var(--primary)); color:white; flex:1; }
+.btn-disabled { opacity:0.5; cursor:not-allowed; }
+
+/* SKILLS */
+.skill-list { display:flex; flex-direction:column; gap:0.5rem; }
+.skill-row { background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:0.8rem 1rem; }
+.skill-row.struggling { border-left:4px solid var(--red); }
+.skill-row.learning { border-left:4px solid var(--orange); }
+.skill-row.practicing { border-left:4px solid var(--yellow); }
+.skill-row.mastered { border-left:4px solid var(--green); }
+.skill-row.new { border-left:4px solid var(--text-dim); }
+.skill-row-head { display:flex; justify-content:space-between; gap:0.5rem; align-items:center; margin-bottom:0.4rem; }
+.skill-name { font-weight:700; font-size:0.95rem; }
+.skill-meta { font-size:0.75rem; color:var(--text-dim); }
+.skill-bar { height:6px; background:var(--bg-elevated); border-radius:6px; overflow:hidden; }
+.skill-bar-fill { height:100%; transition:width 0.3s; }
+.skill-bar-fill.struggling { background:var(--red); }
+.skill-bar-fill.learning { background:var(--orange); }
+.skill-bar-fill.practicing { background:var(--yellow); }
+.skill-bar-fill.mastered { background:var(--green); }
+.skill-bar-fill.new { background:var(--text-dim); }
+.skill-recent { display:flex; gap:0.2rem; margin-top:0.4rem; }
+.skill-recent .dot { width:9px; height:9px; border-radius:50%; }
+.skill-recent .dot.r { background:var(--green); }
+.skill-recent .dot.w { background:var(--red); }
+
+.skill-summary { display:grid; grid-template-columns:repeat(5,1fr); gap:0.4rem; margin-bottom:1rem; }
+.summary-pill { background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:0.5rem 0.4rem; text-align:center; }
+.summary-pill .num { font-size:1.2rem; font-weight:800; }
+.summary-pill .lbl { font-size:0.65rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-dim); margin-top:0.1rem; }
+.summary-pill.struggling .num { color:var(--red); }
+.summary-pill.learning .num { color:var(--orange); }
+.summary-pill.practicing .num { color:var(--yellow); }
+.summary-pill.mastered .num { color:var(--green); }
+.summary-pill.new .num { color:var(--text-dim); }
+
+footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center; font-size:0.82rem; color:var(--text-dim); }
+footer a { color:var(--primary); text-decoration:none; }
+.view { display:none; }
+.view.active { display:block; }
+.back-link { display:inline-block; color:var(--primary); font-size:0.88rem; font-weight:600; text-decoration:none; margin-bottom:0.5rem; }
+
+@media (max-width:480px) {
+  .skill-summary { grid-template-columns:repeat(5,1fr); gap:0.25rem; }
+  .summary-pill { padding:0.4rem 0.2rem; }
+  .summary-pill .num { font-size:1rem; }
+  .summary-pill .lbl { font-size:0.55rem; }
+  .tiles { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="top">
+    <a class="logo" onclick="showView('home')">⚔️ Math Quest v2</a>
+    <div class="stats-row">
+      <div class="stat-pill streak"><span class="icon">🔥</span><span id="streakNum">0</span></div>
+      <div class="stat-pill xp"><span class="icon">⭐</span><span id="xpNum">0</span></div>
+      <div class="stat-pill acc"><span class="icon">🎯</span><span id="accNum">—</span></div>
+    </div>
+  </header>
+
+  <!-- HOME VIEW -->
+  <div class="view active" id="view-home">
+    <div class="hero">
+      <h1 id="heroTitle">Adaptive practice</h1>
+      <p id="heroSub">More practice on what you miss. Less on what you've mastered.</p>
+      <div class="countdown" id="cd"></div>
+    </div>
+
+    <div id="queueBanner"></div>
+
+    <button class="cta-btn" onclick="startPractice()"><span class="icon">▶</span><span id="ctaLabel">Start practice</span></button>
+
+    <div class="tiles">
+      <a class="tile" onclick="showView('skills')">
+        <div class="tile-emoji">📊</div>
+        <div>
+          <div class="tile-title">Skills</div>
+          <p class="tile-desc">See mastery per topic</p>
+        </div>
+      </a>
+      <a class="tile" href="index.html">
+        <div class="tile-emoji">🏠</div>
+        <div>
+          <div class="tile-title">Hub</div>
+          <p class="tile-desc">Back to all tools</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="section-h">Today</div>
+    <div class="today-stats">
+      <div class="today-stat"><div class="num" id="todayDone">0</div><div class="lbl">Done</div></div>
+      <div class="today-stat"><div class="num" id="todayCorrect">0</div><div class="lbl">Correct</div></div>
+      <div class="today-stat"><div class="num" id="todayAcc">—</div><div class="lbl">Accuracy</div></div>
+    </div>
+  </div>
+
+  <!-- PRACTICE VIEW -->
+  <div class="view" id="view-practice">
+    <a class="back-link" onclick="endSession()">← Stop practice</a>
+    <div id="practiceBody"></div>
+  </div>
+
+  <!-- SKILLS VIEW -->
+  <div class="view" id="view-skills">
+    <a class="back-link" onclick="showView('home')">← Back</a>
+    <h2 style="margin:0 0 0.6rem; font-size:1.4rem;">Skills mastery</h2>
+    <p style="margin:0 0 1rem; color:var(--text-dim); font-size:0.92rem;">Sorted by what needs work most. Tap a skill to drill that one only.</p>
+    <div class="skill-summary" id="skillSummary"></div>
+    <div class="skill-list" id="skillList"></div>
+  </div>
+
+  <footer>
+    <p>Math Quest v2 — adaptive engine. <a href="math-quest.html">v1 (classic)</a> · <a href="index.html">Hub</a></p>
+  </footer>
+</div>
+
+<script>
+// =========================================================
+// PROBLEMS — copied from v1 then augmented at load
+// =========================================================
+const PROBLEMS = [{"id": "6.1.1", "ch": 6, "topic": "Product of powers", "diff": 1, "type": "mc", "q": "Simplify: x² · x³", "choices": ["x⁵", "x⁶", "x⁹", "x²+x³"], "ans": "x⁵", "hint": "Same base → add exponents.", "solution": ["x² · x³ = x^(2+3) = x⁵"]}, {"id": "6.1.2", "ch": 6, "topic": "Product of powers", "diff": 1, "type": "mc", "q": "Simplify: y⁴ · y⁷", "choices": ["y¹¹", "y²⁸", "y³", "y³⁵"], "ans": "y¹¹", "hint": "Add the exponents.", "solution": ["y⁴ · y⁷ = y^(4+7) = y¹¹"]}, {"id": "6.1.3", "ch": 6, "topic": "Product of powers", "diff": 2, "type": "typed", "q": "Simplify: (3x²y³)(4x⁵y). Type the simplified form.", "ans": "12x⁷y⁴", "accept": ["12x^7y^4", "12 x⁷ y⁴", "12*x^7*y^4"], "hint": "Multiply coefficients, then add exponents on each variable.", "solution": ["3·4 = 12", "x²·x⁵ = x⁷", "y³·y¹ = y⁴", "Final: 12x⁷y⁴"]}, {"id": "6.2.1", "ch": 6, "topic": "Power of a power", "diff": 1, "type": "mc", "q": "Simplify: (x³)⁴", "choices": ["x⁷", "x¹²", "x⁸¹", "x³⁴"], "ans": "x¹²", "hint": "Power of a power: multiply exponents.", "solution": ["(x³)⁴ = x^(3·4) = x¹²"]}, {"id": "6.2.2", "ch": 6, "topic": "Power of a power", "diff": 2, "type": "typed", "q": "Simplify: (2x³)⁴. Type the simplified form.", "ans": "16x¹²", "accept": ["16x^12", "16 x¹²"], "hint": "Apply the power to each factor inside.", "solution": ["2⁴ = 16", "(x³)⁴ = x¹²", "Final: 16x¹²"]}, {"id": "6.3.1", "ch": 6, "topic": "Quotient of powers", "diff": 1, "type": "mc", "q": "Simplify: x⁹ / x³", "choices": ["x³", "x⁶", "x¹²", "x²⁷"], "ans": "x⁶", "hint": "Same base in division → subtract exponents.", "solution": ["x⁹ / x³ = x^(9-3) = x⁶"]}, {"id": "6.3.2", "ch": 6, "topic": "Quotient of powers", "diff": 2, "type": "typed", "q": "Simplify: (a⁵b²) / (a²b⁻¹). Type the simplified form.", "ans": "a³b³", "accept": ["a^3 b^3", "a³ b³", "a^3*b^3"], "hint": "Subtract exponents on each base. Watch the negative.", "solution": ["a^(5-2) = a³", "b^(2-(-1)) = b^(2+1) = b³", "Final: a³b³"]}, {"id": "6.4.1", "ch": 6, "topic": "Zero & negative exponents", "diff": 1, "type": "mc", "q": "What is 5⁰?", "choices": ["0", "1", "5", "undefined"], "ans": "1", "hint": "Anything (nonzero) to the zero power is 1.", "solution": ["By definition: x⁰ = 1 for x ≠ 0."]}, {"id": "6.4.2", "ch": 6, "topic": "Zero & negative exponents", "diff": 1, "type": "mc", "q": "Simplify: x⁻³", "choices": ["−x³", "1/x³", "−3x", "x³"], "ans": "1/x³", "hint": "Negative exponent → flip to denominator.", "solution": ["x⁻³ = 1/x³"]}, {"id": "6.4.3", "ch": 6, "topic": "Zero & negative exponents", "diff": 2, "type": "typed", "q": "Evaluate: 5⁰ + 3⁻². Type as a fraction or decimal.", "ans": "10/9", "accept": ["10/9", "1.111", "1 1/9", "1.11"], "hint": "5⁰ = 1. 3⁻² = 1/9.", "solution": ["5⁰ = 1", "3⁻² = 1/3² = 1/9", "1 + 1/9 = 9/9 + 1/9 = 10/9"]}, {"id": "6.5.1", "ch": 6, "topic": "Scientific notation", "diff": 1, "type": "mc", "q": "Write 4,200,000 in scientific notation.", "choices": ["4.2 × 10⁶", "42 × 10⁵", "4.2 × 10⁻⁶", "0.42 × 10⁷"], "ans": "4.2 × 10⁶", "hint": "Move decimal so first number is between 1 and 10.", "solution": ["4,200,000 → 4.2 (moved decimal 6 places left)", "Exponent is +6.", "Answer: 4.2 × 10⁶"]}, {"id": "6.5.2", "ch": 6, "topic": "Scientific notation", "diff": 2, "type": "typed", "q": "Write 0.00067 in scientific notation. Format: a × 10^n", "ans": "6.7 × 10⁻⁴", "accept": ["6.7×10⁻⁴", "6.7 x 10^-4", "6.7*10^-4", "6.7 × 10^-4"], "hint": "Small numbers (< 1) have NEGATIVE exponents.", "solution": ["Move decimal 4 places right → 6.7", "Exponent is −4.", "Answer: 6.7 × 10⁻⁴"]}, {"id": "6.6.1", "ch": 6, "topic": "Exponential growth/decay", "diff": 2, "type": "mc", "q": "A car worth $20,000 depreciates 8% per year. Which equation models its value after t years?", "choices": ["y = 20000(0.92)ᵗ", "y = 20000(1.08)ᵗ", "y = 20000(0.08)ᵗ", "y = 20000 − 0.08t"], "ans": "y = 20000(0.92)ᵗ", "hint": "Decay uses (1 − r) raised to t.", "solution": ["Starting value a = 20000", "Rate r = 0.08 (decay)", "y = a(1−r)ᵗ = 20000(0.92)ᵗ"]}, {"id": "6.6.2", "ch": 6, "topic": "Exponential growth/decay", "diff": 3, "type": "typed", "q": "Population starts at 5,000 and grows 3% per year. What's the population after 10 years? Round to whole number.", "ans": "6720", "accept": ["6,720", "6720", "6719", "6721"], "hint": "y = 5000(1.03)^10. Use a calculator if needed.", "solution": ["y = a(1+r)ᵗ", "y = 5000(1.03)¹⁰", "(1.03)¹⁰ ≈ 1.3439", "y ≈ 5000 × 1.3439 ≈ 6,720"]}, {"id": "6.7.1", "ch": 6, "topic": "Geometric sequences", "diff": 1, "type": "mc", "q": "What is the next term of: 3, 12, 48, 192, ___?", "choices": ["240", "576", "768", "960"], "ans": "768", "hint": "Find the common ratio: each term divided by the previous.", "solution": ["12/3 = 4, 48/12 = 4, 192/48 = 4", "Ratio = 4", "192 × 4 = 768"]}, {"id": "7.1.1", "ch": 7, "topic": "Multiply binomials", "diff": 1, "type": "mc", "q": "Multiply: (x + 4)(x − 2)", "choices": ["x² + 2x − 8", "x² − 2x − 8", "x² + 6x − 8", "x² + 2x + 8"], "ans": "x² + 2x − 8", "hint": "FOIL: First, Outer, Inner, Last.", "solution": ["First: x·x = x²", "Outer: x·(−2) = −2x", "Inner: 4·x = 4x", "Last: 4·(−2) = −8", "Combine: x² − 2x + 4x − 8 = x² + 2x − 8"]}, {"id": "7.1.2", "ch": 7, "topic": "Multiply binomials", "diff": 2, "type": "typed", "q": "Multiply: (2x − 3)(x + 5). Type the simplified form.", "ans": "2x² + 7x − 15", "accept": ["2x^2 + 7x - 15", "2x²+7x−15"], "hint": "FOIL carefully with signs.", "solution": ["2x·x = 2x²", "2x·5 = 10x", "−3·x = −3x", "−3·5 = −15", "Combine: 2x² + 10x − 3x − 15 = 2x² + 7x − 15"]}, {"id": "7.2.1", "ch": 7, "topic": "Add/subtract polynomials", "diff": 1, "type": "mc", "q": "Add: (3x² + 2x − 5) + (x² − 4x + 1)", "choices": ["4x² − 2x − 4", "4x² + 6x − 4", "2x² + 6x − 6", "4x² − 2x − 6"], "ans": "4x² − 2x − 4", "hint": "Combine like terms.", "solution": ["x² terms: 3 + 1 = 4 → 4x²", "x terms: 2 + (−4) = −2 → −2x", "constants: −5 + 1 = −4", "Result: 4x² − 2x − 4"]}, {"id": "7.2.2", "ch": 7, "topic": "Add/subtract polynomials", "diff": 2, "type": "typed", "q": "Subtract: (5x² − 3x) − (2x² − x + 7). Type the simplified form.", "ans": "3x² − 2x − 7", "accept": ["3x^2 - 2x - 7", "3x²−2x−7"], "hint": "Distribute the minus sign to ALL terms in the second polynomial.", "solution": ["Distribute −: 5x² − 3x − 2x² + x − 7", "Combine: (5−2)x² + (−3+1)x − 7", "= 3x² − 2x − 7"]}, {"id": "7.3.1", "ch": 7, "topic": "Factor x²+bx+c", "diff": 1, "type": "mc", "q": "Factor: x² + 7x + 12", "choices": ["(x+3)(x+4)", "(x+2)(x+6)", "(x+1)(x+12)", "(x−3)(x−4)"], "ans": "(x+3)(x+4)", "hint": "Two numbers: product 12, sum 7.", "solution": ["Product 12, sum 7", "3 × 4 = 12 ✓ and 3 + 4 = 7 ✓", "Answer: (x+3)(x+4)"]}, {"id": "7.3.2", "ch": 7, "topic": "Factor x²+bx+c", "diff": 1, "type": "mc", "q": "Factor: x² − 5x − 14", "choices": ["(x−7)(x+2)", "(x+7)(x−2)", "(x−2)(x+7)", "(x−1)(x+14)"], "ans": "(x−7)(x+2)", "hint": "Two numbers: product −14, sum −5.", "solution": ["Product −14, sum −5", "−7 × 2 = −14 ✓ and −7 + 2 = −5 ✓", "Answer: (x−7)(x+2)"]}, {"id": "7.3.3", "ch": 7, "topic": "Factor x²+bx+c", "diff": 2, "type": "typed", "q": "Factor: x² − 11x + 30. Type in form (x−a)(x−b).", "ans": "(x−5)(x−6)", "accept": ["(x-5)(x-6)", "(x-6)(x-5)", "(x−6)(x−5)"], "hint": "Product 30, sum −11. Both factors are negative.", "solution": ["Product 30, sum −11", "−5 × −6 = 30 ✓ and −5 + (−6) = −11 ✓", "Answer: (x−5)(x−6)"]}, {"id": "7.4.1", "ch": 7, "topic": "Factor ax²+bx+c", "diff": 2, "type": "mc", "q": "Factor: 2x² + 7x + 3", "choices": ["(2x+1)(x+3)", "(2x+3)(x+1)", "(x+1)(x+3)", "(2x−1)(x−3)"], "ans": "(2x+1)(x+3)", "hint": "AC = 2·3 = 6. Find two numbers product 6, sum 7.", "solution": ["AC method: 2·3 = 6", "Numbers: 6 and 1 (product 6, sum 7)", "Split: 2x² + 6x + x + 3", "Group: 2x(x+3) + 1(x+3) = (2x+1)(x+3)"]}, {"id": "7.4.2", "ch": 7, "topic": "Factor ax²+bx+c", "diff": 3, "type": "typed", "q": "Factor: 6x² + 17x + 12", "ans": "(2x+3)(3x+4)", "accept": ["(3x+4)(2x+3)"], "hint": "AC = 72. Two numbers product 72, sum 17.", "solution": ["AC = 6·12 = 72", "Numbers: 8 and 9 (product 72, sum 17)", "Split: 6x² + 8x + 9x + 12", "Group: 2x(3x+4) + 3(3x+4) = (2x+3)(3x+4)"]}, {"id": "7.5.1", "ch": 7, "topic": "Difference of squares", "diff": 1, "type": "mc", "q": "Factor: x² − 36", "choices": ["(x+6)(x−6)", "(x−6)²", "(x+6)²", "cannot factor"], "ans": "(x+6)(x−6)", "hint": "a² − b² = (a+b)(a−b)", "solution": ["x² − 36 = x² − 6²", "Apply pattern: (x+6)(x−6)"]}, {"id": "7.5.2", "ch": 7, "topic": "Difference of squares", "diff": 2, "type": "typed", "q": "Factor: 16x² − 25", "ans": "(4x+5)(4x−5)", "accept": ["(4x-5)(4x+5)", "(4x−5)(4x+5)"], "hint": "(4x)² − 5² is a difference of squares.", "solution": ["16x² = (4x)²", "25 = 5²", "(4x)² − 5² = (4x+5)(4x−5)"]}, {"id": "7.6.1", "ch": 7, "topic": "Perfect square trinomial", "diff": 2, "type": "mc", "q": "Factor: x² + 12x + 36", "choices": ["(x+6)²", "(x+6)(x−6)", "(x+12)(x+3)", "(x+4)(x+9)"], "ans": "(x+6)²", "hint": "Check if middle term = 2·a·b where a²=x² and b²=36.", "solution": ["a = x, b = 6 → 2ab = 12x ✓", "Perfect square: (x+6)²"]}, {"id": "7.7.1", "ch": 7, "topic": "GCF + complete factoring", "diff": 2, "type": "mc", "q": "Factor completely: 4x³ − 36x", "choices": ["4x(x+3)(x−3)", "4x(x²−9)", "(2x+6)(2x−6)", "4(x³−9x)"], "ans": "4x(x+3)(x−3)", "hint": "Always pull GCF first, then check if the rest factors.", "solution": ["GCF = 4x: 4x(x² − 9)", "x² − 9 is a difference of squares", "= 4x(x+3)(x−3)"]}, {"id": "7.7.2", "ch": 7, "topic": "GCF + complete factoring", "diff": 3, "type": "typed", "q": "Factor completely: 2x² − 8x − 24", "ans": "2(x−6)(x+2)", "accept": ["2(x+2)(x-6)", "2(x−6)(x+2)"], "hint": "GCF is 2. Factor the trinomial inside.", "solution": ["GCF = 2: 2(x² − 4x − 12)", "Factor: product −12, sum −4 → −6 and 2", "= 2(x−6)(x+2)"]}, {"id": "7.8.1", "ch": 7, "topic": "Factor x²+bx+c", "diff": 2, "type": "mc", "q": "Factor: x² + 9x + 20", "choices": ["(x+4)(x+5)", "(x+2)(x+10)", "(x+1)(x+20)", "(x−4)(x−5)"], "ans": "(x+4)(x+5)", "hint": "Product 20, sum 9.", "solution": ["4 × 5 = 20, 4 + 5 = 9", "(x+4)(x+5)"]}, {"id": "8.1", "ch": 8, "topic": "Vertex from vertex form", "diff": 1, "type": "mc", "q": "Identify the vertex of y = (x − 3)² + 5", "choices": ["(3, 5)", "(−3, 5)", "(3, −5)", "(−3, −5)"], "ans": "(3, 5)", "hint": "Vertex form y = a(x−h)² + k has vertex (h, k).", "solution": ["h = 3, k = 5", "Vertex: (3, 5)"]}, {"id": "8.2", "ch": 8, "topic": "Vertex from vertex form", "diff": 2, "type": "typed", "q": "Find the vertex of y = −2(x + 1)² − 4. Format: (h, k)", "ans": "(−1, −4)", "accept": ["(-1,-4)", "(-1, -4)", "(−1,−4)"], "hint": "(x + 1) means h = −1 (sign flips).", "solution": ["y = −2(x − (−1))² + (−4)", "Vertex: (−1, −4)"]}, {"id": "8.3", "ch": 8, "topic": "Axis of symmetry", "diff": 2, "type": "mc", "q": "Find the axis of symmetry of y = x² − 6x + 8.", "choices": ["x = 3", "x = −3", "x = 6", "x = −6"], "ans": "x = 3", "hint": "Axis: x = −b/(2a)", "solution": ["a=1, b=−6", "x = 6/2 = 3"]}, {"id": "8.4", "ch": 8, "topic": "Transformations", "diff": 1, "type": "mc", "q": "How is y = (x + 2)² − 5 transformed from y = x²?", "choices": ["Left 2, down 5", "Right 2, down 5", "Left 2, up 5", "Right 2, up 5"], "ans": "Left 2, down 5", "hint": "(x + h) shifts LEFT (h's sign flips).", "solution": ["(x + 2)² → h = −2 → left 2", "k = −5 → down 5"]}, {"id": "8.5", "ch": 8, "topic": "Transformations", "diff": 3, "type": "mc", "q": "Describe y = −2(x − 4)² + 5 vs y = x²", "choices": ["Reflect over x-axis, vertical stretch 2, right 4, up 5", "Reflect over x-axis, vertical compress 2, right 4, up 5", "Vertical stretch 2, left 4, down 5", "Right 4, up 5 only"], "ans": "Reflect over x-axis, vertical stretch 2, right 4, up 5", "hint": "a = −2 → reflect & stretch by 2.", "solution": ["a = −2: negative → reflect; |a| = 2 → stretch", "h = 4 → right 4", "k = 5 → up 5"]}, {"id": "8.6", "ch": 8, "topic": "Discriminant", "diff": 2, "type": "mc", "q": "How many real solutions does x² + 4x + 5 = 0 have?", "choices": ["0", "1", "2", "infinite"], "ans": "0", "hint": "D = b² − 4ac. Negative → 0 real.", "solution": ["D = 16 − 20 = −4", "D < 0 → 0 real solutions"]}, {"id": "8.7", "ch": 8, "topic": "Discriminant", "diff": 2, "type": "mc", "q": "How many real solutions does 9x² − 6x + 1 = 0 have?", "choices": ["0", "1", "2", "cannot tell"], "ans": "1", "hint": "Zero discriminant = one (double) solution.", "solution": ["D = 36 − 36 = 0", "D = 0 → 1 real solution"]}, {"id": "8.8", "ch": 8, "topic": "Vertex ↔ standard", "diff": 3, "type": "mc", "q": "Convert to vertex form: y = x² − 8x + 13", "choices": ["y = (x − 4)² − 3", "y = (x − 4)² + 3", "y = (x + 4)² − 3", "y = (x − 8)² − 3"], "ans": "y = (x − 4)² − 3", "hint": "Complete the square. Half of −8 is −4; (−4)² = 16.", "solution": ["y = (x² − 8x + 16) + 13 − 16", "y = (x − 4)² − 3"]}, {"id": "8.9", "ch": 8, "topic": "Vertex from standard", "diff": 2, "type": "mc", "q": "Find the vertex of y = x² − 6x + 8.", "choices": ["(3, −1)", "(−3, −1)", "(3, 1)", "(6, 8)"], "ans": "(3, −1)", "hint": "x = −b/(2a), then plug in.", "solution": ["x = 6/2 = 3", "y = 9 − 18 + 8 = −1", "Vertex (3, −1)"]}, {"id": "8.10", "ch": 8, "topic": "Find zeros", "diff": 2, "type": "typed", "q": "Find the zeros of f(x) = (x − 1)(x + 7). List separated by commas.", "ans": "1, −7", "accept": ["-7,1", "1,-7", "−7,1"], "hint": "Zero-product: each factor = 0.", "solution": ["x − 1 = 0 → x = 1", "x + 7 = 0 → x = −7"]}, {"id": "9.1", "ch": 9, "topic": "Solve by factoring", "diff": 1, "type": "mc", "q": "Solve: x² − 6x − 16 = 0", "choices": ["x = 8, −2", "x = −8, 2", "x = 4, −4", "x = 6, −16"], "ans": "x = 8, −2", "hint": "Factor: product −16, sum −6.", "solution": ["(x − 8)(x + 2) = 0", "x = 8 OR x = −2"]}, {"id": "9.2", "ch": 9, "topic": "Solve by factoring", "diff": 2, "type": "typed", "q": "Solve: 2x² + 5x − 3 = 0. List solutions separated by commas.", "ans": "1/2, −3", "accept": ["1/2,-3", "0.5,-3", "-3,1/2"], "hint": "AC = −6. Find two numbers product −6 sum 5.", "solution": ["AC = −6 → 6 and −1", "Split: 2x² + 6x − x − 3", "Group: (2x−1)(x+3) = 0", "x = 1/2 or x = −3"]}, {"id": "9.3", "ch": 9, "topic": "Solve by factoring", "diff": 2, "type": "typed", "q": "Solve by factoring: x² − 7x + 12 = 0. List solutions.", "ans": "3, 4", "accept": ["4,3", "3,4"], "hint": "Product 12, sum −7. Both negatives.", "solution": ["(x − 3)(x − 4) = 0", "x = 3 or x = 4"]}, {"id": "9.4", "ch": 9, "topic": "Solve by square roots", "diff": 1, "type": "mc", "q": "Solve: (x − 4)² = 49", "choices": ["x = 11, −3", "x = 11, 3", "x = 53, −45", "x = 3, −11"], "ans": "x = 11, −3", "hint": "Square root both sides — don't forget ±!", "solution": ["x − 4 = ±7", "x = 11 or x = −3"]}, {"id": "9.5", "ch": 9, "topic": "Solve by square roots", "diff": 2, "type": "typed", "q": "Solve: 3(x − 2)² = 48. List solutions.", "ans": "6, −2", "accept": ["-2,6", "6,-2", "-2, 6"], "hint": "Divide by 3 first, then square root.", "solution": ["(x − 2)² = 16", "x − 2 = ±4", "x = 6 or x = −2"]}, {"id": "9.6", "ch": 9, "topic": "Completing the square", "diff": 3, "type": "typed", "q": "Solve by completing the square: x² + 8x − 9 = 0. List solutions.", "ans": "1, −9", "accept": ["-9,1", "1,-9"], "hint": "Move c, then add (b/2)² to both sides.", "solution": ["x² + 8x = 9", "Add (8/2)² = 16: x² + 8x + 16 = 25", "(x + 4)² = 25", "x + 4 = ±5", "x = 1 or x = −9"]}, {"id": "9.7", "ch": 9, "topic": "Quadratic formula", "diff": 2, "type": "mc", "q": "Quadratic formula: 3x² + 5x − 2 = 0", "choices": ["x = 1/3, −2", "x = −1/3, 2", "x = 1, −2/3", "x = 2, −1/3"], "ans": "x = 1/3, −2", "hint": "x = (−b ± √D)/(2a)", "solution": ["a=3, b=5, c=−2", "D = 25 + 24 = 49 → √49 = 7", "x = (−5 ± 7)/6", "x = 1/3 or x = −2"]}, {"id": "9.8", "ch": 9, "topic": "Quadratic formula", "diff": 3, "type": "mc", "q": "Quadratic formula: 2x² − 5x + 1 = 0", "choices": ["x = (5 ± √17)/4", "x = (5 ± √33)/4", "x = (−5 ± √17)/4", "x = (5 ± √7)/4"], "ans": "x = (5 ± √17)/4", "hint": "a=2, b=−5, c=1. D = 25 − 8.", "solution": ["D = 25 − 8 = 17", "x = (5 ± √17)/4"]}, {"id": "9.9", "ch": 9, "topic": "Word: area", "diff": 3, "type": "typed", "q": "Rectangle: length is 5 more than width. Area = 84. Find the width.", "ans": "7", "accept": ["7 cm", "width = 7"], "hint": "w(w + 5) = 84.", "solution": ["w² + 5w − 84 = 0", "(w + 12)(w − 7) = 0", "w = 7 (reject −12)"]}, {"id": "9.10", "ch": 9, "topic": "Word: projectile", "diff": 3, "type": "mc", "q": "Ball thrown up from 4 ft at 32 ft/s: h(t) = −16t² + 32t + 4. Max height?", "choices": ["20 ft", "16 ft", "32 ft", "36 ft"], "ans": "20 ft", "hint": "Max at t = −b/(2a). Plug in.", "solution": ["t = −32/(2·−16) = 1 sec", "h(1) = −16 + 32 + 4 = 20 ft"]}, {"id": "9.11", "ch": 9, "topic": "Pick the method", "diff": 2, "type": "mc", "q": "Best method to solve 3x² − 12 = 0?", "choices": ["Square roots (no x-term)", "Factoring", "Completing the square", "Quadratic formula"], "ans": "Square roots (no x-term)", "hint": "No middle term → isolate x² and take √.", "solution": ["3x² = 12 → x² = 4 → x = ±2"]}, {"id": "9.12", "ch": 9, "topic": "Solve by factoring", "diff": 2, "type": "typed", "q": "Solve: x² − 9 = 0. List solutions.", "ans": "3, −3", "accept": ["3,-3", "-3,3", "±3"], "hint": "Difference of squares: factor it.", "solution": ["(x − 3)(x + 3) = 0", "x = 3 or x = −3"]}, {"id": "10.1", "ch": 10, "topic": "Simplify", "diff": 1, "type": "mc", "q": "Simplify: 6x / (3x²)", "choices": ["2/x", "x/2", "2x", "6/x"], "ans": "2/x", "hint": "Cancel common factors. x in num cancels one x in denom.", "solution": ["6x / (3x²) = (6/3)·(x/x²) = 2·(1/x) = 2/x"]}, {"id": "10.2", "ch": 10, "topic": "Simplify", "diff": 2, "type": "typed", "q": "Simplify: (x² − 1) / (x − 1). (Assume x ≠ 1.)", "ans": "x + 1", "accept": ["x+1", "(x+1)"], "hint": "Factor the top first.", "solution": ["x² − 1 = (x+1)(x−1)", "(x+1)(x−1)/(x−1) = x+1"]}, {"id": "10.3", "ch": 10, "topic": "Simplify", "diff": 2, "type": "mc", "q": "Simplify: (x² − 4) / (x² + 4x + 4)", "choices": ["(x − 2)/(x + 2)", "(x + 2)/(x − 2)", "(x − 2)²", "x − 2"], "ans": "(x − 2)/(x + 2)", "hint": "Factor both numerator and denominator.", "solution": ["Top: (x−2)(x+2)", "Bottom: (x+2)²", "Cancel one (x+2): (x−2)/(x+2)"]}, {"id": "10.4", "ch": 10, "topic": "Multiply", "diff": 1, "type": "mc", "q": "Multiply: (x/2) · (4/x²)", "choices": ["2/x", "x/2", "4x/(2x²)", "2x"], "ans": "2/x", "hint": "Multiply numerators and denominators, then simplify.", "solution": ["(x · 4)/(2 · x²) = 4x/(2x²) = 2/x"]}, {"id": "10.5", "ch": 10, "topic": "Multiply", "diff": 2, "type": "typed", "q": "Multiply and simplify: (3x²/4) · (8/(9x))", "ans": "2x/3", "accept": ["(2x)/3", "2x÷3"], "hint": "Multiply numerators (24x²) and denominators (36x), then simplify.", "solution": ["(3x² · 8)/(4 · 9x) = 24x²/36x = (24/36)·x = (2/3)x = 2x/3"]}, {"id": "10.6", "ch": 10, "topic": "Divide", "diff": 2, "type": "mc", "q": "Divide: (x/3) ÷ (x/6)", "choices": ["2", "x/2", "1/2", "x²/18"], "ans": "2", "hint": "To divide, multiply by the reciprocal.", "solution": ["(x/3) · (6/x) = 6x/(3x) = 6/3 = 2"]}, {"id": "10.7", "ch": 10, "topic": "Divide", "diff": 3, "type": "typed", "q": "Divide: (2x/5) ÷ (4x²/15)", "ans": "3/(2x)", "accept": ["3/2x", "(3)/(2x)"], "hint": "Multiply by the reciprocal of the second fraction.", "solution": ["(2x/5) · (15/(4x²)) = 30x/(20x²) = 3/(2x)"]}, {"id": "10.8", "ch": 10, "topic": "Add same denom", "diff": 1, "type": "mc", "q": "Add: 3/x + 4/x", "choices": ["7/x", "12/x", "7/(2x)", "7"], "ans": "7/x", "hint": "Same denominator → just add numerators.", "solution": ["3/x + 4/x = (3+4)/x = 7/x"]}, {"id": "10.9", "ch": 10, "topic": "Add different denom", "diff": 2, "type": "mc", "q": "Add: 1/2 + 1/x. Common denominator is 2x.", "choices": ["(x + 2)/(2x)", "(1 + 1)/(2 + x)", "2/(2 + x)", "(2x + 2)/(2x)"], "ans": "(x + 2)/(2x)", "hint": "Convert each to /2x.", "solution": ["1/2 = x/(2x)", "1/x = 2/(2x)", "Sum: (x + 2)/(2x)"]}, {"id": "10.10", "ch": 10, "topic": "Subtract", "diff": 3, "type": "typed", "q": "Subtract: 5/(x−2) − 3/(x−2). Simplify if possible.", "ans": "2/(x−2)", "accept": ["2/(x-2)", "2÷(x−2)"], "hint": "Same denominator → subtract numerators.", "solution": ["(5 − 3)/(x − 2) = 2/(x − 2)"]}, {"id": "10.11", "ch": 10, "topic": "Solve rational eq", "diff": 1, "type": "mc", "q": "Solve: x/3 = 12", "choices": ["x = 36", "x = 4", "x = 9", "x = 15"], "ans": "x = 36", "hint": "Multiply both sides by 3.", "solution": ["x = 12 · 3 = 36"]}, {"id": "10.12", "ch": 10, "topic": "Solve rational eq", "diff": 2, "type": "typed", "q": "Solve: 2/x = 5", "ans": "2/5", "accept": ["0.4", "x = 2/5", "x=2/5"], "hint": "Cross-multiply.", "solution": ["2 = 5x → x = 2/5"]}, {"id": "10.13", "ch": 10, "topic": "Solve rational eq", "diff": 3, "type": "typed", "q": "Solve: (x + 2)/6 = (2x − 10)/8", "ans": "19", "accept": ["x = 19", "x=19"], "hint": "Cross-multiply: 8(x+2) = 6(2x−10).", "solution": ["8(x + 2) = 6(2x − 10)", "8x + 16 = 12x − 60", "76 = 4x", "x = 19", "Check: (19+2)/6 = 21/6 = 3.5; (2·19−10)/8 = 28/8 = 3.5 ✓"]}, {"id": "10.14", "ch": 10, "topic": "Solve rational eq", "diff": 3, "type": "typed", "q": "Solve: (r + 1)/4 = 14/r. Give positive solution.", "ans": "7", "accept": ["r=7", "-8,7", "7,-8"], "hint": "Cross-multiply: r(r+1) = 56.", "solution": ["r(r + 1) = 56", "r² + r − 56 = 0", "(r + 8)(r − 7) = 0", "r = 7 (or r = −8)"]}, {"id": "10.15", "ch": 10, "topic": "Excluded values", "diff": 2, "type": "mc", "q": "For (x + 3)/(x − 5), what value of x is excluded?", "choices": ["x = 5", "x = −3", "x = −5", "x = 3"], "ans": "x = 5", "hint": "Denominator cannot be zero.", "solution": ["Set denominator = 0: x − 5 = 0 → x = 5", "Exclude x = 5"]}, {"id": "11.1", "ch": 11, "topic": "Simplify square root", "diff": 1, "type": "mc", "q": "Simplify: √50", "choices": ["5√2", "10√5", "25√2", "√10"], "ans": "5√2", "hint": "50 = 25 · 2", "solution": ["√50 = √25 · √2 = 5√2"]}, {"id": "11.2", "ch": 11, "topic": "Simplify square root", "diff": 1, "type": "mc", "q": "Simplify: √72", "choices": ["6√2", "8√3", "12√6", "36√2"], "ans": "6√2", "hint": "72 = 36 · 2", "solution": ["√72 = √36 · √2 = 6√2"]}, {"id": "11.3", "ch": 11, "topic": "Simplify square root", "diff": 2, "type": "typed", "q": "Simplify: √112", "ans": "4√7", "accept": ["4 sqrt(7)", "4√7"], "hint": "112 = 16 · 7.", "solution": ["√112 = √16 · √7 = 4√7"]}, {"id": "11.4", "ch": 11, "topic": "Simplify with variables", "diff": 2, "type": "mc", "q": "Simplify: √(48x⁴)", "choices": ["4x²√3", "2x²√12", "4x√3", "√48x"], "ans": "4x²√3", "hint": "48 = 16·3, √(x⁴) = x².", "solution": ["√48 = 4√3", "√(x⁴) = x²", "Product: 4x²√3"]}, {"id": "11.5", "ch": 11, "topic": "Simplify cube root", "diff": 1, "type": "mc", "q": "Simplify: ∛64", "choices": ["4", "8", "6", "16"], "ans": "4", "hint": "What number cubed is 64?", "solution": ["4³ = 4·4·4 = 64", "∛64 = 4"]}, {"id": "11.6", "ch": 11, "topic": "Simplify cube root", "diff": 2, "type": "mc", "q": "Simplify: ∛189", "choices": ["3∛7", "9∛21", "∛189", "3∛9"], "ans": "3∛7", "hint": "189 = 27 · 7. ∛27 = 3.", "solution": ["189 = 27 · 7", "∛189 = ∛27 · ∛7 = 3∛7"]}, {"id": "11.7", "ch": 11, "topic": "Simplify cube root", "diff": 2, "type": "typed", "q": "Simplify: ∛(−8a³)", "ans": "−2a", "accept": ["-2a", "−2·a"], "hint": "∛(−8) = −2 (cube roots can be negative).", "solution": ["∛(−8) = −2", "∛(a³) = a", "Product: −2a"]}, {"id": "11.8", "ch": 11, "topic": "Add/subtract radicals", "diff": 1, "type": "mc", "q": "Simplify: 5√7 + 2√7", "choices": ["7√7", "7√14", "10√7", "√49"], "ans": "7√7", "hint": "Like radicals: add coefficients.", "solution": ["(5 + 2)√7 = 7√7"]}, {"id": "11.9", "ch": 11, "topic": "Add/subtract radicals", "diff": 2, "type": "mc", "q": "Simplify: √72 − √18", "choices": ["3√2", "√54", "6√2 − 3√2", "2√36"], "ans": "3√2", "hint": "Simplify each radical first.", "solution": ["√72 = 6√2", "√18 = 3√2", "6√2 − 3√2 = 3√2"]}, {"id": "11.10", "ch": 11, "topic": "Add/subtract radicals", "diff": 2, "type": "typed", "q": "Simplify: 3√5 + 7√125 − 2√45", "ans": "32√5", "accept": ["32 sqrt(5)", "32√5"], "hint": "Simplify each first: √125 and √45.", "solution": ["√125 = 5√5; √45 = 3√5", "3√5 + 7(5√5) − 2(3√5)", "= 3√5 + 35√5 − 6√5", "= 32√5"]}, {"id": "11.11", "ch": 11, "topic": "Multiply radicals", "diff": 1, "type": "mc", "q": "Multiply: √6 · √8", "choices": ["4√3", "√14", "2√12", "√48"], "ans": "4√3", "hint": "√a · √b = √(ab), then simplify.", "solution": ["√6 · √8 = √48", "√48 = √(16·3) = 4√3"]}, {"id": "11.12", "ch": 11, "topic": "Multiply radicals", "diff": 3, "type": "mc", "q": "Multiply: √6(7√3 + 6)", "choices": ["21√2 + 6√6", "7√18 + 6√6", "7√6·3 + 6√6", "6 + 21√2"], "ans": "21√2 + 6√6", "hint": "Distribute. √6·√3 = √18 = 3√2.", "solution": ["√6·7√3 = 7√18 = 7·3√2 = 21√2", "√6·6 = 6√6", "Sum: 21√2 + 6√6"]}, {"id": "11.13", "ch": 11, "topic": "Rationalize denom", "diff": 2, "type": "mc", "q": "Rationalize: 10/√5", "choices": ["2√5", "√50", "10√5", "√2"], "ans": "2√5", "hint": "Multiply top and bottom by √5.", "solution": ["10/√5 · √5/√5 = 10√5/5 = 2√5"]}, {"id": "11.14", "ch": 11, "topic": "Divide radicals", "diff": 2, "type": "mc", "q": "Simplify: √48/√3", "choices": ["4", "√16", "√45", "16"], "ans": "4", "hint": "√a/√b = √(a/b).", "solution": ["√48/√3 = √(48/3) = √16 = 4"]}, {"id": "11.15", "ch": 11, "topic": "Solve radical eq", "diff": 2, "type": "mc", "q": "Solve: √x = 8", "choices": ["x = 64", "x = 16", "x = 4", "x = 2.83"], "ans": "x = 64", "hint": "Square both sides.", "solution": ["(√x)² = 8²", "x = 64"]}, {"id": "11.16", "ch": 11, "topic": "Solve radical eq", "diff": 3, "type": "typed", "q": "Solve: √(4x + 1) + 6 = 11", "ans": "6", "accept": ["x=6", "x = 6"], "hint": "Isolate the radical first.", "solution": ["√(4x + 1) = 5", "Square: 4x + 1 = 25", "4x = 24 → x = 6", "Check: √25 + 6 = 11 ✓"]}, {"id": "11.17", "ch": 11, "topic": "Multiply binomials w/ radicals", "diff": 3, "type": "mc", "q": "Multiply: (5 + 2√7)(4 − √7)", "choices": ["6 + 3√7", "20 + 3√7 − 14", "20 + 3√7", "6 + 3√14"], "ans": "6 + 3√7", "hint": "FOIL. Remember (√7)² = 7.", "solution": ["F: 5·4 = 20", "O: 5·(−√7) = −5√7", "I: 2√7·4 = 8√7", "L: 2√7·(−√7) = −2·7 = −14", "Sum: 20 − 5√7 + 8√7 − 14 = 6 + 3√7"]}, {"id": "11.18", "ch": 11, "topic": "Square of (a+b√c)", "diff": 3, "type": "typed", "q": "Expand: (1 + 2√8)². Simplify radicals.", "ans": "33 + 8√2", "accept": ["33+8√2", "33 + 8 sqrt(2)"], "hint": "FOIL or use (a+b)² = a² + 2ab + b². Then simplify √8.", "solution": ["(1 + 2√8)² = 1 + 2·1·2√8 + (2√8)²", "= 1 + 4√8 + 4·8", "= 1 + 4√8 + 32 = 33 + 4√8", "√8 = 2√2 → 4√8 = 8√2", "Final: 33 + 8√2"]}, {"id": "11.19", "ch": 11, "topic": "Divide radicals", "diff": 2, "type": "mc", "q": "Simplify: √(48/3)", "choices": ["4", "√16", "2", "√45"], "ans": "4", "hint": "Divide first, then √.", "solution": ["48/3 = 16", "√16 = 4"]}, {"id": "11.20", "ch": 11, "topic": "Rationalize (single)", "diff": 2, "type": "typed", "q": "Rationalize and simplify: 2/(6√2)", "ans": "√2/6", "accept": ["sqrt(2)/6", "(√2)/6"], "hint": "Multiply top and bottom by √2.", "solution": ["2/(6√2) · √2/√2 = 2√2/(6·2) = 2√2/12 = √2/6"]}, {"id": "11.21", "ch": 11, "topic": "Rationalize w/ conjugate", "diff": 3, "type": "mc", "q": "Rationalize: 1/(3 + √2). Multiply by conjugate.", "choices": ["(3 − √2)/7", "(3 + √2)/7", "(3 − √2)/(3+√2)", "(3 − √2)/11"], "ans": "(3 − √2)/7", "hint": "Conjugate of (3 + √2) is (3 − √2). Multiply top and bottom.", "solution": ["1/(3+√2) · (3−√2)/(3−√2)", "Bottom: (3+√2)(3−√2) = 9 − 2 = 7", "Top: 3 − √2", "Result: (3 − √2)/7"]}, {"id": "11.22", "ch": 11, "topic": "Solve radical eq", "diff": 2, "type": "mc", "q": "Solve: −2√x = −16", "choices": ["x = 64", "x = 16", "x = 8", "x = 256"], "ans": "x = 64", "hint": "Divide by −2 first, then square.", "solution": ["√x = 8", "Square: x = 64", "Check: −2(8) = −16 ✓"]}, {"id": "11.23", "ch": 11, "topic": "Radical eq → quadratic", "diff": 3, "type": "typed", "q": "Solve: x = √(56 − x). Give the positive solution.", "ans": "7", "accept": ["x=7", "x = 7"], "hint": "Square both sides. You'll get a quadratic. Reject negative roots.", "solution": ["x² = 56 − x", "x² + x − 56 = 0", "(x + 8)(x − 7) = 0", "x = −8 (reject — √ must be non-negative) or x = 7", "Check: 7 = √49 ✓"]}, {"id": "11.24", "ch": 11, "topic": "Radical eq → quadratic", "diff": 3, "type": "typed", "q": "Solve: p − 3 = √(5p − 15). List ALL solutions.", "ans": "3, 8", "accept": ["8,3", "3,8", "p=3,8"], "hint": "Square both sides. The quadratic factors nicely.", "solution": ["(p − 3)² = 5p − 15", "p² − 6p + 9 = 5p − 15", "p² − 11p + 24 = 0", "(p − 3)(p − 8) = 0", "p = 3 or p = 8 (both check)"]}, {"id": "6.6.3", "ch": 6, "topic": "Exponential growth/decay", "diff": 2, "type": "typed", "q": "Maria invests $2,500 at 4.5% annual interest, compounded annually. Write A as a function of t (years).", "ans": "A = 2500(1.045)^t", "accept": ["2500(1.045)^t", "a=2500(1.045)^t", "2500(1.045)ᵗ"], "hint": "A = P(1 + r)^t. r = 0.045 → base is 1.045.", "solution": ["A = P(1 + r)^t", "P = 2500, r = 0.045", "A = 2500(1.045)^t"]}, {"id": "6.6.4", "ch": 6, "topic": "Exponential growth/decay", "diff": 2, "type": "typed", "q": "$1,200 is invested at 6% interest compounded annually. To the nearest dollar, what is the balance after 8 years?", "ans": "1912", "accept": ["$1912", "1,912", "$1,912", "1912.42", "1912.43"], "hint": "A = 1200(1.06)^8. 1.06^8 ≈ 1.5938.", "solution": ["A = 1200(1.06)^8", "1.06^8 ≈ 1.5938", "A ≈ 1200 × 1.5938 ≈ $1,912"]}, {"id": "6.6.5", "ch": 6, "topic": "Exponential growth/decay", "diff": 2, "type": "typed", "q": "A laptop bought for $1,800 loses 18% of its value each year. Write V as a function of t (years).", "ans": "V = 1800(0.82)^t", "accept": ["1800(0.82)^t", "v=1800(0.82)^t", "1800(0.82)ᵗ"], "hint": "Decay: V = P(1 − r)^t. r = 0.18, base = 0.82.", "solution": ["V = P(1 − r)^t", "r = 0.18 → 1 − r = 0.82", "V = 1800(0.82)^t"]}, {"id": "6.6.6", "ch": 6, "topic": "Exponential growth/decay", "diff": 2, "type": "typed", "q": "Using V = 1800(0.82)^t, find the laptop's value after 4 years (nearest dollar).", "ans": "813", "accept": ["$813", "813.07"], "hint": "0.82^4 ≈ 0.4521.", "solution": ["0.82^4 ≈ 0.4521", "1800 × 0.4521 ≈ 813.07", "≈ $813"]}, {"id": "6.6.7", "ch": 6, "topic": "Exponential growth/decay", "diff": 3, "type": "typed", "q": "Sam invests $1,000 at 5% annual compound interest. After how many full years will his balance first exceed $1,500?", "ans": "9", "accept": ["9 years", "t=9"], "hint": "Need (1.05)^t > 1.5. Try values.", "solution": ["1000(1.05)^t > 1500 → (1.05)^t > 1.5", "1.05^8 ≈ 1.477 — not yet", "1.05^9 ≈ 1.551 ✓", "After 9 years"]}, {"id": "7.3.4", "ch": 7, "topic": "Factor x²+bx+c", "diff": 2, "type": "typed", "q": "Factor: x² − 8x + 15. Type in form (x−a)(x−b).", "ans": "(x−3)(x−5)", "accept": ["(x-3)(x-5)", "(x-5)(x-3)", "(x−5)(x−3)"], "hint": "Product 15, sum −8. Both negatives.", "solution": ["Product 15, sum −8 → −3 and −5", "(x − 3)(x − 5)"]}, {"id": "8.11", "ch": 8, "topic": "Axis of symmetry", "diff": 2, "type": "typed", "q": "Find the axis of symmetry of y = 2x² + 8x − 3.", "ans": "x = -2", "accept": ["-2", "x=-2", "x = -2"], "hint": "x = −b/(2a). a = 2, b = 8.", "solution": ["x = −b/(2a) = −8/(2·2) = −8/4 = −2", "Axis: x = −2"]}, {"id": "8.12", "ch": 8, "topic": "Axis of symmetry", "diff": 2, "type": "typed", "q": "Find the axis of symmetry of y = −x² + 10x.", "ans": "x = 5", "accept": ["5", "x=5"], "hint": "a = −1, b = 10. Negative ÷ negative = positive.", "solution": ["x = −b/(2a) = −10/(2·−1) = −10/−2 = 5", "Axis: x = 5"]}, {"id": "8.13", "ch": 8, "topic": "Vertex from standard", "diff": 2, "type": "typed", "q": "Find the vertex of y = x² − 10x + 21. Type as (h, k).", "ans": "(5, -4)", "accept": ["(5,-4)", "5,-4"], "hint": "h = −b/(2a), then plug back in for k.", "solution": ["h = 10/2 = 5", "k = 25 − 50 + 21 = −4", "Vertex: (5, −4)"]}, {"id": "8.14", "ch": 8, "topic": "Vertex from standard", "diff": 3, "type": "typed", "q": "Find the vertex of y = 2x² − 12x + 19. Type as (h, k).", "ans": "(3, 1)", "accept": ["(3,1)", "3,1"], "hint": "h = −b/(2a) = 12/4 = 3. Then compute k.", "solution": ["h = −(−12)/(2·2) = 12/4 = 3", "k = 2(9) − 12(3) + 19 = 18 − 36 + 19 = 1", "Vertex: (3, 1)"]}, {"id": "8.15", "ch": 8, "topic": "Discriminant", "diff": 2, "type": "typed", "q": "Compute the discriminant of x² − 6x + 4 = 0.", "ans": "20", "accept": ["d=20"], "hint": "D = b² − 4ac. a = 1, b = −6, c = 4.", "solution": ["D = b² − 4ac = (−6)² − 4(1)(4)", "= 36 − 16 = 20"]}, {"id": "8.16", "ch": 8, "topic": "Discriminant", "diff": 2, "type": "typed", "q": "Compute the discriminant of 2x² + 3x + 5 = 0.", "ans": "-31", "accept": ["−31", "d=-31"], "hint": "D = b² − 4ac. a = 2, b = 3, c = 5.", "solution": ["D = 3² − 4(2)(5)", "= 9 − 40 = −31"]}, {"id": "9.13", "ch": 9, "topic": "Completing the square", "diff": 3, "type": "typed", "q": "Convert y = x² + 4x + 1 to vertex form.", "ans": "y = (x + 2)² − 3", "accept": ["(x+2)^2-3", "y=(x+2)^2-3", "(x+2)²-3", "y=(x+2)²-3"], "hint": "Half of b = 4/2 = 2. Square it: 4.", "solution": ["Half of b: 4/2 = 2; square: 4", "y = (x² + 4x + 4) + 1 − 4", "y = (x + 2)² − 3"]}, {"id": "9.14", "ch": 9, "topic": "Quadratic formula", "diff": 3, "type": "typed", "q": "Solve x² − 6x + 4 = 0 using the quadratic formula. Type in form a ± √n.", "ans": "3 ± √5", "accept": ["3±sqrt(5)", "3 ± sqrt(5)", "3±√5", "3+√5,3-√5"], "hint": "D = 20 = 4·5. √20 = 2√5. Then divide by 2a.", "solution": ["a=1, b=−6, c=4", "D = 36 − 16 = 20", "√20 = 2√5", "x = (6 ± 2√5)/2 = 3 ± √5"]}, {"id": "9.15", "ch": 9, "topic": "Word: projectile", "diff": 3, "type": "typed", "q": "Ball launched from the ground: h(t) = −16t² + 48t (ft, sec). At what time does it reach max height?", "ans": "1.5", "accept": ["1.5 seconds", "t=1.5", "3/2"], "hint": "Max at t = −b/(2a). a = −16, b = 48.", "solution": ["t = −b/(2a) = −48/(2·−16) = −48/−32 = 1.5", "Max at t = 1.5 seconds"]}, {"id": "9.16", "ch": 9, "topic": "Word: projectile", "diff": 3, "type": "typed", "q": "Using h(t) = −16t² + 48t, what is the maximum height (in feet)?", "ans": "36", "accept": ["36 ft", "36 feet", "h=36"], "hint": "Plug t = 1.5 into h(t).", "solution": ["h(1.5) = −16(2.25) + 48(1.5)", "= −36 + 72 = 36 ft"]}, {"id": "9.17", "ch": 9, "topic": "Word: projectile", "diff": 3, "type": "typed", "q": "Using h(t) = −16t² + 48t, when does the ball hit the ground (seconds)?", "ans": "3", "accept": ["3 seconds", "t=3"], "hint": "Set h(t) = 0 and factor.", "solution": ["−16t² + 48t = 0", "−16t(t − 3) = 0", "t = 0 (launch) or t = 3 (landing)", "Lands at t = 3 seconds"]}, {"id": "10.16", "ch": 10, "topic": "Excluded values", "diff": 3, "type": "typed", "q": "Find the excluded values of (x + 1)/(x² − 9). List all.", "ans": "x = ±3", "accept": ["3,-3", "-3,3", "±3", "x=±3", "x=3,-3"], "hint": "Set denominator = 0. Factor x² − 9.", "solution": ["x² − 9 = (x+3)(x−3) = 0", "x = 3 or x = −3", "Excluded: x = ±3"]}, {"id": "10.17", "ch": 10, "topic": "Add same denom", "diff": 2, "type": "typed", "q": "Simplify: (2x)/(x+1) + 3/(x+1)", "ans": "(2x + 3)/(x + 1)", "accept": ["(2x+3)/(x+1)"], "hint": "Same denominator → just add numerators.", "solution": ["Same denominator: combine numerators", "(2x + 3)/(x + 1)"]}, {"id": "11.25", "ch": 11, "topic": "Rationalize denom", "diff": 2, "type": "typed", "q": "Rationalize: 6/√3", "ans": "2√3", "accept": ["2sqrt(3)", "2 sqrt(3)", "2sqrt3"], "hint": "Multiply top and bottom by √3.", "solution": ["6/√3 · √3/√3 = 6√3/3 = 2√3"]}];
+
+// =========================================================
+// Augment problems with section + skillId
+// =========================================================
+function slugify(s) {
+  return s.toLowerCase()
+    .replace(/[²³⁴⁵⁶⁷⁸⁹⁰¹]/g, 'n')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+PROBLEMS.forEach(p => {
+  const parts = p.id.split('.');
+  p.section = parts.length >= 2 ? `${parts[0]}.${parts[1]}` : `${p.ch}`;
+  p.skillId = `ch${p.ch}-${slugify(p.topic)}`;
+});
+
+// Build skill registry
+const SKILLS = {};
+PROBLEMS.forEach(p => {
+  if (!SKILLS[p.skillId]) {
+    SKILLS[p.skillId] = { id: p.skillId, ch: p.ch, topic: p.topic, problemIds: [] };
+  }
+  SKILLS[p.skillId].problemIds.push(p.id);
+});
+const SKILL_LIST = Object.values(SKILLS);
+const PROBLEM_BY_ID = {};
+PROBLEMS.forEach(p => { PROBLEM_BY_ID[p.id] = p; });
+
+// =========================================================
+// State
+// =========================================================
+const STATE_KEY = 'mq_v2';
+const defaultState = () => ({
+  skills: {}, // skillId → { attempts, correct, recent: [], lastSeen }
+  session: { xpTotal: 0, streakCurrent: 0, streakLongest: 0, lastDay: '', problemsToday: 0, correctToday: 0, allTimeAttempts: 0, allTimeCorrect: 0 },
+  queue: [],
+  seenRecent: [],
+  current: null, // { problemId, answered, correct, hintShown, fromQueue }
+});
+
+let state = loadState();
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STATE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      const d = defaultState();
+      return { ...d, ...parsed,
+        session: { ...d.session, ...(parsed.session || {}) },
+        skills: parsed.skills || {},
+        queue: parsed.queue || [],
+        seenRecent: parsed.seenRecent || [],
+      };
+    }
+  } catch(e) {}
+  return defaultState();
+}
+function saveState() { localStorage.setItem(STATE_KEY, JSON.stringify(state)); }
+
+// Day rollover
+function todayStr() { return new Date().toISOString().slice(0,10); }
+function rollDay() {
+  const t = todayStr();
+  if (state.session.lastDay !== t) {
+    state.session.lastDay = t;
+    state.session.problemsToday = 0;
+    state.session.correctToday = 0;
+    saveState();
+  }
+}
+rollDay();
+
+// =========================================================
+// Skill state classification
+// =========================================================
+function skillState(skillId) {
+  const t = state.skills[skillId];
+  if (!t || t.attempts === 0) return 'new';
+  const recent = t.recent || [];
+  const recentCorrect = recent.filter(Boolean).length;
+  const recentPct = recent.length ? recentCorrect / recent.length : 0;
+  if (recent.length >= 3 && recentPct < 0.4) return 'struggling';
+  if (t.attempts < 3 || recentPct < 0.7) return 'learning';
+  if (recentPct < 0.9) return 'practicing';
+  return 'mastered';
+}
+
+function skillWeight(skillId) {
+  const s = skillState(skillId);
+  return { struggling: 6, learning: 4, new: 3, practicing: 2, mastered: 1 }[s];
+}
+
+function skillPct(skillId) {
+  const t = state.skills[skillId];
+  if (!t || t.attempts === 0) return 0;
+  return Math.round((t.correct / t.attempts) * 100);
+}
+
+// =========================================================
+// Adaptive picker
+// =========================================================
+function pickNext() {
+  // 1. Drain remediation queue first
+  while (state.queue.length > 0) {
+    const id = state.queue.shift();
+    if (PROBLEM_BY_ID[id]) {
+      saveState();
+      return { problem: PROBLEM_BY_ID[id], fromQueue: true };
+    }
+  }
+
+  // 2. Weighted pick of a skill
+  const weights = SKILL_LIST.map(s => ({ skillId: s.id, w: skillWeight(s.id) }));
+  const total = weights.reduce((a, b) => a + b.w, 0);
+  let r = Math.random() * total;
+  let chosen = weights[0].skillId;
+  for (const x of weights) {
+    r -= x.w;
+    if (r <= 0) { chosen = x.skillId; break; }
+  }
+
+  // 3. Pick a problem in that skill: prefer not-recently-seen
+  const candidates = SKILLS[chosen].problemIds.map(id => PROBLEM_BY_ID[id]);
+  const unseen = candidates.filter(p => !state.seenRecent.includes(p.id));
+  const pool = unseen.length ? unseen : candidates;
+  const p = pool[Math.floor(Math.random() * pool.length)];
+  return { problem: p, fromQueue: false };
+}
+
+// =========================================================
+// Answer recording
+// =========================================================
+function recordAnswer(problem, correct, fromQueue) {
+  const sk = problem.skillId;
+  if (!state.skills[sk]) state.skills[sk] = { attempts: 0, correct: 0, recent: [], lastSeen: 0 };
+  const t = state.skills[sk];
+  t.attempts++;
+  if (correct) t.correct++;
+  t.recent.push(!!correct);
+  if (t.recent.length > 6) t.recent.shift();
+  t.lastSeen = Date.now();
+
+  state.seenRecent.push(problem.id);
+  if (state.seenRecent.length > 8) state.seenRecent.shift();
+
+  // Miss → queue 2 more of same skill (prefer same/easier difficulty)
+  if (!correct) {
+    const others = SKILLS[sk].problemIds
+      .filter(id => id !== problem.id && !state.queue.includes(id))
+      .map(id => PROBLEM_BY_ID[id])
+      .sort((a, b) => Math.abs(a.diff - problem.diff) - Math.abs(b.diff - problem.diff));
+    const toAdd = others.slice(0, 2).map(p => p.id);
+    state.queue.unshift(...toAdd);
+  }
+
+  // XP and streak
+  rollDay();
+  state.session.allTimeAttempts++;
+  if (correct) {
+    state.session.allTimeCorrect++;
+    state.session.correctToday++;
+    state.session.xpTotal += (problem.type === 'typed' ? 15 : 10);
+    state.session.streakCurrent++;
+    if (state.session.streakCurrent > state.session.streakLongest) {
+      state.session.streakLongest = state.session.streakCurrent;
+    }
+  } else {
+    state.session.streakCurrent = 0;
+  }
+  state.session.problemsToday++;
+  saveState();
+}
+
+// =========================================================
+// Answer normalization
+// =========================================================
+function normalizeAnswer(s) {
+  if (s == null) return '';
+  let n = String(s).toLowerCase().trim();
+  n = n.replace(/\s+/g, '').replace(/['"$,]/g, '');
+  n = n.replace(/[−–—]/g, '-');
+  const sup = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+  for (let i = 0; i < 10; i++) n = n.split(sup[i]).join('^' + i);
+  n = n.replace(/√/g, 'sqrt');
+  n = n.replace(/∛/g, 'cbrt');
+  n = n.replace(/[×⋅·\*]/g, '');
+  n = n.replace(/^[avhxypstdkrf]=/, '');
+  if (n.startsWith('(') && n.endsWith(')')) {
+    const inner = n.slice(1, -1);
+    if (!inner.includes('(') && !inner.includes(')')) n = inner;
+  }
+  if (n.includes(',') && !n.includes('(')) {
+    n = n.split(',').map(s => s.trim()).filter(Boolean).sort().join(',');
+  }
+  return n;
+}
+
+// =========================================================
+// VIEWS / Rendering
+// =========================================================
+function refreshHeaderStats() {
+  document.getElementById('streakNum').textContent = state.session.streakCurrent;
+  document.getElementById('xpNum').textContent = state.session.xpTotal;
+  const at = state.session.allTimeAttempts;
+  const acc = at > 0 ? Math.round((state.session.allTimeCorrect / at) * 100) : null;
+  document.getElementById('accNum').textContent = acc === null ? '—' : `${acc}%`;
+}
+
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  if (name === 'home') renderHome();
+  if (name === 'skills') renderSkills();
+  if (name === 'practice') renderPractice();
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  refreshHeaderStats();
+}
+
+// HOME
+function renderHome() {
+  rollDay();
+  document.getElementById('todayDone').textContent = state.session.problemsToday;
+  document.getElementById('todayCorrect').textContent = state.session.correctToday;
+  const pt = state.session.problemsToday;
+  document.getElementById('todayAcc').textContent = pt > 0 ? Math.round((state.session.correctToday / pt) * 100) + '%' : '—';
+
+  // Queue banner
+  const qb = document.getElementById('queueBanner');
+  if (state.queue.length > 0) {
+    qb.innerHTML = `<div class="queue-banner">
+      <span class="icon">🎯</span>
+      <div><strong>${state.queue.length}</strong> remediation problem${state.queue.length === 1 ? '' : 's'} queued from your recent misses — these come first.</div>
+    </div>`;
+  } else {
+    qb.innerHTML = '';
+  }
+
+  // CTA label depends on whether they have queued items
+  document.getElementById('ctaLabel').textContent = state.queue.length > 0
+    ? `Practice (${state.queue.length} queued)`
+    : 'Start practice';
+
+  // Hero copy reflects current state
+  const at = state.session.allTimeAttempts;
+  if (at === 0) {
+    document.getElementById('heroTitle').textContent = 'Welcome';
+    document.getElementById('heroSub').textContent = 'Practice adapts: more of what you miss, less of what you master.';
+  } else {
+    const strug = SKILL_LIST.filter(s => skillState(s.id) === 'struggling').length;
+    const mast = SKILL_LIST.filter(s => skillState(s.id) === 'mastered').length;
+    document.getElementById('heroTitle').textContent = `${mast} skill${mast===1?'':'s'} mastered`;
+    document.getElementById('heroSub').textContent = strug > 0
+      ? `${strug} skill${strug===1?'':'s'} still struggling — engine prioritizes those.`
+      : 'No struggling skills. Engine pulls a balanced mix.';
+  }
+}
+
+function startPractice() {
+  state.current = null;
+  saveState();
+  showView('practice');
+}
+
+function endSession() {
+  state.current = null;
+  saveState();
+  showView('home');
+}
+
+// PRACTICE
+function renderPractice() {
+  if (!state.current) {
+    const { problem, fromQueue } = pickNext();
+    state.current = {
+      problemId: problem.id,
+      answered: false,
+      correct: false,
+      hintShown: false,
+      userAns: '',
+      fromQueue,
+    };
+    saveState();
+  }
+  const c = state.current;
+  const p = PROBLEM_BY_ID[c.problemId];
+  if (!p) { state.current = null; saveState(); return renderPractice(); }
+
+  const body = document.getElementById('practiceBody');
+  const skState = skillState(p.skillId);
+  const skPct = skillPct(p.skillId);
+  const skAttempts = (state.skills[p.skillId]?.attempts) || 0;
+
+  let html = `<div class="q-card">
+    <div class="q-meta">
+      <span class="ch">Ch ${p.ch} · §${p.section}</span>
+      <span class="topic">${p.topic}</span>
+      <span style="margin-left:auto;">Diff ${p.diff}</span>
+      ${c.fromQueue ? '<span class="remediation-tag">🎯 Remediation</span>' : ''}
+    </div>
+    <div class="q-text">${p.q}</div>`;
+
+  // Hint (before answer)
+  if (c.hintShown && !c.answered) {
+    html += `<div class="hint-box">💡 ${p.hint}</div>`;
+  }
+
+  // Choices or input
+  if (p.type === 'mc') {
+    html += `<div class="choices">`;
+    p.choices.forEach((choice, j) => {
+      const letter = "ABCD"[j];
+      let cls = 'choice';
+      if (c.answered) {
+        if (choice === p.ans) cls += ' correct';
+        else if (c.userAns === choice) cls += ' wrong';
+      }
+      html += `<button class="${cls}" onclick="answerMC('${escapeAttr(choice)}')" ${c.answered ? 'disabled' : ''}>
+        <span class="letter">${letter}</span><span>${choice}</span>
+      </button>`;
+    });
+    html += `</div>`;
+  } else {
+    html += `<div class="math-keys">
+      ${['x²','x³','^','√','∛','±','−','/','(',')',','].map(k => {
+        const c2 = k === 'x²' ? '²' : k === 'x³' ? '³' : k === '−' ? '-' : k;
+        return `<button class="math-key" onclick="insertKey('${c2}')">${k}</button>`;
+      }).join('')}
+    </div>
+    <input type="text" class="typed-input ${c.answered ? (c.correct ? 'correct' : 'wrong') : ''}"
+      id="typedInput" placeholder="Type your answer…"
+      value="${escapeAttr(c.userAns)}" autocomplete="off" autocapitalize="off" spellcheck="false"
+      ${c.answered ? 'disabled' : ''}
+      onkeydown="if(event.key==='Enter')submitTyped()">`;
+  }
+
+  // Actions
+  html += `<div class="q-actions">`;
+  if (!c.answered) {
+    if (!c.hintShown) {
+      html += `<button class="btn btn-hint" onclick="showHint()">💡 Hint</button>`;
+    }
+    if (p.type === 'typed') {
+      html += `<button class="btn btn-primary" onclick="submitTyped()">Check answer</button>`;
+    }
+  } else {
+    html += `<button class="btn btn-success" onclick="nextProblem()">Next problem →</button>`;
+  }
+  html += `</div>`;
+
+  // Solution
+  if (c.answered) {
+    html += `<div class="solution-box ${c.correct ? 'right' : 'wrong'}">
+      <div class="sol-head">${c.correct ? '✓ Correct' : '✗ Not quite — worked solution'}</div>
+      <ol>${p.solution.map(s => `<li>${s}</li>`).join('')}</ol>
+      <div class="final-ans">Answer: ${p.ans}</div>
+    </div>`;
+    if (!c.correct) {
+      html += `<div class="queued-note">🎯 Two more problems on <strong>${p.topic}</strong> added to your remediation queue — they'll come up next.</div>`;
+    }
+  }
+
+  html += `</div>`;
+
+  // Skill context card
+  html += `<div style="background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:0.7rem 1rem; margin-top:0.5rem; font-size:0.85rem; color:var(--text-dim);">
+    <strong style="color:var(--text);">${p.topic}</strong> — your mastery: <strong>${skPct}%</strong>${skAttempts > 0 ? ` (${state.skills[p.skillId].correct}/${skAttempts})` : ' (new skill)'} · status: <strong style="color:${
+      {struggling:'var(--red)', learning:'var(--orange)', practicing:'var(--yellow)', mastered:'var(--green)', new:'var(--text-dim)'}[skState]
+    };">${skState}</strong>
+  </div>`;
+
+  body.innerHTML = html;
+
+  // Focus input if typed
+  if (p.type === 'typed' && !c.answered) {
+    setTimeout(() => {
+      const inp = document.getElementById('typedInput');
+      if (inp) inp.focus();
+    }, 50);
+  }
+}
+
+function answerMC(choice) {
+  if (state.current.answered) return;
+  const p = PROBLEM_BY_ID[state.current.problemId];
+  state.current.userAns = choice;
+  state.current.answered = true;
+  state.current.correct = (choice === p.ans);
+  recordAnswer(p, state.current.correct, state.current.fromQueue);
+  renderPractice();
+  refreshHeaderStats();
+}
+
+function submitTyped() {
+  if (state.current.answered) return;
+  const inp = document.getElementById('typedInput');
+  if (!inp) return;
+  const user = inp.value;
+  if (!user.trim()) { inp.focus(); return; }
+  const p = PROBLEM_BY_ID[state.current.problemId];
+  const expected = [p.ans, ...(p.accept || [])].map(normalizeAnswer);
+  const got = normalizeAnswer(user);
+  state.current.userAns = user;
+  state.current.answered = true;
+  state.current.correct = expected.includes(got);
+  recordAnswer(p, state.current.correct, state.current.fromQueue);
+  renderPractice();
+  refreshHeaderStats();
+}
+
+function showHint() {
+  state.current.hintShown = true;
+  saveState();
+  renderPractice();
+}
+
+function nextProblem() {
+  state.current = null;
+  saveState();
+  renderPractice();
+}
+
+function insertKey(ch) {
+  const el = document.getElementById('typedInput');
+  if (!el || el.disabled) return;
+  const start = el.selectionStart ?? el.value.length;
+  const end = el.selectionEnd ?? el.value.length;
+  el.value = el.value.slice(0, start) + ch + el.value.slice(end);
+  el.focus();
+  const newPos = start + ch.length;
+  try { el.setSelectionRange(newPos, newPos); } catch(e) {}
+}
+
+// SKILLS
+function renderSkills() {
+  // Summary counts
+  const counts = { struggling:0, learning:0, practicing:0, mastered:0, new:0 };
+  SKILL_LIST.forEach(s => { counts[skillState(s.id)]++; });
+  const sumHtml = ['struggling','learning','practicing','mastered','new'].map(k =>
+    `<div class="summary-pill ${k}"><div class="num">${counts[k]}</div><div class="lbl">${k}</div></div>`
+  ).join('');
+  document.getElementById('skillSummary').innerHTML = sumHtml;
+
+  // Sorted list — worst first
+  const order = ['struggling','learning','practicing','new','mastered'];
+  const sorted = [...SKILL_LIST].sort((a,b) => {
+    const sa = skillState(a.id), sb = skillState(b.id);
+    const oa = order.indexOf(sa), ob = order.indexOf(sb);
+    if (oa !== ob) return oa - ob;
+    return skillPct(a.id) - skillPct(b.id);
+  });
+
+  let html = '';
+  sorted.forEach(s => {
+    const st = skillState(s.id);
+    const pct = skillPct(s.id);
+    const t = state.skills[s.id];
+    const recent = t?.recent || [];
+    html += `<div class="skill-row ${st}">
+      <div class="skill-row-head">
+        <div>
+          <div class="skill-name">${s.topic}</div>
+          <div class="skill-meta">Ch ${s.ch} · ${s.problemIds.length} problem${s.problemIds.length===1?'':'s'} · ${t ? `${t.correct}/${t.attempts}` : 'not attempted'}</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-weight:800; font-size:1.05rem; color:var(--text);">${t ? pct + '%' : '—'}</div>
+          <div class="skill-meta" style="text-transform:uppercase; letter-spacing:0.05em;">${st}</div>
+        </div>
+      </div>
+      <div class="skill-bar"><div class="skill-bar-fill ${st}" style="width:${t ? pct : 5}%"></div></div>
+      ${recent.length ? `<div class="skill-recent">${recent.map(r => `<span class="dot ${r ? 'r' : 'w'}"></span>`).join('')}</div>` : ''}
+    </div>`;
+  });
+  document.getElementById('skillList').innerHTML = html;
+}
+
+// =========================================================
+// Helpers
+// =========================================================
+function escapeAttr(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// Countdown
+const exam = new Date('2026-06-11T08:00:00');
+const days = Math.max(0, Math.ceil((exam - new Date()) / 86400000));
+document.getElementById('cd').textContent = days === 0 ? 'COA EXAM TODAY' : `${days} days to COA exam`;
+
+// Init
+refreshHeaderStats();
+renderHome();
+</script>
+</body>
+</html>
