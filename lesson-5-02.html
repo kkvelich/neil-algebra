@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5.02 Lesson — Comparing Data Sets</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #0EA5E9; --primary-soft: rgba(14,165,233,0.12);
+  --green: #10B981; --green-soft: rgba(16,185,129,0.18);
+  --red: #EF4444; --red-soft: rgba(239,68,68,0.18);
+  --yellow: #FBBF24; --orange: #F59E0B;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg:#F8FAFC; --bg-card:#FFFFFF; --bg-elevated:#F1F5F9; --text:#1A1A1A; --text-dim:#64748B; --border:#E2E8F0; }
+}
+html, body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:17px; line-height:1.6; }
+.container { max-width:760px; margin:0 auto; padding:1rem 1.1rem 4rem; }
+header.top { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1rem; gap:0.5rem; }
+.logo { font-size:1.2rem; font-weight:800; background:linear-gradient(135deg, #8B5CF6, #EC4899); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+.back { color:var(--text-dim); text-decoration:none; font-size:0.88rem; font-weight:600; }
+.hero { background:linear-gradient(135deg, #8B5CF6, #EC4899); border-radius:18px; padding:1.3rem 1.4rem; color:white; margin-bottom:1.5rem; }
+.hero h1 { margin:0 0 0.4rem; font-size:1.4rem; font-weight:800; }
+.hero p { margin:0; font-size:0.95rem; opacity:0.95; line-height:1.55; }
+.hero .tags { display:flex; gap:0.4rem; margin-top:0.7rem; flex-wrap:wrap; }
+.hero .tag { background:rgba(255,255,255,0.22); padding:0.25rem 0.7rem; border-radius:999px; font-weight:700; font-size:0.78rem; }
+.toc { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin-bottom:1.5rem; }
+.toc h3 { margin:0 0 0.5rem; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); }
+.toc a { display:block; color:var(--text); text-decoration:none; padding:0.35rem 0; font-size:0.95rem; font-weight:600; }
+.toc a:hover { color:var(--primary); }
+h2 { font-size:1.4rem; margin:2rem 0 0.6rem; color:#8B5CF6; font-weight:800; padding-top:0.5rem; border-top:1px solid var(--border); }
+h2:first-of-type { border-top:none; padding-top:0; margin-top:1rem; }
+h3 { font-size:1.1rem; margin:1.5rem 0 0.5rem; font-weight:700; color:var(--text); }
+p { margin:0.6rem 0; }
+ul, ol { margin:0.4rem 0; padding-left:1.4rem; }
+li { margin:0.3rem 0; }
+table { border-collapse:collapse; margin:0.6rem 0 1rem; width:100%; font-size:0.92rem; }
+th, td { border:1px solid var(--border); padding:0.4rem 0.7rem; text-align:left; }
+th { background:var(--bg-elevated); font-weight:700; }
+strong { color:var(--text); }
+code { font-family:-apple-system,"SF Mono",Menlo,monospace; background:var(--bg-elevated); padding:0.1rem 0.35rem; border-radius:4px; font-size:0.92em; }
+.callout { background:rgba(245,158,11,0.1); border-left:4px solid var(--orange); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.callout strong { color:var(--orange); }
+.tip-box { background:rgba(139,92,246,0.08); border-left:4px solid #8B5CF6; padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.tip-box strong { color:#8B5CF6; }
+.ascii { background:var(--bg-elevated); padding:0.8rem 1rem; border-radius:8px; font-family:-apple-system,"SF Mono",Menlo,monospace; font-size:0.88rem; line-height:1.4; overflow-x:auto; white-space:pre; margin:0.6rem 0 0.8rem; color:var(--text); }
+.example { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.example .ex-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--green); font-weight:700; margin-bottom:0.3rem; }
+.practice { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.practice .p-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:#8B5CF6; font-weight:700; margin-bottom:0.3rem; }
+.practice .q { font-weight:600; margin:0.2rem 0 0.6rem; }
+.practice .choices { margin:0.5rem 0; padding-left:1.4rem; }
+.practice .choices li { margin:0.25rem 0; }
+.practice details { margin-top:0.7rem; }
+.practice summary { cursor:pointer; padding:0.55rem 0.9rem; background:linear-gradient(135deg, #8B5CF6, #EC4899); color:white; border-radius:8px; font-weight:700; font-size:0.9rem; list-style:none; display:inline-block; }
+.practice summary::-webkit-details-marker { display:none; }
+.practice summary::before { content:"👁 "; }
+.practice details[open] summary::before { content:"🙈 "; }
+.practice .answer { margin-top:0.7rem; padding:0.85rem 1rem; background:var(--green-soft); border-left:3px solid var(--green); border-radius:0 10px 10px 0; font-size:0.92rem; line-height:1.55; }
+.practice .answer .ans-label { font-weight:800; color:var(--green); margin-right:0.4rem; }
+.checklist { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1.1rem 1.2rem; margin:1rem 0; }
+.checklist label { display:flex; align-items:flex-start; gap:0.6rem; padding:0.4rem 0; cursor:pointer; font-size:0.95rem; line-height:1.5; }
+.checklist input[type=checkbox] { margin-top:0.3rem; width:18px; height:18px; cursor:pointer; flex-shrink:0; }
+.checklist input[type=checkbox]:checked + .item-text { text-decoration:line-through; opacity:0.6; }
+footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center; font-size:0.83rem; color:var(--text-dim); }
+footer a { color:var(--primary); text-decoration:none; }
+.big-final { background:linear-gradient(135deg, rgba(139,92,246,0.15), rgba(236,72,153,0.1)); border:1px solid #8B5CF6; border-radius:14px; padding:1.1rem 1.3rem; margin:1.5rem 0; }
+.big-final h3 { margin-top:0; color:#8B5CF6; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="top">
+    <a class="logo" href="index.html">📊 Lesson 5.02</a>
+    <a class="back" href="index.html">← Hub</a>
+  </header>
+
+  <div class="hero">
+    <h1>5.02 — Comparing Data Sets</h1>
+    <p>This is the hardest quiz so far. It's about <strong>choosing</strong> the right statistical tool — not just computing. Mean or median? Standard deviation or IQR? When does a normal distribution rule kick in?</p>
+    <div class="tags">
+      <span class="tag">10 questions</span>
+      <span class="tag">~45-60 min</span>
+      <span class="tag">Due Thursday</span>
+    </div>
+  </div>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <a href="#sec-a">A. Symmetric vs. Skewed Distributions</a>
+    <a href="#sec-b">B. Mean vs. Median — when to use which</a>
+    <a href="#sec-c">C. Standard Deviation (σ) basics</a>
+    <a href="#sec-d">D. Standard Deviation vs. IQR for spread</a>
+    <a href="#sec-e">E. The 68-95-99.7 Rule (Normal Distribution)</a>
+    <a href="#sec-f">F. Comparing Two Box Plots</a>
+    <a href="#sec-prac">G. Practice (10 problems)</a>
+    <a href="#sec-next">H. What to do next</a>
+  </div>
+
+  <h2 id="sec-a">A. Symmetric vs. Skewed Distributions</h2>
+  <p>Before picking a stat, you need to know the <strong>shape</strong> of the data. Three main shapes:</p>
+  <ul>
+    <li><strong>Symmetric</strong> — data balanced around the middle. Mean ≈ Median.</li>
+    <li><strong>Skewed right</strong> — long tail to the right (high outliers pull mean up). Mean &gt; Median.</li>
+    <li><strong>Skewed left</strong> — long tail to the left (low outliers pull mean down). Mean &lt; Median.</li>
+  </ul>
+  <div class="ascii">  Symmetric        Skewed right        Skewed left
+   _____            __                       __
+  /     \          /  \____               ___/  \
+ /       \        /        \___        __/       \
+─────────         ────────────         ─────────────</div>
+  <p><strong>How to spot skewness on a box plot:</strong></p>
+  <ul>
+    <li>Median in the middle of the box, whiskers equal length → <strong>symmetric</strong>.</li>
+    <li>Median closer to Q1, longer right whisker → <strong>skewed right</strong>.</li>
+    <li>Median closer to Q3, longer left whisker → <strong>skewed left</strong>.</li>
+  </ul>
+
+  <h2 id="sec-b">B. Mean vs. Median — when to use which</h2>
+  <p>Both measure "the middle." But they react VERY differently to outliers.</p>
+  <table>
+    <tr><th>Use this</th><th>When</th><th>Why</th></tr>
+    <tr><td><strong>Mean</strong></td><td>Symmetric data, no outliers</td><td>Uses every data point — most precise when nothing's pulling it</td></tr>
+    <tr><td><strong>Median</strong></td><td>Skewed data OR has outliers</td><td>Doesn't get pulled by extreme values — represents "typical" better</td></tr>
+  </table>
+
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Books read per week: {0, 24, 1, 4, 5, 2, 5, 4}.</p>
+    <ul>
+      <li>Sorted: 0, 1, 2, 4, 4, 5, 5, 24. Mean = 45/8 = 5.625. Median = (4+4)/2 = 4.</li>
+      <li>The 24 is an outlier — pulls the mean way up.</li>
+      <li>The median (4) is more representative of what "typical" looks like.</li>
+    </ul>
+    <p><strong>So: use median.</strong></p>
+  </div>
+
+  <div class="callout">
+    <strong>Question pattern:</strong> "Which measure of center is more appropriate?" Look at the data:
+    <ul>
+      <li>One big or small value that doesn't fit? → median.</li>
+      <li>Looks pretty even? → mean.</li>
+    </ul>
+  </div>
+
+  <h2 id="sec-c">C. Standard Deviation (σ) basics</h2>
+  <p><strong>Standard deviation (σ)</strong> measures the typical distance from the mean. Larger σ = data more spread out.</p>
+  <p>You won't compute σ by hand on this test — but you need to know:</p>
+  <ul>
+    <li>σ uses <strong>every data point</strong>.</li>
+    <li>Outliers <strong>strongly affect</strong> σ (a single extreme value inflates it).</li>
+    <li>Therefore: σ is best for <strong>data without outliers</strong>.</li>
+  </ul>
+
+  <h2 id="sec-d">D. Standard Deviation vs. IQR — when to use which</h2>
+  <table>
+    <tr><th>Use this</th><th>When</th><th>Why</th></tr>
+    <tr><td><strong>Standard Deviation</strong></td><td>No outliers, fairly symmetric</td><td>Most precise — uses all data</td></tr>
+    <tr><td><strong>IQR</strong> (Q3 − Q1)</td><td>Outliers OR skewed</td><td>Ignores the extreme 25% on each end — robust</td></tr>
+  </table>
+
+  <div class="tip-box">
+    <strong>The decision pairs up:</strong>
+    <ul>
+      <li>Mean ↔ Standard Deviation (both use every value, both pulled by outliers).</li>
+      <li>Median ↔ IQR (both ignore extremes, both robust).</li>
+    </ul>
+    If you choose median for the center, you should usually choose IQR for the spread. If mean → σ.
+  </div>
+
+  <h2 id="sec-e">E. The 68-95-99.7 Rule (Normal Distribution)</h2>
+  <p>When a data set is <strong>normally distributed</strong> (the classic bell curve), three specific percentages of the data fall within standard-deviation bands from the mean:</p>
+  <table>
+    <tr><th>Within</th><th>Percentage</th></tr>
+    <tr><td>Mean ± 1σ</td><td><strong>68%</strong></td></tr>
+    <tr><td>Mean ± 2σ</td><td><strong>95%</strong></td></tr>
+    <tr><td>Mean ± 3σ</td><td><strong>99.7%</strong></td></tr>
+  </table>
+  <div class="ascii">                    .------.
+                  .'        '.
+                .'            '.
+              .'                '.
+            .'    68%             '.
+          .'  ────────────────      '.
+        .'   95%                      '.
+      .'  ──────────────────────────    '.
+   _.'  99.7%                              '._
+  ────────────────────────────────────────────────
+   -3σ  -2σ  -1σ   μ   +1σ  +2σ  +3σ</div>
+
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Popcorn bucket sizes are normally distributed with mean = 1720 and σ = 20. What percent of buckets contain between 1680 and 1760 pieces?</p>
+    <ol>
+      <li>1680 = 1720 − 40 = mean − 2σ.</li>
+      <li>1760 = 1720 + 40 = mean + 2σ.</li>
+      <li>So we want the 2σ range → <strong>95%</strong>.</li>
+    </ol>
+  </div>
+
+  <div class="tip-box">
+    <strong>Trick to spot which percentage:</strong> count how many σ's away from the mean each endpoint is. Then look up the table. Mean ± 1σ → 68; mean ± 2σ → 95; mean ± 3σ → 99.7.
+  </div>
+
+  <h2 id="sec-f">F. Comparing Two Box Plots</h2>
+  <p>When the quiz shows two box plots side by side, scan for:</p>
+  <ol>
+    <li><strong>Median position</strong> — which is higher? Which has a more central median (symmetric vs skewed)?</li>
+    <li><strong>IQR (box width)</strong> — which is wider? Which is more consistent?</li>
+    <li><strong>Whisker length / outliers</strong> — which has extreme values?</li>
+    <li><strong>Min/max range</strong> — overall spread.</li>
+  </ol>
+  <p>The "better" or "more consistent" answer usually depends on context (smaller IQR = more consistent). The "higher on average" answer depends on whether you use mean (symmetric) or median (skewed).</p>
+
+  <h2 id="sec-prac">G. Practice Problems</h2>
+
+  <div class="practice">
+    <span class="p-tag">Problem 1</span>
+    <p class="q">A data set is symmetric, with no outliers. Which pair of statistics is best?</p>
+    <ul class="choices">
+      <li>A. Mean and IQR</li>
+      <li>B. Mean and standard deviation</li>
+      <li>C. Median and standard deviation</li>
+      <li>D. Median and IQR</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> Symmetric + no outliers → mean + standard deviation. They pair up (both use every data point).</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 2</span>
+    <p class="q">Books read per week: {0, 24, 1, 4, 5, 2, 5, 4}. Which measure of center and value?</p>
+    <ul class="choices">
+      <li>A. Median; 2</li>
+      <li>B. Median; 4</li>
+      <li>C. Mean; 2</li>
+      <li>D. Mean; 4</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> The 24 is an outlier. Use median. Sorted: 0,1,2,4,4,5,5,24. Median = (4+4)/2 = 4.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 3</span>
+    <p class="q">Test scores are normally distributed with mean 75 and σ = 5. About what % of scores fall between 65 and 85?</p>
+    <ul class="choices">
+      <li>A. 68%</li>
+      <li>B. 75%</li>
+      <li>C. 95%</li>
+      <li>D. 99.7%</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">C.</span> 65 = 75 − 2σ; 85 = 75 + 2σ. Mean ± 2σ → 95%.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 4</span>
+    <p class="q">A toy dog's weight is normally distributed, mean = 8 lb, σ = 1 lb. About 95% of dogs weigh in what range?</p>
+    <ul class="choices">
+      <li>A. 7-9 lb</li>
+      <li>B. 6-10 lb</li>
+      <li>C. 5-11 lb</li>
+      <li>D. 4-12 lb</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> 95% = mean ± 2σ = 8 ± 2 = 6 to 10 lb.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 5</span>
+    <p class="q">A box plot has min 10.5, Q1 11.5, median 12.5, Q3 13.5, max 15. Which gives a better center, and why?</p>
+    <ul class="choices">
+      <li>A. Mean, because data is symmetric</li>
+      <li>B. Mean, because data is pulled left</li>
+      <li>C. Median, because data is pulled left</li>
+      <li>D. Median, because data is pulled right</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">D.</span> Median (12.5) is closer to Q1 (11.5) than to Q3 (13.5). Right whisker (15) is also longer than left. Data is skewed RIGHT (pulled to the right by larger values). Use median.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 6</span>
+    <p class="q">Mid-term scores: 100, 100, 100, 95, 95, 92, 92, 88, 85, 75. Final scores: 98, 95, 93, 91, 88, 82, 78, 78, 65, 60. Which has the larger IQR?</p>
+    <ul class="choices">
+      <li>A. Mid-term</li>
+      <li>B. Final</li>
+      <li>C. Same IQR</li>
+      <li>D. Not enough info</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> Mid-term sorted: 75,85,88,92,92,95,95,100,100,100. Q1 = (88+92)/2 = 90; Q3 = (95+100)/2 = 97.5. IQR = 7.5. Final sorted: 60,65,78,78,82,88,91,93,95,98. Q1 = (78+78)/2 = 78; Q3 = (91+93)/2 = 92. IQR = 14. Final has larger IQR.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 7</span>
+    <p class="q">A survey says College students: σ = 5.2 (no outliers). High School students: σ = 5.4 (has outliers per Min/Max check). Which spread metric to use for each?</p>
+    <ul class="choices">
+      <li>A. Both IQR</li>
+      <li>B. Both standard deviation</li>
+      <li>C. College: IQR. High school: standard deviation.</li>
+      <li>D. College: standard deviation. High school: IQR.</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">D.</span> No outliers → σ (College). Has outliers → IQR (High school).</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 8</span>
+    <p class="q">Two box plots: Class — symmetric box, even whiskers. Exam — outlier at the bottom, longer left whisker. Which best describes the medians?</p>
+    <ul class="choices">
+      <li>A. Exam outlier makes IQR narrower and median higher</li>
+      <li>B. Class data are more evenly spread, pulls its median down</li>
+      <li>C. Class median is lower than exam median</li>
+      <li>D. Class Q3 is lower than exam Q3</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">C.</span> Compare median positions on the number line. If exam median is higher than class median visually, choose C. Hint: medians are LINES inside boxes — read their positions on the x-axis.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 9</span>
+    <p class="q">Heights: 5 ft 8 in, 5 ft 9 in, 5 ft 10 in, 5 ft 11 in, 6 ft. Distribution is symmetric, no outliers. Best center?</p>
+    <ul class="choices">
+      <li>A. Mean</li>
+      <li>B. Median</li>
+      <li>C. Mode</li>
+      <li>D. Range</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">A.</span> Symmetric + no outliers → mean. (Range isn't a center; mode is for categorical data.)</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 10</span>
+    <p class="q">Times normally distributed with mean 60, σ = 10. About 99.7% of values are in what range?</p>
+    <ul class="choices">
+      <li>A. 50-70</li>
+      <li>B. 40-80</li>
+      <li>C. 30-90</li>
+      <li>D. 20-100</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">C.</span> 99.7% = mean ± 3σ = 60 ± 30 = 30 to 90.</div>
+    </details>
+  </div>
+
+  <h2 id="sec-next">H. What to do next</h2>
+  <div class="checklist">
+    <label><input type="checkbox"> <span class="item-text">Read Sections A-F carefully (~30 min)</span></label>
+    <label><input type="checkbox"> <span class="item-text">Work Practice 1-10 on paper. Target: 8+ out of 10</span></label>
+    <label><input type="checkbox"> <span class="item-text">Open <a href="math-quest-v2.html">Math Quest</a> → <strong>Stat: Comparing data sets</strong> → drill</span></label>
+    <label><input type="checkbox"> <span class="item-text">Take <strong>05.02 Comparing Data Sets</strong> in Buzz</span></label>
+  </div>
+
+  <div class="big-final">
+    <h3>🎯 Key things to remember</h3>
+    <ol>
+      <li><strong>Mean ↔ Standard Deviation</strong> (both pulled by outliers). <strong>Median ↔ IQR</strong> (both robust).</li>
+      <li><strong>Symmetric + no outliers → mean + σ.</strong> Skewed or outliers → median + IQR.</li>
+      <li><strong>68-95-99.7 rule:</strong> within 1σ = 68%, 2σ = 95%, 3σ = 99.7%.</li>
+      <li><strong>Spot skew on a box plot:</strong> median position inside the box + whisker lengths.</li>
+      <li><strong>Outliers in data:</strong> one extreme value pulls the mean way off but barely moves the median.</li>
+    </ol>
+  </div>
+
+  <footer>
+    <p>Lesson 5.02 · 2026-05-26. <a href="lesson.html">← 5.01</a> · <a href="index.html">Hub</a> · <a href="lesson-5-04.html">5.04 →</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

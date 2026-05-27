@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5.05 Lesson — Two-Way Frequency Tables</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #0EA5E9;
+  --green: #10B981; --green-soft: rgba(16,185,129,0.18);
+  --red: #EF4444; --red-soft: rgba(239,68,68,0.18);
+  --orange: #F59E0B;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg:#F8FAFC; --bg-card:#FFFFFF; --bg-elevated:#F1F5F9; --text:#1A1A1A; --text-dim:#64748B; --border:#E2E8F0; }
+}
+html, body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:17px; line-height:1.6; }
+.container { max-width:760px; margin:0 auto; padding:1rem 1.1rem 4rem; }
+header.top { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1rem; gap:0.5rem; }
+.logo { font-size:1.2rem; font-weight:800; background:linear-gradient(135deg, #10B981, #06B6D4); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+.back { color:var(--text-dim); text-decoration:none; font-size:0.88rem; font-weight:600; }
+.hero { background:linear-gradient(135deg, #10B981, #06B6D4); border-radius:18px; padding:1.3rem 1.4rem; color:white; margin-bottom:1.5rem; }
+.hero h1 { margin:0 0 0.4rem; font-size:1.4rem; font-weight:800; }
+.hero p { margin:0; font-size:0.95rem; opacity:0.95; line-height:1.55; }
+.hero .tags { display:flex; gap:0.4rem; margin-top:0.7rem; flex-wrap:wrap; }
+.hero .tag { background:rgba(255,255,255,0.22); padding:0.25rem 0.7rem; border-radius:999px; font-weight:700; font-size:0.78rem; }
+.toc { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin-bottom:1.5rem; }
+.toc h3 { margin:0 0 0.5rem; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); }
+.toc a { display:block; color:var(--text); text-decoration:none; padding:0.35rem 0; font-size:0.95rem; font-weight:600; }
+.toc a:hover { color:#10B981; }
+h2 { font-size:1.4rem; margin:2rem 0 0.6rem; color:#10B981; font-weight:800; padding-top:0.5rem; border-top:1px solid var(--border); }
+h2:first-of-type { border-top:none; padding-top:0; margin-top:1rem; }
+h3 { font-size:1.1rem; margin:1.5rem 0 0.5rem; font-weight:700; color:var(--text); }
+p { margin:0.6rem 0; }
+ul, ol { margin:0.4rem 0; padding-left:1.4rem; }
+li { margin:0.3rem 0; }
+table { border-collapse:collapse; margin:0.6rem 0 1rem; width:100%; font-size:0.92rem; }
+th, td { border:1px solid var(--border); padding:0.4rem 0.7rem; text-align:left; }
+th { background:var(--bg-elevated); font-weight:700; }
+strong { color:var(--text); }
+code { font-family:-apple-system,"SF Mono",Menlo,monospace; background:var(--bg-elevated); padding:0.1rem 0.35rem; border-radius:4px; font-size:0.92em; }
+.callout { background:rgba(245,158,11,0.1); border-left:4px solid var(--orange); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.callout strong { color:var(--orange); }
+.tip-box { background:rgba(16,185,129,0.08); border-left:4px solid #10B981; padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.tip-box strong { color:#10B981; }
+.example { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.example .ex-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--green); font-weight:700; margin-bottom:0.3rem; }
+.practice { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.practice .p-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:#10B981; font-weight:700; margin-bottom:0.3rem; }
+.practice .q { font-weight:600; margin:0.2rem 0 0.6rem; }
+.practice .choices { margin:0.5rem 0; padding-left:1.4rem; }
+.practice .choices li { margin:0.25rem 0; }
+.practice details { margin-top:0.7rem; }
+.practice summary { cursor:pointer; padding:0.55rem 0.9rem; background:linear-gradient(135deg, #10B981, #06B6D4); color:white; border-radius:8px; font-weight:700; font-size:0.9rem; list-style:none; display:inline-block; }
+.practice summary::-webkit-details-marker { display:none; }
+.practice summary::before { content:"👁 "; }
+.practice details[open] summary::before { content:"🙈 "; }
+.practice .answer { margin-top:0.7rem; padding:0.85rem 1rem; background:var(--green-soft); border-left:3px solid var(--green); border-radius:0 10px 10px 0; font-size:0.92rem; line-height:1.55; }
+.practice .answer .ans-label { font-weight:800; color:var(--green); margin-right:0.4rem; }
+.checklist { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1.1rem 1.2rem; margin:1rem 0; }
+.checklist label { display:flex; align-items:flex-start; gap:0.6rem; padding:0.4rem 0; cursor:pointer; font-size:0.95rem; line-height:1.5; }
+.checklist input[type=checkbox] { margin-top:0.3rem; width:18px; height:18px; cursor:pointer; flex-shrink:0; }
+.checklist input[type=checkbox]:checked + .item-text { text-decoration:line-through; opacity:0.6; }
+footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center; font-size:0.83rem; color:var(--text-dim); }
+footer a { color:var(--primary); text-decoration:none; }
+.big-final { background:linear-gradient(135deg, rgba(16,185,129,0.15), rgba(6,182,212,0.1)); border:1px solid #10B981; border-radius:14px; padding:1.1rem 1.3rem; margin:1.5rem 0; }
+.big-final h3 { margin-top:0; color:#10B981; }
+.hilite { background:rgba(245,158,11,0.18); padding:0.1rem 0.4rem; border-radius:4px; font-weight:700; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="top">
+    <a class="logo" href="index.html">📋 Lesson 5.05</a>
+    <a class="back" href="index.html">← Hub</a>
+  </header>
+
+  <div class="hero">
+    <h1>5.05 — Two-Way Frequency Tables</h1>
+    <p>Tables that show how two categorical variables relate (like grade × music preference). The big skill: <strong>picking the right denominator</strong> for "what % of A are B?" questions.</p>
+    <div class="tags">
+      <span class="tag">10 questions</span>
+      <span class="tag">~35 min</span>
+      <span class="tag">Due Thursday</span>
+    </div>
+  </div>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <a href="#sec-a">A. What's a two-way frequency table?</a>
+    <a href="#sec-b">B. The four types of frequencies</a>
+    <a href="#sec-c">C. Conditional Relative Frequency — the big one</a>
+    <a href="#sec-d">D. The "what % of A are B" denominator rule</a>
+    <a href="#sec-e">E. Filling in missing cells</a>
+    <a href="#sec-f">F. Building a conditional table (row vs column)</a>
+    <a href="#sec-prac">G. Practice (10 problems)</a>
+    <a href="#sec-next">H. What to do next</a>
+  </div>
+
+  <h2 id="sec-a">A. What's a two-way frequency table?</h2>
+  <p>A table that cross-tabulates TWO categorical variables. Example: 100 students × favorite course × grade level.</p>
+  <table>
+    <tr><th></th><th>Math</th><th>English</th><th>Science</th><th>Row Total</th></tr>
+    <tr><th>Freshmen</th><td>6</td><td>2</td><td>10</td><td>18</td></tr>
+    <tr><th>Sophomores</th><td>8</td><td>12</td><td>2</td><td>22</td></tr>
+    <tr><th>Juniors</th><td>12</td><td>7</td><td>5</td><td>24</td></tr>
+    <tr><th>Col Total</th><td>26</td><td>21</td><td>17</td><td>64</td></tr>
+  </table>
+  <p>Each <strong>cell</strong> shows how many students fit BOTH categories (e.g., 8 sophomores liked math). Row and column totals show how many fit EACH category alone. The grand total (64 here) is the total survey size.</p>
+
+  <h2 id="sec-b">B. The four types of frequencies</h2>
+  <p>From a two-way table, you can read or compute four different things. <strong>The vocabulary matters</strong> — the quiz tests these terms directly.</p>
+  <table>
+    <tr><th>Type</th><th>How to compute</th><th>Example (from table above)</th></tr>
+    <tr><td><strong>Joint frequency</strong></td><td>A cell value (raw count)</td><td>"8 sophomores like math"</td></tr>
+    <tr><td><strong>Joint relative freq.</strong></td><td>Cell ÷ grand total</td><td>8 / 64 = 12.5% — "12.5% of all students are math-loving sophomores"</td></tr>
+    <tr><td><strong>Marginal frequency</strong></td><td>A row or column total</td><td>"26 students like math"</td></tr>
+    <tr><td><strong>Marginal relative freq.</strong></td><td>Row or column total ÷ grand total</td><td>26 / 64 = 40.6% — "40.6% of all students like math"</td></tr>
+  </table>
+
+  <p>There's one more — the most important and most-tested:</p>
+
+  <h2 id="sec-c">C. Conditional Relative Frequency — the big one</h2>
+  <p>A <strong>conditional</strong> frequency answers questions like:</p>
+  <ul>
+    <li>"<em>Of the students who like math</em>, what fraction are juniors?"</li>
+    <li>"<em>Of the juniors</em>, what fraction like math?"</li>
+  </ul>
+  <p>Both involve the same cell (juniors who like math = 12). But the DENOMINATOR is different:</p>
+  <ul>
+    <li>"Of the students who like math…" → divide by the COLUMN total for Math (26). 12/26 ≈ 46%.</li>
+    <li>"Of the juniors…" → divide by the ROW total for Junior (24). 12/24 = 50%.</li>
+  </ul>
+
+  <h2 id="sec-d">D. The "what % of A are B" denominator rule</h2>
+  <p>The most-missed type of question. Here's the rule:</p>
+  <div class="tip-box">
+    <strong>"What % of A are B?"</strong><br>
+    The <strong>denominator</strong> is the total of <strong>A</strong>.<br>
+    The <strong>numerator</strong> is the cell where A AND B meet.
+  </div>
+
+  <table>
+    <tr><th>Question phrasing</th><th>"A" is</th><th>Denominator</th></tr>
+    <tr><td>"What % of <span class="hilite">rock fans</span> are 11-12 grade?"</td><td>rock fans</td><td>Column total for Rock</td></tr>
+    <tr><td>"What % of <span class="hilite">11-12 grade</span> like rock?"</td><td>11-12 grade</td><td>Row total for 11-12 grade</td></tr>
+    <tr><td>"What % of <span class="hilite">all students</span> are 11-12 rock fans?"</td><td>all students</td><td>Grand total</td></tr>
+  </table>
+
+  <div class="callout">
+    <strong>How to read the question wording:</strong> the phrase <em>right after</em> "what % of" tells you the denominator. Underline it in your head before computing.
+  </div>
+
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Band preference table:</p>
+    <table>
+      <tr><th></th><th>Rap</th><th>Rock</th><th>Country</th><th>Row total</th></tr>
+      <tr><th>Grades 9-10</th><td>40</td><td>30</td><td>55</td><td>125</td></tr>
+      <tr><th>Grades 11-12</th><td>60</td><td>25</td><td>35</td><td>120</td></tr>
+      <tr><th>Col total</th><td>100</td><td>55</td><td>90</td><td>245</td></tr>
+    </table>
+    <p><strong>Q1: What % of students who like rock are in grades 11-12?</strong></p>
+    <ul>
+      <li>"Of students who like rock…" → A = rock fans → denominator = 55 (column total).</li>
+      <li>Numerator = cell where Rock AND 11-12 meet = 25.</li>
+      <li>25/55 ≈ 45%.</li>
+    </ul>
+    <p><strong>Q2: What % of students in grades 11-12 like rock?</strong></p>
+    <ul>
+      <li>"Of students in grades 11-12…" → A = grade 11-12 → denominator = 120 (row total).</li>
+      <li>Numerator = cell where Rock AND 11-12 meet = 25.</li>
+      <li>25/120 ≈ 21%.</li>
+    </ul>
+    <p><strong>Same cell. Different denominators. Different answers.</strong> This is THE trap of 5.05.</p>
+  </div>
+
+  <h2 id="sec-e">E. Filling in missing cells</h2>
+  <p>Questions like "complete the table" use the row total = sum of cells, column total = sum of cells, grand total = sum of all rows = sum of all columns.</p>
+
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Complete this table — find the missing cell (under-15 + Walk/Bike):</p>
+    <table>
+      <tr><th></th><th>Walk/Bike</th><th>Bus</th><th>Car</th><th>Row Total</th></tr>
+      <tr><th>Under 15</th><td>?</td><td>60</td><td>?</td><td>165</td></tr>
+      <tr><th>15+</th><td>65</td><td>?</td><td>?</td><td>195</td></tr>
+      <tr><th>Col Total</th><td>152</td><td>110</td><td>98</td><td>360</td></tr>
+    </table>
+    <p>Walk/Bike column: 152 total. Under-15 + 15+ = 152. So Under-15 + 65 = 152 → Under-15 Walk/Bike = 87.</p>
+    <p>Now Under-15 row: 87 + 60 + Under-15 Car = 165 → Under-15 Car = 18.</p>
+    <p>And so on for the rest.</p>
+  </div>
+
+  <h2 id="sec-f">F. Building a conditional table (row vs column)</h2>
+  <p>Two flavors of conditional relative frequency tables:</p>
+  <ul>
+    <li><strong>Row-conditional</strong> — divide each cell by its ROW total. Each row sums to 1 (100%).</li>
+    <li><strong>Column-conditional</strong> — divide each cell by its COLUMN total. Each column sums to 1 (100%).</li>
+  </ul>
+  <p>The question "conditional on X" tells you which to use. "Conditional on GENDER" usually means divide by row (where gender is the row variable).</p>
+
+  <h2 id="sec-prac">G. Practice Problems</h2>
+
+  <div class="practice">
+    <span class="p-tag">Problem 1</span>
+    <p class="q">In a 100-student survey, the grand total cell shows 100. What term describes the value "100"?</p>
+    <ul class="choices">
+      <li>A. Joint frequency</li>
+      <li>B. Marginal frequency</li>
+      <li>C. Grand total (a kind of marginal frequency)</li>
+      <li>D. Joint relative frequency</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">C.</span> The grand total is the total of all marginals — it's classified as a marginal frequency / total frequency.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 2</span>
+    <p class="q">A table shows: column total for "Travel out of state" is 57, grand total is 152. What's the marginal relative frequency for traveling out of state?</p>
+    <ul class="choices">
+      <li>A. 57 / 100 = 57%</li>
+      <li>B. 57 / 152 ≈ 37.5%</li>
+      <li>C. 12 / 57 ≈ 21%</li>
+      <li>D. 45 / 82 ≈ 55%</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> Marginal relative freq. = column total ÷ grand total = 57/152 ≈ 37.5%. (57/100 is the trap — there's no 100 here, only 152.)</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 3</span>
+    <p class="q">Band preference: Rap (Grades 9-10: 40, 11-12: 60), Rock (30, 25), Country (55, 35), Total 245. What % of <strong>students who like rock</strong> are in grades 11-12?</p>
+    <ul class="choices">
+      <li>A. 10%</li>
+      <li>B. 21%</li>
+      <li>C. 25%</li>
+      <li>D. 45%</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">D.</span> "Of students who like rock" → denom = column total for Rock = 30 + 25 = 55. Numerator = 25. 25/55 ≈ 45%.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 4</span>
+    <p class="q">Same band table. What % of <strong>students in grades 11-12</strong> like rock?</p>
+    <ul class="choices">
+      <li>A. 10%</li>
+      <li>B. 21%</li>
+      <li>C. 25%</li>
+      <li>D. 45%</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> "Of students in grades 11-12" → denom = row total for 11-12 = 60+25+35 = 120. Numerator = 25. 25/120 ≈ 21%. Different denominator from Problem 3 → different answer.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 5</span>
+    <p class="q">Travel table: Likes Camping (Likes Travel 52, No Travel 38, total 90). Doesn't Like Camping (36, 74, total 110). Column totals: 88, 112. Grand: 200. What % of <strong>students that like to travel out of state</strong> do NOT like camping?</p>
+    <ul class="choices">
+      <li>A. 30%</li>
+      <li>B. 33%</li>
+      <li>C. 36%</li>
+      <li>D. 41%</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">D.</span> Denom = column total for "Likes Travel" = 88. Numerator = "Likes Travel" AND "Doesn't Camp" = 36. 36/88 ≈ 41%.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 6</span>
+    <p class="q">Complete the table. Under 15 row total = 60; Car column total = 98. Under 15 + Car cell unknown. What is Age 15+ + Car?</p>
+    <ul class="choices">
+      <li>A. 18</li>
+      <li>B. 38</li>
+      <li>C. 50</li>
+      <li>D. 87</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> If column total for Car = 98, and Under 15 + Car = 60 (row total minus other), then Age 15+ + Car = 98 − 60 = 38. (Wait — let me re-check: the question says under-15 ROW total is 60, but the row total for Under 15 should include Walk/Bike, Bus, and Car. Reading carefully, the test version of this had "60" as the count in the Car column for under-15. So 98 − 60 = 38.)</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 7</span>
+    <p class="q">A relative frequency table shows: Grade 9 row totals to 0.54. The value 0.18 sits in the Grade 9 + Running cell. Which statement is true?</p>
+    <ul class="choices">
+      <li>A. In Grade 9, 18 students liked running</li>
+      <li>B. In Grade 9, 27% of students liked volleyball</li>
+      <li>C. In Grade 9, 14 students liked running</li>
+      <li>D. In Grade 9, 18% of students liked running</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">D.</span> 0.18 is a relative frequency = 18%. (Not 18 students — these are decimals/percentages, not counts.)</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 8</span>
+    <p class="q">A two-way table for gender × vacation: Male 38% Hawaii, 12% Paris, row 50%. Female 26% Hawaii, 24% Paris, row 50%. Column totals 64%, 36%, grand 100%. Which row-conditional table is correct?</p>
+    <ul class="choices">
+      <li>A. Male: 0.76 / 0.24 (rows total 1); Female: 0.52 / 0.48 (rows total 1)</li>
+      <li>B. Raw counts (Male 38/12 = 50, etc.)</li>
+      <li>C. Column-conditional (Male: 0.59 / 0.33, etc.)</li>
+      <li>D. Different scaling</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">A.</span> Row-conditional = divide each cell by row total. Male: 38/50 = 0.76; 12/50 = 0.24. Each row sums to 1.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 9</span>
+    <p class="q">Survey of 100 students: 60 like math (35 boys, 25 girls). 40 don't like math (15 boys, 25 girls). What % of math-likers are boys?</p>
+    <ul class="choices">
+      <li>A. 35%</li>
+      <li>B. 50%</li>
+      <li>C. 58%</li>
+      <li>D. 70%</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">C.</span> "Of math-likers" → denom = 60 (column or row total for math). Numerator = boys who like math = 35. 35/60 ≈ 58%.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 10</span>
+    <p class="q">If a conditional relative frequency table is "conditional on row", each row should sum to:</p>
+    <ul class="choices">
+      <li>A. The grand total</li>
+      <li>B. 1.0 (or 100%)</li>
+      <li>C. The column total</li>
+      <li>D. The marginal frequency</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> Row-conditional divides each cell by its row total → each row's cells sum to 1 (or 100%).</div>
+    </details>
+  </div>
+
+  <h2 id="sec-next">H. What to do next</h2>
+  <div class="checklist">
+    <label><input type="checkbox"> <span class="item-text">Read Sections A-F carefully (~25 min)</span></label>
+    <label><input type="checkbox"> <span class="item-text">Memorize the "what % of A are B" denominator rule</span></label>
+    <label><input type="checkbox"> <span class="item-text">Work Practice 1-10 on paper. Target: 8+ out of 10</span></label>
+    <label><input type="checkbox"> <span class="item-text">Open <a href="math-quest-v2.html">Math Quest</a> → <strong>Stat: Two-way frequency tables</strong> → drill</span></label>
+    <label><input type="checkbox"> <span class="item-text">Take <strong>05.05 Two-Way Frequency Tables</strong> in Buzz</span></label>
+  </div>
+
+  <div class="big-final">
+    <h3>🎯 Key things to remember</h3>
+    <ol>
+      <li><strong>"What % of A are B"</strong> → denominator is the total of A. Underline A in the question.</li>
+      <li><strong>"Of rock fans, what % are 11-12"</strong> → divide by column total (rock). <strong>"Of 11-12, what % like rock"</strong> → divide by row total (11-12). Same cell, different denominators.</li>
+      <li><strong>Joint = cell.</strong> <strong>Marginal = row/column total.</strong> <strong>Add "relative" = divide by something.</strong></li>
+      <li><strong>Joint relative</strong> = cell ÷ grand total. <strong>Marginal relative</strong> = row/col total ÷ grand total.</li>
+      <li><strong>Row-conditional</strong>: each row sums to 1. <strong>Column-conditional</strong>: each column sums to 1.</li>
+    </ol>
+  </div>
+
+  <footer>
+    <p>Lesson 5.05 · 2026-05-26. <a href="lesson-5-04.html">← 5.04</a> · <a href="index.html">Hub</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

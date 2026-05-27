@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5.04 Lesson — Data Sets and Outliers</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #0EA5E9;
+  --green: #10B981; --green-soft: rgba(16,185,129,0.18);
+  --red: #EF4444; --red-soft: rgba(239,68,68,0.18);
+  --orange: #F59E0B; --orange-soft: rgba(245,158,11,0.18);
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg:#F8FAFC; --bg-card:#FFFFFF; --bg-elevated:#F1F5F9; --text:#1A1A1A; --text-dim:#64748B; --border:#E2E8F0; }
+}
+html, body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:17px; line-height:1.6; }
+.container { max-width:760px; margin:0 auto; padding:1rem 1.1rem 4rem; }
+header.top { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1rem; gap:0.5rem; }
+.logo { font-size:1.2rem; font-weight:800; background:linear-gradient(135deg, #F59E0B, #DC2626); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+.back { color:var(--text-dim); text-decoration:none; font-size:0.88rem; font-weight:600; }
+.hero { background:linear-gradient(135deg, #F59E0B, #DC2626); border-radius:18px; padding:1.3rem 1.4rem; color:white; margin-bottom:1.5rem; }
+.hero h1 { margin:0 0 0.4rem; font-size:1.4rem; font-weight:800; }
+.hero p { margin:0; font-size:0.95rem; opacity:0.95; line-height:1.55; }
+.hero .tags { display:flex; gap:0.4rem; margin-top:0.7rem; flex-wrap:wrap; }
+.hero .tag { background:rgba(255,255,255,0.22); padding:0.25rem 0.7rem; border-radius:999px; font-weight:700; font-size:0.78rem; }
+.toc { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin-bottom:1.5rem; }
+.toc h3 { margin:0 0 0.5rem; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); }
+.toc a { display:block; color:var(--text); text-decoration:none; padding:0.35rem 0; font-size:0.95rem; font-weight:600; }
+.toc a:hover { color:var(--orange); }
+h2 { font-size:1.4rem; margin:2rem 0 0.6rem; color:var(--orange); font-weight:800; padding-top:0.5rem; border-top:1px solid var(--border); }
+h2:first-of-type { border-top:none; padding-top:0; margin-top:1rem; }
+h3 { font-size:1.1rem; margin:1.5rem 0 0.5rem; font-weight:700; color:var(--text); }
+p { margin:0.6rem 0; }
+ul, ol { margin:0.4rem 0; padding-left:1.4rem; }
+li { margin:0.3rem 0; }
+table { border-collapse:collapse; margin:0.6rem 0 1rem; width:100%; font-size:0.92rem; }
+th, td { border:1px solid var(--border); padding:0.4rem 0.7rem; text-align:left; }
+th { background:var(--bg-elevated); font-weight:700; }
+strong { color:var(--text); }
+code { font-family:-apple-system,"SF Mono",Menlo,monospace; background:var(--bg-elevated); padding:0.1rem 0.35rem; border-radius:4px; font-size:0.92em; }
+.callout { background:rgba(245,158,11,0.12); border-left:4px solid var(--orange); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.callout strong { color:var(--orange); }
+.example { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.example .ex-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--green); font-weight:700; margin-bottom:0.3rem; }
+.ascii { background:var(--bg-elevated); padding:0.8rem 1rem; border-radius:8px; font-family:-apple-system,"SF Mono",Menlo,monospace; font-size:0.88rem; line-height:1.4; overflow-x:auto; white-space:pre; margin:0.6rem 0 0.8rem; color:var(--text); }
+.practice { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.practice .p-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--orange); font-weight:700; margin-bottom:0.3rem; }
+.practice .q { font-weight:600; margin:0.2rem 0 0.6rem; }
+.practice .choices { margin:0.5rem 0; padding-left:1.4rem; }
+.practice .choices li { margin:0.25rem 0; }
+.practice details { margin-top:0.7rem; }
+.practice summary { cursor:pointer; padding:0.55rem 0.9rem; background:linear-gradient(135deg, #F59E0B, #DC2626); color:white; border-radius:8px; font-weight:700; font-size:0.9rem; list-style:none; display:inline-block; }
+.practice summary::-webkit-details-marker { display:none; }
+.practice summary::before { content:"👁 "; }
+.practice details[open] summary::before { content:"🙈 "; }
+.practice .answer { margin-top:0.7rem; padding:0.85rem 1rem; background:var(--green-soft); border-left:3px solid var(--green); border-radius:0 10px 10px 0; font-size:0.92rem; line-height:1.55; }
+.practice .answer .ans-label { font-weight:800; color:var(--green); margin-right:0.4rem; }
+.checklist { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1.1rem 1.2rem; margin:1rem 0; }
+.checklist label { display:flex; align-items:flex-start; gap:0.6rem; padding:0.4rem 0; cursor:pointer; font-size:0.95rem; line-height:1.5; }
+.checklist input[type=checkbox] { margin-top:0.3rem; width:18px; height:18px; cursor:pointer; flex-shrink:0; }
+.checklist input[type=checkbox]:checked + .item-text { text-decoration:line-through; opacity:0.6; }
+footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center; font-size:0.83rem; color:var(--text-dim); }
+footer a { color:var(--primary); text-decoration:none; }
+.big-final { background:linear-gradient(135deg, rgba(245,158,11,0.15), rgba(220,38,38,0.1)); border:1px solid var(--orange); border-radius:14px; padding:1.1rem 1.3rem; margin:1.5rem 0; }
+.big-final h3 { margin-top:0; color:var(--orange); }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="top">
+    <a class="logo" href="index.html">🎯 Lesson 5.04</a>
+    <a class="back" href="index.html">← Hub</a>
+  </header>
+
+  <div class="hero">
+    <h1>5.04 — Data Sets and Outliers</h1>
+    <p>An <strong>outlier</strong> is a value way smaller or bigger than the rest. This whole quiz is about spotting outliers, knowing how they distort each statistic, and deciding what to report when they exist.</p>
+    <div class="tags">
+      <span class="tag">10 questions</span>
+      <span class="tag">~40 min</span>
+      <span class="tag">Due Thursday</span>
+    </div>
+  </div>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <a href="#sec-a">A. What's an outlier?</a>
+    <a href="#sec-b">B. Spotting outliers visually</a>
+    <a href="#sec-c">C. The 1.5×IQR rule (the formal definition)</a>
+    <a href="#sec-d">D. Effect of outliers on each statistic</a>
+    <a href="#sec-e">E. Computing mean/median with vs. without outliers</a>
+    <a href="#sec-f">F. Real-world decision-making</a>
+    <a href="#sec-prac">G. Practice (10 problems)</a>
+    <a href="#sec-next">H. What to do next</a>
+  </div>
+
+  <h2 id="sec-a">A. What's an outlier?</h2>
+  <p>An <strong>outlier</strong> is a data point that's much smaller or larger than the rest of the data. Examples:</p>
+  <ul>
+    <li>{2, 4, 4, 5, 5, 6, 50} — the 50 is way bigger → outlier.</li>
+    <li>{11, 85, 87, 88, 91, 91, 92, 93, 95} — the 11 is way smaller → outlier.</li>
+  </ul>
+  <p>Outliers can come from typos, real one-off events, or measurement errors. Either way, they mess up the "typical" picture of the data.</p>
+
+  <h2 id="sec-b">B. Spotting outliers visually</h2>
+  <p><strong>On a box plot:</strong> outliers usually appear as isolated points OUTSIDE the whiskers (like dots floating beyond the min/max line).</p>
+  <div class="ascii">  outlier
+     ●     min   Q1   med   Q3   max   outlier
+                                          ●
+              |──┌────|────┐──|
+                 (box around middle 50%)</div>
+  <p><strong>On a dot plot:</strong> a lone dot far from the cluster.</p>
+  <p><strong>On a histogram:</strong> a tiny bar far away from the main bulk of bars.</p>
+
+  <h2 id="sec-c">C. The 1.5×IQR rule (formal definition)</h2>
+  <p>To prove a value is an outlier (not just "looks weird"), use the IQR rule:</p>
+  <ol>
+    <li>Compute IQR = Q3 − Q1.</li>
+    <li>Low cutoff = Q1 − 1.5 × IQR.</li>
+    <li>High cutoff = Q3 + 1.5 × IQR.</li>
+    <li>Anything below low or above high is an outlier.</li>
+  </ol>
+
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Data: 12, 15, 17, 18, 20, 22, 23, 25, 50. Identify outliers.</p>
+    <ol>
+      <li>Sort (done). Median (5th of 9) = 20.</li>
+      <li>Lower half: 12, 15, 17, 18 → Q1 = (15+17)/2 = 16.</li>
+      <li>Upper half: 22, 23, 25, 50 → Q3 = (23+25)/2 = 24.</li>
+      <li>IQR = 24 − 16 = 8.</li>
+      <li>Low cutoff = 16 − 1.5(8) = 16 − 12 = 4.</li>
+      <li>High cutoff = 24 + 1.5(8) = 24 + 12 = 36.</li>
+      <li>50 &gt; 36 → outlier.</li>
+    </ol>
+  </div>
+
+  <h2 id="sec-d">D. Effect of outliers on each statistic — the cheat sheet</h2>
+  <table>
+    <tr><th>Statistic</th><th>Outlier effect</th><th>Why</th></tr>
+    <tr><td><strong>Mean</strong></td><td>🚨 Big effect (pulled toward outlier)</td><td>Uses every value</td></tr>
+    <tr><td><strong>Median</strong></td><td>✓ Barely affected</td><td>Just the middle value(s)</td></tr>
+    <tr><td><strong>Range</strong></td><td>🚨 Big effect</td><td>max − min directly uses extremes</td></tr>
+    <tr><td><strong>IQR</strong></td><td>✓ Barely affected</td><td>Uses only Q1 and Q3</td></tr>
+    <tr><td><strong>Standard Deviation</strong></td><td>🚨 Big effect</td><td>Sums squared distances from mean</td></tr>
+    <tr><td><strong>Mode</strong></td><td>✓ Not affected</td><td>Most common value, outliers are rare</td></tr>
+  </table>
+  <p><strong>Memorize this table.</strong> It directly answers half the 5.04 questions.</p>
+
+  <h2 id="sec-e">E. Computing mean/median with vs. without outliers</h2>
+  <p>Common question format: "What's the difference in the mean/median when you include vs. exclude the outlier?"</p>
+
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Lattes sold: 55, 52, 56, 48, 57, 20, 45, 41. Difference in median with vs. without outlier (20)?</p>
+    <ol>
+      <li>WITH outlier (8 values), sorted: 20, 41, 45, 48, 52, 55, 56, 57. Median = (48+52)/2 = 50.</li>
+      <li>WITHOUT outlier (7 values), sorted: 41, 45, 48, 52, 55, 56, 57. Median = 52.</li>
+      <li>Difference = 52 − 50 = 2.</li>
+    </ol>
+  </div>
+
+  <div class="callout">
+    <strong>Pattern:</strong> Mean changes a lot when you remove an outlier. Median barely moves. <strong>If the outlier is HIGH, removing it makes the mean go DOWN.</strong> If the outlier is LOW, removing it makes the mean go UP.
+  </div>
+
+  <h2 id="sec-f">F. Real-world decision-making</h2>
+  <p>Questions about which employee/team/option is "better on average" — with outlier data — use these rules:</p>
+  <ul>
+    <li><strong>Higher median = better center.</strong> (Median ignores outlier noise.)</li>
+    <li><strong>Smaller IQR = more consistent.</strong></li>
+    <li><strong>Don't choose based on min/max alone</strong> — those are just the extremes.</li>
+  </ul>
+
+  <h2 id="sec-prac">G. Practice Problems</h2>
+
+  <div class="practice">
+    <span class="p-tag">Problem 1</span>
+    <p class="q">A data set has Q1 = 10, Q3 = 30. Using the 1.5×IQR rule, which value is an outlier?</p>
+    <ul class="choices">
+      <li>A. −15</li>
+      <li>B. 0</li>
+      <li>C. 45</li>
+      <li>D. 65</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">D.</span> IQR = 30 − 10 = 20. Low cutoff = 10 − 30 = −20. High cutoff = 30 + 30 = 60. 65 > 60 → outlier.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 2</span>
+    <p class="q">Test scores include outlier 72. With the outlier, mean = 86. When the outlier is removed, what's always true?</p>
+    <ul class="choices">
+      <li>A. Mean increases</li>
+      <li>B. Mean decreases</li>
+      <li>C. Median increases</li>
+      <li>D. Median decreases</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">A.</span> Removing a LOW outlier (72) raises the mean. The remaining scores must average higher than 86 once 72 is gone.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 3</span>
+    <p class="q">A box plot shows a clear outlier dot far below the min. If the outlier is removed, which statistic is LEAST changed?</p>
+    <ul class="choices">
+      <li>A. Mean</li>
+      <li>B. Range</li>
+      <li>C. Standard deviation</li>
+      <li>D. Median</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">D.</span> Median is robust to outliers. Mean, range, and σ all use extreme values directly.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 4</span>
+    <p class="q">Softball team sizes: 9, 12, 8, 7, 7, 21, 11, 9, 8, 7, 10, 7, 10, 11. Which statement is true?</p>
+    <ul class="choices">
+      <li>A. One outlier — unusually LARGE</li>
+      <li>B. Two outliers — unusually LARGE</li>
+      <li>C. One outlier — unusually SMALL</li>
+      <li>D. Two outliers — unusually SMALL</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">A.</span> Most teams have 7-12 players. 21 stands out way above. (Check with 1.5×IQR rule: sorted = 7,7,7,7,8,8,9,9,10,10,11,11,12,21. Median = (9+10)/2 = 9.5. Q1 = 7.5, Q3 = 11. IQR = 3.5. High cutoff = 11 + 5.25 = 16.25. 21 > 16.25, outlier ✓.)</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 5</span>
+    <p class="q">Lattes sold: 55, 52, 56, 48, 57, 20, 45, 41. What is the difference between the median including the outlier and excluding it?</p>
+    <ul class="choices">
+      <li>A. 2</li>
+      <li>B. 3</li>
+      <li>C. 30</li>
+      <li>D. 52</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">A.</span> Sorted with outlier (8 values): 20,41,45,48,52,55,56,57. Median = (48+52)/2 = 50. Sorted without (7 values): 41,45,48,52,55,56,57. Median = 52. Difference = 52 − 50 = 2.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 6</span>
+    <p class="q">Tammy and Wyatt are sales associates. Tammy: median 25.5, IQR 5.75. Wyatt: median 24, IQR 7. Who should get the promotion based on "best on average"?</p>
+    <ul class="choices">
+      <li>A. Wyatt — more evenly distributed</li>
+      <li>B. Wyatt — highest single day</li>
+      <li>C. Tammy — her lowest is higher</li>
+      <li>D. Tammy — higher median, smaller IQR</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">D.</span> Higher median = better center. Smaller IQR = more consistent. Tammy wins on both.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 7</span>
+    <p class="q">A dot plot: 15, 23, 24, 26, 27, 35. What's the effect of removing the outliers on the mean?</p>
+    <ul class="choices">
+      <li>A. Remains the same</li>
+      <li>B. Decreases by 2</li>
+      <li>C. Increases by 2</li>
+      <li>D. There are no outliers</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">A.</span> Check with 1.5×IQR rule. Sorted: 15,23,24,26,27,35. Median = (24+26)/2 = 25. Q1 = 23, Q3 = 27. IQR = 4. Low = 23 − 6 = 17. High = 27 + 6 = 33. Both 15 and 35 are outliers, but they're roughly equidistant from the center so removing both barely changes the mean. Original mean = 150/6 = 25. Without: 100/4 = 25. Same!</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 8</span>
+    <p class="q">If outliers are in the data, which pair of statistics best represents center and spread?</p>
+    <ul class="choices">
+      <li>A. Mean + standard deviation</li>
+      <li>B. Mean + IQR</li>
+      <li>C. Median + standard deviation</li>
+      <li>D. Median + IQR</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">D.</span> Both robust to outliers. (This is the same pairing rule from 5.02.)</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 9</span>
+    <p class="q">A box plot has an extreme outlier on the right. Which of the following increases significantly if the outlier is included?</p>
+    <ul class="choices">
+      <li>A. Median</li>
+      <li>B. IQR</li>
+      <li>C. Mean</li>
+      <li>D. Q1</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">C.</span> Mean is dragged toward the outlier. Median, IQR, and Q1 are robust.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 10</span>
+    <p class="q">Two dot plots: Week 1 has ages 62-89. Week 2 has ages 62-89 PLUS 10 more golfers (similar range). True statement?</p>
+    <ul class="choices">
+      <li>A. Range Week 1 = Range Week 2</li>
+      <li>B. Range Week 1 > Range Week 2</li>
+      <li>C. Median Week 1 < Median Week 2</li>
+      <li>D. Mean Week 1 > Mean Week 2</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">A.</span> Both have the same minimum (62) and same maximum (89), so the range = 89 − 62 = 27 for both. The medians/means may shift slightly depending on which ages were added but the range is unchanged.</div>
+    </details>
+  </div>
+
+  <h2 id="sec-next">H. What to do next</h2>
+  <div class="checklist">
+    <label><input type="checkbox"> <span class="item-text">Read Sections A-F carefully (~25 min)</span></label>
+    <label><input type="checkbox"> <span class="item-text">Memorize the "Effect of outliers" cheat sheet table</span></label>
+    <label><input type="checkbox"> <span class="item-text">Work Practice 1-10 on paper. Target: 8+ out of 10</span></label>
+    <label><input type="checkbox"> <span class="item-text">Open <a href="math-quest-v2.html">Math Quest</a> → <strong>Stat: Data sets and outliers</strong> → drill</span></label>
+    <label><input type="checkbox"> <span class="item-text">Take <strong>05.04 Data Sets and Outliers</strong> in Buzz</span></label>
+  </div>
+
+  <div class="big-final">
+    <h3>🎯 Key things to remember</h3>
+    <ol>
+      <li><strong>Effect table:</strong> Mean, Range, σ are pulled by outliers. Median, IQR, Mode are robust.</li>
+      <li><strong>1.5×IQR rule:</strong> outlier if value &lt; Q1 − 1.5·IQR or &gt; Q3 + 1.5·IQR.</li>
+      <li><strong>Remove HIGH outlier → mean DROPS.</strong> Remove LOW outlier → mean RISES.</li>
+      <li><strong>Median moves slightly</strong> when you remove an outlier (by one shift), unlike the mean.</li>
+      <li><strong>"Better on average" = higher MEDIAN, smaller IQR.</strong> Don't use min/max alone.</li>
+    </ol>
+  </div>
+
+  <footer>
+    <p>Lesson 5.04 · 2026-05-26. <a href="lesson-5-02.html">← 5.02</a> · <a href="index.html">Hub</a> · <a href="lesson-5-05.html">5.05 →</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
