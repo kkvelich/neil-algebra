@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Today's Lesson — Statistics 5.00 + 5.01</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #0EA5E9; --primary-soft: rgba(14,165,233,0.12);
+  --green: #10B981; --green-soft: rgba(16,185,129,0.18);
+  --red: #EF4444; --red-soft: rgba(239,68,68,0.18);
+  --yellow: #FBBF24; --orange: #F59E0B;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg:#F8FAFC; --bg-card:#FFFFFF; --bg-elevated:#F1F5F9; --text:#1A1A1A; --text-dim:#64748B; --border:#E2E8F0; }
+}
+html, body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:17px; line-height:1.6; }
+.container { max-width:760px; margin:0 auto; padding:1rem 1.1rem 4rem; }
+header.top { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1rem; gap:0.5rem; }
+.logo { font-size:1.2rem; font-weight:800; background:linear-gradient(135deg, #0EA5E9, #10B981); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+.back { color:var(--text-dim); text-decoration:none; font-size:0.88rem; font-weight:600; }
+.hero { background:linear-gradient(135deg, #0EA5E9, #10B981); border-radius:18px; padding:1.3rem 1.4rem; color:white; margin-bottom:1.5rem; }
+.hero h1 { margin:0 0 0.4rem; font-size:1.4rem; font-weight:800; }
+.hero p { margin:0; font-size:0.95rem; opacity:0.95; line-height:1.55; }
+.hero .tags { display:flex; gap:0.4rem; margin-top:0.7rem; flex-wrap:wrap; }
+.hero .tag { background:rgba(255,255,255,0.22); padding:0.25rem 0.7rem; border-radius:999px; font-weight:700; font-size:0.78rem; }
+.toc { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin-bottom:1.5rem; }
+.toc h3 { margin:0 0 0.5rem; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); }
+.toc a { display:block; color:var(--text); text-decoration:none; padding:0.35rem 0; font-size:0.95rem; font-weight:600; }
+.toc a:hover { color:var(--primary); }
+h2 { font-size:1.4rem; margin:2rem 0 0.6rem; color:var(--primary); font-weight:800; padding-top:0.5rem; border-top:1px solid var(--border); }
+h2:first-of-type { border-top:none; padding-top:0; margin-top:1rem; }
+h3 { font-size:1.1rem; margin:1.5rem 0 0.5rem; font-weight:700; color:var(--text); }
+h4 { font-size:1rem; margin:1.2rem 0 0.5rem; font-weight:700; color:var(--text); }
+p { margin:0.6rem 0; }
+ul, ol { margin:0.4rem 0; padding-left:1.4rem; }
+li { margin:0.3rem 0; }
+table { border-collapse:collapse; margin:0.6rem 0 1rem; width:100%; font-size:0.92rem; }
+th, td { border:1px solid var(--border); padding:0.4rem 0.7rem; text-align:left; }
+th { background:var(--bg-elevated); font-weight:700; }
+strong { color:var(--text); }
+code, .mono { font-family:-apple-system,"SF Mono",Menlo,monospace; background:var(--bg-elevated); padding:0.1rem 0.35rem; border-radius:4px; font-size:0.92em; }
+.callout { background:rgba(245,158,11,0.1); border-left:4px solid var(--orange); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.callout strong { color:var(--orange); }
+.tip-box { background:rgba(6,182,212,0.08); border-left:4px solid var(--primary); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.tip-box strong { color:var(--primary); }
+.ascii { background:var(--bg-elevated); padding:0.8rem 1rem; border-radius:8px; font-family:-apple-system,"SF Mono",Menlo,monospace; font-size:0.88rem; line-height:1.4; overflow-x:auto; white-space:pre; margin:0.6rem 0 0.8rem; color:var(--text); }
+.example { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.example .ex-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--green); font-weight:700; margin-bottom:0.3rem; }
+
+.practice { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.practice .p-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--primary); font-weight:700; margin-bottom:0.3rem; }
+.practice .q { font-weight:600; margin:0.2rem 0 0.6rem; }
+.practice .choices { margin:0.5rem 0; padding-left:1.4rem; }
+.practice .choices li { margin:0.25rem 0; }
+.practice details { margin-top:0.7rem; }
+.practice summary { cursor:pointer; padding:0.55rem 0.9rem; background:linear-gradient(135deg, var(--primary), var(--green)); color:white; border-radius:8px; font-weight:700; font-size:0.9rem; list-style:none; display:inline-block; }
+.practice summary::-webkit-details-marker { display:none; }
+.practice summary::before { content:"👁 "; }
+.practice details[open] summary::before { content:"🙈 "; }
+.practice .answer { margin-top:0.7rem; padding:0.85rem 1rem; background:var(--green-soft); border-left:3px solid var(--green); border-radius:0 10px 10px 0; font-size:0.92rem; line-height:1.55; }
+.practice .answer .ans-label { font-weight:800; color:var(--green); margin-right:0.4rem; }
+
+.checklist { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1.1rem 1.2rem; margin:1rem 0; }
+.checklist label { display:flex; align-items:flex-start; gap:0.6rem; padding:0.4rem 0; cursor:pointer; font-size:0.95rem; line-height:1.5; }
+.checklist input[type=checkbox] { margin-top:0.3rem; width:18px; height:18px; cursor:pointer; flex-shrink:0; }
+.checklist input[type=checkbox]:checked + .item-text { text-decoration:line-through; opacity:0.6; }
+
+footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center; font-size:0.83rem; color:var(--text-dim); }
+footer a { color:var(--primary); text-decoration:none; }
+.big-final { background:linear-gradient(135deg, rgba(6,182,212,0.15), rgba(16,185,129,0.1)); border:1px solid var(--primary); border-radius:14px; padding:1.1rem 1.3rem; margin:1.5rem 0; }
+.big-final h3 { margin-top:0; color:var(--primary); }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="top">
+    <a class="logo" href="index.html">📝 Today's Lesson</a>
+    <a class="back" href="index.html">← Hub</a>
+  </header>
+
+  <div class="hero">
+    <h1>Statistics 5.00 + 5.01 — Today</h1>
+    <p>Statistics wasn't taught in your class this year. Everything here is new. Read it carefully, work the practice problems, then take the Buzz quiz.</p>
+    <div class="tags">
+      <span class="tag">Tue · May 26</span>
+      <span class="tag">~60-90 min</span>
+      <span class="tag">Due tomorrow</span>
+    </div>
+  </div>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <a href="#sec-a">A. What IS Statistics? (5.00 framing)</a>
+    <a href="#sec-b">B. Module 5.01 — Representing Data</a>
+    <a href="#sec-c">C. Practice (10 problems)</a>
+    <a href="#sec-d">D. What to do next</a>
+    <a href="#sec-key">Key things to remember</a>
+  </div>
+
+  <h2 id="sec-a">Section A — What IS Statistics?</h2>
+
+  <h3>A1. What's a "data set"?</h3>
+  <p>A <strong>data set</strong> is just a list of values that someone collected.</p>
+  <p>Examples:</p>
+  <ul>
+    <li>Test scores of 20 students: 72, 85, 90, 65, 78, 81, 95, 70, 88, 76, ...</li>
+    <li>Pulse rates of 16 cattle: 65, 68, 69, 67, 69, 68, 65, 69, 65, 68, 67, ...</li>
+    <li>Types of music your friends like: Country, Pop, Pop, Rock, Hip-hop, ...</li>
+  </ul>
+  <p>Statistics is the toolkit for making sense of these lists.</p>
+
+  <h3>A2. Two big questions statistics tries to answer</h3>
+  <ol>
+    <li><strong>Where is the "middle"?</strong> (most students scored around what value?)</li>
+    <li><strong>How spread out are the values?</strong> (did everyone score similarly, or huge variation?)</li>
+  </ol>
+  <p>The visualizations (dot plot, histogram, box plot) help you SEE both at a glance.</p>
+
+  <h3>A3. Vocabulary for today</h3>
+  <table>
+    <tr><th>Word</th><th>Meaning</th></tr>
+    <tr><td><strong>Value</strong></td><td>One number/category in the data set</td></tr>
+    <tr><td><strong>Frequency</strong></td><td>How many times a value appears</td></tr>
+    <tr><td><strong>Range</strong></td><td>Max − Min (how wide is the data)</td></tr>
+    <tr><td><strong>Distribution</strong></td><td>Overall shape of the data (where values cluster)</td></tr>
+    <tr><td><strong>Bin</strong></td><td>A range used to group continuous values (e.g. "scores 20-29")</td></tr>
+  </table>
+
+  <h2 id="sec-b">Section B — Module 5.01 Representing Data</h2>
+  <p>Three main plots. The test is about reading them, building them, and translating between them.</p>
+
+  <h3>B1. Dot Plot</h3>
+  <p><strong>What it is:</strong> a number line with a stack of dots above each value. Each dot = one occurrence.</p>
+  <p><strong>Example:</strong> Pulse rates of cattle: 65, 65, 65, 67, 67, 67, 67, 68, 68, 68, 68, 69, 69, 69, 69, 69 (3 sixty-fives, 4 sixty-sevens, 4 sixty-eights, 5 sixty-nines).</p>
+  <div class="ascii">                                          •
+                          •     •         •
+                          •     •         •
+              •           •     •         •
+              •           •     •         •
+              •           •     •         •
+        ──────┼──────┼────┼─────┼────┼────┼─────
+              65    66   67    68   69</div>
+  <p><strong>How to read:</strong> count dots above each value. <em>"How many cattle had pulse rate 69?"</em> → 5 dots → 5 cattle.</p>
+  <p><strong>When to use:</strong> discrete values + small data set.</p>
+  <p><strong>Watch for:</strong> missing values get NO dots (just a gap on the number line, like over 66 above).</p>
+
+  <h3>B2. Histogram</h3>
+  <p><strong>What it is:</strong> bars where each bar's HEIGHT = the COUNT of data points that fall in that bar's bin (range).</p>
+  <p><strong>Example:</strong> Math test scores for 23 students grouped into bins:</p>
+  <table>
+    <tr><th>Score range</th><td>20-29</td><td>30-39</td><td>40-49</td><td>50-59</td><td>60-69</td></tr>
+    <tr><th># of students</th><td>4</td><td>7</td><td>5</td><td>4</td><td>3</td></tr>
+  </table>
+  <p>The bar over "20-29" has height <strong>4</strong>. The bar over "30-39" has height <strong>7</strong>.</p>
+  <p><strong>How to read:</strong> <em>"How many students scored 30-39?"</em> → bar height 7 → 7 students. <em>"Most common range?"</em> → tallest bar → 30-39.</p>
+  <p><strong>When to use:</strong> continuous values, or data already reported as ranges.</p>
+
+  <div class="callout">
+    <strong>⚠️ THE BIG TRAP:</strong> bar heights are <strong>COUNTS</strong>, NOT the data values themselves. A histogram with bars of height {3, 7, 4} does NOT correspond to data set {3, 7, 4}. It corresponds to a data set where 3 values are in the first bin, 7 in the second, 4 in the third.<br><br>
+    This trap appears in question after question. Get this and you'll dodge 2-3 traps.
+  </div>
+
+  <h3>B3. Box Plot (Box-and-Whisker)</h3>
+  <p><strong>What it is:</strong> a picture of the <strong>5-number summary</strong>: minimum, Q1, median, Q3, maximum.</p>
+  <table>
+    <tr><th>Name</th><th>What it is</th><th>How to find</th></tr>
+    <tr><td>Minimum</td><td>Smallest value</td><td>First value when sorted</td></tr>
+    <tr><td><strong>Q1</strong></td><td>25th percentile</td><td>Median of the LOWER half</td></tr>
+    <tr><td>Median</td><td>Middle value</td><td>Middle of sorted data</td></tr>
+    <tr><td><strong>Q3</strong></td><td>75th percentile</td><td>Median of the UPPER half</td></tr>
+    <tr><td>Maximum</td><td>Largest value</td><td>Last value when sorted</td></tr>
+  </table>
+  <div class="ascii">  Min       Q1   Median   Q3        Max
+   |─────────┌────|────┐──────────|
+            (box around middle 50%)</div>
+  <ul>
+    <li>Whiskers stretch from Min on the left to Max on the right.</li>
+    <li>The <strong>box</strong> spans Q1 to Q3 — the middle 50%.</li>
+    <li>Line inside the box = <strong>median</strong>.</li>
+    <li>Box width = <strong>IQR = Q3 − Q1.</strong></li>
+  </ul>
+
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Data set {4, 5, 5, 7, 7, 9, 11, 11, 12} (9 sorted values).</p>
+    <ul>
+      <li>Min = 4. Max = 12.</li>
+      <li>Median = middle of 9 = 5th value = <strong>7</strong>.</li>
+      <li>Lower half = {4, 5, 5, 7} → Q1 = (5+5)/2 = <strong>5</strong>.</li>
+      <li>Upper half = {9, 11, 11, 12} → Q3 = (11+11)/2 = <strong>11</strong>.</li>
+      <li>IQR = 11 − 5 = <strong>6</strong>.</li>
+      <li>Range = 12 − 4 = 8.</li>
+    </ul>
+  </div>
+
+  <div class="callout">
+    <strong>⚠️ Don't confuse IQR and Range.</strong> IQR = Q3 − Q1 (box width). Range = max − min (whisker-to-whisker). IQR is what the test asks about most often.
+  </div>
+
+  <h3>B4. Choosing the right plot</h3>
+  <p>This question pattern ALWAYS appears: "Is this data better shown as a dot plot or histogram?"</p>
+  <table>
+    <tr><th>If the data is…</th><th>Use…</th></tr>
+    <tr><td>Discrete values, small set</td><td><strong>Dot plot</strong></td></tr>
+    <tr><td>Continuous OR reported as bin ranges</td><td><strong>Histogram</strong></td></tr>
+  </table>
+
+  <h3>B5. Translating between plots — the main test skill</h3>
+  <ul>
+    <li><strong>Data set → Dot plot:</strong> tally each value. Count = dot stack height.</li>
+    <li><strong>Data set → Histogram:</strong> pick bins. Count values per bin. Count = bar height.</li>
+    <li><strong>Data set → Box plot:</strong> sort, find min/Q1/median/Q3/max, draw.</li>
+    <li><strong>Dot plot → Histogram:</strong> group values into bins. <em>ADD the dot counts.</em></li>
+    <li><strong>Box plot → data set:</strong> must include the min and max values; median in the middle; Q1 and Q3 should match.</li>
+    <li><strong>Dot plot → Box plot:</strong> find 5-number summary from the dots first.</li>
+  </ul>
+
+  <h2 id="sec-c">Section C — Practice Problems</h2>
+  <p>Work each on paper first, then tap <strong>Show answer</strong> to check. Goal: <strong>8+ correct.</strong></p>
+
+  <div class="practice">
+    <span class="p-tag">Problem 1</span>
+    <p class="q">A data set has values 65, 67, 67, 68, 68, 68, 69, 69. Which counts correctly describe the dot plot for this data?</p>
+    <ul class="choices">
+      <li>A. 65: 2 dots, 67: 2 dots, 68: 3 dots, 69: 2 dots</li>
+      <li>B. 65: 1 dot, 67: 2 dots, 68: 3 dots, 69: 2 dots</li>
+      <li>C. 65: 1 dot, 67: 3 dots, 68: 2 dots, 69: 2 dots</li>
+      <li>D. 65: 1 dot, 67: 2 dots, 68: 2 dots, 69: 3 dots</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> Tally: 65 appears 1×, 67 appears 2×, 68 appears 3×, 69 appears 2×. Dot plot: 1 above 65, 2 above 67, 3 above 68, 2 above 69.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 2</span>
+    <p class="q">23 students took a math test. Scores reported as ranges: 20-29 (4 students), 30-39 (7), 40-49 (5), 50-59 (4), 60-69 (3). Which plot best represents this?</p>
+    <ul class="choices">
+      <li>A. Dot plot — every score should be plotted individually</li>
+      <li>B. Histogram — scores are reported as ranges</li>
+      <li>C. Box plot — the data is large</li>
+      <li>D. Either works equally</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> Data is binned into RANGES. Histograms are made for binned data. Dot plot would need individual values, which we don't have.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 3</span>
+    <p class="q">A histogram for ages of 14 children has bars: 5-10 yrs → height 3, 11-13 yrs → height 7, 14-18 yrs → height 4. Which data set could have produced this histogram?</p>
+    <ul class="choices">
+      <li>A. {3, 3, 3, 7, 7, 7, 7, 7, 7, 7, 4, 4, 4, 4}</li>
+      <li>B. {6, 8, 9, 11, 11, 12, 12, 13, 13, 13, 14, 15, 16, 17}</li>
+      <li>C. {3, 5, 7, 11, 13, 14, 18}</li>
+      <li>D. {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> Heights are COUNTS in bins (not data values). Choice B: bin 5-10 has {6,8,9} = 3 ✓; bin 11-13 has {11,11,12,12,13,13,13} = 7 ✓; bin 14-18 has {14,15,16,17} = 4 ✓. Choice A is the heights repeated — common trap. Heights are COUNTS, not data values.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 4</span>
+    <p class="q">A box plot shows: minimum 10, Q1 = 25, median = 40, Q3 = 55, maximum = 70. What is the IQR?</p>
+    <ul class="choices">
+      <li>A. 60</li>
+      <li>B. 30</li>
+      <li>C. 15</li>
+      <li>D. 40</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> IQR = Q3 − Q1 = 55 − 25 = 30. (60 is max − min, which is the RANGE — common wrong answer.)</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 5</span>
+    <p class="q">For the data set {4, 5, 5, 7, 7, 9, 11, 11, 12}, find the median.</p>
+    <ul class="choices">
+      <li>A. 5</li>
+      <li>B. 7</li>
+      <li>C. 9</li>
+      <li>D. 8</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> 9 values, sorted. Middle position = 5th value = 7. (For an even count of values, you'd average the two middles. With 9, the single middle value is the median.)</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 6</span>
+    <p class="q">A histogram bar over the $5-$7.50 price range has height 5. What does that mean?</p>
+    <ul class="choices">
+      <li>A. Total of all prices is $5</li>
+      <li>B. 5 items were sold in the $5-$7.50 price range</li>
+      <li>C. 5 items cost exactly $5</li>
+      <li>D. The bar is 5 units tall, no real meaning</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> Bar height = count. The bin tells you the value range; the height tells you how many fall in it.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 7</span>
+    <p class="q">A dot plot has: 0 → 2 dots, 1 → 2 dots, 2 → 4 dots, 3 → 3 dots, 4 → 4 dots, 5 → 1 dot. If grouped into bins 0-1, 2-3, 4-5, what are the histogram bar heights?</p>
+    <ul class="choices">
+      <li>A. 0-1: 2, 2-3: 7, 4-5: 5</li>
+      <li>B. 0-1: 4, 2-3: 3, 4-5: 5</li>
+      <li>C. 0-1: 4, 2-3: 7, 4-5: 5</li>
+      <li>D. 0-1: 4, 2-3: 7, 4-5: 1</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">C.</span> Add the dot counts in each bin. Bin 0-1: 2 + 2 = 4. Bin 2-3: 4 + 3 = 7. Bin 4-5: 4 + 1 = 5.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 8</span>
+    <p class="q">A box plot shows minimum 0, Q1 = 65, median = 87, Q3 = 95, maximum = 100. Which dot plot could represent the same data?</p>
+    <ul class="choices">
+      <li>A. 65: 2 dots, 87: 1 dot, 95: 2 dots, 100: 1 dot</li>
+      <li>B. 0: 1 dot, 65: 2 dots, 87: 1 dot, 95: 2 dots, 100: 1 dot, 110: 1 dot</li>
+      <li>C. 65: 2 dots, 87: 1 dot, 95: 2 dots, 100: 1 dot, 110: 2 dots</li>
+      <li>D. 0: 1 dot, 65: 2 dots, 87: 1 dot, 95: 2 dots, 100: 1 dot</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">D.</span> Box plot min is 0 — there must be at least one value at 0. Box plot max is 100 — values can't exceed 100. Choice A is missing the 0. B and C include 110, beyond the max. Only D fits.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 9</span>
+    <p class="q">A data set is {40, 70, 70, 80, 80, 95, 95, 100}. What is Q1?</p>
+    <ul class="choices">
+      <li>A. 40</li>
+      <li>B. 70</li>
+      <li>C. 80</li>
+      <li>D. 95</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> Sorted. 8 values total. Lower half = first 4 values: {40, 70, 70, 80}. Q1 = median of lower half = (70 + 70)/2 = 70.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 10</span>
+    <p class="q">A neighborhood has children aged 6, 8, 9, 11, 11, 12, 12, 13, 13, 13, 14, 15, 16, 17. With bins 5-10, 11-13, 14-18, what are the bar heights?</p>
+    <ul class="choices">
+      <li>A. 3, 7, 4</li>
+      <li>B. 4, 7, 3</li>
+      <li>C. 3, 4, 7</li>
+      <li>D. 7, 4, 3</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">A.</span> Bin 5-10: {6, 8, 9} = 3. Bin 11-13: {11, 11, 12, 12, 13, 13, 13} = 7. Bin 14-18: {14, 15, 16, 17} = 4. Heights: 3, 7, 4.</div>
+    </details>
+  </div>
+
+  <h2 id="sec-d">Section D — What to do next</h2>
+  <div class="checklist">
+    <label><input type="checkbox"> <span class="item-text">Read Sections A and B carefully (~30 min)</span></label>
+    <label><input type="checkbox"> <span class="item-text">Work Practice 1-10 on paper. Check answers. Target: 8+ out of 10</span></label>
+    <label><input type="checkbox"> <span class="item-text">Open <a href="math-quest-v2.html">Math Quest</a> → Skills → <strong>Stat: Representing data</strong> → drill until "practicing" or "mastered"</span></label>
+    <label><input type="checkbox"> <span class="item-text">Take <strong>05.01 Representing Data</strong> in Buzz</span></label>
+    <label><input type="checkbox"> <span class="item-text">Bonus: retake <strong>05.00 Statistics Pretest</strong> — beat 72%</span></label>
+  </div>
+
+  <div class="big-final">
+    <h3 id="sec-key">🎯 Key things to remember on the test</h3>
+    <ol>
+      <li><strong>Histogram bar height = COUNT, NOT the data value.</strong> The most common trap.</li>
+      <li><strong>Dot plot = every individual value. Histogram = bins of values.</strong> Discrete/small → dot plot; continuous/binned → histogram.</li>
+      <li><strong>Box plot shows the 5-number summary:</strong> Min, Q1, Median, Q3, Max. <strong>IQR = Q3 − Q1</strong> (box width). <strong>Range = Max − Min</strong> (whisker span).</li>
+      <li>When you see "ranges" (20-29, etc.) → think <strong>histogram</strong>.</li>
+      <li>When you see individual values (65, 67, 68) → think <strong>dot plot</strong>.</li>
+      <li>For 9 sorted values, median = 5th. For an even count, average the two middles.</li>
+    </ol>
+  </div>
+
+  <footer>
+    <p>Today's lesson · 5.00 + 5.01 · 2026-05-26.  <a href="index.html">Back to hub</a>  ·  <a href="math-quest-v2.html">Math Quest →</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
