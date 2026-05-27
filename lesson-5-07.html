@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5.07 Lesson — Correlation, Causation, Slope & Intercept</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #0EA5E9;
+  --accent: #A855F7; --accent-2: #F43F5E;
+  --green: #10B981; --green-soft: rgba(16,185,129,0.18);
+  --red: #EF4444; --red-soft: rgba(239,68,68,0.18);
+  --orange: #F59E0B;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg:#F8FAFC; --bg-card:#FFFFFF; --bg-elevated:#F1F5F9; --text:#1A1A1A; --text-dim:#64748B; --border:#E2E8F0; }
+}
+html, body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:17px; line-height:1.6; }
+.container { max-width:760px; margin:0 auto; padding:1rem 1.1rem 4rem; }
+header.top { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1rem; gap:0.5rem; }
+.logo { font-size:1.2rem; font-weight:800; background:linear-gradient(135deg, #A855F7, #F43F5E); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+.back { color:var(--text-dim); text-decoration:none; font-size:0.88rem; font-weight:600; }
+.hero { background:linear-gradient(135deg, #A855F7, #F43F5E); border-radius:18px; padding:1.3rem 1.4rem; color:white; margin-bottom:1.5rem; }
+.hero h1 { margin:0 0 0.4rem; font-size:1.4rem; font-weight:800; }
+.hero p { margin:0; font-size:0.95rem; opacity:0.95; line-height:1.55; }
+.hero .tags { display:flex; gap:0.4rem; margin-top:0.7rem; flex-wrap:wrap; }
+.hero .tag { background:rgba(255,255,255,0.22); padding:0.25rem 0.7rem; border-radius:999px; font-weight:700; font-size:0.78rem; }
+.toc { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin-bottom:1.5rem; }
+.toc h3 { margin:0 0 0.5rem; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); }
+.toc a { display:block; color:var(--text); text-decoration:none; padding:0.35rem 0; font-size:0.95rem; font-weight:600; }
+.toc a:hover { color:var(--accent); }
+h2 { font-size:1.4rem; margin:2rem 0 0.6rem; color:var(--accent); font-weight:800; padding-top:0.5rem; border-top:1px solid var(--border); }
+h2:first-of-type { border-top:none; padding-top:0; margin-top:1rem; }
+h3 { font-size:1.1rem; margin:1.5rem 0 0.5rem; font-weight:700; color:var(--text); }
+p { margin:0.6rem 0; }
+ul, ol { margin:0.4rem 0; padding-left:1.4rem; }
+li { margin:0.3rem 0; }
+table { border-collapse:collapse; margin:0.6rem 0 1rem; width:100%; font-size:0.92rem; }
+th, td { border:1px solid var(--border); padding:0.4rem 0.7rem; text-align:left; }
+th { background:var(--bg-elevated); font-weight:700; }
+strong { color:var(--text); }
+code { font-family:-apple-system,"SF Mono",Menlo,monospace; background:var(--bg-elevated); padding:0.1rem 0.35rem; border-radius:4px; font-size:0.92em; }
+.callout { background:rgba(245,158,11,0.12); border-left:4px solid var(--orange); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.callout strong { color:var(--orange); }
+.tip-box { background:rgba(168,85,247,0.1); border-left:4px solid var(--accent); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.tip-box strong { color:var(--accent); }
+.example { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.example .ex-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--green); font-weight:700; margin-bottom:0.3rem; }
+.ascii { background:var(--bg-elevated); padding:0.8rem 1rem; border-radius:8px; font-family:-apple-system,"SF Mono",Menlo,monospace; font-size:0.88rem; line-height:1.4; overflow-x:auto; white-space:pre; margin:0.6rem 0 0.8rem; color:var(--text); }
+.practice { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.practice .p-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent); font-weight:700; margin-bottom:0.3rem; }
+.practice .q { font-weight:600; margin:0.2rem 0 0.6rem; }
+.practice .choices { margin:0.5rem 0; padding-left:1.4rem; }
+.practice .choices li { margin:0.25rem 0; }
+.practice details { margin-top:0.7rem; }
+.practice summary { cursor:pointer; padding:0.55rem 0.9rem; background:linear-gradient(135deg, #A855F7, #F43F5E); color:white; border-radius:8px; font-weight:700; font-size:0.9rem; list-style:none; display:inline-block; }
+.practice summary::-webkit-details-marker { display:none; }
+.practice summary::before { content:"👁 "; }
+.practice details[open] summary::before { content:"🙈 "; }
+.practice .answer { margin-top:0.7rem; padding:0.85rem 1rem; background:var(--green-soft); border-left:3px solid var(--green); border-radius:0 10px 10px 0; font-size:0.92rem; line-height:1.55; }
+.practice .answer .ans-label { font-weight:800; color:var(--green); margin-right:0.4rem; }
+.checklist { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1.1rem 1.2rem; margin:1rem 0; }
+.checklist label { display:flex; align-items:flex-start; gap:0.6rem; padding:0.4rem 0; cursor:pointer; font-size:0.95rem; line-height:1.5; }
+.checklist input[type=checkbox] { margin-top:0.3rem; width:18px; height:18px; cursor:pointer; flex-shrink:0; }
+.checklist input[type=checkbox]:checked + .item-text { text-decoration:line-through; opacity:0.6; }
+footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center; font-size:0.83rem; color:var(--text-dim); }
+footer a { color:var(--primary); text-decoration:none; }
+.big-final { background:linear-gradient(135deg, rgba(168,85,247,0.15), rgba(244,63,94,0.1)); border:1px solid var(--accent); border-radius:14px; padding:1.1rem 1.3rem; margin:1.5rem 0; }
+.big-final h3 { margin-top:0; color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="top">
+    <a class="logo" href="index.html">🔗 Lesson 5.07</a>
+    <a class="back" href="index.html">← Hub</a>
+  </header>
+
+  <div class="hero">
+    <h1>5.07 — Interpretation, Correlation & Causation</h1>
+    <p>Six pretest questions came from here. Three skills: <strong>interpreting slope/intercept</strong> in real-world contexts, <strong>reading the correlation coefficient (r)</strong>, and <strong>distinguishing correlation from causation</strong>.</p>
+    <div class="tags">
+      <span class="tag">10 practice problems</span>
+      <span class="tag">~45 min</span>
+      <span class="tag">Pretest Q20-25</span>
+    </div>
+  </div>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <a href="#sec-a">A. Interpreting the y-intercept in context</a>
+    <a href="#sec-b">B. Interpreting the slope as a rate</a>
+    <a href="#sec-c">C. The Correlation Coefficient (r)</a>
+    <a href="#sec-d">D. Estimating r from a scatter plot</a>
+    <a href="#sec-e">E. Correlation vs. Causation</a>
+    <a href="#sec-f">F. The confounding variable trap</a>
+    <a href="#sec-prac">G. Practice (10 problems)</a>
+    <a href="#sec-next">H. What to do next</a>
+  </div>
+
+  <h2 id="sec-a">A. Interpreting the y-intercept in context</h2>
+  <p>In a real-world linear equation y = mx + b, the <strong>y-intercept b</strong> is the value of y when x = 0. In context, it represents the <strong>starting value</strong> or <strong>baseline</strong>.</p>
+
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Mortgage model: y = 120,000 − 2000x, where x = months and y = money still owed. What does the y-intercept represent?</p>
+    <ul>
+      <li>At x = 0 (month zero, before payments), y = 120,000.</li>
+      <li>This is the <strong>original amount of the mortgage</strong>.</li>
+    </ul>
+  </div>
+
+  <div class="tip-box">
+    <strong>Question pattern:</strong> "What does the y-intercept represent?" The answer is always about the starting/initial/baseline value of y — what happens when x = 0.
+  </div>
+
+  <h2 id="sec-b">B. Interpreting the slope as a rate</h2>
+  <p>The <strong>slope m</strong> tells you how much y CHANGES for each 1-unit increase in x. It's a <strong>rate</strong>.</p>
+  <ul>
+    <li><strong>Positive m</strong>: y INCREASES as x increases.</li>
+    <li><strong>Negative m</strong>: y DECREASES as x increases.</li>
+    <li>The <strong>magnitude of m</strong> = how fast it changes.</li>
+  </ul>
+
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Spaceship velocity: v(t) = 5924 + 312t, where v is velocity (km/min) and t is time (minutes). What is the slope, and what does it represent?</p>
+    <ul>
+      <li>Slope m = 312.</li>
+      <li>Positive → velocity INCREASES as time increases.</li>
+      <li>312 = the rate of increase.</li>
+      <li><strong>"Velocity increases at a rate of 312 km/min for each additional minute."</strong></li>
+    </ul>
+  </div>
+
+  <div class="callout">
+    <strong>⚠️ Common trap:</strong> students confuse slope with y-intercept. The slope is the COEFFICIENT of x (the number multiplied by x). The y-intercept is the constant TERM (no x attached).
+  </div>
+
+  <h2 id="sec-c">C. The Correlation Coefficient (r)</h2>
+  <p>The <strong>correlation coefficient r</strong> is a single number between −1 and +1 that summarizes how strongly two variables are linearly related.</p>
+  <table>
+    <tr><th>r value</th><th>Meaning</th></tr>
+    <tr><td><strong>r = 1</strong></td><td>Perfect positive linear relationship (dots fall exactly on an upward line)</td></tr>
+    <tr><td>r = 0.9 to 0.999</td><td>Very strong positive</td></tr>
+    <tr><td>r = 0.5 to 0.89</td><td>Moderate positive</td></tr>
+    <tr><td>r = 0.0 to 0.49</td><td>Weak positive (or no relationship)</td></tr>
+    <tr><td><strong>r = 0</strong></td><td>No linear relationship</td></tr>
+    <tr><td>r = −0.5 to −0.89</td><td>Moderate negative</td></tr>
+    <tr><td><strong>r = −1</strong></td><td>Perfect negative linear relationship</td></tr>
+  </table>
+  <p>Two things tell you about r:</p>
+  <ul>
+    <li><strong>Sign</strong> (positive or negative): direction of the trend.</li>
+    <li><strong>Magnitude</strong> (how close to ±1): strength of the trend.</li>
+  </ul>
+
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>The correlation coefficient between hours studied and test score is r = 0.9976. Describe the relationship.</p>
+    <ul>
+      <li>r is positive → as hours studied go up, scores go up.</li>
+      <li>r is very close to +1 → very STRONG relationship.</li>
+      <li><strong>"There is a strong POSITIVE relationship between x and y."</strong></li>
+    </ul>
+  </div>
+
+  <h2 id="sec-d">D. Estimating r from a scatter plot</h2>
+  <p>The pretest may show data and ask you to estimate r. Without actually computing it, you can narrow down based on the visual:</p>
+  <ul>
+    <li><strong>Dots tightly clustered around a line, going up</strong> → r ≈ +0.9</li>
+    <li><strong>Dots vaguely going up but spread out</strong> → r ≈ +0.3 to +0.5</li>
+    <li><strong>Dots all over the place, no trend</strong> → r ≈ 0</li>
+    <li><strong>Dots loosely going down</strong> → r ≈ −0.3 to −0.5</li>
+    <li><strong>Dots tightly along a downward line</strong> → r ≈ −0.9</li>
+  </ul>
+
+  <h2 id="sec-e">E. Correlation vs. Causation</h2>
+  <p>This is the most-tested concept of 5.07.</p>
+  <ul>
+    <li><strong>Correlation</strong>: two variables move together — they're statistically related.</li>
+    <li><strong>Causation</strong>: one variable DIRECTLY causes the other to change.</li>
+  </ul>
+  <div class="callout">
+    <strong>⚠️ Correlation does NOT imply causation.</strong> Just because two things go up together doesn't mean one caused the other. There could be a third hidden factor, or it could be coincidence.
+  </div>
+
+  <div class="tip-box">
+    <strong>How to tell which it is:</strong>
+    <ul>
+      <li><strong>Causation</strong>: there's a clear mechanism, a controlled comparison (one thing changes while everything else is held constant), or the relationship has been tested experimentally.</li>
+      <li><strong>Correlation only</strong>: data was just observed (not controlled), and the result might be due to a hidden third variable.</li>
+    </ul>
+  </div>
+
+  <div class="example">
+    <span class="ex-tag">Worked example — Causation</span>
+    <p>"One patient with a cold takes a medicine and the other doesn't. The patient who took medicine recovered faster."</p>
+    <ul>
+      <li>There's a DIRECT comparison: treatment vs. no treatment.</li>
+      <li>The difference in outcome can be linked to the treatment.</li>
+      <li><strong>This is causation</strong> (the medicine caused the faster recovery).</li>
+    </ul>
+  </div>
+
+  <div class="example">
+    <span class="ex-tag">Worked example — Correlation only</span>
+    <p>"Marcus puts his water in the refrigerator so it will stay cold."</p>
+    <ul>
+      <li>There IS a clear mechanism: refrigerators cool things down.</li>
+      <li>This is actually <strong>causation</strong> — the refrigerator directly causes the water to stay cold.</li>
+    </ul>
+    <p>Wait, but compare:</p>
+    <p>"Ice cream sales rise in summer; drowning deaths also rise in summer."</p>
+    <ul>
+      <li>Both go up together — they ARE correlated.</li>
+      <li>But ice cream doesn't cause drowning. Heat (summer) causes BOTH.</li>
+      <li><strong>This is correlation only</strong> — with a confounding variable (heat).</li>
+    </ul>
+  </div>
+
+  <h2 id="sec-f">F. The confounding variable trap</h2>
+  <p>A <strong>confounding variable</strong> is a hidden third variable that causes BOTH of the variables you're observing. When you see two things correlated, always ask: <em>"could there be a third factor causing both?"</em></p>
+  <table>
+    <tr><th>Correlation</th><th>Confounding variable (true cause)</th></tr>
+    <tr><td>Ice cream sales ↔ drowning deaths</td><td>Summer / hot weather</td></tr>
+    <tr><td>Shoe size ↔ reading ability (in kids)</td><td>Age</td></tr>
+    <tr><td>Number of churches in a city ↔ crime rate</td><td>City size / population</td></tr>
+    <tr><td>Chocolate consumption ↔ Nobel prizes per capita</td><td>National wealth</td></tr>
+  </table>
+
+  <h2 id="sec-prac">G. Practice Problems</h2>
+
+  <div class="practice">
+    <span class="p-tag">Problem 1</span>
+    <p class="q">A mortgage model is y = 120,000 − 2000x (x = months, y = $ remaining). What does the y-intercept represent?</p>
+    <ul class="choices">
+      <li>A. Amount paid each month</li>
+      <li>B. Monthly interest rate</li>
+      <li>C. Original amount of the mortgage</li>
+      <li>D. Number of months to pay off the mortgage</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">C.</span> At x = 0 (before any payments), y = 120,000. That's the starting balance — the original mortgage amount.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 2</span>
+    <p class="q">A spaceship's velocity is v(t) = 5924 + 312t (km/min). What is the slope, and what does it mean?</p>
+    <ul class="choices">
+      <li>A. 5,924 — velocity increases at 5,924 km/min per minute</li>
+      <li>B. −5,924 — velocity decreases at 5,924 km/min per minute</li>
+      <li>C. 312 — velocity increases at 312 km/min per minute</li>
+      <li>D. −312 — velocity decreases at 312 km/min per minute</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">C.</span> The slope is the coefficient of t — that's 312. Positive → velocity increases. 312 km/min per minute of elapsed time.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 3</span>
+    <p class="q">A correlation coefficient is r = 0.9976. What does this mean?</p>
+    <ul class="choices">
+      <li>A. Strong positive relationship</li>
+      <li>B. Strong negative relationship</li>
+      <li>C. Weak positive relationship</li>
+      <li>D. Weak negative relationship</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">A.</span> Positive (above 0) → positive trend. Very close to +1 → strong.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 4</span>
+    <p class="q">Two variables have r = 0.12. The relationship is:</p>
+    <ul class="choices">
+      <li>A. Strong positive</li>
+      <li>B. Weak positive</li>
+      <li>C. Strong negative</li>
+      <li>D. No relationship at all</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> r is positive but close to 0 — weak positive. (Not "no relationship" because r ≠ 0.)</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 5</span>
+    <p class="q">Advertising costs vs. sales data: dots roughly trend upward but spread out moderately. Best estimate for r?</p>
+    <ul class="choices">
+      <li>A. 0.89</li>
+      <li>B. 0.20</li>
+      <li>C. 0.12</li>
+      <li>D. 0.01</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">A.</span> "Roughly trending upward" with moderate spread → strong positive but not perfect. 0.89 is the closest "strong positive but not extreme" choice.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 6</span>
+    <p class="q">"One patient with a cold takes medicine, the other does not. The patient who took medicine recovered faster." Is this correlation or causation?</p>
+    <ul class="choices">
+      <li>A. Correlation — one patient is sick, the other is not</li>
+      <li>B. Causation — both patients need medicine</li>
+      <li>C. Correlation — both patients are sick at the same time</li>
+      <li>D. Causation — the patient who took medicine recovered quicker</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">D.</span> A controlled comparison (one with treatment, one without) directly links the treatment to the faster recovery. This is causation.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 7</span>
+    <p class="q">"Marcus puts his water in the refrigerator so it will stay cold." Correlation or causation?</p>
+    <ul class="choices">
+      <li>A. Correlation — not enough observable trials</li>
+      <li>B. Causation — a refrigerator keeps things cold</li>
+      <li>C. Neither — water temperature is independent of refrigeration</li>
+      <li>D. Not enough info</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> Refrigeration directly causes the temperature drop — there's a clear mechanism. Causation.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 8</span>
+    <p class="q">"Towns with more parks have lower crime rates." A headline reads "Parks Reduce Crime." What's wrong with the headline?</p>
+    <ul class="choices">
+      <li>A. Nothing — the correlation is strong</li>
+      <li>B. It assumes causation from correlation</li>
+      <li>C. Parks should increase crime</li>
+      <li>D. The data is too small</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> Correlation alone never proves causation. Possible confounders: wealthier towns have more parks AND less crime; well-funded municipalities invest in both. The correlation is real, but the causal claim isn't supported.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 9</span>
+    <p class="q">A line of best fit is y = −0.13x + 4.65 over 8 years. What does the slope of −0.13 tell you?</p>
+    <ul class="choices">
+      <li>A. y decreases by 0.13 per year (units)</li>
+      <li>B. y increases by 0.13 per year</li>
+      <li>C. y is 0.13 at the start</li>
+      <li>D. The line is shifted down by 0.13</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">A.</span> Slope is negative → y is decreasing. Magnitude 0.13 → decreases by 0.13 for each 1-unit increase in x (each year).</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 10</span>
+    <p class="q">Hours of cardio exercise correlate negatively with resting heart rate. Which best describes this relationship?</p>
+    <ul class="choices">
+      <li>A. Correlation only — they just happen to move together</li>
+      <li>B. Causation — exercise has a known physiological effect on the heart</li>
+      <li>C. Confounded by age</li>
+      <li>D. Not enough info</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> Cardio strengthens the heart, lowering resting heart rate — direct biological mechanism. Plus this can be tested experimentally. Causation.</div>
+    </details>
+  </div>
+
+  <h2 id="sec-next">H. What to do next</h2>
+  <div class="checklist">
+    <label><input type="checkbox"> <span class="item-text">Read Sections A-F carefully (~30 min)</span></label>
+    <label><input type="checkbox"> <span class="item-text">Memorize the r-value ranges (above 0.7 = strong, near 0 = weak)</span></label>
+    <label><input type="checkbox"> <span class="item-text">Work Practice 1-10 on paper. Target: 8+ out of 10</span></label>
+    <label><input type="checkbox"> <span class="item-text">Open <a href="math-quest-v2.html">Math Quest</a> → <strong>Stat: Correlation and causation</strong> → drill</span></label>
+    <label><input type="checkbox"> <span class="item-text">When 5.07 unlocks in Buzz, take it</span></label>
+    <label><input type="checkbox"> <span class="item-text">Retake the 05.00 Pretest after all 6 lessons — goal: beat 72%</span></label>
+  </div>
+
+  <div class="big-final">
+    <h3>🎯 Key things to remember</h3>
+    <ol>
+      <li><strong>Y-intercept</strong> in context = starting value, baseline, the value when x = 0.</li>
+      <li><strong>Slope</strong> in context = rate of change. Positive m → y goes UP. Negative m → y goes DOWN. Magnitude = how fast.</li>
+      <li><strong>r near +1</strong> = strong positive. <strong>r near −1</strong> = strong negative. <strong>r near 0</strong> = weak/no relationship.</li>
+      <li><strong>Correlation ≠ causation.</strong> Always ask: is there a confounding variable that explains BOTH?</li>
+      <li><strong>Causation needs:</strong> a clear mechanism OR a controlled comparison.</li>
+      <li><strong>"Just observed together"</strong> = correlation only.</li>
+    </ol>
+  </div>
+
+  <footer>
+    <p>Lesson 5.07 · 2026-05-26. <a href="lesson-5-06.html">← 5.06</a> · <a href="index.html">Hub</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

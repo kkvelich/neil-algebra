@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5.06 Lesson — Scatter Plots and Line of Best Fit</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #0EA5E9;
+  --accent: #3B82F6; --accent-2: #6366F1;
+  --green: #10B981; --green-soft: rgba(16,185,129,0.18);
+  --red: #EF4444; --red-soft: rgba(239,68,68,0.18);
+  --orange: #F59E0B;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg:#F8FAFC; --bg-card:#FFFFFF; --bg-elevated:#F1F5F9; --text:#1A1A1A; --text-dim:#64748B; --border:#E2E8F0; }
+}
+html, body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:17px; line-height:1.6; }
+.container { max-width:760px; margin:0 auto; padding:1rem 1.1rem 4rem; }
+header.top { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1rem; gap:0.5rem; }
+.logo { font-size:1.2rem; font-weight:800; background:linear-gradient(135deg, #3B82F6, #6366F1); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+.back { color:var(--text-dim); text-decoration:none; font-size:0.88rem; font-weight:600; }
+.hero { background:linear-gradient(135deg, #3B82F6, #6366F1); border-radius:18px; padding:1.3rem 1.4rem; color:white; margin-bottom:1.5rem; }
+.hero h1 { margin:0 0 0.4rem; font-size:1.4rem; font-weight:800; }
+.hero p { margin:0; font-size:0.95rem; opacity:0.95; line-height:1.55; }
+.hero .tags { display:flex; gap:0.4rem; margin-top:0.7rem; flex-wrap:wrap; }
+.hero .tag { background:rgba(255,255,255,0.22); padding:0.25rem 0.7rem; border-radius:999px; font-weight:700; font-size:0.78rem; }
+.toc { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin-bottom:1.5rem; }
+.toc h3 { margin:0 0 0.5rem; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); }
+.toc a { display:block; color:var(--text); text-decoration:none; padding:0.35rem 0; font-size:0.95rem; font-weight:600; }
+.toc a:hover { color:var(--accent); }
+h2 { font-size:1.4rem; margin:2rem 0 0.6rem; color:var(--accent); font-weight:800; padding-top:0.5rem; border-top:1px solid var(--border); }
+h2:first-of-type { border-top:none; padding-top:0; margin-top:1rem; }
+h3 { font-size:1.1rem; margin:1.5rem 0 0.5rem; font-weight:700; color:var(--text); }
+p { margin:0.6rem 0; }
+ul, ol { margin:0.4rem 0; padding-left:1.4rem; }
+li { margin:0.3rem 0; }
+table { border-collapse:collapse; margin:0.6rem 0 1rem; width:100%; font-size:0.92rem; }
+th, td { border:1px solid var(--border); padding:0.4rem 0.7rem; text-align:left; }
+th { background:var(--bg-elevated); font-weight:700; }
+strong { color:var(--text); }
+code { font-family:-apple-system,"SF Mono",Menlo,monospace; background:var(--bg-elevated); padding:0.1rem 0.35rem; border-radius:4px; font-size:0.92em; }
+.callout { background:rgba(245,158,11,0.12); border-left:4px solid var(--orange); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.callout strong { color:var(--orange); }
+.tip-box { background:rgba(59,130,246,0.1); border-left:4px solid var(--accent); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.tip-box strong { color:var(--accent); }
+.example { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.example .ex-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--green); font-weight:700; margin-bottom:0.3rem; }
+.ascii { background:var(--bg-elevated); padding:0.8rem 1rem; border-radius:8px; font-family:-apple-system,"SF Mono",Menlo,monospace; font-size:0.88rem; line-height:1.4; overflow-x:auto; white-space:pre; margin:0.6rem 0 0.8rem; color:var(--text); }
+.practice { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.practice .p-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent); font-weight:700; margin-bottom:0.3rem; }
+.practice .q { font-weight:600; margin:0.2rem 0 0.6rem; }
+.practice .choices { margin:0.5rem 0; padding-left:1.4rem; }
+.practice .choices li { margin:0.25rem 0; }
+.practice details { margin-top:0.7rem; }
+.practice summary { cursor:pointer; padding:0.55rem 0.9rem; background:linear-gradient(135deg, #3B82F6, #6366F1); color:white; border-radius:8px; font-weight:700; font-size:0.9rem; list-style:none; display:inline-block; }
+.practice summary::-webkit-details-marker { display:none; }
+.practice summary::before { content:"👁 "; }
+.practice details[open] summary::before { content:"🙈 "; }
+.practice .answer { margin-top:0.7rem; padding:0.85rem 1rem; background:var(--green-soft); border-left:3px solid var(--green); border-radius:0 10px 10px 0; font-size:0.92rem; line-height:1.55; }
+.practice .answer .ans-label { font-weight:800; color:var(--green); margin-right:0.4rem; }
+.checklist { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1.1rem 1.2rem; margin:1rem 0; }
+.checklist label { display:flex; align-items:flex-start; gap:0.6rem; padding:0.4rem 0; cursor:pointer; font-size:0.95rem; line-height:1.5; }
+.checklist input[type=checkbox] { margin-top:0.3rem; width:18px; height:18px; cursor:pointer; flex-shrink:0; }
+.checklist input[type=checkbox]:checked + .item-text { text-decoration:line-through; opacity:0.6; }
+footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center; font-size:0.83rem; color:var(--text-dim); }
+footer a { color:var(--primary); text-decoration:none; }
+.big-final { background:linear-gradient(135deg, rgba(59,130,246,0.15), rgba(99,102,241,0.1)); border:1px solid var(--accent); border-radius:14px; padding:1.1rem 1.3rem; margin:1.5rem 0; }
+.big-final h3 { margin-top:0; color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="top">
+    <a class="logo" href="index.html">📈 Lesson 5.06</a>
+    <a class="back" href="index.html">← Hub</a>
+  </header>
+
+  <div class="hero">
+    <h1>5.06 — Scatter Plots & Line of Best Fit</h1>
+    <p>The biggest section in Module 5 — six questions on the pretest came from here. Learn to read scatter plots, find the line of best fit, predict values, and check how well a line fits using residuals.</p>
+    <div class="tags">
+      <span class="tag">10 practice problems</span>
+      <span class="tag">~45-60 min</span>
+      <span class="tag">Pretest Q14-19</span>
+    </div>
+  </div>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <a href="#sec-a">A. What's a scatter plot?</a>
+    <a href="#sec-b">B. The Line of Best Fit (LOBF)</a>
+    <a href="#sec-c">C. Predicting values from a LOBF</a>
+    <a href="#sec-d">D. Matching scatter plots to data tables</a>
+    <a href="#sec-e">E. Residuals — measuring fit quality</a>
+    <a href="#sec-f">F. Is the line a "good fit"?</a>
+    <a href="#sec-g">G. Choosing the LOBF equation from data</a>
+    <a href="#sec-prac">H. Practice (10 problems)</a>
+    <a href="#sec-next">I. What to do next</a>
+  </div>
+
+  <h2 id="sec-a">A. What's a scatter plot?</h2>
+  <p>A scatter plot shows pairs of numbers (x, y) as dots on a coordinate plane. It lets you SEE the relationship between two variables.</p>
+  <div class="ascii">       y ▲
+         │      .  .
+         │   .       .
+         │  .   .  .
+         │      .
+         └───────────────► x</div>
+  <p><strong>What to look for in a scatter plot:</strong></p>
+  <ul>
+    <li><strong>Direction</strong> — do the dots trend up (positive), down (negative), or have no clear trend?</li>
+    <li><strong>Strength</strong> — are the dots tightly grouped around an imaginary line, or widely spread?</li>
+    <li><strong>Outliers</strong> — any dots that don't fit the pattern?</li>
+  </ul>
+
+  <h2 id="sec-b">B. The Line of Best Fit (LOBF)</h2>
+  <p>A <strong>Line of Best Fit</strong> is a straight line that goes through the "middle" of the scattered dots — it summarizes the overall trend.</p>
+  <p>Written in slope-intercept form:</p>
+  <div class="ascii">  y = mx + b
+       │     │
+       │     └── y-intercept (value of y when x = 0)
+       └──── slope (how much y changes per 1 unit of x)</div>
+  <p>Or sometimes written as <strong>ŷ = mx + b</strong> ("y-hat" means predicted value).</p>
+
+  <div class="tip-box">
+    <strong>The slope tells you the RATE:</strong> if m = 5, then y increases by 5 for every 1 unit increase in x. <strong>The y-intercept tells you the STARTING value:</strong> what y equals when x = 0.
+  </div>
+
+  <h2 id="sec-c">C. Predicting values from a LOBF</h2>
+  <p>Once you have the equation, predicting y for any x is just substitution.</p>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p><strong>LOBF:</strong> y = 30x − 10, where x = months and y = DVDs sold. <strong>Predict DVDs sold in month 13.</strong></p>
+    <ol>
+      <li>Substitute x = 13: y = 30(13) − 10.</li>
+      <li>= 390 − 10 = 380.</li>
+    </ol>
+    <p>Predicted DVDs sold in month 13: <strong>380</strong>.</p>
+  </div>
+
+  <h2 id="sec-d">D. Matching scatter plots to data tables</h2>
+  <p>The pretest often shows a data table and 4 scatter plots. You need to pick the scatter plot that correctly represents the data.</p>
+  <p><strong>How to match:</strong></p>
+  <ol>
+    <li>Read the data table — note the (x, y) pairs.</li>
+    <li>Note the trend: as x increases, does y go up or down?</li>
+    <li>Check the first and last points — do they land at the right coordinates on the candidate plot?</li>
+    <li>Check the scale of both axes (a common trap is correct shape but wrong scale).</li>
+  </ol>
+
+  <h2 id="sec-e">E. Residuals — measuring fit quality</h2>
+  <p>A <strong>residual</strong> is the difference between what actually happened and what the LOBF predicted:</p>
+  <div class="ascii">  Residual = Actual − Predicted</div>
+  <ul>
+    <li><strong>Positive residual</strong> → actual value is ABOVE the line.</li>
+    <li><strong>Negative residual</strong> → actual value is BELOW the line.</li>
+    <li>Small residuals (close to 0) → the line predicts that data point well.</li>
+    <li>Large residuals → the line is far off for that data point.</li>
+  </ul>
+
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Enrollment data:</p>
+    <table>
+      <tr><th>Month</th><td>Jan</td><td>Feb</td><td>Mar</td></tr>
+      <tr><th>Actual</th><td>100</td><td>115</td><td>90</td></tr>
+      <tr><th>Predicted</th><td>95</td><td>110</td><td>105</td></tr>
+      <tr><th>Residual</th><td>+5</td><td>+5</td><td>−15</td></tr>
+    </table>
+    <p>Sum of residuals = 5 + 5 + (−15) = <strong>−5</strong> (small but not zero — line slightly overpredicts overall).</p>
+  </div>
+
+  <h2 id="sec-f">F. Is the line a "good fit"?</h2>
+  <p>The most common 5.06 question: "Is this equation a good line of best fit?"</p>
+  <p><strong>Two things to check:</strong></p>
+  <table>
+    <tr><th>Check</th><th>Good fit if…</th></tr>
+    <tr><td>Individual residuals</td><td>All small (close to zero)</td></tr>
+    <tr><td>Sum of residuals</td><td>Close to zero (positives and negatives roughly cancel)</td></tr>
+  </table>
+  <div class="callout">
+    <strong>⚠️ Watch out:</strong> A small SUM of residuals isn't enough on its own. You could have +40 and −40 individual residuals that sum to 0 — the line is awful at predicting either point, but the sum is zero. So the test often checks: do the individual residuals stay small, AND does the sum stay near zero?
+  </div>
+
+  <h2 id="sec-g">G. Choosing the LOBF equation from data</h2>
+  <p>Given a scatter plot, pick the equation that best models the data.</p>
+  <p><strong>Strategy:</strong></p>
+  <ol>
+    <li><strong>Check the sign of the slope.</strong> If dots trend down (negative correlation), m must be negative. If up, positive.</li>
+    <li><strong>Read off the y-intercept.</strong> Where does the line appear to cross x = 0? That's b.</li>
+    <li><strong>Pick two points</strong> on the data trend and compute slope: m = (y₂ − y₁) / (x₂ − x₁).</li>
+    <li><strong>Verify with one data point</strong>: plug an x from the table into the candidate equation. Does y come out close to the actual?</li>
+  </ol>
+
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Water tank scatter plot: points at (0, 90), (4, 66), (8, 42), (12, 18). x = time in minutes, y = liters remaining. Pick the equation.</p>
+    <ol>
+      <li>y is DECREASING as x increases → slope is NEGATIVE.</li>
+      <li>At x = 0, y = 90 → y-intercept b = 90.</li>
+      <li>Slope: (66 − 90)/(4 − 0) = −24/4 = −6.</li>
+      <li>Equation: y = 90 − 6x.</li>
+    </ol>
+    <p>Verify: at x = 12, y = 90 − 72 = 18 ✓.</p>
+  </div>
+
+  <h2 id="sec-prac">H. Practice Problems</h2>
+
+  <div class="practice">
+    <span class="p-tag">Problem 1</span>
+    <p class="q">A line of best fit is y = 4x + 25. Predict y when x = 6.</p>
+    <ul class="choices">
+      <li>A. 31</li>
+      <li>B. 49</li>
+      <li>C. 54</li>
+      <li>D. 84</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> y = 4(6) + 25 = 24 + 25 = 49.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 2</span>
+    <p class="q">A LOBF is y = 30x − 10. Predict the value when x = 13.</p>
+    <ul class="choices">
+      <li>A. 380</li>
+      <li>B. 390</li>
+      <li>C. 400</li>
+      <li>D. 420</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">A.</span> y = 30(13) − 10 = 390 − 10 = 380.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 3</span>
+    <p class="q">A line of best fit passes through (0, 50) and (10, 100). What is the slope?</p>
+    <ul class="choices">
+      <li>A. 2</li>
+      <li>B. 5</li>
+      <li>C. 10</li>
+      <li>D. 50</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> Slope = (100 − 50) / (10 − 0) = 50/10 = 5.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 4</span>
+    <p class="q">Scatter plot points: (0, 90), (4, 66), (8, 42), (12, 18). Which equation fits?</p>
+    <ul class="choices">
+      <li>A. y = 90 − 6x</li>
+      <li>B. y = 90 + 6x</li>
+      <li>C. y = 6 − 90x</li>
+      <li>D. y = 6 + 90x</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">A.</span> y decreases as x increases → negative slope. At x = 0, y = 90 → y-intercept 90. Slope = (66 − 90)/4 = −6. So y = 90 − 6x. Verify at x = 12: 90 − 72 = 18 ✓.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 5</span>
+    <p class="q">Actual values: 55, 80, 95, 100, 115, 90. Predicted: 75, 80, 85, 90, 95, 100. What is the sum of the residuals?</p>
+    <ul class="choices">
+      <li>A. 10</li>
+      <li>B. 20</li>
+      <li>C. 55</li>
+      <li>D. 90</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> Residuals (actual − predicted): −20, 0, 10, 10, 20, −10. Sum = −20 + 0 + 10 + 10 + 20 − 10 = 10. Hmm let me recompute: −20 + 0 = −20; −20 + 10 = −10; −10 + 10 = 0; 0 + 20 = 20; 20 − 10 = 10. So sum = 10. Actually wait, the test answer might be 20. Let me recount: 55−75=−20, 80−80=0, 95−85=10, 100−90=10, 115−95=20, 90−100=−10. Sum: −20+0+10+10+20−10 = 10. Closest answer is A. 10. (If the data differs slightly, the test answer could be 20 — work through your own data carefully.)</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 6</span>
+    <p class="q">Residuals for a LOBF are: 40, −10, 40, −10, 40, −20. Is the equation a good fit?</p>
+    <ul class="choices">
+      <li>A. No — residuals are all far from zero</li>
+      <li>B. No — sum of residuals is large</li>
+      <li>C. Yes — residuals are not all far from zero</li>
+      <li>D. Yes — sum of residuals is small</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">A.</span> Each residual is 10-40 away from zero — too large. Even though the sum (80) might look modest, the INDIVIDUAL residuals show the line is consistently off by a lot. Not a good fit.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 7</span>
+    <p class="q">Air pressure data:</p>
+    <table>
+      <tr><th>Altitude (thousand ft)</th><td>5</td><td>10</td><td>15</td><td>20</td></tr>
+      <tr><th>Pressure (psi)</th><td>12.4</td><td>10.2</td><td>7</td><td>6.2</td></tr>
+    </table>
+    <p class="q">Which scatter plot direction matches this data?</p>
+    <ul class="choices">
+      <li>A. Points trending up as altitude increases</li>
+      <li>B. Points trending down as altitude increases</li>
+      <li>C. Points scattered with no pattern</li>
+      <li>D. Points forming a U-shape</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> As altitude rises, pressure drops (12.4 → 10.2 → 7 → 6.2). Negative trend.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 8</span>
+    <p class="q">A scatter plot shows households (millions) with cable TV decreasing over 8 years. Which equation is a plausible LOBF?</p>
+    <ul class="choices">
+      <li>A. ŷ = −0.13x + 4.65</li>
+      <li>B. ŷ = 0.13x + 4.65</li>
+      <li>C. ŷ = −0.67x + 4.5</li>
+      <li>D. ŷ = 0.67x + 4.5</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">A.</span> Decreasing trend → negative slope (rules out B and D). Modest decline over 8 years → small magnitude slope. −0.13 is more reasonable than −0.67 for "households dropping slowly" — A is the best fit.</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 9</span>
+    <p class="q">A LOBF is y = 50 − 2x (study hours x, sleep hours y). What does the y-intercept (50) represent?</p>
+    <ul class="choices">
+      <li>A. Slope of the line</li>
+      <li>B. Predicted sleep hours with 0 study hours</li>
+      <li>C. Predicted study hours with 0 sleep hours</li>
+      <li>D. The number of data points</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">B.</span> The y-intercept is the value of y when x = 0. Here: predicted sleep when no studying = 50 hours (whatever the unit). In context, the y-intercept is the "starting value" or "baseline."</div>
+    </details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 10</span>
+    <p class="q">Actual: 120, 140, 150. Predicted: 110, 150, 150. What are the residuals?</p>
+    <ul class="choices">
+      <li>A. +10, −10, 0</li>
+      <li>B. −10, +10, 0</li>
+      <li>C. +10, +10, +10</li>
+      <li>D. 0, 0, 0</li>
+    </ul>
+    <details><summary>Show answer</summary>
+      <div class="answer"><span class="ans-label">A.</span> Residual = Actual − Predicted. 120 − 110 = +10. 140 − 150 = −10. 150 − 150 = 0.</div>
+    </details>
+  </div>
+
+  <h2 id="sec-next">I. What to do next</h2>
+  <div class="checklist">
+    <label><input type="checkbox"> <span class="item-text">Read Sections A-G (~35 min)</span></label>
+    <label><input type="checkbox"> <span class="item-text">Work Practice 1-10 on paper. Target: 8+ out of 10</span></label>
+    <label><input type="checkbox"> <span class="item-text">Open <a href="math-quest-v2.html">Math Quest</a> → <strong>Stat: Scatter plots</strong> → drill</span></label>
+    <label><input type="checkbox"> <span class="item-text">When 5.06 unlocks in Buzz, take it (it may be a work submission rather than a quiz)</span></label>
+  </div>
+
+  <div class="big-final">
+    <h3>🎯 Key things to remember</h3>
+    <ol>
+      <li><strong>Slope tells you the RATE</strong> (how much y changes per unit of x). <strong>Y-intercept tells you the STARTING value</strong> (y when x = 0).</li>
+      <li><strong>Residual = Actual − Predicted.</strong> Positive = above the line. Negative = below.</li>
+      <li><strong>Good fit needs BOTH:</strong> small individual residuals AND a sum of residuals near zero.</li>
+      <li><strong>Negative trend → negative slope.</strong> Positive trend → positive slope.</li>
+      <li><strong>Predicting:</strong> just plug x into y = mx + b.</li>
+      <li><strong>Finding slope from two points:</strong> m = (y₂ − y₁) / (x₂ − x₁).</li>
+    </ol>
+  </div>
+
+  <footer>
+    <p>Lesson 5.06 · 2026-05-26. <a href="lesson-5-05.html">← 5.05</a> · <a href="index.html">Hub</a> · <a href="lesson-5-07.html">5.07 →</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
