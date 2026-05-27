@@ -194,7 +194,7 @@ footer a { color:var(--primary); text-decoration:none; }
   <!-- HOME VIEW -->
   <div class="view active" id="view-home">
     <div class="hero">
-      <h1 id="heroTitle">Adaptive practice</h1>
+      <h1 id="heroTitle">COA Sem 2 practice</h1>
       <p id="heroSub">More practice on what you miss. Less on what you've mastered.</p>
       <div class="countdown" id="cd"></div>
     </div>
@@ -246,7 +246,7 @@ footer a { color:var(--primary); text-decoration:none; }
   </div>
 
   <footer>
-    <p>Math Quest v2 — adaptive engine. <a href="math-quest.html">v1 (classic)</a> · <a href="index.html">Hub</a></p>
+    <p>Math Quest — adaptive engine for COA Sem 2. · <a href="index.html">Hub</a></p>
   </footer>
 </div>
 
@@ -1552,9 +1552,17 @@ PROBLEMS.forEach(p => {
   p.skillId = `ch${p.ch}-${slugify(p.topic)}`;
 });
 
-// Build skill registry
+// COA Sem 2 / MAT100B = Segment 2 = Modules 5-8.
+// In-scope chapters: 5 (Stat), 7 (Polynomial Ops & Factoring),
+// 8 (Quadratic Functions — graphing/vertex/axis/discriminant),
+// 9 (Solving Quadratics).
+// App is now COA-only: out-of-scope skills are completely hidden.
+const COA_SCOPE_CHAPTERS = [5, 7, 8, 9];
+
+// Build skill registry — IN-SCOPE ONLY.
 const SKILLS = {};
 PROBLEMS.forEach(p => {
+  if (!COA_SCOPE_CHAPTERS.includes(p.ch)) return;
   if (!SKILLS[p.skillId]) {
     SKILLS[p.skillId] = { id: p.skillId, ch: p.ch, topic: p.topic, problemIds: [] };
   }
@@ -1562,7 +1570,9 @@ PROBLEMS.forEach(p => {
 });
 const SKILL_LIST = Object.values(SKILLS);
 const PROBLEM_BY_ID = {};
-PROBLEMS.forEach(p => { PROBLEM_BY_ID[p.id] = p; });
+PROBLEMS.forEach(p => {
+  if (COA_SCOPE_CHAPTERS.includes(p.ch)) PROBLEM_BY_ID[p.id] = p;
+});
 
 // =========================================================
 // State
@@ -1623,26 +1633,12 @@ function skillState(skillId) {
   return 'mastered';
 }
 
-// COA Sem 2 / MAT100B = Segment 2 = Modules 5-8.
-// In-scope chapters: 5 (Stat), 7 (Polynomial Ops & Factoring),
-// 8 (Quadratic Functions — graphing/vertex/axis/discriminant),
-// 9 (Solving Quadratics).
-// Out of scope: 6 (Exponentials — Segment 1), 10 (Rational — not in FlexPoint),
-// 11 (Radicals — in Segment 1 of FlexPoint).
-const COA_SCOPE_CHAPTERS = [5, 7, 8, 9];
-function inCoaScope(skillId) {
-  const skill = SKILLS[skillId];
-  if (!skill) return true;
-  return COA_SCOPE_CHAPTERS.includes(skill.ch);
-}
-
 function skillWeight(skillId) {
   const s = skillState(skillId);
-  const base = { struggling: 6, learning: 4, new: 3, practicing: 2, mastered: 1 }[s];
-  // Out-of-scope skills still surface occasionally (0.2× weight) — useful for
-  // general fluency review — but the engine spends ~80% on COA-relevant skills.
-  return inCoaScope(skillId) ? base : base * 0.2;
+  return { struggling: 6, learning: 4, new: 3, practicing: 2, mastered: 1 }[s];
 }
+// (COA_SCOPE_CHAPTERS is now applied at SKILLS build time — out-of-scope skills
+// are never in the registry, so no per-skill scope check is needed downstream.)
 
 function skillPct(skillId) {
   const t = state.skills[skillId];
@@ -1772,19 +1768,18 @@ function showView(name) {
 
 // HOME
 function computeReadiness() {
-  // Readiness = share of in-scope skills at practicing/mastered.
-  // Empirically: hitting ~85% of in-scope skills at practicing/mastered is
+  // Readiness = share of (COA Sem 2) skills at practicing/mastered.
+  // Empirically: hitting ~85% of skills at practicing/mastered is
   // a reasonable predictor of clearing 80% on the exam.
-  const inScope = SKILL_LIST.filter(s => inCoaScope(s.id));
-  if (inScope.length === 0) return { pct: 0, label: 'no data yet', goodCount: 0, total: 0 };
+  if (SKILL_LIST.length === 0) return { pct: 0, label: 'no data yet', goodCount: 0, total: 0 };
   let goodCount = 0;
   let strugCount = 0;
-  inScope.forEach(s => {
+  SKILL_LIST.forEach(s => {
     const st = skillState(s.id);
     if (st === 'practicing' || st === 'mastered') goodCount++;
     if (st === 'struggling') strugCount++;
   });
-  const pct = Math.round((goodCount / inScope.length) * 100);
+  const pct = Math.round((goodCount / SKILL_LIST.length) * 100);
   let label;
   const at = state.session.allTimeAttempts;
   if (at === 0) label = 'Practice hasn\'t started — open Practice to begin.';
@@ -1840,8 +1835,8 @@ function renderHome() {
     const mast = SKILL_LIST.filter(s => skillState(s.id) === 'mastered').length;
     document.getElementById('heroTitle').textContent = `${mast} skill${mast===1?'':'s'} mastered`;
     document.getElementById('heroSub').textContent = strug > 0
-      ? `${strug} skill${strug===1?'':'s'} still struggling — engine prioritizes those. Focused on COA Modules 5-8.`
-      : 'Engine focused on COA Sem 2 (Modules 5-8). Out-of-scope skills surface ~20% for fluency.';
+      ? `${strug} skill${strug===1?'':'s'} still struggling — engine prioritizes those. COA Modules 5-8 only.`
+      : 'COA Sem 2 only. Engine pulls from Modules 5-8.';
   }
 }
 
@@ -2090,7 +2085,7 @@ function renderSkills() {
     html += `<div class="skill-row ${st}">
       <div class="skill-row-head">
         <div>
-          <div class="skill-name">${s.topic}${inCoaScope(s.id) ? ' <span title="On the COA Sem 2 exam (Modules 5-8)" style="font-size:0.7em;background:rgba(6,182,212,0.18);color:var(--primary);padding:0.1rem 0.4rem;border-radius:6px;font-weight:700;margin-left:0.3rem;letter-spacing:0.03em;">COA</span>' : ''}${LESSONS[s.id] ? ' <span title="Lesson available" style="font-size:0.78em;opacity:0.7;">📖</span>' : ''}</div>
+          <div class="skill-name">${s.topic}${LESSONS[s.id] ? ' <span title="Lesson available" style="font-size:0.78em;opacity:0.7;">📖</span>' : ''}</div>
           <div class="skill-meta">Ch ${s.ch} · ${s.problemIds.length} problem${s.problemIds.length===1?'':'s'} · ${t ? `${t.correct}/${t.attempts}` : 'not attempted'}</div>
         </div>
         <div style="text-align:right;">

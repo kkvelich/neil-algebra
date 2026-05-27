@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>COA Long-Form Prep — Compound Interest & Quadratics</title>
+<title>COA Prep — Modules 5-8 Typed Practice</title>
 <style>
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 :root {
@@ -28,7 +28,7 @@ header.top { display:flex; justify-content:space-between; align-items:center; pa
 .hero p { margin:0; font-size:0.92rem; opacity:0.95; }
 .hero .countdown { display:inline-block; background:rgba(255,255,255,0.22); padding:0.3rem 0.7rem; border-radius:999px; margin-top:0.5rem; font-weight:700; font-size:0.82rem; }
 .section-jump { display:flex; gap:0.5rem; margin-bottom:1rem; flex-wrap:wrap; }
-.section-jump a { flex:1; min-width:140px; text-align:center; background:var(--bg-card); border:1px solid var(--border); padding:0.6rem 0.8rem; border-radius:10px; text-decoration:none; color:var(--text); font-size:0.88rem; font-weight:700; }
+.section-jump a { flex:1; min-width:140px; text-align:center; background:var(--bg-card); border:1px solid var(--border); padding:0.6rem 0.8rem; border-radius:10px; text-decoration:none; color:var(--text); font-size:0.85rem; font-weight:700; }
 .section-jump a:hover { border-color:var(--primary); }
 .section-header { font-size:0.82rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); margin:1.5rem 0 0.6rem 0.25rem; font-weight:700; }
 .q-card { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:1.1rem 1.2rem; margin-bottom:1rem; scroll-margin-top:1rem; }
@@ -63,7 +63,6 @@ header.top { display:flex; justify-content:space-between; align-items:center; pa
 .solution-box ol { margin:0.3rem 0 0.6rem 1.1rem; padding:0; }
 .solution-box li { margin:0.25rem 0; font-size:0.95rem; line-height:1.5; }
 .solution-box .final-ans { font-weight:700; color:var(--green); margin-top:0.4rem; font-size:0.98rem; }
-.solution-box.wrong .final-ans { color:var(--green); }
 .your-ans { font-size:0.88rem; color:var(--text-dim); margin-top:0.4rem; font-style:italic; }
 .bottom-bar { display:flex; gap:0.5rem; margin-top:1.5rem; }
 .bottom-bar .btn { flex:1; padding:0.9rem; }
@@ -77,23 +76,25 @@ footer a { color:var(--primary); text-decoration:none; }
 <div class="container">
 
   <header class="top">
-    <a href="index.html" class="logo">📐 COA Long-Form</a>
-    <div class="score-pill" id="scorePill">0 / 14</div>
+    <a href="index.html" class="logo">🎯 COA Prep</a>
+    <div class="score-pill" id="scorePill">0 / 13</div>
   </header>
 
   <div class="hero">
-    <h1>Long-form drill — compound interest &amp; quadratics</h1>
-    <p>The exact two topics that hurt you. Type the answer, hit Check, study the steps. Repeat until automatic.</p>
+    <h1>COA Sem 2 — typed practice</h1>
+    <p>Modules 5-8 only: Statistics, Polynomial Ops, Factoring, Quadratics. Type the answer, no MC crutch. Same format as the in-person final on June 11.</p>
     <div class="countdown" id="cd"></div>
   </div>
 
   <div class="tip">
-    <strong>How to use:</strong> Work each problem on paper first (this is long-form — write the steps). Then type the final answer. After Check, read the worked solution even if you got it right. Hint = if you're stuck for 60 seconds.
+    <strong>How to use:</strong> Work each problem on paper first. Then type the final answer. Read the worked solution even when you get it right — it cements the method.
   </div>
 
   <div class="section-jump">
-    <a href="#compound">💰 Compound Interest (5)</a>
-    <a href="#quadratics">⚡ Quadratics (9)</a>
+    <a href="#stats">📊 Statistics (4)</a>
+    <a href="#polynomials">➕ Polynomial Ops (2)</a>
+    <a href="#factoring">🧩 Factoring (3)</a>
+    <a href="#quadratics">⚡ Quadratics (4)</a>
   </div>
 
   <div id="quiz"></div>
@@ -104,13 +105,13 @@ footer a { color:var(--primary); text-decoration:none; }
   </div>
 
   <footer>
-    <p><a href="index.html">← Back to Hub</a> · <a href="workbook.html">Workbook</a> · <a href="cheat-sheet.pdf">Cheat sheet</a></p>
+    <p><a href="index.html">← Back to Hub</a> · <a href="math-quest-v2.html">Math Quest →</a></p>
   </footer>
 
 </div>
 
 <script>
-const STORAGE_KEY = 'neil_coa_longform_v1';
+const STORAGE_KEY = 'neil_coa_prep_v1';
 const defaultState = { answers:{}, checked:{}, hints:{}, hintsCount:0, attempts:0 };
 let state = loadState();
 function loadState() {
@@ -123,108 +124,103 @@ function loadState() {
 function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
 
 // =========================================================
-// PROBLEMS — 5 compound interest, 9 quadratics, all free-response
+// PROBLEMS — Modules 5-8 typed practice (COA Sem 2)
 // =========================================================
 const QUESTIONS = [
-  // ----- COMPOUND INTEREST / EXPONENTIAL (5) -----
-  { id:1, section:"compound", topic:"Compound interest — write the equation",
-    q:"Maria invests $2,500 at 4.5% annual interest, compounded annually. Write the amount A as a function of t (years).",
-    ans:"A = 2500(1.045)^t",
-    accept:["2500(1.045)^t", "a=2500(1.045)^t"],
-    hint:"Formula: A = P(1 + r)^t. Convert 4.5% to decimal (0.045). The base is 1 + 0.045 = 1.045.",
-    sol:["Use A = P(1 + r)^t.", "P = 2500, r = 0.045 (4.5% as a decimal).", "A = 2500(1 + 0.045)^t = <strong>2500(1.045)^t</strong>."]},
+  // ----- STATISTICS (Module 5) -----
+  { id:1, section:"stats", topic:"Median (even count)",
+    q:"Find the median of: 4, 7, 9, 12, 15, 18.",
+    ans:"10.5",
+    accept:["21/2", "10 1/2"],
+    hint:"Even count → average the two middle values.",
+    sol:["Sorted already. 6 numbers → middle two are 9 and 12.", "Median = (9 + 12)/2 = 10.5"]},
 
-  { id:2, section:"compound", topic:"Compound interest — compute future value",
-    q:"$1,200 is invested at 6% annual interest, compounded annually. To the nearest dollar, what is the balance after 8 years?",
-    ans:"1912",
-    accept:["$1912", "1,912", "$1,912", "1912.42", "1912.43"],
-    hint:"A = 1200(1.06)^8. Compute 1.06^8 first, then multiply by 1200. 1.06^8 ≈ 1.5938.",
-    sol:["A = P(1 + r)^t = 1200(1.06)^8.", "1.06^8 ≈ 1.5938.", "A ≈ 1200 × 1.5938 ≈ 1912.42.", "Rounded: <strong>$1,912</strong>."]},
+  { id:2, section:"stats", topic:"IQR",
+    q:"Find the IQR of: 5, 8, 12, 14, 18, 22, 25.",
+    ans:"14",
+    accept:["iqr=14", "14.0"],
+    hint:"Q1 = median of lower half (below the overall median). Q3 = median of upper half.",
+    sol:["Overall median: 14 (middle of 7 numbers).", "Lower half: 5, 8, 12 → Q1 = 8 (middle).", "Upper half: 18, 22, 25 → Q3 = 22.", "IQR = Q3 − Q1 = 22 − 8 = 14"]},
 
-  { id:3, section:"compound", topic:"Exponential decay — write the equation",
-    q:"A laptop bought for $1,800 loses 18% of its value each year. Write the value V as a function of t (years).",
-    ans:"V = 1800(0.82)^t",
-    accept:["1800(0.82)^t", "v=1800(0.82)^t"],
-    hint:"Decay formula: V = P(1 − r)^t. Here r = 0.18, so the base is 1 − 0.18 = 0.82.",
-    sol:["Decay: V = P(1 − r)^t.", "r = 0.18, so 1 − r = 0.82.", "V = <strong>1800(0.82)^t</strong>."]},
+  { id:3, section:"stats", topic:"Conditional frequency",
+    q:"A survey: 80 students. Of the 50 who like math, 30 are boys. What percent of math-likers are boys? (Round to whole percent.)",
+    ans:"60",
+    accept:["60%", "0.60", "0.6"],
+    hint:"Divide boys-who-like-math by total math-likers, × 100.",
+    sol:["30 of 50 math-likers are boys.", "30/50 = 0.6 → 60%"]},
 
-  { id:4, section:"compound", topic:"Exponential decay — compute value",
-    q:"Using V = 1800(0.82)^t, what is the laptop's value after 4 years? (Round to the nearest dollar.)",
-    ans:"813",
-    accept:["$813", "813.07", "813.08"],
-    hint:"Compute 0.82^4 first, then multiply by 1800. 0.82^4 ≈ 0.4521.",
-    sol:["0.82^4 ≈ 0.4521.", "V ≈ 1800 × 0.4521 ≈ 813.07.", "Rounded: <strong>$813</strong>."]},
+  { id:4, section:"stats", topic:"Line of best fit — prediction",
+    q:"A line of best fit is y = 4x + 25 (x = hours studied, y = test score). Predict y for x = 6.",
+    ans:"49",
+    accept:["y=49", "score=49"],
+    hint:"Plug x = 6 into the equation.",
+    sol:["y = 4(6) + 25", "= 24 + 25", "= 49"]},
 
-  { id:5, section:"compound", topic:"Compound interest — solve for t",
-    q:"Sam invests $1,000 at 5% annual compound interest. After how many full years will his balance first exceed $1,500?",
-    ans:"9",
-    accept:["9 years", "t=9"],
-    hint:"Solve 1000(1.05)^t > 1500 → (1.05)^t > 1.5. Try values of t until you cross 1.5.",
-    sol:["1000(1.05)^t > 1500 → (1.05)^t > 1.5.", "1.05^8 ≈ 1.477 — not yet.", "1.05^9 ≈ 1.551 — yes!", "First full year balance exceeds $1,500: <strong>t = 9 years</strong>."]},
+  // ----- POLYNOMIAL OPERATIONS (Module 6) -----
+  { id:5, section:"polynomials", topic:"FOIL",
+    q:"Multiply: (3x − 5)(2x + 7). Type the simplified form.",
+    ans:"6x² + 11x − 35",
+    accept:["6x^2+11x-35", "6x^2 + 11x - 35", "6x²+11x−35"],
+    hint:"FOIL carefully — watch the signs on −5.",
+    sol:["F: 3x · 2x = 6x²", "O: 3x · 7 = 21x", "I: (−5) · 2x = −10x", "L: (−5) · 7 = −35", "Combine: 6x² + 21x − 10x − 35 = 6x² + 11x − 35"]},
 
-  // ----- QUADRATICS (9) -----
-  { id:6, section:"quadratics", topic:"Solve by factoring",
-    q:"Solve by factoring: x² − 9x + 20 = 0",
-    ans:"x = 4, 5",
-    accept:["4,5", "5,4", "x=4,5", "x=5,4", "{4,5}", "{5,4}"],
-    hint:"Need two numbers with product 20 and sum −9. Both negative: try −4 and −5.",
-    sol:["Two numbers with product 20 and sum −9: −4 and −5.", "Factor: (x − 4)(x − 5) = 0.", "Zero-product: x − 4 = 0 or x − 5 = 0.", "<strong>x = 4 or x = 5</strong>."]},
+  { id:6, section:"polynomials", topic:"Subtract polynomials",
+    q:"Simplify: (4x² + 3x − 2) − (x² − 5x + 6). Type the result.",
+    ans:"3x² + 8x − 8",
+    accept:["3x^2+8x-8", "3x^2 + 8x - 8", "3x²+8x−8"],
+    hint:"Distribute the minus to EVERY term in the second polynomial.",
+    sol:["Distribute: 4x² + 3x − 2 − x² + 5x − 6.", "Group like terms: (4−1)x² + (3+5)x + (−2−6).", "= 3x² + 8x − 8"]},
 
-  { id:7, section:"quadratics", topic:"Factor with leading coefficient",
-    q:"Solve by factoring: 2x² + 7x + 3 = 0",
-    ans:"x = -3, -1/2",
-    accept:["-3,-1/2", "-1/2,-3", "x=-3,-1/2", "x=-1/2,-3", "-3,-0.5", "-0.5,-3", "x=-3,-0.5", "x=-0.5,-3"],
-    hint:"AC method: a·c = 2·3 = 6. Need numbers with product 6 and sum 7 → 6 and 1.",
-    sol:["AC = 2·3 = 6. Need product 6, sum 7 → 6 and 1.", "Split the middle: 2x² + 6x + x + 3.", "Group: 2x(x + 3) + 1(x + 3) = (2x + 1)(x + 3).", "(2x + 1)(x + 3) = 0 → x = −1/2 or x = −3.", "<strong>x = −3 or x = −1/2</strong>."]},
+  // ----- FACTORING (Module 7) -----
+  { id:7, section:"factoring", topic:"Factor x²+bx+c",
+    q:"Factor: x² + 12x + 32. Type as (x+a)(x+b).",
+    ans:"(x+4)(x+8)",
+    accept:["(x+8)(x+4)"],
+    hint:"Two numbers: product 32, sum 12.",
+    sol:["Product 32, sum 12 → 4 and 8.", "(x + 4)(x + 8)"]},
 
-  { id:8, section:"quadratics", topic:"Square-root method",
-    q:"Solve: x² = 49",
-    ans:"x = ±7",
-    accept:["±7", "7,-7", "-7,7", "x=±7", "x=7,-7", "x=-7,7"],
-    hint:"Take the square root of both sides. Remember the ± — both roots are solutions.",
-    sol:["Take √ of both sides: x = ±√49.", "<strong>x = ±7</strong> (i.e., x = 7 or x = −7)."]},
+  { id:8, section:"factoring", topic:"Factor ax²+bx+c",
+    q:"Factor: 3x² − 10x + 8. Type the factored form.",
+    ans:"(3x − 4)(x − 2)",
+    accept:["(3x-4)(x-2)", "(x-2)(3x-4)", "(x − 2)(3x − 4)"],
+    hint:"AC = 24. Need product 24, sum −10 → both negative.",
+    sol:["AC = 3·8 = 24. Numbers with product 24, sum −10: −6 and −4.", "Split: 3x² − 6x − 4x + 8.", "Group: 3x(x − 2) − 4(x − 2) = (3x − 4)(x − 2)."]},
 
-  { id:9, section:"quadratics", topic:"Discriminant — compute",
-    q:"Compute the discriminant of x² − 6x + 4 = 0.",
-    ans:"20",
-    accept:["d=20"],
-    hint:"Discriminant = b² − 4ac. Identify a, b, c first. Be careful with signs.",
-    sol:["a = 1, b = −6, c = 4.", "D = b² − 4ac = (−6)² − 4(1)(4).", "= 36 − 16 = <strong>20</strong>."]},
+  { id:9, section:"factoring", topic:"Factor completely",
+    q:"Factor completely: 2x³ − 8x. Type the result.",
+    ans:"2x(x + 2)(x − 2)",
+    accept:["2x(x-2)(x+2)", "2x(x+2)(x-2)", "2x(x − 2)(x + 2)"],
+    hint:"GCF first. Then check if what's left matches a pattern.",
+    sol:["GCF = 2x: 2x(x² − 4).", "x² − 4 is a difference of squares → (x + 2)(x − 2).", "Combined: 2x(x + 2)(x − 2)"]},
 
-  { id:10, section:"quadratics", topic:"Discriminant — interpret",
-    q:"How many real solutions does 2x² + 3x + 5 = 0 have? (Type a number: 0, 1, or 2.)",
-    ans:"0",
-    accept:["none", "no real solutions", "zero"],
-    hint:"Compute discriminant. If D > 0 → 2 real; D = 0 → 1 real; D < 0 → 0 real (no real solutions).",
-    sol:["a = 2, b = 3, c = 5.", "D = b² − 4ac = 9 − 4(2)(5) = 9 − 40 = −31.", "D < 0 → no real solutions.", "<strong>0 real solutions</strong>."]},
+  // ----- QUADRATIC FUNCTIONS (Module 8) -----
+  { id:10, section:"quadratics", topic:"Vertex from standard",
+    q:"Find the vertex of y = x² − 6x + 13. Type as (h, k).",
+    ans:"(3, 4)",
+    accept:["(3,4)", "3,4"],
+    hint:"h = −b/(2a). Then plug h back in for k.",
+    sol:["h = −(−6)/(2·1) = 6/2 = 3", "k = (3)² − 6(3) + 13 = 9 − 18 + 13 = 4", "Vertex: (3, 4)"]},
 
-  { id:11, section:"quadratics", topic:"Vertex from standard form",
-    q:"Find the vertex of y = x² − 8x + 11. Type as (h, k).",
-    ans:"(4, -5)",
-    accept:["(4,-5)", "4,-5", "h=4,k=-5"],
-    hint:"x-coordinate: h = −b/(2a). Then plug h back into the equation to find k.",
-    sol:["a = 1, b = −8 → h = −(−8)/(2·1) = 8/2 = 4.", "k = (4)² − 8(4) + 11 = 16 − 32 + 11 = −5.", "Vertex: <strong>(4, −5)</strong>."]},
+  { id:11, section:"quadratics", topic:"Solve by factoring",
+    q:"Solve x² − 5x + 6 = 0. List solutions.",
+    ans:"x = 2, 3",
+    accept:["2,3", "3,2", "x=2,3", "x=3,2", "{2,3}"],
+    hint:"Two numbers with product 6, sum −5 → both negative.",
+    sol:["Factor: (x − 2)(x − 3) = 0.", "Zero-product: x − 2 = 0 or x − 3 = 0.", "x = 2 or x = 3"]},
 
-  { id:12, section:"quadratics", topic:"Axis of symmetry",
-    q:"Find the axis of symmetry of y = 3x² + 12x − 1.",
-    ans:"x = -2",
-    accept:["-2", "x=-2"],
-    hint:"Axis: x = −b/(2a). Here a = 3 and b = 12.",
-    sol:["x = −b/(2a) = −12/(2·3) = −12/6 = −2.", "Axis of symmetry: <strong>x = −2</strong>."]},
+  { id:12, section:"quadratics", topic:"Quadratic formula",
+    q:"Solve x² − 4x + 1 = 0 using the quadratic formula. Type as a ± √n.",
+    ans:"2 ± √3",
+    accept:["2±sqrt(3)", "2 ± sqrt(3)", "2±√3"],
+    hint:"D = 16 − 4 = 12. √12 = 2√3. Then divide by 2a.",
+    sol:["a = 1, b = −4, c = 1.", "D = (−4)² − 4(1)(1) = 16 − 4 = 12.", "√12 = √(4·3) = 2√3.", "x = (4 ± 2√3)/2 = 2 ± √3"]},
 
-  { id:13, section:"quadratics", topic:"Convert standard → vertex form",
-    q:"Convert y = x² + 6x + 5 to vertex form by completing the square.",
-    ans:"y = (x + 3)² - 4",
-    accept:["(x+3)^2-4", "y=(x+3)^2-4", "y=(x+3)²-4", "(x+3)²-4"],
-    hint:"Take half of b, square it. b = 6 → half is 3 → 3² = 9. Add and subtract 9 to complete the square.",
-    sol:["Half of b: 6/2 = 3. Square it: 9.", "y = (x² + 6x + 9) + 5 − 9 = (x + 3)² − 4.", "Vertex form: <strong>y = (x + 3)² − 4</strong>.", "Vertex is at (−3, −4)."]},
-
-  { id:14, section:"quadratics", topic:"Projectile — time of max height",
-    q:"A ball is launched from the ground with height (in feet) h = −16t² + 64t, where t is seconds. At what time t does the ball reach its maximum height?",
-    ans:"t = 2",
-    accept:["2", "2 seconds", "t=2 seconds"],
-    hint:"Max of a parabola is at its vertex. t-coordinate: t = −b/(2a). Here a = −16 and b = 64.",
-    sol:["Vertex t-coordinate: t = −b/(2a) = −64/(2·−16) = −64/−32 = 2.", "Max height occurs at <strong>t = 2 seconds</strong>."]},
+  { id:13, section:"quadratics", topic:"Projectile — max height time",
+    q:"h(t) = −16t² + 96t. At what time t does h reach its maximum?",
+    ans:"3",
+    accept:["t=3", "3 seconds"],
+    hint:"Vertex t-coordinate: t = −b/(2a). a = −16, b = 96.",
+    sol:["t = −b/(2a) = −96/(2·−16) = −96/−32 = 3.", "Max at t = 3 seconds."]},
 ];
 
 // =========================================================
@@ -234,23 +230,16 @@ function normalizeAnswer(s) {
   if (s == null) return '';
   let n = String(s).toLowerCase().trim();
   n = n.replace(/\s+/g, '').replace(/['"$,]/g, '');
-  // dashes and minus signs unified
   n = n.replace(/[−–—]/g, '-');
-  // unicode superscripts → ^N
   const sup = '⁰¹²³⁴⁵⁶⁷⁸⁹';
   for (let i = 0; i < 10; i++) n = n.split(sup[i]).join('^' + i);
-  // radicals
   n = n.replace(/√/g, 'sqrt');
-  // multiplication symbols → drop
   n = n.replace(/[×⋅·\*]/g, '');
-  // strip leading variable=  (a=, v=, h=, x=, y=, p=, t=, d=, k=)
-  n = n.replace(/^[avhxypstdk]=/, '');
-  // strip outer parens if no inner parens
+  n = n.replace(/^[avhxypstdkrf]=/, '');
   if (n.startsWith('(') && n.endsWith(')')) {
     const inner = n.slice(1, -1);
     if (!inner.includes('(') && !inner.includes(')')) n = inner;
   }
-  // if it's a comma list with no parens, sort the parts so "5,4" == "4,5"
   if (n.includes(',') && !n.includes('(')) {
     n = n.split(',').map(s => s.trim()).filter(Boolean).sort().join(',');
   }
@@ -273,10 +262,15 @@ function refreshScore() {
 function render() {
   let html = '';
   let lastSection = '';
+  const sectionLabels = {
+    stats: '📊 Statistics (Module 5)',
+    polynomials: '➕ Polynomial Operations (Module 6)',
+    factoring: '🧩 Factoring & Graphing Polynomials (Module 7)',
+    quadratics: '⚡ Quadratic Functions (Module 8)',
+  };
   QUESTIONS.forEach((q, i) => {
     if (q.section !== lastSection) {
-      const label = q.section === 'compound' ? '💰 Compound Interest & Exponential' : '⚡ Quadratics';
-      html += `<div class="section-header" id="${q.section}">${label}</div>`;
+      html += `<div class="section-header" id="${q.section}">${sectionLabels[q.section]}</div>`;
       lastSection = q.section;
     }
 
@@ -365,7 +359,6 @@ function checkAnswer(i) {
   state.checked[i] = expected.includes(got) ? 'correct' : 'wrong';
   saveState();
   render();
-  // Auto-scroll to next unchecked
   setTimeout(() => {
     const card = document.getElementById('q' + q.id);
     if (card) card.scrollIntoView({ behavior:'smooth', block:'start' });
@@ -375,7 +368,7 @@ function checkAnswer(i) {
 function revealAnswer(i) {
   const q = QUESTIONS[i];
   state.answers[i] = state.answers[i] || '';
-  state.checked[i] = 'wrong'; // count as not-correct but show solution
+  state.checked[i] = 'wrong';
   saveState();
   render();
 }
@@ -412,12 +405,11 @@ function scrollToFirstUnanswered() {
       return;
     }
   }
-  // all correct
-  alert("All 14 problems correct — you're locked in. 🔒");
+  alert("All 13 COA Prep problems correct. 🔒");
 }
 
 function resetAll() {
-  if (!confirm("Reset all 14 problems? (Progress will be lost.)")) return;
+  if (!confirm("Reset all 13 problems?")) return;
   state = JSON.parse(JSON.stringify(defaultState));
   state.attempts += 1;
   saveState();
@@ -434,9 +426,9 @@ function escapeHtml(s) {
 }
 
 // Countdown
-const exam = new Date('2026-06-11T08:00:00');
+const exam = new Date('2026-06-11T11:00:00');
 const days = Math.max(0, Math.ceil((exam - new Date()) / 86400000));
-document.getElementById('cd').textContent = days === 0 ? 'COA EXAM TODAY' : `${days} days until COA exam`;
+document.getElementById('cd').textContent = days === 0 ? 'COA EXAM TODAY (11 AM)' : `${days} days to COA exam (11 AM June 11)`;
 
 render();
 </script>
