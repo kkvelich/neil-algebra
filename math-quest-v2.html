@@ -40,6 +40,14 @@ header.top { display:flex; justify-content:space-between; align-items:center; pa
 .cta-btn:hover { transform:translateY(-2px); }
 .cta-btn .icon { font-size:1.5rem; }
 
+.goal-banner { background:linear-gradient(135deg, rgba(6,182,212,0.15), rgba(16,185,129,0.1)); border:1px solid var(--primary); border-radius:14px; padding:0.9rem 1.1rem; margin-bottom:0.85rem; }
+.goal-banner .goal-label { font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--primary); font-weight:700; margin-bottom:0.2rem; }
+.goal-banner .goal-target { font-size:1.05rem; font-weight:800; color:var(--text); margin-bottom:0.45rem; }
+.goal-banner .goal-bar { height:8px; background:var(--bg-elevated); border-radius:8px; overflow:hidden; margin:0.35rem 0; }
+.goal-banner .goal-bar-fill { height:100%; background:linear-gradient(90deg, var(--primary), var(--green)); transition:width 0.4s ease; }
+.goal-banner .goal-readiness { font-size:0.83rem; color:var(--text-dim); line-height:1.45; }
+.goal-banner .goal-readiness strong { color:var(--text); }
+
 .queue-banner { background:rgba(245,158,11,0.12); border:1px solid var(--orange); border-radius:14px; padding:0.85rem 1rem; margin-bottom:1rem; display:flex; align-items:center; gap:0.6rem; font-size:0.92rem; }
 .queue-banner .icon { font-size:1.4rem; }
 .queue-banner strong { color:var(--orange); }
@@ -190,6 +198,8 @@ footer a { color:var(--primary); text-decoration:none; }
       <p id="heroSub">More practice on what you miss. Less on what you've mastered.</p>
       <div class="countdown" id="cd"></div>
     </div>
+
+    <div id="goalBanner"></div>
 
     <div id="queueBanner"></div>
 
@@ -1761,8 +1771,44 @@ function showView(name) {
 }
 
 // HOME
+function computeReadiness() {
+  // Readiness = share of in-scope skills at practicing/mastered.
+  // Empirically: hitting ~85% of in-scope skills at practicing/mastered is
+  // a reasonable predictor of clearing 80% on the exam.
+  const inScope = SKILL_LIST.filter(s => inCoaScope(s.id));
+  if (inScope.length === 0) return { pct: 0, label: 'no data yet', goodCount: 0, total: 0 };
+  let goodCount = 0;
+  let strugCount = 0;
+  inScope.forEach(s => {
+    const st = skillState(s.id);
+    if (st === 'practicing' || st === 'mastered') goodCount++;
+    if (st === 'struggling') strugCount++;
+  });
+  const pct = Math.round((goodCount / inScope.length) * 100);
+  let label;
+  const at = state.session.allTimeAttempts;
+  if (at === 0) label = 'Practice hasn\'t started — open Practice to begin.';
+  else if (pct >= 85) label = '<strong>On track for 80%+</strong> — keep maintaining mastery.';
+  else if (pct >= 60) label = '<strong>Building</strong> — closing in. Keep going.';
+  else if (pct >= 30) label = '<strong>Foundation phase</strong> — push harder on weak skills.';
+  else label = '<strong>Early days</strong> — daily practice needed to hit 80%.';
+  return { pct, label, goodCount, total: inScope.length, strugCount };
+}
+
+function renderGoalBanner() {
+  const r = computeReadiness();
+  const banner = document.getElementById('goalBanner');
+  banner.innerHTML = `<div class="goal-banner">
+    <div class="goal-label">🎯 Goal · ${days === 0 ? 'EXAM TODAY' : days + ' days to COA exam'}</div>
+    <div class="goal-target">≥80% on June 11 COA final</div>
+    <div class="goal-bar"><div class="goal-bar-fill" style="width:${r.pct}%"></div></div>
+    <div class="goal-readiness">Readiness: <strong>${r.goodCount} of ${r.total}</strong> in-scope skills at practicing/mastered (${r.pct}%). ${r.label}</div>
+  </div>`;
+}
+
 function renderHome() {
   rollDay();
+  renderGoalBanner();
   document.getElementById('todayDone').textContent = state.session.problemsToday;
   document.getElementById('todayCorrect').textContent = state.session.correctToday;
   const pt = state.session.problemsToday;
