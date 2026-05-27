@@ -14,11 +14,10 @@ On iPad/iPhone: open in Safari → Share → **Add to Home Screen.**
 
 ## 📁 What's in here
 
-- **`index.html`** — hub (Math Quest + COA Prep tiles)
-- **`math-quest-v2.html`** — adaptive practice engine (daily driver). Modules
-  5-8 only, with 55 worked-example lessons and a live readiness estimator.
-- **`coa-prep.html`** — 13 typed-answer problems matching the long-form COA
-  exam format. Covers Modules 5, 6, 7, 8.
+- **`index.html`** — hub (single Math Quest tile)
+- **`math-quest-v2.html`** — adaptive practice engine (daily driver).
+  Multiple-choice only, Modules 5-8 only, with 55 worked-example lessons and
+  a live readiness estimator.
 
 ## 🎓 COA Sem 2 scope (MAT100B Segment 2)
 

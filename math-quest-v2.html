@@ -194,8 +194,8 @@ footer a { color:var(--primary); text-decoration:none; }
   <!-- HOME VIEW -->
   <div class="view active" id="view-home">
     <div class="hero">
-      <h1 id="heroTitle">COA Sem 2 practice</h1>
-      <p id="heroSub">More practice on what you miss. Less on what you've mastered.</p>
+      <h1 id="heroTitle">COA Sem 2 practice (MC)</h1>
+      <p id="heroSub">Multiple choice. More on what you miss, less on what you've mastered.</p>
       <div class="countdown" id="cd"></div>
     </div>
 
@@ -1556,13 +1556,15 @@ PROBLEMS.forEach(p => {
 // In-scope chapters: 5 (Stat), 7 (Polynomial Ops & Factoring),
 // 8 (Quadratic Functions — graphing/vertex/axis/discriminant),
 // 9 (Solving Quadratics).
-// App is now COA-only: out-of-scope skills are completely hidden.
+// App is COA-only AND multiple-choice only — typed-input problems
+// are filtered out at the registry build step.
 const COA_SCOPE_CHAPTERS = [5, 7, 8, 9];
 
-// Build skill registry — IN-SCOPE ONLY.
+// Build skill registry — IN-SCOPE + MC ONLY.
 const SKILLS = {};
 PROBLEMS.forEach(p => {
   if (!COA_SCOPE_CHAPTERS.includes(p.ch)) return;
+  if (p.type !== 'mc') return;
   if (!SKILLS[p.skillId]) {
     SKILLS[p.skillId] = { id: p.skillId, ch: p.ch, topic: p.topic, problemIds: [] };
   }
@@ -1571,7 +1573,7 @@ PROBLEMS.forEach(p => {
 const SKILL_LIST = Object.values(SKILLS);
 const PROBLEM_BY_ID = {};
 PROBLEMS.forEach(p => {
-  if (COA_SCOPE_CHAPTERS.includes(p.ch)) PROBLEM_BY_ID[p.id] = p;
+  if (COA_SCOPE_CHAPTERS.includes(p.ch) && p.type === 'mc') PROBLEM_BY_ID[p.id] = p;
 });
 
 // =========================================================
@@ -1835,8 +1837,8 @@ function renderHome() {
     const mast = SKILL_LIST.filter(s => skillState(s.id) === 'mastered').length;
     document.getElementById('heroTitle').textContent = `${mast} skill${mast===1?'':'s'} mastered`;
     document.getElementById('heroSub').textContent = strug > 0
-      ? `${strug} skill${strug===1?'':'s'} still struggling — engine prioritizes those. COA Modules 5-8 only.`
-      : 'COA Sem 2 only. Engine pulls from Modules 5-8.';
+      ? `${strug} skill${strug===1?'':'s'} still struggling — engine prioritizes those. COA Modules 5-8 · MC only.`
+      : 'COA Sem 2 only · MC. Engine pulls from Modules 5-8.';
   }
 }
 
