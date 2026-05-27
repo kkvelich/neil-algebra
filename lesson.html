@@ -138,14 +138,44 @@ footer a { color:var(--primary); text-decoration:none; }
   <h3>B1. Dot Plot</h3>
   <p><strong>What it is:</strong> a number line with a stack of dots above each value. Each dot = one occurrence.</p>
   <p><strong>Example:</strong> Pulse rates of cattle: 65, 65, 65, 67, 67, 67, 67, 68, 68, 68, 68, 69, 69, 69, 69, 69 (3 sixty-fives, 4 sixty-sevens, 4 sixty-eights, 5 sixty-nines).</p>
-  <div class="ascii">                                          •
-                          •     •         •
-                          •     •         •
-              •           •     •         •
-              •           •     •         •
-              •           •     •         •
-        ──────┼──────┼────┼─────┼────┼────┼─────
-              65    66   67    68   69</div>
+  <div style="background:var(--bg-elevated); border-radius:10px; padding:0.8rem; margin:0.6rem 0;">
+    <svg viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:400px; display:block; margin:0 auto;">
+      <!-- 65: 3 dots -->
+      <circle cx="80" cy="130" r="8" fill="#0EA5E9"/>
+      <circle cx="80" cy="110" r="8" fill="#0EA5E9"/>
+      <circle cx="80" cy="90" r="8" fill="#0EA5E9"/>
+      <!-- 67: 4 dots -->
+      <circle cx="180" cy="130" r="8" fill="#0EA5E9"/>
+      <circle cx="180" cy="110" r="8" fill="#0EA5E9"/>
+      <circle cx="180" cy="90" r="8" fill="#0EA5E9"/>
+      <circle cx="180" cy="70" r="8" fill="#0EA5E9"/>
+      <!-- 68: 4 dots -->
+      <circle cx="230" cy="130" r="8" fill="#0EA5E9"/>
+      <circle cx="230" cy="110" r="8" fill="#0EA5E9"/>
+      <circle cx="230" cy="90" r="8" fill="#0EA5E9"/>
+      <circle cx="230" cy="70" r="8" fill="#0EA5E9"/>
+      <!-- 69: 5 dots -->
+      <circle cx="280" cy="130" r="8" fill="#0EA5E9"/>
+      <circle cx="280" cy="110" r="8" fill="#0EA5E9"/>
+      <circle cx="280" cy="90" r="8" fill="#0EA5E9"/>
+      <circle cx="280" cy="70" r="8" fill="#0EA5E9"/>
+      <circle cx="280" cy="50" r="8" fill="#0EA5E9"/>
+      <!-- Number line -->
+      <line x1="40" y1="150" x2="360" y2="150" stroke="currentColor" stroke-width="2"/>
+      <!-- Tick marks + labels -->
+      <line x1="80" y1="148" x2="80" y2="156" stroke="currentColor" stroke-width="2"/>
+      <text x="80" y="172" text-anchor="middle" font-size="13" fill="currentColor">65</text>
+      <line x1="130" y1="148" x2="130" y2="156" stroke="currentColor" stroke-width="2"/>
+      <text x="130" y="172" text-anchor="middle" font-size="13" fill="currentColor">66</text>
+      <line x1="180" y1="148" x2="180" y2="156" stroke="currentColor" stroke-width="2"/>
+      <text x="180" y="172" text-anchor="middle" font-size="13" fill="currentColor">67</text>
+      <line x1="230" y1="148" x2="230" y2="156" stroke="currentColor" stroke-width="2"/>
+      <text x="230" y="172" text-anchor="middle" font-size="13" fill="currentColor">68</text>
+      <line x1="280" y1="148" x2="280" y2="156" stroke="currentColor" stroke-width="2"/>
+      <text x="280" y="172" text-anchor="middle" font-size="13" fill="currentColor">69</text>
+    </svg>
+    <p style="text-align:center; font-size:0.78rem; color:var(--text-dim); margin:0.3rem 0 0;">3 dots over 65, no dots over 66, 4 over 67, 4 over 68, 5 over 69.</p>
+  </div>
   <p><strong>How to read:</strong> count dots above each value. <em>"How many cattle had pulse rate 69?"</em> → 5 dots → 5 cattle.</p>
   <p><strong>When to use:</strong> discrete values + small data set.</p>
   <p><strong>Watch for:</strong> missing values get NO dots (just a gap on the number line, like over 66 above).</p>
@@ -158,6 +188,34 @@ footer a { color:var(--primary); text-decoration:none; }
     <tr><th># of students</th><td>4</td><td>7</td><td>5</td><td>4</td><td>3</td></tr>
   </table>
   <p>The bar over "20-29" has height <strong>4</strong>. The bar over "30-39" has height <strong>7</strong>.</p>
+  <div style="background:var(--bg-elevated); border-radius:10px; padding:0.8rem; margin:0.6rem 0;">
+    <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:400px; display:block; margin:0 auto;">
+      <!-- Bars -->
+      <rect x="50" y="100" width="55" height="60" fill="#10B981"/>
+      <rect x="110" y="55" width="55" height="105" fill="#10B981"/>
+      <rect x="170" y="85" width="55" height="75" fill="#10B981"/>
+      <rect x="230" y="100" width="55" height="60" fill="#10B981"/>
+      <rect x="290" y="115" width="55" height="45" fill="#10B981"/>
+      <!-- Bar height labels -->
+      <text x="77" y="95" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">4</text>
+      <text x="137" y="50" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">7</text>
+      <text x="197" y="80" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">5</text>
+      <text x="257" y="95" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">4</text>
+      <text x="317" y="110" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">3</text>
+      <!-- X axis -->
+      <line x1="40" y1="160" x2="360" y2="160" stroke="currentColor" stroke-width="2"/>
+      <!-- Bin labels -->
+      <text x="77" y="180" text-anchor="middle" font-size="11" fill="currentColor">20-29</text>
+      <text x="137" y="180" text-anchor="middle" font-size="11" fill="currentColor">30-39</text>
+      <text x="197" y="180" text-anchor="middle" font-size="11" fill="currentColor">40-49</text>
+      <text x="257" y="180" text-anchor="middle" font-size="11" fill="currentColor">50-59</text>
+      <text x="317" y="180" text-anchor="middle" font-size="11" fill="currentColor">60-69</text>
+      <!-- Axis labels -->
+      <text x="200" y="205" text-anchor="middle" font-size="12" font-weight="600" fill="currentColor">Score range</text>
+      <text x="20" y="105" text-anchor="middle" font-size="12" font-weight="600" fill="currentColor" transform="rotate(-90, 20, 105)"># students</text>
+    </svg>
+    <p style="text-align:center; font-size:0.78rem; color:var(--text-dim); margin:0.3rem 0 0;">Histogram of math test scores by bin. Bar heights = number of students in that range.</p>
+  </div>
   <p><strong>How to read:</strong> <em>"How many students scored 30-39?"</em> → bar height 7 → 7 students. <em>"Most common range?"</em> → tallest bar → 30-39.</p>
   <p><strong>When to use:</strong> continuous values, or data already reported as ranges.</p>
 
@@ -176,9 +234,38 @@ footer a { color:var(--primary); text-decoration:none; }
     <tr><td><strong>Q3</strong></td><td>75th percentile</td><td>Median of the UPPER half</td></tr>
     <tr><td>Maximum</td><td>Largest value</td><td>Last value when sorted</td></tr>
   </table>
-  <div class="ascii">  Min       Q1   Median   Q3        Max
-   |─────────┌────|────┐──────────|
-            (box around middle 50%)</div>
+  <div style="background:var(--bg-elevated); border-radius:10px; padding:0.8rem; margin:0.6rem 0;">
+    <svg viewBox="0 0 420 140" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:420px; display:block; margin:0 auto;">
+      <!-- Whisker left (Min to Q1) -->
+      <line x1="40" y1="60" x2="120" y2="60" stroke="#6366F1" stroke-width="2.5"/>
+      <!-- Min cap -->
+      <line x1="40" y1="40" x2="40" y2="80" stroke="#6366F1" stroke-width="2.5"/>
+      <!-- Box -->
+      <rect x="120" y="35" width="200" height="50" fill="rgba(99,102,241,0.18)" stroke="#6366F1" stroke-width="2.5"/>
+      <!-- Median line -->
+      <line x1="200" y1="35" x2="200" y2="85" stroke="#6366F1" stroke-width="3.5"/>
+      <!-- Whisker right (Q3 to Max) -->
+      <line x1="320" y1="60" x2="380" y2="60" stroke="#6366F1" stroke-width="2.5"/>
+      <!-- Max cap -->
+      <line x1="380" y1="40" x2="380" y2="80" stroke="#6366F1" stroke-width="2.5"/>
+      <!-- Labels above -->
+      <text x="40" y="25" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">Min</text>
+      <text x="120" y="25" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">Q1</text>
+      <text x="200" y="25" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">Median</text>
+      <text x="320" y="25" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">Q3</text>
+      <text x="380" y="25" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">Max</text>
+      <!-- IQR bracket below -->
+      <line x1="120" y1="100" x2="320" y2="100" stroke="currentColor" stroke-width="1"/>
+      <line x1="120" y1="100" x2="120" y2="92" stroke="currentColor" stroke-width="1"/>
+      <line x1="320" y1="100" x2="320" y2="92" stroke="currentColor" stroke-width="1"/>
+      <text x="220" y="115" text-anchor="middle" font-size="11" fill="currentColor">IQR = Q3 − Q1</text>
+      <!-- Range bracket below that -->
+      <line x1="40" y1="130" x2="380" y2="130" stroke="currentColor" stroke-width="1"/>
+      <line x1="40" y1="130" x2="40" y2="122" stroke="currentColor" stroke-width="1"/>
+      <line x1="380" y1="130" x2="380" y2="122" stroke="currentColor" stroke-width="1"/>
+    </svg>
+    <p style="text-align:center; font-size:0.78rem; color:var(--text-dim); margin:0.3rem 0 0;">Box plot anatomy. Box = middle 50% (IQR). Whiskers extend to min and max.</p>
+  </div>
   <ul>
     <li>Whiskers stretch from Min on the left to Max on the right.</li>
     <li>The <strong>box</strong> spans Q1 to Q3 — the middle 50%.</li>

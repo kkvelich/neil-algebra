@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5.05 Simulated Quiz — Two-Way Frequency Tables</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #10B981; --primary-2: #06B6D4;
+  --green: #10B981; --green-soft: rgba(16,185,129,0.18);
+  --red: #EF4444; --red-soft: rgba(239,68,68,0.18);
+  --orange: #F59E0B;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg:#F8FAFC; --bg-card:#FFFFFF; --bg-elevated:#F1F5F9; --text:#1A1A1A; --text-dim:#64748B; --border:#E2E8F0; }
+}
+html, body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:17px; line-height:1.6; }
+.container { max-width:760px; margin:0 auto; padding:1rem 1.1rem 4rem; }
+header.top { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1rem; }
+.logo { font-size:1.2rem; font-weight:800; background:linear-gradient(135deg, #10B981, #06B6D4); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+.back { color:var(--text-dim); text-decoration:none; font-size:0.88rem; font-weight:600; }
+.hero { background:linear-gradient(135deg, #10B981, #06B6D4); border-radius:18px; padding:1.2rem 1.3rem; color:white; margin-bottom:1.3rem; }
+.hero h1 { margin:0 0 0.3rem; font-size:1.3rem; font-weight:800; }
+.hero p { margin:0; font-size:0.92rem; opacity:0.95; line-height:1.55; }
+.hero .tags { display:flex; gap:0.4rem; margin-top:0.6rem; flex-wrap:wrap; }
+.hero .tag { background:rgba(255,255,255,0.22); padding:0.25rem 0.7rem; border-radius:999px; font-weight:700; font-size:0.78rem; }
+.score-bar { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:0.85rem 1rem; margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center; }
+.score-bar .label { font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); font-weight:700; }
+.score-bar .progress-num { font-size:1.4rem; font-weight:800; color:var(--primary); }
+.q-card { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:1.1rem 1.3rem; margin-bottom:1rem; }
+.q-card.correct { border-color:var(--green); background:linear-gradient(180deg, var(--green-soft), var(--bg-card)); }
+.q-card.wrong { border-color:var(--red); background:linear-gradient(180deg, var(--red-soft), var(--bg-card)); }
+.q-num { font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); font-weight:700; margin-bottom:0.3rem; }
+.q-text { font-size:1.04rem; font-weight:600; margin-bottom:0.7rem; line-height:1.55; }
+.q-text table { border-collapse:collapse; width:100%; margin:0.5rem 0; font-size:0.88rem; font-weight:500; }
+.q-text th, .q-text td { border:1px solid var(--border); padding:0.3rem 0.5rem; text-align:center; }
+.q-text th { background:var(--bg-elevated); font-weight:700; }
+.choices { display:flex; flex-direction:column; gap:0.45rem; }
+.choice { display:flex; align-items:flex-start; gap:0.65rem; background:var(--bg-elevated); border:2px solid transparent; border-radius:10px; padding:0.7rem 0.9rem; cursor:pointer; font-size:0.95rem; line-height:1.5; transition:all 0.15s; }
+.choice:hover { border-color:var(--primary); }
+.choice input { margin-top:0.3rem; cursor:pointer; flex-shrink:0; accent-color:var(--primary); }
+.choice .letter { font-weight:800; color:var(--text-dim); margin-right:0.2rem; }
+.choice.selected { border-color:var(--primary); background:rgba(16,185,129,0.12); }
+.choice.disabled { cursor:not-allowed; opacity:0.85; }
+.choice.disabled:hover { border-color:transparent; }
+.choice.disabled.selected { border-color:var(--primary); }
+.choice.show-correct { border-color:var(--green); background:var(--green-soft); }
+.choice.show-wrong { border-color:var(--red); background:var(--red-soft); }
+.solution { margin-top:0.7rem; padding:0.75rem 1rem; background:var(--bg-elevated); border-left:3px solid var(--primary); border-radius:0 8px 8px 0; font-size:0.9rem; line-height:1.55; }
+.solution .sol-head { font-weight:800; color:var(--primary); margin-bottom:0.25rem; }
+.bottom-bar { display:flex; gap:0.55rem; margin-top:1.5rem; }
+.btn { flex:1; border:none; border-radius:12px; cursor:pointer; font-family:inherit; padding:0.95rem; font-size:1rem; font-weight:800; }
+.btn-primary { background:linear-gradient(135deg, var(--primary), var(--primary-2)); color:white; }
+.btn-primary:hover { transform:translateY(-1px); }
+.btn-secondary { background:var(--bg-elevated); color:var(--text); border:1px solid var(--border); }
+.btn:disabled { opacity:0.5; cursor:not-allowed; }
+.result-banner { background:linear-gradient(135deg, rgba(16,185,129,0.15), rgba(6,182,212,0.1)); border:1px solid var(--primary); border-radius:14px; padding:1.1rem 1.3rem; margin:1.5rem 0; }
+.result-banner.pass { background:linear-gradient(135deg, rgba(16,185,129,0.18), rgba(6,182,212,0.1)); border-color:var(--green); }
+.result-banner.fail { background:linear-gradient(135deg, rgba(239,68,68,0.18), rgba(245,158,11,0.1)); border-color:var(--red); }
+.result-banner h2 { margin:0 0 0.3rem; font-size:1.3rem; color:var(--primary); }
+.result-banner.pass h2 { color:var(--green); }
+.result-banner.fail h2 { color:var(--red); }
+.result-banner .big-score { font-size:3rem; font-weight:900; margin:0.3rem 0; line-height:1; }
+.result-banner.pass .big-score { color:var(--green); }
+.result-banner.fail .big-score { color:var(--red); }
+.result-banner p { margin:0.2rem 0; font-size:0.95rem; line-height:1.55; }
+footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center; font-size:0.83rem; color:var(--text-dim); }
+footer a { color:var(--primary); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="top">
+    <a class="logo" href="index.html">🎯 5.05 Sim Quiz</a>
+    <a class="back" href="lesson-5-05.html">← Lesson</a>
+  </header>
+
+  <div class="hero">
+    <h1>5.05 Simulated Quiz</h1>
+    <p>10 questions about two-way frequency tables. <strong>The big skill: pick the right denominator</strong> for "what % of A are B" questions. Goal: 8+ correct.</p>
+    <div class="tags">
+      <span class="tag">10 MC questions</span>
+      <span class="tag">~20 min</span>
+      <span class="tag">Retry-able</span>
+    </div>
+  </div>
+
+  <div class="score-bar">
+    <div>
+      <div class="label">Selected</div>
+      <div class="progress-num"><span id="selectedCount">0</span> / 10</div>
+    </div>
+    <div style="text-align:right;">
+      <div class="label">Status</div>
+      <div id="quizStatus" style="font-size:0.9rem; font-weight:700;">In progress</div>
+    </div>
+  </div>
+
+  <div id="quiz"></div>
+
+  <div class="bottom-bar">
+    <button class="btn btn-secondary" onclick="resetQuiz()">🔄 Reset</button>
+    <button class="btn btn-primary" id="submitBtn" onclick="submitQuiz()" disabled>Submit all</button>
+  </div>
+
+  <footer>
+    <p><a href="lesson-5-05.html">← Back to 5.05 lesson</a> · <a href="index.html">Hub</a></p>
+  </footer>
+
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    q: `<p>A high school surveyed 200 students about their preferred lunch:</p><table><tr><th></th><th>Pizza</th><th>Salad</th><th>Sandwich</th><th>Total</th></tr><tr><th>Boys</th><td>50</td><td>10</td><td>30</td><td>90</td></tr><tr><th>Girls</th><td>40</td><td>40</td><td>30</td><td>110</td></tr><tr><th>Total</th><td>90</td><td>50</td><td>60</td><td>200</td></tr></table><p>What is the marginal frequency for Pizza?</p>`,
+    choices: ["50", "90", "0.45 (or 45%)", "200"],
+    ans: 1,
+    sol: "Marginal frequency = column or row total (raw count). Pizza column total = 50 + 40 = 90."
+  },
+  {
+    q: `<p>Same table. What is the joint relative frequency of Girls who chose Sandwich? (Round to 2 decimal places.)</p>`,
+    choices: ["0.15", "0.27", "0.30", "0.50"],
+    ans: 0,
+    sol: "Joint relative freq = cell ÷ grand total = 30 / 200 = 0.15."
+  },
+  {
+    q: `<p>Same table (200 total, 90 chose pizza). What % of students who chose pizza were boys?</p>`,
+    choices: ["28%", "45%", "50%", "56%"],
+    ans: 3,
+    sol: "'Of students who chose pizza' → denominator = column total for Pizza = 90. Numerator = Boys + Pizza cell = 50. 50/90 ≈ 56%."
+  },
+  {
+    q: `<p>Same table. What % of boys chose pizza?</p>`,
+    choices: ["25%", "45%", "50%", "56%"],
+    ans: 3,
+    sol: "'Of boys' → denominator = row total for Boys = 90. Numerator = Boys + Pizza = 50. 50/90 ≈ 56%. (Coincidentally the same answer as Q3 here, but the denominator is different!)"
+  },
+  {
+    q: `<p>A survey of 150 students:</p><table><tr><th></th><th>Liked Math</th><th>Didn't like Math</th><th>Total</th></tr><tr><th>Took online prep</th><td>60</td><td>20</td><td>80</td></tr><tr><th>No prep</th><td>30</td><td>40</td><td>70</td></tr><tr><th>Total</th><td>90</td><td>60</td><td>150</td></tr></table><p>What % of students who took online prep liked math?</p>`,
+    choices: ["40%", "60%", "75%", "80%"],
+    ans: 2,
+    sol: "'Of students who took online prep' → denominator = row total = 80. Numerator = (took prep) AND (liked math) = 60. 60/80 = 75%."
+  },
+  {
+    q: `<p>Same table. What % of students who LIKED math took online prep?</p>`,
+    choices: ["50%", "60%", "67%", "75%"],
+    ans: 2,
+    sol: "'Of students who liked math' → denominator = column total = 90. Numerator = (liked math) AND (took prep) = 60. 60/90 ≈ 67%. Same cell, DIFFERENT denominator → different answer!"
+  },
+  {
+    q: `<p>Complete the table — find the missing cell:</p><table><tr><th></th><th>Coffee</th><th>Tea</th><th>Total</th></tr><tr><th>Morning</th><td>?</td><td>20</td><td>70</td></tr><tr><th>Afternoon</th><td>30</td><td>?</td><td>50</td></tr><tr><th>Total</th><td>80</td><td>40</td><td>120</td></tr></table><p>How many people had coffee in the morning?</p>`,
+    choices: ["20", "30", "50", "70"],
+    ans: 2,
+    sol: "Morning row total = 70. Tea cell = 20. So Coffee cell = 70 − 20 = 50. (Verify: column total for Coffee = 80 = 50 + 30 ✓.)"
+  },
+  {
+    q: `<p>What term describes the value 80 in the marginal cell (total of Coffee column) in the table above?</p>`,
+    choices: ["Joint frequency", "Joint relative frequency", "Marginal frequency", "Marginal relative frequency"],
+    ans: 2,
+    sol: "It's a column TOTAL, not a single cell, and it's a COUNT not a percentage. → Marginal frequency."
+  },
+  {
+    q: `<p>A row-conditional relative frequency table is constructed. Which is true?</p>`,
+    choices: [
+      "Each cell divided by the grand total",
+      "Each row sums to 1 (or 100%)",
+      "Each column sums to 1 (or 100%)",
+      "All cells equal each other"
+    ],
+    ans: 1,
+    sol: "Row-conditional → divide each cell by its ROW total. After that, each row's cells sum to 1."
+  },
+  {
+    q: `<p>A two-way table has 100 students total. 30 girls chose volleyball, and the row total for Girls is 60. What's the column total for Volleyball if the joint relative frequency for Boys+Volleyball is 0.20?</p>`,
+    choices: ["20", "30", "40", "50"],
+    ans: 3,
+    sol: "Joint rel freq for Boys+Volleyball = 0.20 → Boys+Volleyball cell = 0.20 × 100 = 20. Column total for Volleyball = Girls+Volleyball + Boys+Volleyball = 30 + 20 = 50."
+  }
+];
+
+let userAnswers = new Array(QUESTIONS.length).fill(null);
+let submitted = false;
+
+function render() {
+  const quizEl = document.getElementById('quiz');
+  let html = '';
+  QUESTIONS.forEach((q, i) => {
+    let cardCls = 'q-card';
+    if (submitted) cardCls += userAnswers[i] === q.ans ? ' correct' : ' wrong';
+    html += `<div class="${cardCls}">
+      <div class="q-num">Question ${i + 1} of ${QUESTIONS.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="choices">`;
+    q.choices.forEach((c, j) => {
+      let choiceCls = 'choice';
+      if (submitted) {
+        choiceCls += ' disabled';
+        if (j === q.ans) choiceCls += ' show-correct';
+        else if (userAnswers[i] === j) choiceCls += ' show-wrong';
+      } else if (userAnswers[i] === j) {
+        choiceCls += ' selected';
+      }
+      html += `<label class="${choiceCls}">
+        <input type="radio" name="q${i}" value="${j}" ${userAnswers[i] === j ? 'checked' : ''} ${submitted ? 'disabled' : ''} onchange="selectAnswer(${i}, ${j})">
+        <span><span class="letter">${'ABCD'[j]}.</span> ${c}</span>
+      </label>`;
+    });
+    html += `</div>`;
+    if (submitted) {
+      html += `<div class="solution"><div class="sol-head">${userAnswers[i] === q.ans ? '✓ Correct' : '✗ Correct answer: ' + 'ABCD'[q.ans]}</div>${q.sol}</div>`;
+    }
+    html += `</div>`;
+  });
+  quizEl.innerHTML = html;
+  updateScoreBar();
+}
+
+function updateScoreBar() {
+  const selected = userAnswers.filter(a => a !== null).length;
+  document.getElementById('selectedCount').textContent = selected;
+  document.getElementById('quizStatus').textContent = submitted ? 'Submitted' : (selected === QUESTIONS.length ? 'Ready to submit' : 'In progress');
+  document.getElementById('submitBtn').disabled = submitted || selected < QUESTIONS.length;
+}
+
+function selectAnswer(qIdx, choiceIdx) {
+  if (submitted) return;
+  userAnswers[qIdx] = choiceIdx;
+  render();
+}
+
+function submitQuiz() {
+  if (submitted) return;
+  if (userAnswers.includes(null)) {
+    if (!confirm("You haven't answered every question. Submit anyway?")) return;
+  }
+  submitted = true;
+  render();
+  showResults();
+}
+
+function showResults() {
+  const correct = userAnswers.filter((a, i) => a === QUESTIONS[i].ans).length;
+  const total = QUESTIONS.length;
+  const pct = Math.round(correct / total * 100);
+  const pass = pct >= 80;
+  const banner = document.createElement('div');
+  banner.className = 'result-banner ' + (pass ? 'pass' : 'fail');
+  banner.innerHTML = `
+    <h2>${pass ? '🎯 Locked in' : '📚 Keep working'}</h2>
+    <div class="big-score">${correct} / ${total} <span style="font-size:1.5rem;">(${pct}%)</span></div>
+    <p>${pass ? 'You\'d hit 80% on this topic. Review what you missed.' : 'Below 80%. Re-read the lesson, study explanations, then retry.'}</p>
+    <p style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-dim);">Scroll down to see your answers vs. the correct ones.</p>
+  `;
+  document.querySelector('.score-bar').after(banner);
+  window.scrollTo({ top: banner.offsetTop - 20, behavior: 'smooth' });
+}
+
+function resetQuiz() {
+  if (!confirm("Clear answers and start over?")) return;
+  userAnswers = new Array(QUESTIONS.length).fill(null);
+  submitted = false;
+  document.querySelectorAll('.result-banner').forEach(el => el.remove());
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+render();
+</script>
+</body>
+</html>

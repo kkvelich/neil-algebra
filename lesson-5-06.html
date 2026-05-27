@@ -106,12 +106,54 @@ footer a { color:var(--primary); text-decoration:none; }
 
   <h2 id="sec-a">A. What's a scatter plot?</h2>
   <p>A scatter plot shows pairs of numbers (x, y) as dots on a coordinate plane. It lets you SEE the relationship between two variables.</p>
-  <div class="ascii">       y ▲
-         │      .  .
-         │   .       .
-         │  .   .  .
-         │      .
-         └───────────────► x</div>
+  <div style="background:var(--bg-elevated); border-radius:10px; padding:0.8rem; margin:0.6rem 0; display:flex; gap:0.6rem; flex-wrap:wrap; justify-content:center;">
+    <div style="text-align:center;">
+      <svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" style="width:170px;">
+        <line x1="25" y1="155" x2="170" y2="155" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="25" y1="155" x2="25" y2="15" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="45" cy="130" r="4" fill="#3B82F6"/>
+        <circle cx="60" cy="120" r="4" fill="#3B82F6"/>
+        <circle cx="75" cy="100" r="4" fill="#3B82F6"/>
+        <circle cx="90" cy="90" r="4" fill="#3B82F6"/>
+        <circle cx="105" cy="75" r="4" fill="#3B82F6"/>
+        <circle cx="120" cy="60" r="4" fill="#3B82F6"/>
+        <circle cx="140" cy="40" r="4" fill="#3B82F6"/>
+        <circle cx="155" cy="30" r="4" fill="#3B82F6"/>
+        <text x="90" y="175" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">Positive</text>
+      </svg>
+    </div>
+    <div style="text-align:center;">
+      <svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" style="width:170px;">
+        <line x1="25" y1="155" x2="170" y2="155" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="25" y1="155" x2="25" y2="15" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="45" cy="30" r="4" fill="#EC4899"/>
+        <circle cx="60" cy="40" r="4" fill="#EC4899"/>
+        <circle cx="75" cy="55" r="4" fill="#EC4899"/>
+        <circle cx="90" cy="75" r="4" fill="#EC4899"/>
+        <circle cx="105" cy="90" r="4" fill="#EC4899"/>
+        <circle cx="120" cy="105" r="4" fill="#EC4899"/>
+        <circle cx="140" cy="125" r="4" fill="#EC4899"/>
+        <circle cx="155" cy="140" r="4" fill="#EC4899"/>
+        <text x="90" y="175" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">Negative</text>
+      </svg>
+    </div>
+    <div style="text-align:center;">
+      <svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" style="width:170px;">
+        <line x1="25" y1="155" x2="170" y2="155" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="25" y1="155" x2="25" y2="15" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="40" cy="80" r="4" fill="#94A3B8"/>
+        <circle cx="55" cy="50" r="4" fill="#94A3B8"/>
+        <circle cx="70" cy="120" r="4" fill="#94A3B8"/>
+        <circle cx="90" cy="60" r="4" fill="#94A3B8"/>
+        <circle cx="105" cy="130" r="4" fill="#94A3B8"/>
+        <circle cx="120" cy="45" r="4" fill="#94A3B8"/>
+        <circle cx="135" cy="100" r="4" fill="#94A3B8"/>
+        <circle cx="155" cy="75" r="4" fill="#94A3B8"/>
+        <text x="90" y="175" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">No correlation</text>
+      </svg>
+    </div>
+  </div>
+  <p style="text-align:center; font-size:0.78rem; color:var(--text-dim); margin-top:0.2rem;">Three scatter plot patterns. Positive: dots trend up. Negative: dots trend down. No correlation: scattered randomly.</p>
   <p><strong>What to look for in a scatter plot:</strong></p>
   <ul>
     <li><strong>Direction</strong> — do the dots trend up (positive), down (negative), or have no clear trend?</li>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5.04 Simulated Quiz — Data Sets and Outliers</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #F59E0B; --primary-2: #DC2626;
+  --green: #10B981; --green-soft: rgba(16,185,129,0.18);
+  --red: #EF4444; --red-soft: rgba(239,68,68,0.18);
+  --orange: #F59E0B;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg:#F8FAFC; --bg-card:#FFFFFF; --bg-elevated:#F1F5F9; --text:#1A1A1A; --text-dim:#64748B; --border:#E2E8F0; }
+}
+html, body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:17px; line-height:1.6; }
+.container { max-width:760px; margin:0 auto; padding:1rem 1.1rem 4rem; }
+header.top { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1rem; }
+.logo { font-size:1.2rem; font-weight:800; background:linear-gradient(135deg, #F59E0B, #DC2626); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+.back { color:var(--text-dim); text-decoration:none; font-size:0.88rem; font-weight:600; }
+.hero { background:linear-gradient(135deg, #F59E0B, #DC2626); border-radius:18px; padding:1.2rem 1.3rem; color:white; margin-bottom:1.3rem; }
+.hero h1 { margin:0 0 0.3rem; font-size:1.3rem; font-weight:800; }
+.hero p { margin:0; font-size:0.92rem; opacity:0.95; line-height:1.55; }
+.hero .tags { display:flex; gap:0.4rem; margin-top:0.6rem; flex-wrap:wrap; }
+.hero .tag { background:rgba(255,255,255,0.22); padding:0.25rem 0.7rem; border-radius:999px; font-weight:700; font-size:0.78rem; }
+.score-bar { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:0.85rem 1rem; margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center; }
+.score-bar .label { font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); font-weight:700; }
+.score-bar .progress-num { font-size:1.4rem; font-weight:800; color:var(--primary); }
+.q-card { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:1.1rem 1.3rem; margin-bottom:1rem; }
+.q-card.correct { border-color:var(--green); background:linear-gradient(180deg, var(--green-soft), var(--bg-card)); }
+.q-card.wrong { border-color:var(--red); background:linear-gradient(180deg, var(--red-soft), var(--bg-card)); }
+.q-num { font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); font-weight:700; margin-bottom:0.3rem; }
+.q-text { font-size:1.04rem; font-weight:600; margin-bottom:0.7rem; line-height:1.55; }
+.choices { display:flex; flex-direction:column; gap:0.45rem; }
+.choice { display:flex; align-items:flex-start; gap:0.65rem; background:var(--bg-elevated); border:2px solid transparent; border-radius:10px; padding:0.7rem 0.9rem; cursor:pointer; font-size:0.95rem; line-height:1.5; transition:all 0.15s; }
+.choice:hover { border-color:var(--primary); }
+.choice input { margin-top:0.3rem; cursor:pointer; flex-shrink:0; accent-color:var(--primary); }
+.choice .letter { font-weight:800; color:var(--text-dim); margin-right:0.2rem; }
+.choice.selected { border-color:var(--primary); background:rgba(245,158,11,0.12); }
+.choice.disabled { cursor:not-allowed; opacity:0.85; }
+.choice.disabled:hover { border-color:transparent; }
+.choice.disabled.selected { border-color:var(--primary); }
+.choice.show-correct { border-color:var(--green); background:var(--green-soft); }
+.choice.show-wrong { border-color:var(--red); background:var(--red-soft); }
+.solution { margin-top:0.7rem; padding:0.75rem 1rem; background:var(--bg-elevated); border-left:3px solid var(--primary); border-radius:0 8px 8px 0; font-size:0.9rem; line-height:1.55; }
+.solution .sol-head { font-weight:800; color:var(--primary); margin-bottom:0.25rem; }
+.bottom-bar { display:flex; gap:0.55rem; margin-top:1.5rem; }
+.btn { flex:1; border:none; border-radius:12px; cursor:pointer; font-family:inherit; padding:0.95rem; font-size:1rem; font-weight:800; }
+.btn-primary { background:linear-gradient(135deg, var(--primary), var(--primary-2)); color:white; }
+.btn-primary:hover { transform:translateY(-1px); }
+.btn-secondary { background:var(--bg-elevated); color:var(--text); border:1px solid var(--border); }
+.btn:disabled { opacity:0.5; cursor:not-allowed; }
+.result-banner { background:linear-gradient(135deg, rgba(245,158,11,0.15), rgba(220,38,38,0.1)); border:1px solid var(--primary); border-radius:14px; padding:1.1rem 1.3rem; margin:1.5rem 0; }
+.result-banner.pass { background:linear-gradient(135deg, rgba(16,185,129,0.18), rgba(6,182,212,0.1)); border-color:var(--green); }
+.result-banner.fail { background:linear-gradient(135deg, rgba(239,68,68,0.18), rgba(245,158,11,0.1)); border-color:var(--red); }
+.result-banner h2 { margin:0 0 0.3rem; font-size:1.3rem; color:var(--primary); }
+.result-banner.pass h2 { color:var(--green); }
+.result-banner.fail h2 { color:var(--red); }
+.result-banner .big-score { font-size:3rem; font-weight:900; margin:0.3rem 0; line-height:1; }
+.result-banner.pass .big-score { color:var(--green); }
+.result-banner.fail .big-score { color:var(--red); }
+.result-banner p { margin:0.2rem 0; font-size:0.95rem; line-height:1.55; }
+footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center; font-size:0.83rem; color:var(--text-dim); }
+footer a { color:var(--primary); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="top">
+    <a class="logo" href="index.html">🎯 5.04 Sim Quiz</a>
+    <a class="back" href="lesson-5-04.html">← Lesson</a>
+  </header>
+
+  <div class="hero">
+    <h1>5.04 Simulated Quiz</h1>
+    <p>10 questions about outliers — spotting them, measuring their effect, and making decisions when they exist. <strong>Goal: 8+ correct before taking the real Buzz quiz.</strong></p>
+    <div class="tags">
+      <span class="tag">10 MC questions</span>
+      <span class="tag">~20 min</span>
+      <span class="tag">Retry-able</span>
+    </div>
+  </div>
+
+  <div class="score-bar">
+    <div>
+      <div class="label">Selected</div>
+      <div class="progress-num"><span id="selectedCount">0</span> / 10</div>
+    </div>
+    <div style="text-align:right;">
+      <div class="label">Status</div>
+      <div id="quizStatus" style="font-size:0.9rem; font-weight:700;">In progress</div>
+    </div>
+  </div>
+
+  <div id="quiz"></div>
+
+  <div class="bottom-bar">
+    <button class="btn btn-secondary" onclick="resetQuiz()">🔄 Reset</button>
+    <button class="btn btn-primary" id="submitBtn" onclick="submitQuiz()" disabled>Submit all</button>
+  </div>
+
+  <footer>
+    <p><a href="lesson-5-04.html">← Back to 5.04 lesson</a> · <a href="index.html">Hub</a></p>
+  </footer>
+
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    q: "Data set: 8, 9, 9, 10, 11, 50, 12. Q1 = 9, Q3 = 12, IQR = 3. Using the 1.5×IQR rule, which value is an outlier?",
+    choices: ["8 — it's the smallest", "50 — it's far above the high cutoff", "12 — it's the largest in Q3", "There are no outliers"],
+    ans: 1,
+    sol: "High cutoff = Q3 + 1.5·IQR = 12 + 4.5 = 16.5. Low cutoff = Q1 − 1.5·IQR = 9 − 4.5 = 4.5. 50 is way above 16.5 → outlier."
+  },
+  {
+    q: "A class's test scores have one outlier (a 45 in an otherwise high-scoring class). If the outlier is REMOVED, what happens to the mean?",
+    choices: ["Mean increases", "Mean decreases", "Mean stays the same", "Mean depends on the original size"],
+    ans: 0,
+    sol: "Removing a LOW outlier raises the mean — the remaining values average higher without the 45 dragging things down."
+  },
+  {
+    q: "Which statistic is the LEAST affected by an outlier?",
+    choices: ["Mean", "Standard deviation", "Range", "Median"],
+    ans: 3,
+    sol: "Median is robust — just the middle value. Mean, σ, and range all use extreme values directly and get pulled by them."
+  },
+  {
+    q: "Restaurant tips: 4, 2, 8, 15, 20, 7, 5, 0, 6, 2. Which best describes the IQR?",
+    choices: [
+      "Small — the data is tightly clustered around the median",
+      "Larger because of the 20",
+      "0 — the data has zero spread",
+      "20 — the range equals the IQR"
+    ],
+    ans: 0,
+    sol: "Sorted: 0, 2, 2, 4, 5, 6, 7, 8, 15, 20. Q1 = (2+4)/2 = 3. Q3 = (8+15)/2 = 11.5. IQR = 8.5 — not 'small' actually, but not 'inflated by 20' (which would happen to range, not IQR). The IQR is robust to that outlier."
+  },
+  {
+    q: "An employee's monthly sales: $19k, $21k, $26k, $25k, $26k, $27k, $28k, $76k. The $76k looks unusual. Including the outlier, which measure of center best represents the 'typical' month?",
+    choices: ["Mean ($31k)", "Median ($25.5k)", "Mode (no mode)", "Range ($57k)"],
+    ans: 1,
+    sol: "The $76k drags the mean up to $31k — a misleading 'typical' month. The median ($25.5k) reflects what most months actually look like."
+  },
+  {
+    q: "Sales data has Q1 = 20, Q3 = 30. What range of values would qualify as outliers using the 1.5×IQR rule?",
+    choices: [
+      "Less than 0 or greater than 50",
+      "Less than 5 or greater than 45",
+      "Less than 15 or greater than 35",
+      "Less than 10 or greater than 40"
+    ],
+    ans: 1,
+    sol: "IQR = 30 − 20 = 10. Low cutoff = 20 − 1.5(10) = 20 − 15 = 5. High cutoff = 30 + 15 = 45. Outliers: < 5 or > 45."
+  },
+  {
+    q: "Sara had a hot day at the snack stand: usual lattes per day = 40, 42, 45, 38, 41, but one day she sold 99. The 99 is an outlier. Which is true if we INCLUDE the 99?",
+    choices: [
+      "Range goes up significantly",
+      "Median goes up significantly",
+      "IQR goes up significantly",
+      "Mode goes up significantly"
+    ],
+    ans: 0,
+    sol: "Range = max − min. The new max is 99, so range jumps dramatically. Median and IQR are robust. Mode is unchanged."
+  },
+  {
+    q: "Tammy: median sales = $25k, IQR = $2k. Wyatt: median = $24k, IQR = $5k. Who should get the promotion for 'best on average'?",
+    choices: [
+      "Wyatt — wider IQR shows variability/range",
+      "Tammy — higher median AND smaller IQR (more consistent)",
+      "Wyatt — has higher peaks",
+      "Tammy — her IQR matches her median"
+    ],
+    ans: 1,
+    sol: "'Best on average' = higher median (Tammy's $25k > $24k). 'More consistent' = smaller IQR (Tammy's $2k < $5k). Tammy wins on both."
+  },
+  {
+    q: "If a data set has NO outliers and is symmetric, you should describe its spread using:",
+    choices: ["Range", "IQR", "Standard deviation", "All of the above are wrong"],
+    ans: 2,
+    sol: "Symmetric + no outliers → standard deviation is the best (most precise — uses all data, not pulled by extremes). IQR works too but σ is more refined when no outliers exist."
+  },
+  {
+    q: "Histogram A has bars: 0-10 → 2, 10-20 → 12, 20-30 → 6. Histogram B (same data but with 8 more people added in the 0-10 range): 0-10 → 10, 10-20 → 12, 20-30 → 6. How does Histogram B look compared to A?",
+    choices: [
+      "B is more symmetric",
+      "B is more skewed RIGHT",
+      "B is less symmetric — skewed LEFT now",
+      "B has the same shape, just more data"
+    ],
+    ans: 0,
+    sol: "Adding more values to the smaller end makes the bars closer in height — distribution becomes MORE symmetric. The 0-10 bar grew to match 10-20 better."
+  }
+];
+
+let userAnswers = new Array(QUESTIONS.length).fill(null);
+let submitted = false;
+
+function render() {
+  const quizEl = document.getElementById('quiz');
+  let html = '';
+  QUESTIONS.forEach((q, i) => {
+    let cardCls = 'q-card';
+    if (submitted) cardCls += userAnswers[i] === q.ans ? ' correct' : ' wrong';
+    html += `<div class="${cardCls}">
+      <div class="q-num">Question ${i + 1} of ${QUESTIONS.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="choices">`;
+    q.choices.forEach((c, j) => {
+      let choiceCls = 'choice';
+      if (submitted) {
+        choiceCls += ' disabled';
+        if (j === q.ans) choiceCls += ' show-correct';
+        else if (userAnswers[i] === j) choiceCls += ' show-wrong';
+      } else if (userAnswers[i] === j) {
+        choiceCls += ' selected';
+      }
+      html += `<label class="${choiceCls}">
+        <input type="radio" name="q${i}" value="${j}" ${userAnswers[i] === j ? 'checked' : ''} ${submitted ? 'disabled' : ''} onchange="selectAnswer(${i}, ${j})">
+        <span><span class="letter">${'ABCD'[j]}.</span> ${c}</span>
+      </label>`;
+    });
+    html += `</div>`;
+    if (submitted) {
+      html += `<div class="solution"><div class="sol-head">${userAnswers[i] === q.ans ? '✓ Correct' : '✗ Correct answer: ' + 'ABCD'[q.ans]}</div>${q.sol}</div>`;
+    }
+    html += `</div>`;
+  });
+  quizEl.innerHTML = html;
+  updateScoreBar();
+}
+
+function updateScoreBar() {
+  const selected = userAnswers.filter(a => a !== null).length;
+  document.getElementById('selectedCount').textContent = selected;
+  document.getElementById('quizStatus').textContent = submitted ? 'Submitted' : (selected === QUESTIONS.length ? 'Ready to submit' : 'In progress');
+  document.getElementById('submitBtn').disabled = submitted || selected < QUESTIONS.length;
+}
+
+function selectAnswer(qIdx, choiceIdx) {
+  if (submitted) return;
+  userAnswers[qIdx] = choiceIdx;
+  render();
+}
+
+function submitQuiz() {
+  if (submitted) return;
+  if (userAnswers.includes(null)) {
+    if (!confirm("You haven't answered every question. Submit anyway?")) return;
+  }
+  submitted = true;
+  render();
+  showResults();
+}
+
+function showResults() {
+  const correct = userAnswers.filter((a, i) => a === QUESTIONS[i].ans).length;
+  const total = QUESTIONS.length;
+  const pct = Math.round(correct / total * 100);
+  const pass = pct >= 80;
+  const banner = document.createElement('div');
+  banner.className = 'result-banner ' + (pass ? 'pass' : 'fail');
+  banner.innerHTML = `
+    <h2>${pass ? '🎯 Locked in' : '📚 Keep working'}</h2>
+    <div class="big-score">${correct} / ${total} <span style="font-size:1.5rem;">(${pct}%)</span></div>
+    <p>${pass ? 'You\'d hit 80% on this topic. Review the questions you missed below.' : 'Below 80%. Read each missed question\'s explanation, re-read the lesson, then retry.'}</p>
+    <p style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-dim);">Scroll down to see your answers vs. the correct ones.</p>
+  `;
+  document.querySelector('.score-bar').after(banner);
+  window.scrollTo({ top: banner.offsetTop - 20, behavior: 'smooth' });
+}
+
+function resetQuiz() {
+  if (!confirm("Clear answers and start over?")) return;
+  userAnswers = new Array(QUESTIONS.length).fill(null);
+  submitted = false;
+  document.querySelectorAll('.result-banner').forEach(el => el.remove());
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+render();
+</script>
+</body>
+</html>
