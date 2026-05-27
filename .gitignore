@@ -7,3 +7,7 @@ textbookonline/
 
 # Personal student data — Neil's grade history. Local only.
 progress-log.md
+
+# COA / FlexPoint proprietary content pulled from the Buzz LMS
+# (pretests, quizzes, exam questions). Reference only — never push.
+coa-reference/
