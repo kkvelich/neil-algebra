@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistics Test Part 2 — Study Walkthrough</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #F59E0B;
+  --accent: #DC2626; --accent-2: #F59E0B;
+  --green: #10B981; --green-soft: rgba(16,185,129,0.18);
+  --red: #EF4444; --red-soft: rgba(239,68,68,0.18);
+  --orange: #F59E0B;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg:#F8FAFC; --bg-card:#FFFFFF; --bg-elevated:#F1F5F9; --text:#1A1A1A; --text-dim:#64748B; --border:#E2E8F0; }
+}
+html, body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:17px; line-height:1.6; }
+.container { max-width:760px; margin:0 auto; padding:1rem 1.1rem 4rem; }
+header.top { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1rem; gap:0.5rem; }
+.logo { font-size:1.2rem; font-weight:800; background:linear-gradient(135deg, #F59E0B, #DC2626); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+.back { color:var(--text-dim); text-decoration:none; font-size:0.88rem; font-weight:600; }
+.hero { background:linear-gradient(135deg, #F59E0B, #DC2626); border-radius:18px; padding:1.3rem 1.4rem; color:white; margin-bottom:1.5rem; }
+.hero h1 { margin:0 0 0.4rem; font-size:1.4rem; font-weight:800; }
+.hero p { margin:0; font-size:0.95rem; opacity:0.96; line-height:1.55; }
+.hero .tags { display:flex; gap:0.4rem; margin-top:0.7rem; flex-wrap:wrap; }
+.hero .tag { background:rgba(255,255,255,0.22); padding:0.25rem 0.7rem; border-radius:999px; font-weight:700; font-size:0.78rem; }
+.toc { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin-bottom:1.5rem; }
+.toc h3 { margin:0 0 0.5rem; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); }
+.toc a { display:block; color:var(--text); text-decoration:none; padding:0.35rem 0; font-size:0.95rem; font-weight:600; }
+.toc a:hover { color:var(--accent); }
+h2 { font-size:1.3rem; margin:2rem 0 0.6rem; color:var(--accent); font-weight:800; padding-top:0.5rem; border-top:1px solid var(--border); }
+h2:first-of-type { border-top:none; padding-top:0; margin-top:1rem; }
+h3 { font-size:1.05rem; margin:1.3rem 0 0.5rem; font-weight:700; color:var(--text); }
+p { margin:0.6rem 0; }
+ul, ol { margin:0.4rem 0; padding-left:1.4rem; }
+li { margin:0.3rem 0; }
+table { border-collapse:collapse; margin:0.6rem 0 1rem; width:100%; font-size:0.92rem; }
+th, td { border:1px solid var(--border); padding:0.4rem 0.7rem; text-align:center; }
+th { background:var(--bg-elevated); font-weight:700; }
+strong { color:var(--text); }
+.callout { background:rgba(245,158,11,0.12); border-left:4px solid var(--orange); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.callout strong { color:var(--orange); }
+.qbox { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.qbox .q-label { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent); font-weight:800; margin-bottom:0.3rem; }
+.qbox .pts { float:right; font-size:0.72rem; color:var(--text-dim); font-weight:700; }
+details { margin-top:0.7rem; }
+summary { cursor:pointer; padding:0.55rem 0.9rem; background:linear-gradient(135deg, #F59E0B, #DC2626); color:white; border-radius:8px; font-weight:700; font-size:0.9rem; list-style:none; display:inline-block; }
+summary::-webkit-details-marker { display:none; }
+summary::before { content:"👁 try it first, then check "; }
+details[open] summary::before { content:"🙈 hide "; }
+.answer { margin-top:0.7rem; padding:0.85rem 1rem; background:var(--green-soft); border-left:3px solid var(--green); border-radius:0 10px 10px 0; font-size:0.92rem; line-height:1.55; }
+.answer .ans-label { font-weight:800; color:var(--green); }
+.svg-wrap { background:var(--bg-elevated); border-radius:10px; padding:0.8rem; margin:0.6rem 0; text-align:center; }
+.checklist { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1.1rem 1.2rem; margin:1rem 0; }
+.checklist label { display:flex; align-items:flex-start; gap:0.6rem; padding:0.4rem 0; cursor:pointer; font-size:0.95rem; line-height:1.5; }
+.checklist input[type=checkbox] { margin-top:0.3rem; width:18px; height:18px; cursor:pointer; flex-shrink:0; }
+.checklist input[type=checkbox]:checked + .item-text { text-decoration:line-through; opacity:0.6; }
+.big-final { background:linear-gradient(135deg, rgba(245,158,11,0.15), rgba(220,38,38,0.12)); border:1px solid var(--accent); border-radius:14px; padding:1.1rem 1.3rem; margin:1.5rem 0; }
+.big-final h3 { margin-top:0; color:var(--accent); }
+footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center; font-size:0.83rem; color:var(--text-dim); }
+footer a { color:var(--primary); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="top">
+    <a class="logo" href="index.html">📝 Test Part 2</a>
+    <a class="back" href="index.html">← Hub</a>
+  </header>
+
+  <div class="hero">
+    <h1>Statistics Test Part 2 — Study Walkthrough</h1>
+    <p>This is the <strong>free-response half</strong> — 4 questions you type into Buzz, worth ~40 points. Work each part on paper FIRST, then tap to check the method. On the real test: <strong>show every step and include units.</strong></p>
+    <div class="tags">
+      <span class="tag">4 questions</span>
+      <span class="tag">~40 points</span>
+      <span class="tag">Show your work</span>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>How it's graded:</strong> each part earns points for the correct answer <em>and</em> the work shown. Don't just write a number — write the formula, plug in, and label units. A right answer with no work can lose points; a small arithmetic slip with correct work still earns most of them.
+  </div>
+
+  <div class="toc">
+    <h3>The 4 questions</h3>
+    <a href="#q1">Q1 — Box plots: comparing two data sets (Parts A–D)</a>
+    <a href="#q2">Q2 — Two-way frequency table (Parts A–C)</a>
+    <a href="#q3">Q3 — Scatter plot &amp; correlation coefficient (Parts A–B)</a>
+    <a href="#q4">Q4 — Line of best fit from a table (Parts A–C)</a>
+  </div>
+
+  <!-- ===================== Q1 ===================== -->
+  <h2 id="q1">Q1 — Comparing two box plots</h2>
+  <p>Two box plots compare the number of <strong>male</strong> vs <strong>female</strong> dogs at a daycare each day for a month. Their five-number summaries:</p>
+  <table>
+    <tr><th></th><th>Min</th><th>Q1</th><th>Median</th><th>Q3</th><th>Max</th><th>Outlier</th></tr>
+    <tr><th>Males</th><td>0</td><td>1</td><td>20</td><td>25</td><td>50</td><td>—</td></tr>
+    <tr><th>Females</th><td>0</td><td>5</td><td>6</td><td>10</td><td>18</td><td>point at 43</td></tr>
+  </table>
+
+  <div class="svg-wrap">
+    <svg viewBox="0 0 420 170" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px;">
+      <!-- axis -->
+      <line x1="50" y1="150" x2="410" y2="150" stroke="currentColor" stroke-width="1"/>
+      <g font-size="9" fill="currentColor" text-anchor="middle">
+        <line x1="50"  y1="148" x2="50"  y2="152" stroke="currentColor"/><text x="50"  y="163">0</text>
+        <line x1="122" y1="148" x2="122" y2="152" stroke="currentColor"/><text x="122" y="163">10</text>
+        <line x1="194" y1="148" x2="194" y2="152" stroke="currentColor"/><text x="194" y="163">20</text>
+        <line x1="266" y1="148" x2="266" y2="152" stroke="currentColor"/><text x="266" y="163">30</text>
+        <line x1="338" y1="148" x2="338" y2="152" stroke="currentColor"/><text x="338" y="163">40</text>
+        <line x1="410" y1="148" x2="410" y2="152" stroke="currentColor"/><text x="406" y="163">50</text>
+      </g>
+      <!-- Males box plot (blue) y~40 -->
+      <text x="44" y="44" font-size="10" fill="#3B82F6" text-anchor="end" font-weight="700">M</text>
+      <line x1="50" y1="40" x2="57.2" y2="40" stroke="#3B82F6" stroke-width="1.5"/>
+      <line x1="50" y1="33" x2="50" y2="47" stroke="#3B82F6" stroke-width="1.5"/>
+      <rect x="57.2" y="27" width="172.8" height="26" fill="rgba(59,130,246,0.25)" stroke="#3B82F6" stroke-width="1.5"/>
+      <line x1="194" y1="27" x2="194" y2="53" stroke="#3B82F6" stroke-width="2"/>
+      <line x1="230" y1="40" x2="410" y2="40" stroke="#3B82F6" stroke-width="1.5"/>
+      <line x1="410" y1="33" x2="410" y2="47" stroke="#3B82F6" stroke-width="1.5"/>
+      <!-- Females box plot (purple) y~110 -->
+      <text x="44" y="114" font-size="10" fill="#A855F7" text-anchor="end" font-weight="700">F</text>
+      <line x1="50" y1="110" x2="86" y2="110" stroke="#A855F7" stroke-width="1.5"/>
+      <line x1="50" y1="103" x2="50" y2="117" stroke="#A855F7" stroke-width="1.5"/>
+      <rect x="86" y="97" width="36" height="26" fill="rgba(168,85,247,0.25)" stroke="#A855F7" stroke-width="1.5"/>
+      <line x1="93.2" y1="97" x2="93.2" y2="123" stroke="#A855F7" stroke-width="2"/>
+      <line x1="122" y1="110" x2="179.6" y2="110" stroke="#A855F7" stroke-width="1.5"/>
+      <line x1="179.6" y1="103" x2="179.6" y2="117" stroke="#A855F7" stroke-width="1.5"/>
+      <circle cx="359.6" cy="110" r="4" fill="none" stroke="#A855F7" stroke-width="1.5"/>
+      <text x="359.6" y="132" font-size="9" fill="#A855F7" text-anchor="middle">outlier 43</text>
+    </svg>
+  </div>
+
+  <div class="qbox">
+    <span class="q-label">Part A</span><span class="pts">2 pts</span>
+    <p><strong>Estimate the IQR for the males' data.</strong></p>
+    <details><summary></summary>
+      <div class="answer"><span class="ans-label">Method + answer.</span> IQR = Q3 − Q1 (the width of the box). For the males: 25 − 1 = <strong>24</strong>. (IQR is NOT max − min — that's the range.)</div>
+    </details>
+  </div>
+
+  <div class="qbox">
+    <span class="q-label">Part B</span><span class="pts">2 pts</span>
+    <p><strong>Estimate the difference between the median values of each data set.</strong></p>
+    <details><summary></summary>
+      <div class="answer"><span class="ans-label">Method + answer.</span> Males median − females median = 20 − 6 = <strong>14</strong>.</div>
+    </details>
+  </div>
+
+  <div class="qbox">
+    <span class="q-label">Part C</span><span class="pts">4 pts</span>
+    <p><strong>Describe the distribution of each data set, and say whether the mean or the median is the better measure of center for each.</strong></p>
+    <details><summary></summary>
+      <div class="answer"><span class="ans-label">Method + answer.</span>
+      <ul>
+        <li><strong>Males:</strong> the box and whiskers are uneven — a tiny lower whisker (0→1) and a long upper whisker (25→50) — so the data is <strong>skewed right</strong>. The long tail would drag the mean up, so the <strong>median</strong> is the better measure of center.</li>
+        <li><strong>Females:</strong> there is a clear <strong>outlier at 43</strong>, far above the rest. An outlier distorts the mean, so the <strong>median</strong> is the better measure of center here too.</li>
+      </ul>
+      Rule: use the <strong>median</strong> whenever data is skewed or has outliers; use the mean only when it's roughly symmetric with no outliers.</div>
+    </details>
+  </div>
+
+  <div class="qbox">
+    <span class="q-label">Part D</span><span class="pts">2 pts</span>
+    <p><strong>Give a possible reason for the outlier in the data set.</strong></p>
+    <details><summary></summary>
+      <div class="answer"><span class="ans-label">Sample answer.</span> On one day an unusually large number of female dogs attended — for example a special daycare event, a holiday or weekend rush, or a grooming/adoption promotion that drew many dogs that day. (Any reasonable real-world reason for one unusually high day earns the points.)</div>
+    </details>
+  </div>
+
+  <!-- ===================== Q2 ===================== -->
+  <h2 id="q2">Q2 — Two-way frequency table (food truck)</h2>
+  <p>A food truck surveyed customers. The table is partly filled — first <strong>complete it</strong> (every row and column adds to its total):</p>
+  <table>
+    <tr><th></th><th>Likes hamburgers</th><th>Does not</th><th>Total</th></tr>
+    <tr><th>Likes burritos</th><td>29</td><td>41</td><td>?</td></tr>
+    <tr><th>Does not like burritos</th><td>?</td><td>54</td><td>135</td></tr>
+    <tr><th>Total</th><td>110</td><td>?</td><td>205</td></tr>
+  </table>
+  <details><summary></summary>
+    <div class="answer"><span class="ans-label">Completed table.</span>
+    <table>
+      <tr><th></th><th>Likes ham</th><th>Does not</th><th>Total</th></tr>
+      <tr><th>Likes burritos</th><td>29</td><td>41</td><td><strong>70</strong></td></tr>
+      <tr><th>No burritos</th><td><strong>81</strong></td><td>54</td><td>135</td></tr>
+      <tr><th>Total</th><td>110</td><td><strong>95</strong></td><td>205</td></tr>
+    </table>
+    Likes-burritos total = 29+41 = 70. No-burritos/likes-ham = 135−54 = 81. No-ham total = 205−110 = 95. (Check: column 110 = 29+81 ✓, column 95 = 41+54 ✓.)</div>
+  </details>
+
+  <div class="qbox">
+    <span class="q-label">Part A</span><span class="pts">2 pts</span>
+    <p><strong>What percentage of respondents do NOT like both hamburgers and burritos?</strong></p>
+    <details><summary></summary>
+      <div class="answer"><span class="ans-label">Method + answer.</span> "Not both" = dislikes hamburgers AND dislikes burritos = the 54 cell. 54 ÷ 205 = <strong>0.263 ≈ 26.3%</strong>.</div>
+    </details>
+  </div>
+
+  <div class="qbox">
+    <span class="q-label">Part B</span><span class="pts">3 pts</span>
+    <p><strong>What is the marginal relative frequency of all customers who like hamburgers?</strong></p>
+    <details><summary></summary>
+      <div class="answer"><span class="ans-label">Method + answer.</span> Marginal = a row/column TOTAL ÷ grand total. Likes-ham total = 110, so 110 ÷ 205 = <strong>0.537 ≈ 53.7%</strong>.</div>
+    </details>
+  </div>
+
+  <div class="qbox">
+    <span class="q-label">Part C</span><span class="pts">5 pts</span>
+    <p><strong>Use conditional relative frequencies to determine which data point has the strongest association of its two factors. Explain in complete sentences.</strong></p>
+    <details><summary></summary>
+      <div class="answer"><span class="ans-label">Method + answer.</span> Divide each inner cell by its row total and by its column total, then find the largest:
+      <table>
+        <tr><th>Cell</th><th>÷ row</th><th>÷ column</th></tr>
+        <tr><td>likes burr & likes ham (29)</td><td>0.41</td><td>0.26</td></tr>
+        <tr><td>likes burr & no ham (41)</td><td>0.59</td><td>0.43</td></tr>
+        <tr><td>no burr & likes ham (81)</td><td>0.60</td><td><strong>0.74</strong></td></tr>
+        <tr><td>no burr & no ham (54)</td><td>0.40</td><td>0.57</td></tr>
+      </table>
+      The strongest association is between <strong>"does not like burritos" and "likes hamburgers."</strong> Of the customers who like hamburgers, 81 of 110 (≈ <strong>73.6%</strong>) do not like burritos — the highest conditional relative frequency in the table, so those two factors are the most strongly linked.</div>
+    </details>
+  </div>
+
+  <!-- ===================== Q3 ===================== -->
+  <h2 id="q3">Q3 — Scatter plot &amp; correlation coefficient</h2>
+  <p>A scatter plot shows strawberries picked vs. day in February. The points trend clearly <strong>upward</strong> (positive), moderately spread around a line. Software reported <strong>r = 0.01</strong>.</p>
+
+  <div class="qbox">
+    <span class="q-label">Part A</span><span class="pts">5 pts</span>
+    <p><strong>Is r = 0.01 an accurate value for this data? Why or why not?</strong></p>
+    <details><summary></summary>
+      <div class="answer"><span class="ans-label">Method + answer.</span> <strong>No.</strong> An r near 0 means essentially NO linear relationship, but the plot shows a clear upward (positive) trend. A positive trend should give an r much closer to +1 — roughly +0.7 to +0.9 for moderately spread points. So r = 0.01 is not accurate; it contradicts the visible pattern and was likely calculated or entered incorrectly.
+      <br><br>Reminder of the r scale: −1 = perfect negative, 0 = none, +1 = perfect positive.</div>
+    </details>
+  </div>
+
+  <div class="qbox">
+    <span class="q-label">Part B</span><span class="pts">5 pts</span>
+    <p><strong>Write a scenario that would be a CAUSAL relationship for strawberries picked on the farm.</strong></p>
+    <details><summary></summary>
+      <div class="answer"><span class="ans-label">Sample answer.</span> The day in February only <em>correlates</em> with berries picked — the date doesn't <em>cause</em> it. A causal example: <strong>the number of workers picking causes the number of strawberries picked</strong> — more pickers directly results in more berries picked. (Also valid: warmer temperature / more sunlight causes more berries to ripen and be picked.)
+      <br><br>Key idea: causation means one variable <em>directly makes</em> the other change.</div>
+    </details>
+  </div>
+
+  <!-- ===================== Q4 ===================== -->
+  <h2 id="q4">Q4 — Line of best fit from a table</h2>
+  <p>A manager records employees vs. yearly products:</p>
+  <table>
+    <tr><th>Employees (x)</th><td>0</td><td>25</td><td>50</td><td>75</td><td>100</td><td>125</td><td>150</td><td>175</td><td>200</td></tr>
+    <tr><th>Products (y)</th><td>10</td><td>160</td><td>310</td><td>460</td><td>610</td><td>760</td><td>910</td><td>1060</td><td>1210</td></tr>
+  </table>
+
+  <div class="qbox">
+    <span class="q-label">Part A</span><span class="pts">4 pts</span>
+    <p><strong>Is there a correlation? Justify your answer.</strong></p>
+    <details><summary></summary>
+      <div class="answer"><span class="ans-label">Method + answer.</span> <strong>Yes — a perfect positive correlation.</strong> Every time x rises by 25, y rises by exactly 150 (160−10, 310−160, … all = 150). A constant rate of change means the points lie exactly on a line, so r = 1.</div>
+    </details>
+  </div>
+
+  <div class="qbox">
+    <span class="q-label">Part B</span><span class="pts">3 pts</span>
+    <p><strong>Write a function that best fits the data.</strong></p>
+    <details><summary></summary>
+      <div class="answer"><span class="ans-label">Method + answer.</span> Slope = Δy/Δx = 150/25 = 6. At x = 0, y = 10, so the y-intercept is 10. <strong>y = 6x + 10.</strong> (Check x = 200: 6·200 + 10 = 1210 ✓.)</div>
+    </details>
+  </div>
+
+  <div class="qbox">
+    <span class="q-label">Part C</span><span class="pts">3 pts</span>
+    <p><strong>What do the slope and the y-intercept indicate?</strong></p>
+    <details><summary></summary>
+      <div class="answer"><span class="ans-label">Method + answer.</span>
+      <ul>
+        <li><strong>Slope = 6:</strong> each additional employee produces 6 more products per year.</li>
+        <li><strong>y-intercept = 10:</strong> with 0 employees, 10 products are still produced — a baseline output (e.g., automated production) before any employees are added.</li>
+      </ul></div>
+    </details>
+  </div>
+
+  <div class="big-final">
+    <h3>🔑 Before you submit</h3>
+    <ul>
+      <li><strong>IQR = Q3 − Q1</strong> (box width); range = max − min. Don't mix them up.</li>
+      <li>Use the <strong>median</strong> when data is skewed or has an outlier.</li>
+      <li><strong>Marginal</strong> = a total ÷ grand total. <strong>Conditional</strong> = a cell ÷ its row (or column) total — read the wording for which denominator.</li>
+      <li><strong>r</strong> matches the picture: upward → near +1, downward → near −1, no pattern → near 0.</li>
+      <li>Line of best fit: <strong>slope = Δy/Δx</strong>, intercept = value at x = 0. Always interpret them in context, with units.</li>
+      <li>Show the formula → plug in → label units. Work earns points even if a number slips.</li>
+    </ul>
+  </div>
+
+  <div class="checklist">
+    <label><input type="checkbox"><span class="item-text">I worked each part on paper before checking</span></label>
+    <label><input type="checkbox"><span class="item-text">I can find IQR and compare medians from box plots</span></label>
+    <label><input type="checkbox"><span class="item-text">I completed the two-way table and know marginal vs conditional</span></label>
+    <label><input type="checkbox"><span class="item-text">I can explain why r = 0.01 is wrong for an upward trend</span></label>
+    <label><input type="checkbox"><span class="item-text">I can build y = mx + b from a table and interpret slope/intercept</span></label>
+  </div>
+
+  <footer>
+    <p><a href="index.html">← Back to Hub</a> · <a href="module-5-review.html">Module 5 Final Review drill</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
