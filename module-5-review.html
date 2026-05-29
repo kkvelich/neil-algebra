@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 5 Final Review — Targeted Drill</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #6366F1; --primary-2: #8B5CF6;
+  --green: #10B981; --green-soft: rgba(16,185,129,0.18);
+  --red: #EF4444; --red-soft: rgba(239,68,68,0.18);
+  --orange: #F59E0B;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg:#F8FAFC; --bg-card:#FFFFFF; --bg-elevated:#F1F5F9; --text:#1A1A1A; --text-dim:#64748B; --border:#E2E8F0; }
+}
+html, body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:17px; line-height:1.6; }
+.container { max-width:760px; margin:0 auto; padding:1rem 1.1rem 4rem; }
+header.top { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1rem; }
+.logo { font-size:1.2rem; font-weight:800; background:linear-gradient(135deg, #6366F1, #8B5CF6); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+.back { color:var(--text-dim); text-decoration:none; font-size:0.88rem; font-weight:600; }
+.hero { background:linear-gradient(135deg, #6366F1, #8B5CF6); border-radius:18px; padding:1.2rem 1.3rem; color:white; margin-bottom:1.3rem; }
+.hero h1 { margin:0 0 0.3rem; font-size:1.3rem; font-weight:800; }
+.hero p { margin:0; font-size:0.92rem; opacity:0.95; line-height:1.55; }
+.hero .tags { display:flex; gap:0.4rem; margin-top:0.6rem; flex-wrap:wrap; }
+.hero .tag { background:rgba(255,255,255,0.22); padding:0.25rem 0.7rem; border-radius:999px; font-weight:700; font-size:0.78rem; }
+.score-bar { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:0.85rem 1rem; margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center; }
+.score-bar .label { font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); font-weight:700; }
+.score-bar .progress-num { font-size:1.4rem; font-weight:800; color:var(--primary); }
+.q-card { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:1.1rem 1.3rem; margin-bottom:1rem; }
+.q-card.correct { border-color:var(--green); background:linear-gradient(180deg, var(--green-soft), var(--bg-card)); }
+.q-card.wrong { border-color:var(--red); background:linear-gradient(180deg, var(--red-soft), var(--bg-card)); }
+.q-num { font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); font-weight:700; margin-bottom:0.3rem; }
+.skill-tag { display:inline-block; font-size:0.62rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; background:rgba(99,102,241,0.18); color:var(--primary); padding:0.1rem 0.45rem; border-radius:4px; margin-left:0.4rem; }
+.q-text { font-size:1.04rem; font-weight:600; margin-bottom:0.7rem; line-height:1.55; }
+.q-text sup { font-size:0.72em; }
+.q-text table { border-collapse:collapse; width:100%; margin:0.5rem 0; font-size:0.88rem; font-weight:500; }
+.q-text th, .q-text td { border:1px solid var(--border); padding:0.3rem 0.5rem; text-align:center; }
+.q-text th { background:var(--bg-elevated); font-weight:700; }
+.choices { display:flex; flex-direction:column; gap:0.45rem; }
+.choice { display:flex; align-items:flex-start; gap:0.65rem; background:var(--bg-elevated); border:2px solid transparent; border-radius:10px; padding:0.7rem 0.9rem; cursor:pointer; font-size:0.95rem; line-height:1.5; transition:all 0.15s; }
+.choice sup { font-size:0.72em; }
+.choice:hover { border-color:var(--primary); }
+.choice input { margin-top:0.3rem; cursor:pointer; flex-shrink:0; accent-color:var(--primary); }
+.choice .letter { font-weight:800; color:var(--text-dim); margin-right:0.2rem; }
+.choice.selected { border-color:var(--primary); background:rgba(99,102,241,0.12); }
+.choice.disabled { cursor:not-allowed; opacity:0.85; }
+.choice.disabled:hover { border-color:transparent; }
+.choice.disabled.selected { border-color:var(--primary); }
+.choice.show-correct { border-color:var(--green); background:var(--green-soft); }
+.choice.show-wrong { border-color:var(--red); background:var(--red-soft); }
+.solution { margin-top:0.7rem; padding:0.75rem 1rem; background:var(--bg-elevated); border-left:3px solid var(--primary); border-radius:0 8px 8px 0; font-size:0.9rem; line-height:1.55; }
+.solution sup { font-size:0.72em; }
+.solution .sol-head { font-weight:800; color:var(--primary); margin-bottom:0.25rem; }
+.bottom-bar { display:flex; gap:0.55rem; margin-top:1.5rem; }
+.btn { flex:1; border:none; border-radius:12px; cursor:pointer; font-family:inherit; padding:0.95rem; font-size:1rem; font-weight:800; }
+.btn-primary { background:linear-gradient(135deg, var(--primary), var(--primary-2)); color:white; }
+.btn-primary:hover { transform:translateY(-1px); }
+.btn-secondary { background:var(--bg-elevated); color:var(--text); border:1px solid var(--border); }
+.btn:disabled { opacity:0.5; cursor:not-allowed; }
+.result-banner { background:linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.1)); border:1px solid var(--primary); border-radius:14px; padding:1.1rem 1.3rem; margin:1.5rem 0; }
+.result-banner.pass { background:linear-gradient(135deg, rgba(16,185,129,0.18), rgba(139,92,246,0.1)); border-color:var(--green); }
+.result-banner.fail { background:linear-gradient(135deg, rgba(239,68,68,0.18), rgba(245,158,11,0.1)); border-color:var(--red); }
+.result-banner h2 { margin:0 0 0.3rem; font-size:1.3rem; color:var(--primary); }
+.result-banner.pass h2 { color:var(--green); }
+.result-banner.fail h2 { color:var(--red); }
+.result-banner .big-score { font-size:3rem; font-weight:900; margin:0.3rem 0; line-height:1; }
+.result-banner.pass .big-score { color:var(--green); }
+.result-banner.fail .big-score { color:var(--red); }
+.result-banner p { margin:0.2rem 0; font-size:0.95rem; line-height:1.55; }
+footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center; font-size:0.83rem; color:var(--text-dim); }
+footer a { color:var(--primary); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="top">
+    <a class="logo" href="index.html">🎯 Module 5 Review</a>
+    <a class="back" href="index.html">← Hub</a>
+  </header>
+
+  <div class="hero">
+    <h1>Module 5 Final Review — Targeted Drill</h1>
+    <p>15 questions hitting the exact spots from the real Statistics Test: <strong>box plots</strong>, <strong>average rate of change</strong>, mean vs. median &amp; outliers, conditional frequency, function fit, and y-intercept meaning. Read every solution. Goal: 12+/15 (80%).</p>
+    <div class="tags">
+      <span class="tag">15 MC questions</span>
+      <span class="tag">~25 min</span>
+      <span class="tag">Retry-able</span>
+    </div>
+  </div>
+
+  <div class="score-bar">
+    <div>
+      <div class="label">Selected</div>
+      <div class="progress-num"><span id="selectedCount">0</span> / 15</div>
+    </div>
+    <div style="text-align:right;">
+      <div class="label">Status</div>
+      <div id="quizStatus" style="font-size:0.9rem; font-weight:700;">In progress</div>
+    </div>
+  </div>
+
+  <div id="quiz"></div>
+
+  <div class="bottom-bar">
+    <button class="btn btn-secondary" onclick="resetQuiz()">🔄 Reset</button>
+    <button class="btn btn-primary" id="submitBtn" onclick="submitQuiz()" disabled>Submit all</button>
+  </div>
+
+  <footer>
+    <p><a href="index.html">← Back to Hub</a> · <a href="math-quest-v2.html">Math Quest</a></p>
+  </footer>
+
+</div>
+
+<script>
+const QUESTIONS = [
+  // ===== BOX PLOTS (the biggest gap) =====
+  {
+    skill: "Box plots",
+    q: `<p>A data set is: <b>6, 9, 12, 12, 15, 18, 21, 24</b>. What is the <b>lower quartile (Q1)</b>?</p>`,
+    choices: ["10.5", "9", "12", "13.5"],
+    ans: 0,
+    sol: "8 values → the median is between the 4th and 5th (12 and 15) = 13.5, which splits the data into a lower half [6, 9, 12, 12]. Q1 = median of that lower half = (9 + 12)/2 = <b>10.5</b>."
+  },
+  {
+    skill: "Box plots",
+    q: `<p>A box plot shows: minimum 20, Q1 = 28, median = 35, Q3 = 44, maximum = 60. What is the <b>interquartile range (IQR)</b>?</p>`,
+    choices: ["40", "16", "35", "28"],
+    ans: 1,
+    sol: "IQR = Q3 − Q1 = 44 − 28 = <b>16</b> (the width of the box). 40 is the range (max − min), 35 is the median, 28 is Q1 — don't confuse them."
+  },
+  {
+    skill: "Box plots",
+    q: `<p>Two classes' test scores as box plots:</p>
+      <table><tr><th></th><th>Min</th><th>Q1</th><th>Median</th><th>Q3</th><th>Max</th></tr>
+      <tr><th>Class A</th><td>60</td><td>70</td><td>78</td><td>85</td><td>95</td></tr>
+      <tr><th>Class B</th><td>55</td><td>68</td><td>80</td><td>88</td><td>92</td></tr></table>
+      <p>Which statement is <b>true</b>?</p>`,
+    choices: [
+      "Class A's median is greater than Class B's median",
+      "Class A's upper quartile is greater than Class B's upper quartile",
+      "Class A's lower quartile is greater than Class B's lower quartile",
+      "Class A's maximum is less than Class B's maximum"
+    ],
+    ans: 2,
+    sol: "Check each statistic separately. Lower quartile: A = 70, B = 68 → A &gt; B ✓. (Median: 78 &lt; 80; upper quartile: 85 &lt; 88; maximum: 95 &gt; 92, so the others are false.) Always read each value off the plot before judging."
+  },
+  {
+    skill: "Box plots",
+    q: `<p>A box plot has a <b>much longer whisker on the right</b> and the median sitting close to Q1. How is the data distributed, and which measure of center is better?</p>`,
+    choices: [
+      "Symmetric; the mean is the better center",
+      "Skewed left; the mean is the better center",
+      "Skewed right; the mean is the better center",
+      "Skewed right; the median is the better center"
+    ],
+    ans: 3,
+    sol: "A long right whisker = a long right tail = <b>skewed right</b>. The long tail drags the mean up, so the <b>median</b> (resistant to the tail) is the better measure of center."
+  },
+  // ===== AVERAGE RATE OF CHANGE (recurring miss) =====
+  {
+    skill: "Avg rate of change",
+    q: `<p>Hours vs. money earned:</p>
+      <table><tr><th>Hours</th><td>1</td><td>2</td><td>4</td><td>6</td><td>8</td></tr>
+      <tr><th>Money</th><td>$5</td><td>$9</td><td>$17</td><td>$25</td><td>$33</td></tr></table>
+      <p>What is the <b>average rate of change from 2 to 6 hours</b> (with units)?</p>`,
+    choices: ["$4 per hour", "$16 per hour", "$16", "$8 per hour"],
+    ans: 0,
+    sol: "Rate of change = (change in money) ÷ (change in hours) = (25 − 9) ÷ (6 − 2) = 16 ÷ 4 = <b>$4 per hour</b>. The 16 is the total change — you MUST divide by the 4 hours, and include the units."
+  },
+  {
+    skill: "Avg rate of change",
+    q: `<p>An ice-cream truck's profit at hour 2 is $30 and at hour 6 is $98. What is the <b>average rate of change from hour 2 to hour 6</b> (with units)?</p>`,
+    choices: ["$68 per hour", "$17 per hour", "$68", "$34 per hour"],
+    ans: 1,
+    sol: "(98 − 30) ÷ (6 − 2) = 68 ÷ 4 = <b>$17 per hour</b>. ⚠️ This is the exact trap you missed twice: $68 is the TOTAL change — divide by the 4 hours to get the rate."
+  },
+  {
+    skill: "Avg rate of change",
+    q: `<p>The cost of producing x items is C(x) = 6x + 40. What is the <b>average rate of change</b>, and what does it mean?</p>`,
+    choices: [
+      "$40 per item — the setup fee",
+      "$46 per item",
+      "$6 per item — cost rises $6 for each additional item",
+      "$6 total, one time"
+    ],
+    ans: 2,
+    sol: "For a linear function, the average rate of change = the slope = <b>6</b>. So the cost increases <b>$6 for each additional item</b>. The 40 is the starting (fixed) cost, not the rate."
+  },
+  // ===== MEAN vs MEDIAN / OUTLIERS =====
+  {
+    skill: "Mean vs median",
+    q: `<p>A data set of home prices is <b>strongly skewed right</b> by a few very expensive homes. Which is the better measure of center?</p>`,
+    choices: [
+      "Mean, because it uses every value",
+      "The range, because it shows the spread",
+      "Mean, because the data is symmetric",
+      "Median, because it resists the high outliers"
+    ],
+    ans: 3,
+    sol: "A few very high values pull the <b>mean</b> upward. The <b>median</b> is resistant to those outliers, so it better represents a typical home price for skewed data."
+  },
+  {
+    skill: "Outliers",
+    q: `<p>A set of 10 test scores has a mean of 80. A <b>low</b> outlier of 30 is removed. What happens to the mean?</p>`,
+    choices: ["It increases", "It decreases", "It stays the same", "Cannot be determined"],
+    ans: 0,
+    sol: "Removing a value <b>below</b> the mean pulls the average <b>up</b>. Check: sum = 80×10 = 800; remove 30 → 770 ÷ 9 ≈ 85.6 &gt; 80. So the mean increases."
+  },
+  {
+    skill: "Outliers",
+    q: `<p>A set of 8 values has a mean of 50. A <b>high</b> outlier of 130 is removed. What happens to the mean?</p>`,
+    choices: ["It increases", "It decreases", "It stays the same", "It doubles"],
+    ans: 1,
+    sol: "Removing a value <b>above</b> the mean pulls the average <b>down</b>. Check: sum = 50×8 = 400; remove 130 → 270 ÷ 7 ≈ 38.6 &lt; 50. So the mean decreases."
+  },
+  // ===== CONDITIONAL RELATIVE FREQUENCY =====
+  {
+    skill: "Two-way tables",
+    q: `<p>Pet ownership among 100 people:</p>
+      <table><tr><th></th><th>Cat</th><th>No Cat</th><th>Total</th></tr>
+      <tr><th>Dog</th><td>30</td><td>20</td><td>50</td></tr>
+      <tr><th>No Dog</th><td>10</td><td>40</td><td>50</td></tr>
+      <tr><th>Total</th><td>40</td><td>60</td><td>100</td></tr></table>
+      <p>What is the <b>row-conditional</b> relative frequency of cat ownership <b>among dog owners</b>?</p>`,
+    choices: ["0.30", "0.40", "0.60", "0.75"],
+    ans: 2,
+    sol: "Row-conditional → divide by the <b>ROW</b> total. Dog owners row total = 50; dog-and-cat = 30 → 30/50 = <b>0.60</b>. (0.30 would be dividing by the grand total.)"
+  },
+  {
+    skill: "Two-way tables",
+    q: `<p>Same table. What fraction of <b>cat owners</b> also own a dog?</p>`,
+    choices: ["0.30", "0.40", "0.60", "0.75"],
+    ans: 3,
+    sol: "&quot;Of cat owners&quot; → divide by the <b>CAT column</b> total = 40. Dog-and-cat = 30 → 30/40 = <b>0.75</b>. Same cell as the previous question, but a DIFFERENT denominator → different answer."
+  },
+  // ===== FUNCTION FIT / SCATTER =====
+  {
+    skill: "Scatter / fit",
+    q: `<p>A scatter plot shows points rising along a <b>straight line</b> at a constant rate (a steady upward trend). Which function best models the data?</p>`,
+    choices: ["f(x) = 2x", "f(x) = 2x<sup>2</sup>", "f(x) = −2x", "f(x) = 2<sup>x</sup>"],
+    ans: 0,
+    sol: "A straight upward trend = <b>linear with a positive slope</b> → f(x) = 2x. A quadratic (2x²) curves, −2x slopes downward, and 2^x curves upward exponentially."
+  },
+  // ===== INTERPRETING SLOPE & INTERCEPT =====
+  {
+    skill: "y-intercept",
+    q: `<p>Yearly salt intake is modeled by f(x) = 50x + 3500, where x = years since 2012 and f(x) is grams. What does the <b>3,500</b> represent?</p>`,
+    choices: [
+      "The yearly increase in salt intake",
+      "The estimated salt intake in 2012 (when x = 0)",
+      "The salt intake in 2017",
+      "The total intake across all years"
+    ],
+    ans: 1,
+    sol: "The y-intercept is the value when <b>x = 0</b>. Here x = 0 means 2012, so 3,500 g is the <b>estimated salt intake in 2012</b> (the starting amount). The 50 is the yearly increase (the slope)."
+  },
+  {
+    skill: "Slope meaning",
+    q: `<p>Distance is given by d(t) = 8t + 5, where t is time in seconds. What does the <b>8</b> (the slope) represent?</p>`,
+    choices: [
+      "The starting distance when t = 0",
+      "The total distance traveled",
+      "d increases by 8 for each 1-second increase in t",
+      "Where the line crosses the y-axis"
+    ],
+    ans: 2,
+    sol: "The slope is the rate of change: <b>d increases by 8 for each additional second</b>. The 5 is the starting value (y-intercept), i.e., the distance at t = 0."
+  }
+];
+
+let userAnswers = new Array(QUESTIONS.length).fill(null);
+let submitted = false;
+
+function render() {
+  const quizEl = document.getElementById('quiz');
+  let html = '';
+  QUESTIONS.forEach((q, i) => {
+    let cardCls = 'q-card';
+    if (submitted) cardCls += userAnswers[i] === q.ans ? ' correct' : ' wrong';
+    html += `<div class="${cardCls}">
+      <div class="q-num">Question ${i + 1} of ${QUESTIONS.length}<span class="skill-tag">${q.skill}</span></div>
+      <div class="q-text">${q.q}</div>
+      <div class="choices">`;
+    q.choices.forEach((c, j) => {
+      let choiceCls = 'choice';
+      if (submitted) {
+        choiceCls += ' disabled';
+        if (j === q.ans) choiceCls += ' show-correct';
+        else if (userAnswers[i] === j) choiceCls += ' show-wrong';
+      } else if (userAnswers[i] === j) {
+        choiceCls += ' selected';
+      }
+      html += `<label class="${choiceCls}">
+        <input type="radio" name="q${i}" value="${j}" ${userAnswers[i] === j ? 'checked' : ''} ${submitted ? 'disabled' : ''} onchange="selectAnswer(${i}, ${j})">
+        <span><span class="letter">${'ABCD'[j]}.</span> ${c}</span>
+      </label>`;
+    });
+    html += `</div>`;
+    if (submitted) {
+      html += `<div class="solution"><div class="sol-head">${userAnswers[i] === q.ans ? '✓ Correct' : '✗ Correct answer: ' + 'ABCD'[q.ans]}</div>${q.sol}</div>`;
+    }
+    html += `</div>`;
+  });
+  quizEl.innerHTML = html;
+  updateScoreBar();
+}
+
+function updateScoreBar() {
+  const selected = userAnswers.filter(a => a !== null).length;
+  document.getElementById('selectedCount').textContent = selected;
+  document.getElementById('quizStatus').textContent = submitted ? 'Submitted' : (selected === QUESTIONS.length ? 'Ready to submit' : 'In progress');
+  document.getElementById('submitBtn').disabled = submitted || selected < QUESTIONS.length;
+}
+
+function selectAnswer(qIdx, choiceIdx) {
+  if (submitted) return;
+  userAnswers[qIdx] = choiceIdx;
+  render();
+}
+
+function submitQuiz() {
+  if (submitted) return;
+  if (userAnswers.includes(null)) {
+    if (!confirm("You haven't answered every question. Submit anyway?")) return;
+  }
+  submitted = true;
+  render();
+  showResults();
+}
+
+function showResults() {
+  const correct = userAnswers.filter((a, i) => a === QUESTIONS[i].ans).length;
+  const total = QUESTIONS.length;
+  const pct = Math.round(correct / total * 100);
+  const pass = pct >= 80;
+  const banner = document.createElement('div');
+  banner.className = 'result-banner ' + (pass ? 'pass' : 'fail');
+  banner.innerHTML = `
+    <h2>${pass ? '🎯 Ready for these on the final' : '📚 Keep drilling'}</h2>
+    <div class="big-score">${correct} / ${total} <span style="font-size:1.5rem;">(${pct}%)</span></div>
+    <p>${pass ? 'You\'d clear 80% on these patterns. Review any you missed, then come back tomorrow to confirm it stuck.' : 'Below 80%. Read every solution carefully — these are the exact patterns from the real test. Then hit Reset and retry.'}</p>
+    <p style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-dim);">Scroll down to see your answers vs. the correct ones.</p>
+  `;
+  document.querySelector('.score-bar').after(banner);
+  window.scrollTo({ top: banner.offsetTop - 20, behavior: 'smooth' });
+}
+
+function resetQuiz() {
+  if (!confirm("Clear answers and start over?")) return;
+  userAnswers = new Array(QUESTIONS.length).fill(null);
+  submitted = false;
+  document.querySelectorAll('.result-banner').forEach(el => el.remove());
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+render();
+</script>
+</body>
+</html>
