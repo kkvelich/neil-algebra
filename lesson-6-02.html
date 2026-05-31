@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6.02 Lesson — Adding and Subtracting Polynomials</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #14B8A6;
+  --accent: #2563EB; --accent-2: #14B8A6;
+  --green: #10B981; --green-soft: rgba(16,185,129,0.18);
+  --red: #EF4444; --red-soft: rgba(239,68,68,0.18);
+  --orange: #F59E0B;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg:#F8FAFC; --bg-card:#FFFFFF; --bg-elevated:#F1F5F9; --text:#1A1A1A; --text-dim:#64748B; --border:#E2E8F0; }
+}
+html, body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:17px; line-height:1.6; }
+.container { max-width:760px; margin:0 auto; padding:1rem 1.1rem 4rem; }
+header.top { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1rem; gap:0.5rem; }
+.logo { font-size:1.2rem; font-weight:800; background:linear-gradient(135deg, #14B8A6, #2563EB); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+.back { color:var(--text-dim); text-decoration:none; font-size:0.88rem; font-weight:600; }
+.hero { background:linear-gradient(135deg, #14B8A6, #2563EB); border-radius:18px; padding:1.3rem 1.4rem; color:white; margin-bottom:1.5rem; }
+.hero h1 { margin:0 0 0.4rem; font-size:1.4rem; font-weight:800; }
+.hero p { margin:0; font-size:0.95rem; opacity:0.95; line-height:1.55; }
+.hero .tags { display:flex; gap:0.4rem; margin-top:0.7rem; flex-wrap:wrap; }
+.hero .tag { background:rgba(255,255,255,0.22); padding:0.25rem 0.7rem; border-radius:999px; font-weight:700; font-size:0.78rem; }
+.toc { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin-bottom:1.5rem; }
+.toc h3 { margin:0 0 0.5rem; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); }
+.toc a { display:block; color:var(--text); text-decoration:none; padding:0.35rem 0; font-size:0.95rem; font-weight:600; }
+.toc a:hover { color:var(--accent); }
+h2 { font-size:1.3rem; margin:2rem 0 0.6rem; color:var(--accent); font-weight:800; padding-top:0.5rem; border-top:1px solid var(--border); }
+h2:first-of-type { border-top:none; padding-top:0; margin-top:1rem; }
+h3 { font-size:1.05rem; margin:1.3rem 0 0.5rem; font-weight:700; color:var(--text); }
+p { margin:0.6rem 0; }
+ul, ol { margin:0.4rem 0; padding-left:1.4rem; }
+li { margin:0.3rem 0; }
+sup { font-size:0.75em; }
+table { border-collapse:collapse; margin:0.6rem 0 1rem; width:100%; font-size:0.92rem; }
+th, td { border:1px solid var(--border); padding:0.4rem 0.7rem; text-align:left; }
+th { background:var(--bg-elevated); font-weight:700; }
+strong { color:var(--text); }
+code { font-family:-apple-system,"SF Mono",Menlo,monospace; background:var(--bg-elevated); padding:0.1rem 0.35rem; border-radius:4px; font-size:0.92em; }
+.callout { background:rgba(245,158,11,0.12); border-left:4px solid var(--orange); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.callout strong { color:var(--orange); }
+.tip-box { background:rgba(37,99,235,0.1); border-left:4px solid var(--accent); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.tip-box strong { color:var(--accent); }
+.example { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.example .ex-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--green); font-weight:700; margin-bottom:0.3rem; }
+.practice { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.practice .p-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent); font-weight:700; margin-bottom:0.3rem; }
+.practice .q { font-weight:600; margin:0.2rem 0 0.6rem; }
+.practice details { margin-top:0.7rem; }
+.practice summary { cursor:pointer; padding:0.55rem 0.9rem; background:linear-gradient(135deg, #14B8A6, #2563EB); color:white; border-radius:8px; font-weight:700; font-size:0.9rem; list-style:none; display:inline-block; }
+.practice summary::-webkit-details-marker { display:none; }
+.practice summary::before { content:"👁 "; }
+.practice details[open] summary::before { content:"🙈 "; }
+.practice .answer { margin-top:0.7rem; padding:0.85rem 1rem; background:var(--green-soft); border-left:3px solid var(--green); border-radius:0 10px 10px 0; font-size:0.92rem; line-height:1.55; }
+.practice .answer .ans-label { font-weight:800; color:var(--green); margin-right:0.4rem; }
+.big-final { background:linear-gradient(135deg, rgba(20,184,166,0.15), rgba(37,99,235,0.1)); border:1px solid var(--accent); border-radius:14px; padding:1.1rem 1.3rem; margin:1.5rem 0; }
+.big-final h3 { margin-top:0; color:var(--accent); }
+footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center; font-size:0.83rem; color:var(--text-dim); }
+footer a { color:var(--primary); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="top">
+    <a class="logo" href="index.html">➕➖ Lesson 6.02</a>
+    <a class="back" href="index.html">← Hub</a>
+  </header>
+
+  <div class="hero">
+    <h1>6.02 — Adding and Subtracting Polynomials</h1>
+    <p>Combine like terms, distribute the minus carefully, and use function notation (f + g)(x). One trap (the minus sign) accounts for most missed problems — kill it here.</p>
+    <div class="tags">
+      <span class="tag">10 practice problems</span>
+      <span class="tag">~30 min</span>
+      <span class="tag">Closure + (f±g)</span>
+    </div>
+  </div>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <a href="#sec-a">A. Like terms</a>
+    <a href="#sec-b">B. Combining like terms</a>
+    <a href="#sec-c">C. Adding polynomials</a>
+    <a href="#sec-d">D. Subtracting polynomials ⚠️ (the trap)</a>
+    <a href="#sec-e">E. Closure property</a>
+    <a href="#sec-f">F. (f + g)(x) and (f − g)(x)</a>
+    <a href="#sec-g">G. Word problems (perimeter, profit, totals)</a>
+    <a href="#sec-prac">H. Practice (10 problems)</a>
+    <a href="#sec-next">I. What to do next</a>
+  </div>
+
+  <h2 id="sec-a">A. Like terms</h2>
+  <p>Two terms are <strong>like terms</strong> if they have the <strong>same variables raised to the same exponents</strong>. The coefficients can differ.</p>
+  <table>
+    <tr><th>Pair</th><th>Like? Why</th></tr>
+    <tr><td><code>5x<sup>2</sup></code> &nbsp; and &nbsp; <code>−3x<sup>2</sup></code></td><td>✅ Same variable, same exponent (2)</td></tr>
+    <tr><td><code>7xy</code> &nbsp; and &nbsp; <code>−2yx</code></td><td>✅ Same variables, same exponents (order doesn't matter)</td></tr>
+    <tr><td><code>4x<sup>2</sup></code> &nbsp; and &nbsp; <code>4x<sup>3</sup></code></td><td>❌ Different exponents on x</td></tr>
+    <tr><td><code>8x</code> &nbsp; and &nbsp; <code>8y</code></td><td>❌ Different variables</td></tr>
+  </table>
+
+  <h2 id="sec-b">B. Combining like terms</h2>
+  <p>To combine like terms: <strong>add the coefficients</strong>, keep the variable part the same.</p>
+  <div class="example">
+    <span class="ex-tag">Example</span>
+    <p><code>5x<sup>2</sup> + 3x<sup>2</sup> = 8x<sup>2</sup></code> &nbsp;&nbsp;&nbsp;&nbsp; <code>7y − 2y = 5y</code> &nbsp;&nbsp;&nbsp;&nbsp; <code>4ab + ab = 5ab</code></p>
+  </div>
+
+  <h2 id="sec-c">C. Adding polynomials</h2>
+  <p>Drop the parentheses, line up like terms, add the coefficients.</p>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p><code>(3x<sup>3</sup> + 5x − 2) + (x<sup>3</sup> − 4x + 7)</code></p>
+    <ul>
+      <li>Drop parens: <code>3x<sup>3</sup> + 5x − 2 + x<sup>3</sup> − 4x + 7</code></li>
+      <li>Group like terms: <code>(3x<sup>3</sup> + x<sup>3</sup>) + (5x − 4x) + (−2 + 7)</code></li>
+      <li>Combine: <strong>4x<sup>3</sup> + x + 5</strong></li>
+    </ul>
+  </div>
+
+  <h2 id="sec-d">D. Subtracting polynomials ⚠️ (the trap)</h2>
+  <div class="callout"><strong>The single biggest mistake.</strong> When subtracting, you must <strong>distribute the negative to EVERY term in the second polynomial</strong> — not just the first one.</div>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p><code>(4x − 6) − (3x + 6)</code></p>
+    <ul>
+      <li>Distribute the minus: <code>4x − 6 <span style="color:var(--accent);">− 3x − 6</span></code> (the +6 became −6 ✓)</li>
+      <li>Combine: <code>(4x − 3x) + (−6 − 6)</code></li>
+      <li>Answer: <strong>x − 12</strong></li>
+    </ul>
+  </div>
+  <div class="example">
+    <span class="ex-tag">Harder worked example</span>
+    <p><code>(6x<sup>2</sup> + 2x<sup>3</sup> − 3) − (4x<sup>3</sup> − x<sup>2</sup> + 5)</code></p>
+    <ul>
+      <li>Distribute the minus: <code>6x<sup>2</sup> + 2x<sup>3</sup> − 3 <span style="color:var(--accent);">− 4x<sup>3</sup> + x<sup>2</sup> − 5</span></code> (all three signs flip!)</li>
+      <li>Group: <code>(2x<sup>3</sup> − 4x<sup>3</sup>) + (6x<sup>2</sup> + x<sup>2</sup>) + (−3 − 5)</code></li>
+      <li>Answer: <strong>−2x<sup>3</sup> + 7x<sup>2</sup> − 8</strong></li>
+    </ul>
+  </div>
+  <div class="tip-box"><strong>Watch the wording:</strong> "5x − 6 subtracted FROM 3x<sup>2</sup> − 6x + 2" means <code>(3x<sup>2</sup> − 6x + 2) − (5x − 6)</code>, not the other way around.</div>
+
+  <h2 id="sec-e">E. Closure property</h2>
+  <p>The <strong>closure property</strong> says: when you add OR subtract two polynomials, the result is ALWAYS another polynomial. (Same with multiplication. Division? Not always — that can create variables in the denominator.)</p>
+  <div class="tip-box"><strong>On a quiz:</strong> if the question asks "demonstrates that polynomials are closed under addition/subtraction," the right phrasing is <em>"the result WILL be a polynomial"</em> — not "may or may not be."</div>
+
+  <h2 id="sec-f">F. (f + g)(x) and (f − g)(x)</h2>
+  <p>If you have two functions f and g, then:</p>
+  <ul>
+    <li><strong>(f + g)(x) = f(x) + g(x)</strong> — add the outputs.</li>
+    <li><strong>(f − g)(x) = f(x) − g(x)</strong> — subtract the outputs (distribute the minus over g!).</li>
+    <li><strong>(f + g)(a) = f(a) + g(a)</strong> — plug a into each, then add.</li>
+  </ul>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>If f(x) = 2x − 9 and g(x) = x<sup>2</sup> + 3, find (f + g)(4).</p>
+    <ul>
+      <li>f(4) = 2(4) − 9 = −1</li>
+      <li>g(4) = 4<sup>2</sup> + 3 = 19</li>
+      <li>(f + g)(4) = −1 + 19 = <strong>18</strong></li>
+    </ul>
+  </div>
+
+  <h2 id="sec-g">G. Word problems</h2>
+
+  <h3>Perimeter (sum of side lengths)</h3>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Rectangle: length x + 6, width y − 1. Perimeter?</p>
+    <p>P = 2·length + 2·width = 2(x + 6) + 2(y − 1) = <strong>2x + 2y + 10</strong>.</p>
+  </div>
+
+  <h3>Profit = Revenue − Cost (a subtraction)</h3>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>A tablet sells for f(x) = 3x + 6000 and costs g(x) = 20x − 400 to make. Find profit at x = 300.</p>
+    <ul>
+      <li>f(300) = 3(300) + 6000 = $6,900 (revenue)</li>
+      <li>g(300) = 20(300) − 400 = $5,600 (cost)</li>
+      <li>Profit = (f − g)(300) = 6900 − 5600 = <strong>$1,300 profit</strong></li>
+    </ul>
+  </div>
+  <div class="callout"><strong>Trap:</strong> a (f − g) result represents <em>profit</em> (revenue minus cost), NOT cost. Read the question carefully.</div>
+
+  <h3>Combining quantities (calories, time, distance)</h3>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>f(x) = 2x + 210 calories burned exercising for x hours. g(x) = 2x + 125 deficit from diet. Find (f + g)(3).</p>
+    <ul>
+      <li>f(3) = 2(3) + 210 = 216</li>
+      <li>g(3) = 2(3) + 125 = 131</li>
+      <li>(f + g)(3) = <strong>347 calories total</strong> — combining diet with 3 hours of exercise.</li>
+    </ul>
+  </div>
+
+  <h2 id="sec-prac">H. Practice (10 problems)</h2>
+
+  <div class="practice">
+    <span class="p-tag">Problem 1</span>
+    <p class="q">Simplify <code>(4x − 6) + (5x + 1)</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">9x − 5.</span> 4x + 5x = 9x; −6 + 1 = −5.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 2</span>
+    <p class="q">Simplify <code>(4x − 6) − (3x + 6)</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">x − 12.</span> Distribute the minus: 4x − 6 − 3x − 6 → (4x − 3x) + (−6 − 6) = x − 12.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 3</span>
+    <p class="q">Simplify <code>(3x<sup>2</sup> − 2) + (2x<sup>2</sup> − 6x + 3)</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">5x<sup>2</sup> − 6x + 1.</span> 3x<sup>2</sup>+2x<sup>2</sup> = 5x<sup>2</sup>; −6x stays; −2+3 = 1.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 4</span>
+    <p class="q">Total distance: run 2x miles + cycle (x<sup>2</sup> + 7) miles + swim (x − 2) miles. Simplify.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">x<sup>2</sup> + 3x + 5.</span> 2x + x<sup>2</sup> + 7 + x − 2 → x<sup>2</sup> + 3x + 5.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 5</span>
+    <p class="q">Total commute = (2x − 6y) + (6x − 10y).</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">8x − 16y.</span> 2x + 6x = 8x; −6y − 10y = −16y.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 6</span>
+    <p class="q">Rectangle: length 5x + 3, width 2x − 1. Find perimeter; what does closure say about the result?</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">P = 14x + 4; the result IS always a polynomial.</span> P = 2(5x+3) + 2(2x−1) = 10x + 6 + 4x − 2 = 14x + 4. Closure: sums of polynomials are always polynomials.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 7</span>
+    <p class="q">Subtract <code>5x − 6</code> FROM <code>3x<sup>2</sup> − 6x + 2</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">3x<sup>2</sup> − 11x + 8 (and the result IS a polynomial).</span> (3x<sup>2</sup> − 6x + 2) − (5x − 6) = 3x<sup>2</sup> − 6x + 2 − 5x + 6 = 3x<sup>2</sup> − 11x + 8.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 8</span>
+    <p class="q">Simplify <code>(5x<sup>2</sup> + 2x − 6) − (3x<sup>2</sup> − 6x + 2)</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">2x<sup>2</sup> + 8x − 8.</span> Distribute the minus: 5x<sup>2</sup>+2x−6 − 3x<sup>2</sup>+6x−2 → (5−3)x<sup>2</sup> + (2+6)x + (−6−2) = 2x<sup>2</sup> + 8x − 8.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 9</span>
+    <p class="q">f(x) = 3x − 5, g(x) = x<sup>2</sup> + 2. Find (f + g)(3).</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">15.</span> f(3) = 4; g(3) = 11; sum = 15.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 10</span>
+    <p class="q">f(x) = 3x + 6000 (revenue), g(x) = 20x − 400 (cost). Find (f − g)(300) and explain.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">$1,300 PROFIT from 300 tablets.</span> f(300) = 6900; g(300) = 5600; f − g = 1300. Revenue − cost = profit (not cost).</div></details>
+  </div>
+
+  <div class="big-final">
+    <h3>🔑 Key things to remember</h3>
+    <ul>
+      <li><strong>Distribute the minus to EVERY term</strong> when subtracting — this is the #1 mistake. Both <code>−(3x + 6) = −3x − 6</code> and <code>−(4x<sup>3</sup> − x<sup>2</sup> + 5) = −4x<sup>3</sup> + x<sup>2</sup> − 5</code>.</li>
+      <li><strong>"A subtracted FROM B"</strong> = B − A, not A − B. Always.</li>
+      <li><strong>Closure:</strong> sum or difference of polynomials is ALWAYS a polynomial.</li>
+      <li><strong>(f + g)(a) = f(a) + g(a)</strong> — plug in first, then add.</li>
+      <li><strong>Profit = revenue − cost</strong> — when a word problem subtracts two functions, name the result (profit, deficit, savings) — don't just say "cost."</li>
+    </ul>
+  </div>
+
+  <h2 id="sec-next">I. What to do next</h2>
+  <ol>
+    <li>Drill the <a href="sim-quiz-6-00.html">Module 6 sim quiz</a> — questions 4-7 cover 6.02.</li>
+    <li>Move to Lesson 6.03 (exponent rules) when it's ready.</li>
+  </ol>
+
+  <footer>
+    <p><a href="lesson-6-01.html">← 6.01</a> · <a href="index.html">Hub</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

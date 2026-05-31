@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6.01 Lesson — Characteristics of Polynomials</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #14B8A6;
+  --accent: #2563EB; --accent-2: #14B8A6;
+  --green: #10B981; --green-soft: rgba(16,185,129,0.18);
+  --red: #EF4444; --red-soft: rgba(239,68,68,0.18);
+  --orange: #F59E0B;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg:#F8FAFC; --bg-card:#FFFFFF; --bg-elevated:#F1F5F9; --text:#1A1A1A; --text-dim:#64748B; --border:#E2E8F0; }
+}
+html, body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:17px; line-height:1.6; }
+.container { max-width:760px; margin:0 auto; padding:1rem 1.1rem 4rem; }
+header.top { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1rem; gap:0.5rem; }
+.logo { font-size:1.2rem; font-weight:800; background:linear-gradient(135deg, #14B8A6, #2563EB); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+.back { color:var(--text-dim); text-decoration:none; font-size:0.88rem; font-weight:600; }
+.hero { background:linear-gradient(135deg, #14B8A6, #2563EB); border-radius:18px; padding:1.3rem 1.4rem; color:white; margin-bottom:1.5rem; }
+.hero h1 { margin:0 0 0.4rem; font-size:1.4rem; font-weight:800; }
+.hero p { margin:0; font-size:0.95rem; opacity:0.95; line-height:1.55; }
+.hero .tags { display:flex; gap:0.4rem; margin-top:0.7rem; flex-wrap:wrap; }
+.hero .tag { background:rgba(255,255,255,0.22); padding:0.25rem 0.7rem; border-radius:999px; font-weight:700; font-size:0.78rem; }
+.toc { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin-bottom:1.5rem; }
+.toc h3 { margin:0 0 0.5rem; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); }
+.toc a { display:block; color:var(--text); text-decoration:none; padding:0.35rem 0; font-size:0.95rem; font-weight:600; }
+.toc a:hover { color:var(--accent); }
+h2 { font-size:1.3rem; margin:2rem 0 0.6rem; color:var(--accent); font-weight:800; padding-top:0.5rem; border-top:1px solid var(--border); }
+h2:first-of-type { border-top:none; padding-top:0; margin-top:1rem; }
+h3 { font-size:1.05rem; margin:1.3rem 0 0.5rem; font-weight:700; color:var(--text); }
+p { margin:0.6rem 0; }
+ul, ol { margin:0.4rem 0; padding-left:1.4rem; }
+li { margin:0.3rem 0; }
+sup { font-size:0.75em; }
+table { border-collapse:collapse; margin:0.6rem 0 1rem; width:100%; font-size:0.92rem; }
+th, td { border:1px solid var(--border); padding:0.4rem 0.7rem; text-align:left; }
+th { background:var(--bg-elevated); font-weight:700; }
+strong { color:var(--text); }
+code { font-family:-apple-system,"SF Mono",Menlo,monospace; background:var(--bg-elevated); padding:0.1rem 0.35rem; border-radius:4px; font-size:0.92em; }
+.callout { background:rgba(245,158,11,0.12); border-left:4px solid var(--orange); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.callout strong { color:var(--orange); }
+.tip-box { background:rgba(37,99,235,0.1); border-left:4px solid var(--accent); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.tip-box strong { color:var(--accent); }
+.example { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.example .ex-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--green); font-weight:700; margin-bottom:0.3rem; }
+.practice { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.practice .p-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent); font-weight:700; margin-bottom:0.3rem; }
+.practice .q { font-weight:600; margin:0.2rem 0 0.6rem; }
+.practice details { margin-top:0.7rem; }
+.practice summary { cursor:pointer; padding:0.55rem 0.9rem; background:linear-gradient(135deg, #14B8A6, #2563EB); color:white; border-radius:8px; font-weight:700; font-size:0.9rem; list-style:none; display:inline-block; }
+.practice summary::-webkit-details-marker { display:none; }
+.practice summary::before { content:"👁 "; }
+.practice details[open] summary::before { content:"🙈 "; }
+.practice .answer { margin-top:0.7rem; padding:0.85rem 1rem; background:var(--green-soft); border-left:3px solid var(--green); border-radius:0 10px 10px 0; font-size:0.92rem; line-height:1.55; }
+.practice .answer .ans-label { font-weight:800; color:var(--green); margin-right:0.4rem; }
+.big-final { background:linear-gradient(135deg, rgba(20,184,166,0.15), rgba(37,99,235,0.1)); border:1px solid var(--accent); border-radius:14px; padding:1.1rem 1.3rem; margin:1.5rem 0; }
+.big-final h3 { margin-top:0; color:var(--accent); }
+footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center; font-size:0.83rem; color:var(--text-dim); }
+footer a { color:var(--primary); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="top">
+    <a class="logo" href="index.html">🧮 Lesson 6.01</a>
+    <a class="back" href="index.html">← Hub</a>
+  </header>
+
+  <div class="hero">
+    <h1>6.01 — Characteristics of Polynomials</h1>
+    <p>The vocabulary of polynomials: terms, degree, standard form, and what's NOT a polynomial. Lock this in and the rest of Module 6 gets easy.</p>
+    <div class="tags">
+      <span class="tag">10 practice problems</span>
+      <span class="tag">~30 min</span>
+      <span class="tag">Module 6 start</span>
+    </div>
+  </div>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <a href="#sec-a">A. What is a polynomial?</a>
+    <a href="#sec-b">B. Counting terms (mono-, bi-, tri-, poly-)</a>
+    <a href="#sec-c">C. Degree (single variable)</a>
+    <a href="#sec-d">D. Degree with multiple variables ⚠️</a>
+    <a href="#sec-e">E. Standard form (descending degree)</a>
+    <a href="#sec-f">F. Classifying by degree name</a>
+    <a href="#sec-g">G. Non-examples — what is NOT a polynomial</a>
+    <a href="#sec-prac">H. Practice (10 problems)</a>
+    <a href="#sec-next">I. What to do next</a>
+  </div>
+
+  <h2 id="sec-a">A. What is a polynomial?</h2>
+  <p>A <strong>polynomial</strong> is an expression made of <strong>terms</strong> added or subtracted together. Each term is a number (the <strong>coefficient</strong>) times one or more variables raised to <strong>whole-number powers</strong> (0, 1, 2, 3, …).</p>
+  <div class="example">
+    <span class="ex-tag">Examples</span>
+    <p><code>3x<sup>2</sup> − 5x + 7</code> &nbsp;&nbsp; <code>x<sup>3</sup>y + 4xy − 2</code> &nbsp;&nbsp; <code>9</code> &nbsp;&nbsp; <code>−4x</code></p>
+    <p style="margin-top:0.4rem; color:var(--text-dim); font-size:0.88rem;">Even just <code>9</code> counts (constant) and <code>−4x</code> counts (monomial).</p>
+  </div>
+
+  <h2 id="sec-b">B. Counting terms</h2>
+  <p>Terms are separated by <strong>+ or −</strong>. The name depends on how many there are:</p>
+  <table>
+    <tr><th>Terms</th><th>Name</th><th>Example</th></tr>
+    <tr><td>1</td><td>Monomial</td><td><code>7x<sup>3</sup></code></td></tr>
+    <tr><td>2</td><td>Binomial</td><td><code>2x + 5</code></td></tr>
+    <tr><td>3</td><td>Trinomial</td><td><code>x<sup>2</sup> + 3x − 4</code></td></tr>
+    <tr><td>4+</td><td>(just) Polynomial</td><td><code>x<sup>3</sup> − 2x<sup>2</sup> + x − 6</code></td></tr>
+  </table>
+  <div class="tip-box"><strong>Tip:</strong> Count by looking at the + and − signs between terms. <code>5x − 4 + 2y<sup>3</sup>x − 9</code> has 4 terms (a polynomial).</div>
+
+  <h2 id="sec-c">C. Degree — single variable</h2>
+  <p>With one variable, the <strong>degree</strong> of a term is the variable's exponent. The <strong>degree of the polynomial</strong> is the <strong>highest</strong> degree among its terms.</p>
+  <div class="example">
+    <span class="ex-tag">Example</span>
+    <p>In <code>2x<sup>4</sup> − 8x<sup>5</sup> − 2x<sup>2</sup> + 5</code>:<br>
+    Term degrees: 4, 5, 2, 0. <strong>Polynomial degree = 5</strong> (the highest).</p>
+  </div>
+
+  <h2 id="sec-d">D. Degree with multiple variables ⚠️</h2>
+  <div class="callout"><strong>This is the #1 trap.</strong> For a term with more than one variable, the term's degree is the <strong>SUM</strong> of the exponents, not just one of them.</div>
+  <div class="example">
+    <span class="ex-tag">Example — the trap</span>
+    <p><code>3y<sup>3</sup>x</code> has exponents 3 (on y) and 1 (on x). Its degree = 3 + 1 = <strong>4</strong>, not 3.</p>
+  </div>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>What is the degree of <code>9x<sup>2</sup>y − 4x + 3y<sup>3</sup>x − 2y<sup>2</sup></code>?</p>
+    <ul>
+      <li><code>9x<sup>2</sup>y</code>: 2 + 1 = <strong>3</strong></li>
+      <li><code>−4x</code>: <strong>1</strong></li>
+      <li><code>3y<sup>3</sup>x</code>: 3 + 1 = <strong>4</strong></li>
+      <li><code>−2y<sup>2</sup></code>: <strong>2</strong></li>
+    </ul>
+    <p>Polynomial degree = highest = <strong>4</strong>.</p>
+  </div>
+
+  <h2 id="sec-e">E. Standard form (descending degree)</h2>
+  <p>Standard form means writing the terms in order of <strong>decreasing degree</strong> (highest first).</p>
+  <div class="example">
+    <span class="ex-tag">Example</span>
+    <p>Standard form of <code>−3x<sup>8</sup> + 9x<sup>2</sup> + 10x</code>? Degrees are 8, 2, 1 — already descending ✓.</p>
+    <p>Standard form of the polynomial in section D:<br><code>3y<sup>3</sup>x + 9x<sup>2</sup>y − 2y<sup>2</sup> − 4x</code> (degrees 4, 3, 2, 1).</p>
+  </div>
+  <div class="tip-box"><strong>Tip:</strong> compute every term's degree first, then write them out in descending order.</div>
+
+  <h2 id="sec-f">F. Classifying by degree name</h2>
+  <table>
+    <tr><th>Degree</th><th>Name</th><th>Example</th></tr>
+    <tr><td>0</td><td>Constant</td><td><code>7</code></td></tr>
+    <tr><td>1</td><td>Linear</td><td><code>6x + 6</code> &nbsp; or just <code>−2x</code></td></tr>
+    <tr><td>2</td><td>Quadratic</td><td><code>5x<sup>2</sup> + 9x − 1</code></td></tr>
+    <tr><td>3</td><td>Cubic</td><td><code>10x<sup>3</sup> − 6x<sup>2</sup> − 9x + 12</code></td></tr>
+    <tr><td>4</td><td>Quartic</td><td><code>x<sup>4</sup> − 3x<sup>2</sup> + 1</code></td></tr>
+    <tr><td>5</td><td>Quintic</td><td><code>2x<sup>5</sup> − x</code></td></tr>
+  </table>
+  <div class="tip-box"><strong>Combine the two names:</strong> "3rd-degree binomial" = degree 3 AND 2 terms (e.g. <code>4x<sup>3</sup> − 7</code>). The degree name and the term-count name are independent — say both.</div>
+
+  <h2 id="sec-g">G. Non-examples — what is NOT a polynomial</h2>
+  <p>A polynomial must have <strong>only whole-number exponents</strong> on its variables, with <strong>no variables in denominators</strong> or under roots. Anything else disqualifies it:</p>
+  <table>
+    <tr><th>Expression</th><th>Why it's NOT a polynomial</th></tr>
+    <tr><td><code>3/x<sup>2</sup></code> or <code>5x<sup>−2</sup></code></td><td>variable in denominator / negative exponent</td></tr>
+    <tr><td><code>√x</code> or <code>x<sup>1/2</sup></code></td><td>variable in a root / fractional exponent</td></tr>
+    <tr><td><code>2<sup>x</sup></code></td><td>variable in the exponent (that's exponential, not polynomial)</td></tr>
+    <tr><td><code>1/(x + 4)</code></td><td>variable in denominator</td></tr>
+  </table>
+  <div class="callout"><strong>Quiz watch-out:</strong> if a fraction shows a variable on the bottom (like <code>33y<sup>2</sup>/x<sup>2</sup></code>), pick <em>"variable in the denominator"</em> or <em>"negative exponent"</em> — they describe the same violation.</div>
+
+  <h2 id="sec-prac">H. Practice (10 problems)</h2>
+
+  <div class="practice">
+    <span class="p-tag">Problem 1</span>
+    <p class="q">Classify <code>6x − 4x<sup>3</sup> + 9x<sup>5</sup> − 2</code> by degree and number of terms.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">5th-degree polynomial with 4 terms.</span> Highest power is 5 (in 9x<sup>5</sup>). Four terms.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 2</span>
+    <p class="q">Which is in standard form? &nbsp; (a) <code>5x<sup>2</sup> + 2x<sup>5</sup> + 7</code> &nbsp; (b) <code>2x<sup>6</sup> − 4x<sup>3</sup> + x</code> &nbsp; (c) <code>x − 3x<sup>4</sup> + 8x<sup>2</sup></code></p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">(b).</span> Degrees 6, 3, 1 — fully descending. (a) jumps 2, 5, 0; (c) jumps 1, 4, 2.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 3</span>
+    <p class="q">Find the degree of <code>x<sup>2</sup>y − 7xy + xyz + x</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">3.</span> Term degrees: x<sup>2</sup>y → 3, −7xy → 2, xyz → 3, x → 1. Highest is 3.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 4</span>
+    <p class="q">Order by degree (least → greatest): &nbsp; I. <code>6x<sup>2</sup></code> &nbsp; II. <code>18x<sup>3</sup> + 5ab − 6y</code> &nbsp; III. <code>8a − 5</code> &nbsp; IV. <code>4x<sup>3</sup>y + 3x<sup>2</sup> − xy − 4</code></p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">III, I, II, IV.</span> Degrees: I=2, II=3 (the x<sup>3</sup>), III=1, IV=4 (the x<sup>3</sup>y → 3+1=4).</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 5</span>
+    <p class="q">Order by number of terms (greatest → least): &nbsp; I. <code>x + 2xyz</code> &nbsp; II. <code>3x + y + z</code> &nbsp; III. <code>2x<sup>2</sup>y + x<sup>2</sup> − 3x + 4</code> &nbsp; IV. <code>9x<sup>2</sup>yz</code></p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">III, II, I, IV.</span> Term counts: III=4, II=3, I=2, IV=1.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 6</span>
+    <p class="q">Which is a <strong>3rd-degree binomial</strong>? &nbsp; (a) <code>2x<sup>3</sup> + x − 5</code> &nbsp; (b) <code>4x<sup>3</sup> − 7</code> &nbsp; (c) <code>5x<sup>2</sup> − 9</code> &nbsp; (d) <code>x<sup>3</sup></code></p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">(b).</span> Binomial = 2 terms; degree 3 = highest exponent 3. (a) is a trinomial; (c) is degree 2; (d) is a monomial.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 7</span>
+    <p class="q">Classify <code>−2x</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">Linear monomial</span> (degree 1, 1 term).</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 8</span>
+    <p class="q">Why is <code>33y<sup>2</sup>/x<sup>2</sup></code> NOT a polynomial?</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">Variable in the denominator</span> (equivalently: x has a negative exponent, x<sup>−2</sup>). Polynomials cannot have variables in the denominator.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 9</span>
+    <p class="q">Identify the cubic expression: &nbsp; (a) <code>19x<sup>4</sup> + 18x<sup>3</sup> − 16x<sup>2</sup> − 12x + 1</code> &nbsp; (b) <code>10x<sup>3</sup> − 6x<sup>2</sup> − 9x + 12</code> &nbsp; (c) <code>−9x<sup>2</sup> − 3x + 4</code> &nbsp; (d) <code>4x + 3</code></p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">(b).</span> Cubic = degree 3. (a) is quartic, (c) quadratic, (d) linear.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 10</span>
+    <p class="q">Put in standard form: <code>9x<sup>2</sup>y − 4x + 3y<sup>3</sup>x − 2y<sup>2</sup></code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">3y<sup>3</sup>x + 9x<sup>2</sup>y − 2y<sup>2</sup> − 4x.</span> Term degrees: 9x<sup>2</sup>y → 3, −4x → 1, 3y<sup>3</sup>x → 4, −2y<sup>2</sup> → 2. Descending: 4, 3, 2, 1.</div></details>
+  </div>
+
+  <div class="big-final">
+    <h3>🔑 Key things to remember</h3>
+    <ul>
+      <li><strong>Multi-variable degree = SUM of exponents in each term.</strong> 3y<sup>3</sup>x is degree 4, not 3.</li>
+      <li><strong>Standard form = descending degree.</strong> Compute every term's degree first.</li>
+      <li><strong>Degree name + term-count name are independent.</strong> "5th-degree binomial" = degree 5 with 2 terms.</li>
+      <li><strong>Not a polynomial:</strong> variable in denominator, variable in a root, fractional or negative exponent, or variable in the exponent (2<sup>x</sup>).</li>
+    </ul>
+  </div>
+
+  <h2 id="sec-next">I. What to do next</h2>
+  <ol>
+    <li>Take the <a href="sim-quiz-6-00.html">Module 6 sim quiz</a> — questions 1-3 cover 6.01.</li>
+    <li>Move to <a href="lesson-6-02.html">Lesson 6.02 — Adding &amp; Subtracting Polynomials</a>.</li>
+  </ol>
+
+  <footer>
+    <p><a href="index.html">← Hub</a> · <a href="lesson-6-02.html">Next: 6.02 →</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
