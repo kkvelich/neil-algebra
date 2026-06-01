@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>6.07 DBA Prep — Polynomial Operations Discussion-Based Assessment</title>
+<title>6.07 Written DBA — Module 6 Reflection</title>
 <style>
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 :root {
@@ -40,25 +40,24 @@ p { margin:0.6rem 0; }
 ul, ol { margin:0.4rem 0; padding-left:1.4rem; }
 li { margin:0.3rem 0; }
 sup { font-size:0.75em; }
-table { border-collapse:collapse; margin:0.6rem 0 1rem; width:100%; font-size:0.92rem; }
-th, td { border:1px solid var(--border); padding:0.4rem 0.7rem; text-align:left; }
-th { background:var(--bg-elevated); font-weight:700; }
 strong { color:var(--text); }
 code { font-family:-apple-system,"SF Mono",Menlo,monospace; background:var(--bg-elevated); padding:0.1rem 0.35rem; border-radius:4px; font-size:0.92em; }
 .callout { background:rgba(245,158,11,0.12); border-left:4px solid var(--orange); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
 .callout strong { color:var(--orange); }
 .tip-box { background:rgba(37,99,235,0.1); border-left:4px solid var(--accent); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
 .tip-box strong { color:var(--accent); }
-.qa { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
-.qa .q-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent); font-weight:700; margin-bottom:0.3rem; }
-.qa .q { font-weight:700; margin:0.2rem 0 0.5rem; }
-.qa details { margin-top:0.5rem; }
-.qa summary { cursor:pointer; padding:0.55rem 0.9rem; background:linear-gradient(135deg, #14B8A6, #2563EB); color:white; border-radius:8px; font-weight:700; font-size:0.9rem; list-style:none; display:inline-block; }
-.qa summary::-webkit-details-marker { display:none; }
-.qa summary::before { content:"🗣 say it out loud, then check  "; }
-.qa details[open] summary::before { content:"🙈 hide  "; }
-.qa .answer { margin-top:0.7rem; padding:0.85rem 1rem; background:var(--green-soft); border-left:3px solid var(--green); border-radius:0 10px 10px 0; font-size:0.92rem; line-height:1.55; }
-.qa .answer .ans-label { font-weight:800; color:var(--green); margin-right:0.4rem; }
+.qbox { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.qbox .q-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent); font-weight:800; margin-bottom:0.3rem; }
+.qbox .q-prompt { font-weight:700; margin:0.2rem 0 0.6rem; line-height:1.5; }
+details { margin-top:0.7rem; }
+summary { cursor:pointer; padding:0.55rem 0.9rem; background:linear-gradient(135deg, #14B8A6, #2563EB); color:white; border-radius:8px; font-weight:700; font-size:0.9rem; list-style:none; display:inline-block; }
+summary::-webkit-details-marker { display:none; }
+summary::before { content:"✍️ draft yours first, then see a sample  "; }
+details[open] summary::before { content:"🙈 hide  "; }
+.answer { margin-top:0.7rem; padding:0.85rem 1rem; background:var(--green-soft); border-left:3px solid var(--green); border-radius:0 10px 10px 0; font-size:0.92rem; line-height:1.6; }
+.answer .ans-label { font-weight:800; color:var(--green); margin-right:0.4rem; }
+.answer .alt { margin-top:0.6rem; padding-top:0.5rem; border-top:1px dashed var(--border); font-size:0.88rem; color:var(--text-dim); }
+.answer .alt strong { color:var(--text); }
 .checklist { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1.1rem 1.2rem; margin:1rem 0; }
 .checklist label { display:flex; align-items:flex-start; gap:0.6rem; padding:0.4rem 0; cursor:pointer; font-size:0.95rem; line-height:1.5; }
 .checklist input[type=checkbox] { margin-top:0.3rem; width:18px; height:18px; cursor:pointer; flex-shrink:0; }
@@ -73,175 +72,115 @@ footer a { color:var(--primary); text-decoration:none; }
 <div class="container">
 
   <header class="top">
-    <a class="logo" href="index.html">🗣 6.07 DBA Prep</a>
+    <a class="logo" href="index.html">✍️ 6.07 DBA</a>
     <a class="back" href="index.html">← Hub</a>
   </header>
 
   <div class="hero">
-    <h1>6.07 — Discussion-Based Assessment Prep</h1>
-    <p>The DBA is a short verbal check (a phone or video call with your teacher, roughly 10–15 min). She asks you to <strong>explain</strong> Module 6 concepts and walk through example problems out loud — no multiple choice, no formulas to memorize, just demonstrating that you understand the material.</p>
+    <h1>6.07 — Polynomial Operations DBA (written)</h1>
+    <p>Mrs. Goldstein's DBA is a <strong>typed reflection</strong>: 4 questions, write 2–4 thoughtful sentences each. Draft your own first, then check a sample. The reflection questions (2–4) should be <strong>specific to you</strong> — generic answers lose points.</p>
     <div class="tags">
-      <span class="tag">Verbal</span>
-      <span class="tag">All of Module 6</span>
-      <span class="tag">Show your understanding</span>
+      <span class="tag">4 questions · type in Buzz</span>
+      <span class="tag">2–4 sentences each</span>
+      <span class="tag">~15 min</span>
     </div>
   </div>
 
-  <div class="callout"><strong>The DBA grades how well you can explain</strong> — not whether you got every number right. If you blank on arithmetic, that's OK. If you can't describe the method, that's the problem. Practice talking through the steps out loud, in your own words.</div>
+  <div class="callout"><strong>What earns points:</strong> specific examples (not "I learned a lot"), honest self-assessment, and one concrete thing you'd change or a tool you'd use. The math question (Q1) wants a real example of each, not just a definition.</div>
 
   <div class="toc">
-    <h3>Likely talking-point areas (one per sub-topic)</h3>
-    <a href="#sec-601">6.01 — Classifying polynomials</a>
-    <a href="#sec-602">6.02 — Adding &amp; subtracting + closure</a>
-    <a href="#sec-603">6.03 — Exponent rules</a>
-    <a href="#sec-604">6.04 — Multiplying polynomials</a>
-    <a href="#sec-605">6.05 — Function composition</a>
-    <a href="#sec-tips">How to talk on a DBA</a>
-    <a href="#sec-checklist">Final checklist</a>
+    <h3>The 4 questions</h3>
+    <a href="#q1">Q1 — 3rd-degree binomial vs. 2nd-degree trinomial</a>
+    <a href="#q2">Q2 — One challenge in this unit and how you overcame it</a>
+    <a href="#q3">Q3 — Are you taking good notes? Pacing?</a>
+    <a href="#q4">Q4 — Do you read the announcements?</a>
+    <a href="#sec-tips">Tips for typing your answers</a>
+    <a href="#sec-checklist">Pre-submit checklist</a>
   </div>
 
-  <h2 id="sec-601">6.01 — Classifying polynomials</h2>
-
-  <div class="qa">
-    <span class="q-tag">Likely DBA question</span>
-    <p class="q">What is a polynomial? Give an example of something that is NOT a polynomial, and explain why.</p>
+  <h2 id="q1">Q1 — What's the difference between a 3rd-degree binomial and a 2nd-degree trinomial? Give an example of both.</h2>
+  <div class="qbox">
+    <span class="q-tag">Math content — the answer is specific</span>
+    <p class="q-prompt">Define each clearly and provide ONE example of each.</p>
     <details><summary></summary>
-      <div class="answer"><span class="ans-label">Talk through this:</span> A polynomial is an expression made of terms added or subtracted, where each term is a number times one or more variables raised to <strong>whole-number powers</strong> (0, 1, 2, 3, …). For example, <code>3x<sup>2</sup> − 5x + 7</code> is a polynomial.
-      <br><br>Something like <code>3/x<sup>2</sup></code> is NOT a polynomial because it has a variable in the denominator (equivalently, a negative exponent: x<sup>−2</sup>). Other non-examples: anything with a variable under a square root (<code>√x</code>), a fractional exponent (<code>x<sup>1/2</sup></code>), or a variable in the exponent (<code>2<sup>x</sup></code>).</div>
+      <div class="answer"><span class="ans-label">Sample answer (2–4 sentences):</span>
+      A third-degree binomial has a degree of <strong>3</strong> (its highest exponent is 3) and exactly <strong>2 terms</strong> — for example, <code>4x<sup>3</sup> − 7</code>. A second-degree trinomial has a degree of <strong>2</strong> and exactly <strong>3 terms</strong> — for example, <code>5x<sup>2</sup> + 9x − 1</code>. The two differ in both the highest exponent (3 vs. 2) and the number of terms (2 vs. 3).
+      <div class="alt"><strong>Other valid examples:</strong> a 3rd-degree binomial = <code>x<sup>3</sup> − 8</code> or <code>2y<sup>3</sup> + 5</code>. A 2nd-degree trinomial = <code>x<sup>2</sup> − 6x + 9</code> or <code>3a<sup>2</sup> + 2a − 1</code>.</div></div>
     </details>
   </div>
 
-  <div class="qa">
-    <span class="q-tag">Likely DBA question</span>
-    <p class="q">How do you classify a polynomial like <code>3y<sup>3</sup>x + 9x<sup>2</sup>y − 2y<sup>2</sup> − 4x</code> by degree and number of terms? What's "standard form"?</p>
+  <h2 id="q2">Q2 — What's one challenge you had in this unit? How did you overcome it?</h2>
+  <div class="qbox">
+    <span class="q-tag">Reflection — make it specific to you</span>
+    <p class="q-prompt">Name ONE concrete challenge (not "everything was hard") and a real fix that worked. Use the sample as a starting frame.</p>
     <details><summary></summary>
-      <div class="answer"><span class="ans-label">Talk through this:</span> Count the terms — they're separated by + or −. Four terms here, so it's a polynomial (1 = monomial, 2 = binomial, 3 = trinomial, 4+ = "polynomial"). For degree with multiple variables, I add the exponents in each term: 3y<sup>3</sup>x → 3+1 = 4; 9x<sup>2</sup>y → 2+1 = 3; −2y<sup>2</sup> → 2; −4x → 1. The polynomial's degree is the highest, which is <strong>4</strong>.
-      <br><br>Standard form means writing the terms in <strong>descending order of degree</strong>: 3y<sup>3</sup>x + 9x<sup>2</sup>y − 2y<sup>2</sup> − 4x (degrees 4, 3, 2, 1).</div>
-    </details>
-  </div>
-
-  <h2 id="sec-602">6.02 — Adding &amp; subtracting + closure</h2>
-
-  <div class="qa">
-    <span class="q-tag">Likely DBA question</span>
-    <p class="q">Walk me through subtracting <code>(5x<sup>2</sup> + 2x − 6) − (3x<sup>2</sup> − 6x + 2)</code>. What's the most common mistake?</p>
-    <details><summary></summary>
-      <div class="answer"><span class="ans-label">Talk through this:</span> First, distribute the negative to <strong>every term</strong> in the second polynomial — that's the most common mistake. So I rewrite it as: 5x<sup>2</sup> + 2x − 6 − 3x<sup>2</sup> + 6x − 2. Then I combine like terms: x<sup>2</sup> terms: 5 − 3 = 2 → 2x<sup>2</sup>. x terms: 2 + 6 = 8 → 8x. Constants: −6 − 2 = −8. So the answer is <strong>2x<sup>2</sup> + 8x − 8</strong>. People forget to flip the signs on the second and third terms.</div>
-    </details>
-  </div>
-
-  <div class="qa">
-    <span class="q-tag">Likely DBA question</span>
-    <p class="q">What is the closure property? Are polynomials closed under all four operations?</p>
-    <details><summary></summary>
-      <div class="answer"><span class="ans-label">Talk through this:</span> Closure means: when you combine two things from a set using an operation, the result stays in that set. Polynomials are closed under <strong>addition, subtraction, and multiplication</strong> — adding, subtracting, or multiplying two polynomials always gives another polynomial.
-      <br><br>Polynomials are NOT closed under division. Dividing two polynomials can give you a result with a variable in the denominator (like (x+1)/(x−2)), which isn't a polynomial.</div>
-    </details>
-  </div>
-
-  <h2 id="sec-603">6.03 — Exponent rules</h2>
-
-  <div class="qa">
-    <span class="q-tag">Likely DBA question</span>
-    <p class="q">What are the main exponent rules? Pick one and show me an example.</p>
-    <details><summary></summary>
-      <div class="answer"><span class="ans-label">Talk through this:</span> The big rules are:
-      <ul>
-        <li><strong>Product</strong> (same base): add exponents. <code>x<sup>3</sup> · x<sup>5</sup> = x<sup>8</sup></code>.</li>
-        <li><strong>Quotient</strong>: subtract exponents. <code>x<sup>7</sup>/x<sup>3</sup> = x<sup>4</sup></code>.</li>
-        <li><strong>Power of a power</strong>: multiply exponents. <code>(x<sup>2</sup>)<sup>5</sup> = x<sup>10</sup></code>.</li>
-        <li><strong>Power of a product</strong>: distribute the exponent. <code>(3x)<sup>4</sup> = 3<sup>4</sup>x<sup>4</sup> = 81x<sup>4</sup></code>. Don't forget the coefficient!</li>
-        <li><strong>Negative exponent</strong>: flip across the bar. <code>x<sup>−2</sup> = 1/x<sup>2</sup></code>.</li>
-        <li><strong>Zero exponent</strong>: anything to the 0 = 1.</li>
+      <div class="answer"><span class="ans-label">Sample answer (most common Module 6 struggle):</span>
+      One thing that tripped me up early was <strong>subtracting polynomials</strong> — I kept forgetting to distribute the negative across every term of the second polynomial, which gave me wrong signs on the middle terms. I overcame it by writing an extra step where I rewrite the subtraction with all the signs already flipped before combining like terms. After doing it a few times the pattern stuck, and on 6.02 I stopped making sign errors.
+      <div class="alt"><strong>Pick whichever feels true:</strong>
+      <ul style="margin-top:0.3rem;">
+        <li><strong>Multi-variable degree</strong> ("I forgot the degree of a term like 3y<sup>3</sup>x adds the exponents → degree 4, not 3").</li>
+        <li><strong>Perfect-square middle term</strong> ("I kept writing (x − 9)<sup>2</sup> = x<sup>2</sup> + 81 and missing the −18x").</li>
+        <li><strong>Function composition order</strong> ("I had to learn which function goes inside in word problems — the action that happens first").</li>
+        <li><strong>Exponent rules</strong> ("I confused power-of-a-power with product rule — multiplied when I should have added").</li>
       </ul>
-      Pick one and explain the rule in your own words plus do a quick example.</div>
+      Then say HOW you fixed it: re-read the lesson, practiced more, made a sticky-note rule, did sim quizzes till it stuck, etc.</div></div>
     </details>
   </div>
 
-  <h2 id="sec-604">6.04 — Multiplying polynomials</h2>
-
-  <div class="qa">
-    <span class="q-tag">Likely DBA question</span>
-    <p class="q">Walk me through multiplying <code>(2x − 3)(x<sup>2</sup> + 4x − 5)</code>. What method do you use?</p>
+  <h2 id="q3">Q3 — Notes &amp; pacing self-assessment</h2>
+  <div class="qbox">
+    <span class="q-tag">Reflection — be honest</span>
+    <p class="q-prompt">Mrs. Goldstein asks four things: Are you taking good notes? Are they organized? Are you rushing/steady/too slow? What helps OR what could you improve? Hit each part.</p>
     <details><summary></summary>
-      <div class="answer"><span class="ans-label">Talk through this:</span> I distribute each term of the first polynomial across the trinomial — basically an extended FOIL.
-      <br><br>First, 2x times the trinomial: 2x · x<sup>2</sup> = 2x<sup>3</sup>; 2x · 4x = 8x<sup>2</sup>; 2x · (−5) = −10x.
-      <br>Then −3 times the trinomial: −3 · x<sup>2</sup> = −3x<sup>2</sup>; −3 · 4x = −12x; −3 · (−5) = 15.
-      <br>I add everything together and combine like terms: 2x<sup>3</sup> + (8 − 3)x<sup>2</sup> + (−10 − 12)x + 15 = <strong>2x<sup>3</sup> + 5x<sup>2</sup> − 22x + 15</strong>.</div>
+      <div class="answer"><span class="ans-label">Sample answer (steady + organized + one honest improvement):</span>
+      I'm working at a <strong>steady pace</strong> and my notes are organized by sub-topic (6.01, 6.02, etc.) with the rule at the top and a worked example next to it. What helps me most is writing the worked example right next to the rule — that way when I'm taking a quiz I can look at a real problem instead of just a formula. <strong>One thing I could improve</strong> is reviewing my notes the day before a quiz, instead of only flipping through them while I'm taking it.
+      <div class="alt"><strong>Adjust to be honest:</strong>
+      <ul style="margin-top:0.3rem;">
+        <li>If you're <strong>rushing</strong>: say so and name a fix (e.g., "I'll slow down on the practice test before attempting the real one").</li>
+        <li>If notes are <strong>messy</strong>: own it and pick one structure to try (separate page per sub-topic, color-code rules, etc.).</li>
+        <li>If you mostly use the <strong>lesson pages</strong> as notes (or this app): say that and explain how you use them.</li>
+      </ul></div></div>
     </details>
   </div>
 
-  <div class="qa">
-    <span class="q-tag">Likely DBA question</span>
-    <p class="q">What are the two special-product shortcuts?</p>
+  <h2 id="q4">Q4 — Do you read the announcements?</h2>
+  <div class="qbox">
+    <span class="q-tag">Reflection — short, honest</span>
+    <p class="q-prompt">Yes OR no, plus a real reason. Either answer is fine — the teacher wants to see self-awareness.</p>
     <details><summary></summary>
-      <div class="answer"><span class="ans-label">Talk through this:</span> Two patterns worth memorizing:
-      <ul>
-        <li><strong>Difference of squares:</strong> (a − b)(a + b) = a<sup>2</sup> − b<sup>2</sup>. The middle terms cancel. Example: (5x − 3)(5x + 3) = 25x<sup>2</sup> − 9.</li>
-        <li><strong>Perfect square:</strong> (a ± b)<sup>2</sup> = a<sup>2</sup> ± 2ab + b<sup>2</sup>. The middle term is the easy one to forget. Example: (3x − 8)<sup>2</sup> = 9x<sup>2</sup> − 48x + 64.</li>
-      </ul></div>
+      <div class="answer"><span class="ans-label">Sample (yes):</span>
+      Yes, I check the announcements at the top-right of Buzz when I log in so I don't miss reminders about due dates or test windows. Knowing what's coming up helps me plan when to take each quiz and the practice test before the real one.
+      <div class="alt"><strong>Sample (no, with a fix):</strong> Honestly I usually go straight to my to-do list and the activity I'm working on, so I haven't been reading the announcements consistently. I'll start skimming them at the beginning of each session so I don't miss deadlines or hints for upcoming work.</div></div>
     </details>
   </div>
 
-  <h2 id="sec-605">6.05 — Function composition</h2>
-
-  <div class="qa">
-    <span class="q-tag">Likely DBA question</span>
-    <p class="q">What does function composition mean? How do you evaluate f(g(3)) if f(x) = 2x + 1 and g(x) = x<sup>2</sup>?</p>
-    <details><summary></summary>
-      <div class="answer"><span class="ans-label">Talk through this:</span> Composition means feeding the output of one function into another — you do the inside one first, then the outside.
-      <br><br>For f(g(3)) with f(x) = 2x + 1 and g(x) = x<sup>2</sup>: g(3) = 9, then f(9) = 2(9) + 1 = <strong>19</strong>.
-      <br><br>And order matters — f(g(x)) is usually different from g(f(x)).</div>
-    </details>
-  </div>
-
-  <div class="qa">
-    <span class="q-tag">Likely DBA question</span>
-    <p class="q">A bike is 30% off, then you pay 12% tax on the sale price. If c(p) is the sale price and f(c) is the price with tax, which composition gives the final price — c[f(c)] or f[c(p)]? Why?</p>
-    <details><summary></summary>
-      <div class="answer"><span class="ans-label">Talk through this:</span> Discount happens FIRST, so c goes inside (innermost). Then tax is applied to the discounted price, so f goes outside. The composition is <strong>f[c(p)]</strong>. If c(p) = 0.7p and f(c) = 1.12c, then f[c(p)] = 1.12(0.7p) = 0.784p.</div>
-    </details>
-  </div>
-
-  <div class="qa">
-    <span class="q-tag">Likely DBA question</span>
-    <p class="q">If s(t) makes signs per hour and w(h) is hours per week, what are the units of s(w(h))?</p>
-    <details><summary></summary>
-      <div class="answer"><span class="ans-label">Talk through this:</span> I follow the chain: w takes weeks and outputs hours; s takes hours and outputs signs. So s(w(h)) takes weeks in and gives signs out — units are <strong>signs per week</strong>. The "hours" unit cancels along the chain.</div>
-    </details>
-  </div>
-
-  <h2 id="sec-tips">How to talk on a DBA</h2>
+  <h2 id="sec-tips">Tips for typing your answers</h2>
   <ul>
-    <li><strong>Talk while you work.</strong> Don't go silent — explain what you're doing as you do it. Even small narration like "first I'll combine like terms" earns credit.</li>
-    <li><strong>Use the vocabulary.</strong> Words like polynomial, degree, standard form, closure, FOIL, composition, slope, intercept — using them shows you understand the concepts, not just the procedures.</li>
-    <li><strong>It's OK to pause and think.</strong> "Let me think through that" is fine. A short pause beats a wrong answer.</li>
-    <li><strong>If you blank, restart from a definition.</strong> "A polynomial is…" — going back to basics often unblocks you.</li>
-    <li><strong>Arithmetic slips happen.</strong> Catch yourself: "Wait — let me redo that step." The teacher is grading explanation, not arithmetic perfection.</li>
-    <li><strong>If you don't know, say so.</strong> "I'm not sure" is better than guessing — she'll usually rephrase or move on.</li>
-    <li><strong>Have a calculator and paper handy.</strong> Write as you talk; some teachers ask you to show work on camera.</li>
+    <li><strong>Be specific.</strong> "I struggled with the negative sign in subtraction" beats "I struggled with algebra."</li>
+    <li><strong>Use Module 6 vocabulary</strong> in Q1 and Q2 — degree, term, binomial, trinomial, distribute, closure, FOIL. Shows you actually learned it.</li>
+    <li><strong>2–4 sentences = 30–80 words.</strong> Don't write a paragraph; don't write a single sentence.</li>
+    <li><strong>Reflection ≠ flattery.</strong> "I learned a lot and Mrs. Goldstein is a great teacher" isn't an answer. Pick something real.</li>
+    <li><strong>One concrete fix or tool per reflection question</strong> (Q2, Q3) — give the grader something specific to point to.</li>
+    <li><strong>Match your own tone</strong> — if a sentence feels like a robot wrote it, rewrite it in your words.</li>
   </ul>
 
   <div class="big-final">
-    <h3>🔑 The five things to be ready to explain</h3>
-    <ol>
-      <li>What makes something a <strong>polynomial</strong> (and what doesn't).</li>
-      <li>How to <strong>distribute the negative</strong> when subtracting two polynomials.</li>
-      <li>At least 2–3 <strong>exponent rules</strong> with examples.</li>
-      <li>Two <strong>special products</strong>: difference of squares and perfect square.</li>
-      <li>How <strong>function composition</strong> works, and how to figure out which function goes inside in a word problem.</li>
-    </ol>
+    <h3>🔑 Quick recap</h3>
+    <ul>
+      <li>Q1: degrees differ (3 vs 2) AND term counts differ (2 vs 3). Give one example of each.</li>
+      <li>Q2: name one specific Module 6 challenge + one specific fix.</li>
+      <li>Q3: pace + organization + ONE improvement. Hit all three.</li>
+      <li>Q4: yes/no + real reason. Either is fine.</li>
+    </ul>
   </div>
 
-  <h2 id="sec-checklist">Final checklist before the call</h2>
+  <h2 id="sec-checklist">Pre-submit checklist</h2>
   <div class="checklist">
-    <label><input type="checkbox"><span class="item-text">I read every "talk through this" out loud at least once</span></label>
-    <label><input type="checkbox"><span class="item-text">I can define "polynomial" in my own words</span></label>
-    <label><input type="checkbox"><span class="item-text">I can explain why <code>3/x<sup>2</sup></code> isn't a polynomial</span></label>
-    <label><input type="checkbox"><span class="item-text">I can talk through subtracting two polynomials and call out the minus-sign trap</span></label>
-    <label><input type="checkbox"><span class="item-text">I can name and explain the closure property</span></label>
-    <label><input type="checkbox"><span class="item-text">I have paper + pencil + a calculator ready</span></label>
-    <label><input type="checkbox"><span class="item-text">I have my notes/this page open during the call</span></label>
+    <label><input type="checkbox"><span class="item-text">Q1 — gave an example of each, not just a definition</span></label>
+    <label><input type="checkbox"><span class="item-text">Q2 — challenge is specific (not "everything was hard") and the fix is concrete</span></label>
+    <label><input type="checkbox"><span class="item-text">Q3 — hit all three: notes, pacing, and one improvement</span></label>
+    <label><input type="checkbox"><span class="item-text">Q4 — yes/no plus a real reason</span></label>
+    <label><input type="checkbox"><span class="item-text">Each answer is 2–4 sentences, sounds like me, uses some Module 6 vocabulary</span></label>
   </div>
 
   <footer>
