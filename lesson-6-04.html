@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6.04 Lesson — Multiplying and Dividing Polynomials</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #14B8A6;
+  --accent: #2563EB; --accent-2: #14B8A6;
+  --green: #10B981; --green-soft: rgba(16,185,129,0.18);
+  --red: #EF4444; --red-soft: rgba(239,68,68,0.18);
+  --orange: #F59E0B;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg:#F8FAFC; --bg-card:#FFFFFF; --bg-elevated:#F1F5F9; --text:#1A1A1A; --text-dim:#64748B; --border:#E2E8F0; }
+}
+html, body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:17px; line-height:1.6; }
+.container { max-width:760px; margin:0 auto; padding:1rem 1.1rem 4rem; }
+header.top { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1rem; gap:0.5rem; }
+.logo { font-size:1.2rem; font-weight:800; background:linear-gradient(135deg, #14B8A6, #2563EB); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+.back { color:var(--text-dim); text-decoration:none; font-size:0.88rem; font-weight:600; }
+.hero { background:linear-gradient(135deg, #14B8A6, #2563EB); border-radius:18px; padding:1.3rem 1.4rem; color:white; margin-bottom:1.5rem; }
+.hero h1 { margin:0 0 0.4rem; font-size:1.4rem; font-weight:800; }
+.hero p { margin:0; font-size:0.95rem; opacity:0.95; line-height:1.55; }
+.hero .tags { display:flex; gap:0.4rem; margin-top:0.7rem; flex-wrap:wrap; }
+.hero .tag { background:rgba(255,255,255,0.22); padding:0.25rem 0.7rem; border-radius:999px; font-weight:700; font-size:0.78rem; }
+.toc { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin-bottom:1.5rem; }
+.toc h3 { margin:0 0 0.5rem; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); }
+.toc a { display:block; color:var(--text); text-decoration:none; padding:0.35rem 0; font-size:0.95rem; font-weight:600; }
+.toc a:hover { color:var(--accent); }
+h2 { font-size:1.3rem; margin:2rem 0 0.6rem; color:var(--accent); font-weight:800; padding-top:0.5rem; border-top:1px solid var(--border); }
+h2:first-of-type { border-top:none; padding-top:0; margin-top:1rem; }
+h3 { font-size:1.05rem; margin:1.3rem 0 0.5rem; font-weight:700; color:var(--text); }
+p { margin:0.6rem 0; }
+ul, ol { margin:0.4rem 0; padding-left:1.4rem; }
+li { margin:0.3rem 0; }
+sup { font-size:0.75em; }
+table { border-collapse:collapse; margin:0.6rem 0 1rem; width:100%; font-size:0.92rem; }
+th, td { border:1px solid var(--border); padding:0.4rem 0.7rem; text-align:left; }
+th { background:var(--bg-elevated); font-weight:700; }
+strong { color:var(--text); }
+code { font-family:-apple-system,"SF Mono",Menlo,monospace; background:var(--bg-elevated); padding:0.1rem 0.35rem; border-radius:4px; font-size:0.92em; }
+.callout { background:rgba(245,158,11,0.12); border-left:4px solid var(--orange); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.callout strong { color:var(--orange); }
+.tip-box { background:rgba(37,99,235,0.1); border-left:4px solid var(--accent); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.tip-box strong { color:var(--accent); }
+.example { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.example .ex-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--green); font-weight:700; margin-bottom:0.3rem; }
+.practice { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.practice .p-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent); font-weight:700; margin-bottom:0.3rem; }
+.practice .q { font-weight:600; margin:0.2rem 0 0.6rem; }
+.practice details { margin-top:0.7rem; }
+.practice summary { cursor:pointer; padding:0.55rem 0.9rem; background:linear-gradient(135deg, #14B8A6, #2563EB); color:white; border-radius:8px; font-weight:700; font-size:0.9rem; list-style:none; display:inline-block; }
+.practice summary::-webkit-details-marker { display:none; }
+.practice summary::before { content:"👁 "; }
+.practice details[open] summary::before { content:"🙈 "; }
+.practice .answer { margin-top:0.7rem; padding:0.85rem 1rem; background:var(--green-soft); border-left:3px solid var(--green); border-radius:0 10px 10px 0; font-size:0.92rem; line-height:1.55; }
+.practice .answer .ans-label { font-weight:800; color:var(--green); margin-right:0.4rem; }
+.big-final { background:linear-gradient(135deg, rgba(20,184,166,0.15), rgba(37,99,235,0.1)); border:1px solid var(--accent); border-radius:14px; padding:1.1rem 1.3rem; margin:1.5rem 0; }
+.big-final h3 { margin-top:0; color:var(--accent); }
+footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center; font-size:0.83rem; color:var(--text-dim); }
+footer a { color:var(--primary); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="top">
+    <a class="logo" href="index.html">✖️ Lesson 6.04</a>
+    <a class="back" href="index.html">← Hub</a>
+  </header>
+
+  <div class="hero">
+    <h1>6.04 — Multiplying and Dividing Polynomials</h1>
+    <p>Distribute a monomial, FOIL two binomials, multiply binomial × trinomial, and the two special products everyone forgets: difference of squares and the perfect square.</p>
+    <div class="tags">
+      <span class="tag">10 practice problems</span>
+      <span class="tag">~40 min</span>
+      <span class="tag">FOIL + special products</span>
+    </div>
+  </div>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <a href="#sec-a">A. Distribute a monomial across a polynomial</a>
+    <a href="#sec-b">B. FOIL — multiplying two binomials</a>
+    <a href="#sec-c">C. Difference of squares ⭐</a>
+    <a href="#sec-d">D. Perfect square ⚠️ (the middle-term trap)</a>
+    <a href="#sec-e">E. Binomial × trinomial (extended FOIL)</a>
+    <a href="#sec-f">F. Word problems: area, (f · g)(x), (f ÷ g)(x)</a>
+    <a href="#sec-g">G. Closure under multiplication</a>
+    <a href="#sec-prac">H. Practice (10 problems)</a>
+    <a href="#sec-next">I. What to do next</a>
+  </div>
+
+  <h2 id="sec-a">A. Distribute a monomial across a polynomial</h2>
+  <p>Multiply the monomial by each term of the polynomial. Use the product rule on the variables (add exponents).</p>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p><code>x<sup>2</sup>(4x − 3)</code></p>
+    <ul>
+      <li>x<sup>2</sup> · 4x = 4x<sup>3</sup></li>
+      <li>x<sup>2</sup> · (−3) = −3x<sup>2</sup></li>
+      <li>Answer: <strong>4x<sup>3</sup> − 3x<sup>2</sup></strong></li>
+    </ul>
+  </div>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p><code>2x<sup>4</sup>(3x<sup>2</sup> + 4x + 1)</code></p>
+    <ul>
+      <li>2x<sup>4</sup>·3x<sup>2</sup> = 6x<sup>6</sup></li>
+      <li>2x<sup>4</sup>·4x = 8x<sup>5</sup></li>
+      <li>2x<sup>4</sup>·1 = 2x<sup>4</sup></li>
+      <li>Answer: <strong>6x<sup>6</sup> + 8x<sup>5</sup> + 2x<sup>4</sup></strong></li>
+    </ul>
+  </div>
+  <div class="callout"><strong>Watch the sign:</strong> when the monomial is negative, distribute the negative too. <code>−5x<sup>2</sup>(4x − 6x<sup>2</sup> − 3) = −20x<sup>3</sup> + 30x<sup>4</sup> + 15x<sup>2</sup></code> → in standard form: <code>30x<sup>4</sup> − 20x<sup>3</sup> + 15x<sup>2</sup></code>.</div>
+
+  <h2 id="sec-b">B. FOIL — multiplying two binomials</h2>
+  <p>FOIL = <strong>F</strong>irst, <strong>O</strong>uter, <strong>I</strong>nner, <strong>L</strong>ast. Multiply each pair and combine like terms.</p>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p><code>(2x − 3)(x + 4)</code></p>
+    <ul>
+      <li><b>F</b>irst: 2x · x = 2x<sup>2</sup></li>
+      <li><b>O</b>uter: 2x · 4 = 8x</li>
+      <li><b>I</b>nner: −3 · x = −3x</li>
+      <li><b>L</b>ast: −3 · 4 = −12</li>
+      <li>Sum: 2x<sup>2</sup> + 8x − 3x − 12 = <strong>2x<sup>2</sup> + 5x − 12</strong></li>
+    </ul>
+  </div>
+
+  <h2 id="sec-c">C. Difference of squares ⭐</h2>
+  <p>Pattern: <strong>(a − b)(a + b) = a<sup>2</sup> − b<sup>2</sup></strong>. The middle terms cancel, so the answer has NO middle term.</p>
+  <div class="example">
+    <span class="ex-tag">Examples</span>
+    <p><code>(x + 3)(x − 3) = x<sup>2</sup> − 9</code></p>
+    <p><code>(8x − 4)(8x + 4) = 64x<sup>2</sup> − 16</code></p>
+    <p><code>(6x − 2)(6x + 2) = 36x<sup>2</sup> − 4</code></p>
+    <p><code>(5x − 3)(5x + 3) = 25x<sup>2</sup> − 9</code></p>
+  </div>
+  <div class="tip-box"><strong>Recognize the pattern:</strong> same two terms, one with +, one with −. If you spot it, skip FOIL and write the answer in one step.</div>
+
+  <h2 id="sec-d">D. Perfect square ⚠️ (the middle-term trap)</h2>
+  <p>Pattern: <strong>(a ± b)<sup>2</sup> = a<sup>2</sup> ± 2ab + b<sup>2</sup></strong>. The middle term is <strong>2ab</strong> — easy to forget.</p>
+  <div class="callout"><strong>The trap:</strong> <code>(x − 9)<sup>2</sup> ≠ x<sup>2</sup> + 81</code> and <code>≠ x<sup>2</sup> − 81</code>. The correct answer is <code>x<sup>2</sup> − 18x + 81</code>. Don't drop the middle term.</div>
+  <div class="example">
+    <span class="ex-tag">Examples</span>
+    <p><code>(x − 7)<sup>2</sup> = x<sup>2</sup> − 2(x)(7) + 7<sup>2</sup> = x<sup>2</sup> − 14x + 49</code></p>
+    <p><code>(3x − 8)<sup>2</sup> = (3x)<sup>2</sup> − 2(3x)(8) + 8<sup>2</sup> = 9x<sup>2</sup> − 48x + 64</code></p>
+    <p><code>(x + 5)<sup>2</sup> = x<sup>2</sup> + 10x + 25</code></p>
+    <p><code>(8x − 2)<sup>2</sup> = 64x<sup>2</sup> − 32x + 4</code></p>
+  </div>
+
+  <h2 id="sec-e">E. Binomial × trinomial (extended FOIL)</h2>
+  <p>Distribute each term of the binomial across the entire trinomial — that's 6 products total. Combine like terms at the end.</p>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p><code>(2x − 3)(2x<sup>2</sup> + 7x − 1)</code></p>
+    <ul>
+      <li>2x times the trinomial: 2x·2x<sup>2</sup> + 2x·7x + 2x·(−1) = 4x<sup>3</sup> + 14x<sup>2</sup> − 2x</li>
+      <li>−3 times the trinomial: −3·2x<sup>2</sup> + (−3)·7x + (−3)·(−1) = −6x<sup>2</sup> − 21x + 3</li>
+      <li>Add: 4x<sup>3</sup> + (14 − 6)x<sup>2</sup> + (−2 − 21)x + 3 = <strong>4x<sup>3</sup> + 8x<sup>2</sup> − 23x + 3</strong></li>
+    </ul>
+  </div>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p><code>(5x − 6)(3x<sup>2</sup> − 4x − 3)</code></p>
+    <ul>
+      <li>5x · (3x<sup>2</sup> − 4x − 3) = 15x<sup>3</sup> − 20x<sup>2</sup> − 15x</li>
+      <li>−6 · (3x<sup>2</sup> − 4x − 3) = −18x<sup>2</sup> + 24x + 18</li>
+      <li>Add: 15x<sup>3</sup> + (−20 − 18)x<sup>2</sup> + (−15 + 24)x + 18 = <strong>15x<sup>3</sup> − 38x<sup>2</sup> + 9x + 18</strong></li>
+    </ul>
+  </div>
+
+  <h2 id="sec-f">F. Word problems</h2>
+
+  <h3>Area = length × width</h3>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Rectangle with length 3x and width (2x<sup>2</sup> − 5x + 4). Area?</p>
+    <p>A = 3x(2x<sup>2</sup> − 5x + 4) = <strong>6x<sup>3</sup> − 15x<sup>2</sup> + 12x</strong>.</p>
+  </div>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Square traffic sign with side (8x − 2). Area?</p>
+    <p>A = (8x − 2)<sup>2</sup> = <strong>64x<sup>2</sup> − 32x + 4</strong>. (Perfect-square pattern — don't drop the middle term!)</p>
+  </div>
+
+  <h3>(f · g) — distance = rate × time</h3>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>f(x) = 2x<sup>2</sup> + 1 is bike speed (mph). g(x) = x + 1 is time (hours). Find (f · g)(2).</p>
+    <ul>
+      <li>f(2) = 2(4) + 1 = 9 mph</li>
+      <li>g(2) = 3 hours</li>
+      <li>(f · g)(2) = 9 · 3 = <strong>27 miles</strong> (distance)</li>
+    </ul>
+  </div>
+
+  <h3>(f ÷ g) — rate = distance ÷ time</h3>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>f(x) = 4x + 8 is distance (miles). g(x) = x − 1 is time (hours). Find (f ÷ g)(4).</p>
+    <ul>
+      <li>f(4) = 4(4) + 8 = 24 miles</li>
+      <li>g(4) = 3 hours</li>
+      <li>(f ÷ g)(4) = 24 / 3 = <strong>8 mph</strong> (rate)</li>
+    </ul>
+  </div>
+
+  <h2 id="sec-g">G. Closure under multiplication</h2>
+  <p>Polynomials are <strong>closed under multiplication</strong> — when you multiply two polynomials, the result is ALWAYS another polynomial.</p>
+  <div class="example">
+    <span class="ex-tag">Example</span>
+    <p>(4x + 6)(2x<sup>2</sup> − 8x) = 8x<sup>3</sup> − 20x<sup>2</sup> − 48x. The product is a polynomial → closure under multiplication is demonstrated.</p>
+  </div>
+  <div class="tip-box"><strong>On a quiz:</strong> when asked "does this demonstrate closure?", the answer is always "yes, the result <em>is</em> a polynomial," not "may or may not be."</div>
+
+  <h2 id="sec-prac">H. Practice (10 problems)</h2>
+
+  <div class="practice">
+    <span class="p-tag">Problem 1</span>
+    <p class="q">Multiply: <code>(x + 3)(x − 3)</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">x<sup>2</sup> − 9.</span> Difference of squares. Middle terms cancel.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 2</span>
+    <p class="q">Expand: <code>(x − 7)<sup>2</sup></code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">x<sup>2</sup> − 14x + 49.</span> Perfect square. Middle term: 2(x)(7) = 14x; sign is negative because (x−7)<sup>2</sup>.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 3</span>
+    <p class="q">Expand: <code>(x + 5)<sup>2</sup></code> and explain how it shows closure.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">x<sup>2</sup> + 10x + 25; IS a polynomial.</span> Perfect square. Result is a polynomial → closure under multiplication holds.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 4</span>
+    <p class="q">Multiply: <code>x<sup>2</sup>(4x − 3)</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">4x<sup>3</sup> − 3x<sup>2</sup>.</span> Distribute the monomial.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 5</span>
+    <p class="q">Multiply: <code>2x<sup>4</sup>(3x<sup>2</sup> + 4x + 1)</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">6x<sup>6</sup> + 8x<sup>5</sup> + 2x<sup>4</sup>.</span> Distribute, then add exponents term by term.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 6</span>
+    <p class="q">A rectangle has sides (2x − 5) and (x + 4). Find its area in standard form.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">2x<sup>2</sup> + 3x − 20.</span> FOIL: 2x·x + 2x·4 + (−5)·x + (−5)·4 = 2x<sup>2</sup> + 8x − 5x − 20.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 7</span>
+    <p class="q">Multiply: <code>(2x − 3)(2x<sup>2</sup> + 7x − 1)</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">4x<sup>3</sup> + 8x<sup>2</sup> − 23x + 3.</span> Distribute 2x and −3 across the trinomial, then combine.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 8</span>
+    <p class="q">Multiply <code>(4x + 6)(2x<sup>2</sup> − 8x)</code> and explain closure.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">8x<sup>3</sup> − 20x<sup>2</sup> − 48x; IS a polynomial.</span> Two polynomials multiplied — the result is a polynomial → closure under multiplication.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 9</span>
+    <p class="q">f(x) = 2x<sup>2</sup> + 1 (rate in mph), g(x) = x + 1 (time in hours). Find (f · g)(2) and interpret.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">27 miles (distance).</span> f(2) = 9, g(2) = 3, product = 27. Rate × time = distance.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 10</span>
+    <p class="q">f(x) = 4x + 8 (distance in miles), g(x) = x − 1 (time in hours). Find (f ÷ g)(4) and interpret.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">8 mph (rate).</span> f(4) = 24, g(4) = 3, 24/3 = 8. Distance ÷ time = rate.</div></details>
+  </div>
+
+  <div class="big-final">
+    <h3>🔑 Key things to remember</h3>
+    <ul>
+      <li><strong>Difference of squares:</strong> (a−b)(a+b) = a<sup>2</sup> − b<sup>2</sup> (no middle term).</li>
+      <li><strong>Perfect square:</strong> (a±b)<sup>2</sup> = a<sup>2</sup> ± 2ab + b<sup>2</sup>. <em>Always</em> include the 2ab middle term.</li>
+      <li><strong>Binomial × trinomial:</strong> distribute each term of the binomial across the whole trinomial — 6 products → combine like terms.</li>
+      <li><strong>Closure under multiplication:</strong> product of polynomials is always a polynomial.</li>
+      <li><strong>Word problems:</strong> rate × time = distance (f·g). Distance ÷ time = rate (f÷g). Track units.</li>
+      <li><strong>Standard form for the final answer:</strong> highest degree first.</li>
+    </ul>
+  </div>
+
+  <h2 id="sec-next">I. What to do next</h2>
+  <ol>
+    <li>Drill the <a href="sim-quiz-6-00.html">Module 6 sim quiz</a> — questions 11-14 cover 6.04.</li>
+    <li>Move to <a href="lesson-6-05.html">Lesson 6.05 — Function Composition</a>.</li>
+  </ol>
+
+  <footer>
+    <p><a href="lesson-6-03.html">← 6.03</a> · <a href="index.html">Hub</a> · <a href="lesson-6-05.html">6.05 →</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

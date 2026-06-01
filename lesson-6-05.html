@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6.05 Lesson — Function Composition</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #14B8A6;
+  --accent: #2563EB; --accent-2: #14B8A6;
+  --green: #10B981; --green-soft: rgba(16,185,129,0.18);
+  --red: #EF4444; --red-soft: rgba(239,68,68,0.18);
+  --orange: #F59E0B;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg:#F8FAFC; --bg-card:#FFFFFF; --bg-elevated:#F1F5F9; --text:#1A1A1A; --text-dim:#64748B; --border:#E2E8F0; }
+}
+html, body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:17px; line-height:1.6; }
+.container { max-width:760px; margin:0 auto; padding:1rem 1.1rem 4rem; }
+header.top { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1rem; gap:0.5rem; }
+.logo { font-size:1.2rem; font-weight:800; background:linear-gradient(135deg, #14B8A6, #2563EB); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+.back { color:var(--text-dim); text-decoration:none; font-size:0.88rem; font-weight:600; }
+.hero { background:linear-gradient(135deg, #14B8A6, #2563EB); border-radius:18px; padding:1.3rem 1.4rem; color:white; margin-bottom:1.5rem; }
+.hero h1 { margin:0 0 0.4rem; font-size:1.4rem; font-weight:800; }
+.hero p { margin:0; font-size:0.95rem; opacity:0.95; line-height:1.55; }
+.hero .tags { display:flex; gap:0.4rem; margin-top:0.7rem; flex-wrap:wrap; }
+.hero .tag { background:rgba(255,255,255,0.22); padding:0.25rem 0.7rem; border-radius:999px; font-weight:700; font-size:0.78rem; }
+.toc { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin-bottom:1.5rem; }
+.toc h3 { margin:0 0 0.5rem; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); }
+.toc a { display:block; color:var(--text); text-decoration:none; padding:0.35rem 0; font-size:0.95rem; font-weight:600; }
+.toc a:hover { color:var(--accent); }
+h2 { font-size:1.3rem; margin:2rem 0 0.6rem; color:var(--accent); font-weight:800; padding-top:0.5rem; border-top:1px solid var(--border); }
+h2:first-of-type { border-top:none; padding-top:0; margin-top:1rem; }
+h3 { font-size:1.05rem; margin:1.3rem 0 0.5rem; font-weight:700; color:var(--text); }
+p { margin:0.6rem 0; }
+ul, ol { margin:0.4rem 0; padding-left:1.4rem; }
+li { margin:0.3rem 0; }
+sup { font-size:0.75em; }
+table { border-collapse:collapse; margin:0.6rem 0 1rem; width:100%; font-size:0.92rem; }
+th, td { border:1px solid var(--border); padding:0.4rem 0.7rem; text-align:left; }
+th { background:var(--bg-elevated); font-weight:700; }
+strong { color:var(--text); }
+code { font-family:-apple-system,"SF Mono",Menlo,monospace; background:var(--bg-elevated); padding:0.1rem 0.35rem; border-radius:4px; font-size:0.92em; }
+.callout { background:rgba(245,158,11,0.12); border-left:4px solid var(--orange); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.callout strong { color:var(--orange); }
+.tip-box { background:rgba(37,99,235,0.1); border-left:4px solid var(--accent); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.tip-box strong { color:var(--accent); }
+.example { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.example .ex-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--green); font-weight:700; margin-bottom:0.3rem; }
+.practice { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.practice .p-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent); font-weight:700; margin-bottom:0.3rem; }
+.practice .q { font-weight:600; margin:0.2rem 0 0.6rem; }
+.practice details { margin-top:0.7rem; }
+.practice summary { cursor:pointer; padding:0.55rem 0.9rem; background:linear-gradient(135deg, #14B8A6, #2563EB); color:white; border-radius:8px; font-weight:700; font-size:0.9rem; list-style:none; display:inline-block; }
+.practice summary::-webkit-details-marker { display:none; }
+.practice summary::before { content:"👁 "; }
+.practice details[open] summary::before { content:"🙈 "; }
+.practice .answer { margin-top:0.7rem; padding:0.85rem 1rem; background:var(--green-soft); border-left:3px solid var(--green); border-radius:0 10px 10px 0; font-size:0.92rem; line-height:1.55; }
+.practice .answer .ans-label { font-weight:800; color:var(--green); margin-right:0.4rem; }
+.big-final { background:linear-gradient(135deg, rgba(20,184,166,0.15), rgba(37,99,235,0.1)); border:1px solid var(--accent); border-radius:14px; padding:1.1rem 1.3rem; margin:1.5rem 0; }
+.big-final h3 { margin-top:0; color:var(--accent); }
+footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center; font-size:0.83rem; color:var(--text-dim); }
+footer a { color:var(--primary); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="top">
+    <a class="logo" href="index.html">🔗 Lesson 6.05</a>
+    <a class="back" href="index.html">← Hub</a>
+  </header>
+
+  <div class="hero">
+    <h1>6.05 — Function Composition</h1>
+    <p>One function feeds into another. Two notations, one big idea — and the trick is reading <em>which function goes first.</em></p>
+    <div class="tags">
+      <span class="tag">10 practice problems</span>
+      <span class="tag">~35 min</span>
+      <span class="tag">Order matters!</span>
+    </div>
+  </div>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <a href="#sec-a">A. What is composition?</a>
+    <a href="#sec-b">B. f[g(a)] — plug in a number</a>
+    <a href="#sec-c">C. f[g(x)] — algebraic composition</a>
+    <a href="#sec-d">D. Order matters ⚠️</a>
+    <a href="#sec-e">E. Word problems: pick the right order</a>
+    <a href="#sec-f">F. Units of a composite function</a>
+    <a href="#sec-g">G. The squared-binomial trap</a>
+    <a href="#sec-prac">H. Practice (10 problems)</a>
+    <a href="#sec-next">I. What to do next</a>
+  </div>
+
+  <h2 id="sec-a">A. What is composition?</h2>
+  <p><strong>Function composition</strong> means feeding the output of one function into another. Two equivalent notations:</p>
+  <ul>
+    <li><code>f(g(x))</code> &nbsp; — read "f of g of x"</li>
+    <li><code>(f ∘ g)(x)</code> &nbsp; — read "f composed with g"</li>
+  </ul>
+  <p>Both mean: <strong>first do g, then apply f to that result.</strong> The inside function runs first.</p>
+  <div class="tip-box"><strong>Visual:</strong> imagine a pipe. Input x → through g → g(x) comes out → into f → f(g(x)) comes out the other end.</div>
+
+  <h2 id="sec-b">B. f[g(a)] — plug in a number</h2>
+  <p>To evaluate at a specific number: <strong>compute the inside first</strong>, then apply the outside function.</p>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>f(x) = 4x + 21 and g(x) = 2x + 2. Find f[g(7)].</p>
+    <ol>
+      <li>Inside first: g(7) = 2(7) + 2 = <strong>16</strong></li>
+      <li>Outside: f(16) = 4(16) + 21 = 64 + 21 = <strong>85</strong></li>
+    </ol>
+  </div>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>f(x) = 2x<sup>2</sup> − 5 and g(x) = 3x − 7. Find f[g(4)].</p>
+    <ol>
+      <li>g(4) = 3(4) − 7 = 5</li>
+      <li>f(5) = 2(25) − 5 = <strong>45</strong></li>
+    </ol>
+  </div>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>f(x) = 3x − 2 and g(x) = x<sup>2</sup> − 1. Find f[g(5)].</p>
+    <ol>
+      <li>g(5) = 25 − 1 = 24</li>
+      <li>f(24) = 3(24) − 2 = <strong>70</strong></li>
+    </ol>
+  </div>
+
+  <h2 id="sec-c">C. f[g(x)] — algebraic composition</h2>
+  <p>To compose algebraically, substitute the whole expression g(x) wherever you see x in f.</p>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>f(x) = 6x + 11 and g(x) = x + 6. Find f[g(x)].</p>
+    <ol>
+      <li>f[g(x)] = f(x + 6)</li>
+      <li>Wherever f had x, put (x + 6): 6(x + 6) + 11</li>
+      <li>Distribute: 6x + 36 + 11 = <strong>6x + 47</strong></li>
+    </ol>
+  </div>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>f(x) = 7x + 13 and g(x) = x<sup>2</sup> + 2. Find f[g(x)].</p>
+    <ol>
+      <li>f[g(x)] = f(x<sup>2</sup> + 2) = 7(x<sup>2</sup> + 2) + 13</li>
+      <li>Distribute: 7x<sup>2</sup> + 14 + 13 = <strong>7x<sup>2</sup> + 27</strong></li>
+    </ol>
+  </div>
+
+  <h2 id="sec-d">D. Order matters ⚠️</h2>
+  <div class="callout"><strong>In general, f(g(x)) ≠ g(f(x)).</strong> Always check which function the question wants on the outside.</div>
+  <div class="example">
+    <span class="ex-tag">Why order matters</span>
+    <p>Let f(x) = x + 1 and g(x) = 2x.</p>
+    <ul>
+      <li>f(g(x)) = f(2x) = 2x + 1</li>
+      <li>g(f(x)) = g(x + 1) = 2(x + 1) = 2x + 2</li>
+    </ul>
+    <p>Different answers! Read the problem carefully.</p>
+  </div>
+
+  <h2 id="sec-e">E. Word problems: pick the right order</h2>
+  <p>Pay attention to which action happens <strong>first</strong>. That's the inside function.</p>
+  <h3>Discount then tax</h3>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>A bike is 30% off: c(p) = 0.7p (sale price from original p). Then sales tax of 12% on the discounted price: f(c) = 1.12c. What's the final price?</p>
+    <ul>
+      <li>Discount happens <strong>first</strong> (innermost): c(p)</li>
+      <li>Then tax on top: f[c(p)]</li>
+      <li>f[c(p)] = 1.12 · (0.7p) = <strong>0.784p</strong></li>
+    </ul>
+  </div>
+  <h3>Selling tickets — money per hour</h3>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>f(x) = 0.5x dollars per ticket (x = tickets). g(x) = 6x tickets per hour (x = hours). What's money per hour?</p>
+    <ul>
+      <li>Hours come in, tickets come out (g first), then dollars (f next).</li>
+      <li>f(g(x)) = 0.5(6x) = <strong>3x dollars per hour</strong></li>
+    </ul>
+  </div>
+  <h3>Biking — calories with trailer</h3>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>c(h) = 400h is calories burned biking (h = hours). t(c) = 2c doubles it when towing a trailer. Find calories per hour with the trailer.</p>
+    <ul>
+      <li>Biking happens first (c), then doubling (t).</li>
+      <li>t[c(h)] = 2(400h) = <strong>800h</strong></li>
+    </ul>
+  </div>
+
+  <h2 id="sec-f">F. Units of a composite function</h2>
+  <p>The input units of the composite = the input units of the INNERMOST function. The output units = the output units of the OUTERMOST function. The middle unit "cancels" along the chain.</p>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>s(t) makes signs per hour. w(h) is hours per week. Units of s(w(h))?</p>
+    <ul>
+      <li>w takes weeks → hours</li>
+      <li>s takes hours → signs</li>
+      <li>So s(w(h)) goes weeks → signs. Units: <strong>signs per week</strong>.</li>
+    </ul>
+  </div>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>f(s) = flowers from s seeds. s(w) = seeds in w weeks. Units of f(s(w))?</p>
+    <ul>
+      <li>weeks → seeds → flowers → <strong>flowers per week</strong>.</li>
+    </ul>
+  </div>
+
+  <h2 id="sec-g">G. The squared-binomial trap</h2>
+  <div class="callout"><strong>Watch out:</strong> when the outer function has x<sup>2</sup>, composing produces a squared binomial — don't drop the middle term.</div>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>k(x) = 2x<sup>2</sup> − 8 and p(x) = x − 4. Find (k ∘ p)(x).</p>
+    <ol>
+      <li>(k ∘ p)(x) = k(p(x)) = k(x − 4)</li>
+      <li>k(x − 4) = 2(x − 4)<sup>2</sup> − 8</li>
+      <li>(x − 4)<sup>2</sup> = x<sup>2</sup> − 8x + 16 (perfect-square pattern, don't drop the −8x!)</li>
+      <li>2(x<sup>2</sup> − 8x + 16) − 8 = 2x<sup>2</sup> − 16x + 32 − 8 = <strong>2x<sup>2</sup> − 16x + 24</strong></li>
+    </ol>
+  </div>
+
+  <h2 id="sec-prac">H. Practice (10 problems)</h2>
+
+  <div class="practice">
+    <span class="p-tag">Problem 1</span>
+    <p class="q">f(x) = 4x + 21, g(x) = 2x + 2. Find f[g(7)].</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">85.</span> g(7) = 16; f(16) = 64 + 21.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 2</span>
+    <p class="q">f(x) = 6x + 11, g(x) = x + 6. Find f[g(x)].</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">6x + 47.</span> 6(x + 6) + 11 = 6x + 36 + 11.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 3</span>
+    <p class="q">m(x) = 4x − 11, n(x) = x − 10. Find m[n(x)].</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">4x − 51.</span> 4(x − 10) − 11 = 4x − 40 − 11.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 4</span>
+    <p class="q">A dishwasher is 25% off: p(d) = 0.75d. Then 14% tax: c(p) = 1.14p. Final price?</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">c[p(d)] = 0.855d.</span> Discount first (innermost), then tax on top: 1.14(0.75d).</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 5</span>
+    <p class="q">f(x) = 2x<sup>2</sup> − 5, g(x) = 3x − 7. Find f[g(4)].</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">45.</span> g(4) = 5; f(5) = 2(25) − 5.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 6</span>
+    <p class="q">f(x) = 7x + 13, g(x) = x<sup>2</sup> + 2. Find f[g(x)].</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">7x<sup>2</sup> + 27.</span> 7(x<sup>2</sup> + 2) + 13 = 7x<sup>2</sup> + 14 + 13.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 7</span>
+    <p class="q">k(x) = 2x<sup>2</sup> − 8, p(x) = x − 4. Find (k ∘ p)(x).</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">2x<sup>2</sup> − 16x + 24.</span> k(x − 4) = 2(x − 4)<sup>2</sup> − 8 = 2(x<sup>2</sup> − 8x + 16) − 8.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 8</span>
+    <p class="q">P(w) = ½w + 1 is paintings as a function of weeks. J(y) is weeks per year. Function for paintings completed in a year?</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">P[J(y)] = ½ · J(y) + 1.</span> Year → weeks (J first) → paintings (P next).</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 9</span>
+    <p class="q">s(t) is bracelets per hour. W(h) is hours per week. Units of s(W(h))?</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">Bracelets per week.</span> weeks → hours (W) → bracelets (s).</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 10</span>
+    <p class="q">f(s) = 2s + 25 (flowers from s seeds), s(w) = 25w (seeds in w weeks). Find f(s(w)) and evaluate at w = 30.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">f(s(w)) = 50w + 25; f(s(30)) = 1,525 flowers.</span> Substitute: f(25w) = 2(25w) + 25 = 50w + 25. At w = 30: 50(30) + 25 = 1525.</div></details>
+  </div>
+
+  <div class="big-final">
+    <h3>🔑 Key things to remember</h3>
+    <ul>
+      <li><strong>Inside first:</strong> f(g(x)) means do g first, then f.</li>
+      <li><strong>Order matters:</strong> f(g(x)) ≠ g(f(x)) in general. Re-read the problem to make sure you have the right order.</li>
+      <li><strong>Word problems:</strong> the action that happens FIRST is the INNERMOST function (sale before tax → c is inner; biking before doubling → c is inner).</li>
+      <li><strong>Units chain:</strong> composite input = innermost input; composite output = outermost output. Middle unit cancels.</li>
+      <li><strong>Squared-binomial trap:</strong> if the outer function has x<sup>2</sup>, you'll get a perfect square (a±b)<sup>2</sup> — keep the 2ab middle term.</li>
+    </ul>
+  </div>
+
+  <h2 id="sec-next">I. What to do next</h2>
+  <ol>
+    <li>Drill the <a href="sim-quiz-6-00.html">Module 6 sim quiz</a> — questions 15-16 cover 6.05.</li>
+    <li>You've now covered all of Module 6 lessons. Sit the <strong>practice test</strong> (06.06) and aim for 13+/15 before the real 06.08 module test.</li>
+    <li>Get ready for the <a href="dba-6-07-prep.html">6.07 Discussion-Based Assessment</a> — a verbal check with your teacher.</li>
+  </ol>
+
+  <footer>
+    <p><a href="lesson-6-04.html">← 6.04</a> · <a href="index.html">Hub</a> · <a href="dba-6-07-prep.html">6.07 DBA prep →</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
