@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 8 Crash Course — Quadratic Functions</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #F59E0B;
+  --accent: #DC2626; --accent-2: #F59E0B;
+  --green: #10B981; --green-soft: rgba(16,185,129,0.18);
+  --red: #EF4444; --red-soft: rgba(239,68,68,0.18);
+  --orange: #F59E0B;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg:#F8FAFC; --bg-card:#FFFFFF; --bg-elevated:#F1F5F9; --text:#1A1A1A; --text-dim:#64748B; --border:#E2E8F0; }
+}
+html, body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:17px; line-height:1.6; }
+.container { max-width:760px; margin:0 auto; padding:1rem 1.1rem 4rem; }
+header.top { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1rem; gap:0.5rem; }
+.logo { font-size:1.2rem; font-weight:800; background:linear-gradient(135deg, #F59E0B, #DC2626); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+.back { color:var(--text-dim); text-decoration:none; font-size:0.88rem; font-weight:600; }
+.hero { background:linear-gradient(135deg, #F59E0B, #DC2626); border-radius:18px; padding:1.3rem 1.4rem; color:white; margin-bottom:1.5rem; }
+.hero h1 { margin:0 0 0.4rem; font-size:1.4rem; font-weight:800; }
+.hero p { margin:0; font-size:0.95rem; opacity:0.95; line-height:1.55; }
+.hero .tags { display:flex; gap:0.4rem; margin-top:0.7rem; flex-wrap:wrap; }
+.hero .tag { background:rgba(255,255,255,0.22); padding:0.25rem 0.7rem; border-radius:999px; font-weight:700; font-size:0.78rem; }
+.toc { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin-bottom:1.5rem; }
+.toc h3 { margin:0 0 0.5rem; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); }
+.toc a { display:block; color:var(--text); text-decoration:none; padding:0.35rem 0; font-size:0.95rem; font-weight:600; }
+.toc a:hover { color:var(--accent); }
+h2 { font-size:1.3rem; margin:2rem 0 0.6rem; color:var(--accent); font-weight:800; padding-top:0.5rem; border-top:1px solid var(--border); }
+h2:first-of-type { border-top:none; padding-top:0; margin-top:1rem; }
+h3 { font-size:1.05rem; margin:1.3rem 0 0.5rem; font-weight:700; color:var(--text); }
+p { margin:0.6rem 0; }
+ul, ol { margin:0.4rem 0; padding-left:1.4rem; }
+li { margin:0.3rem 0; }
+sup { font-size:0.75em; }
+table { border-collapse:collapse; margin:0.6rem 0 1rem; width:100%; font-size:0.92rem; }
+th, td { border:1px solid var(--border); padding:0.4rem 0.7rem; text-align:left; }
+th { background:var(--bg-elevated); font-weight:700; }
+strong { color:var(--text); }
+code { font-family:-apple-system,"SF Mono",Menlo,monospace; background:var(--bg-elevated); padding:0.1rem 0.35rem; border-radius:4px; font-size:0.92em; }
+.callout { background:rgba(245,158,11,0.12); border-left:4px solid var(--orange); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.callout strong { color:var(--orange); }
+.tip-box { background:rgba(220,38,38,0.1); border-left:4px solid var(--accent); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.tip-box strong { color:var(--accent); }
+.example { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.example .ex-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--green); font-weight:700; margin-bottom:0.3rem; }
+.practice { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.practice .p-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent); font-weight:700; margin-bottom:0.3rem; }
+.practice .q { font-weight:600; margin:0.2rem 0 0.6rem; }
+.practice details { margin-top:0.7rem; }
+.practice summary { cursor:pointer; padding:0.55rem 0.9rem; background:linear-gradient(135deg, #F59E0B, #DC2626); color:white; border-radius:8px; font-weight:700; font-size:0.9rem; list-style:none; display:inline-block; }
+.practice summary::-webkit-details-marker { display:none; }
+.practice summary::before { content:"👁 "; }
+.practice details[open] summary::before { content:"🙈 "; }
+.practice .answer { margin-top:0.7rem; padding:0.85rem 1rem; background:var(--green-soft); border-left:3px solid var(--green); border-radius:0 10px 10px 0; font-size:0.92rem; line-height:1.55; }
+.practice .answer .ans-label { font-weight:800; color:var(--green); margin-right:0.4rem; }
+.big-final { background:linear-gradient(135deg, rgba(245,158,11,0.15), rgba(220,38,38,0.12)); border:1px solid var(--accent); border-radius:14px; padding:1.1rem 1.3rem; margin:1.5rem 0; }
+.big-final h3 { margin-top:0; color:var(--accent); }
+footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center; font-size:0.83rem; color:var(--text-dim); }
+footer a { color:var(--primary); text-decoration:none; }
+.flowchart { background:var(--bg-elevated); border-radius:10px; padding:0.9rem 1rem; margin:0.8rem 0; font-family:-apple-system,"SF Mono",Menlo,monospace; font-size:0.9rem; line-height:1.5; white-space:pre; overflow-x:auto; }
+.svg-wrap { background:var(--bg-elevated); border-radius:10px; padding:0.8rem; margin:0.6rem 0; text-align:center; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="top">
+    <a class="logo" href="index.html">🔥 Module 8 Crash</a>
+    <a class="back" href="index.html">← Hub</a>
+  </header>
+
+  <div class="hero">
+    <h1>Module 8 — Quadratic Functions (Crash Course)</h1>
+    <p>Quadratics in one page. Every quadratic looks like <code>ax<sup>2</sup> + bx + c</code> and graphs as a <strong>parabola</strong>. The skills: graph it, find roots three different ways, and translate between standard / vertex / factored forms.</p>
+    <div class="tags">
+      <span class="tag">5 sub-topics</span>
+      <span class="tag">~50 min</span>
+      <span class="tag">For the final</span>
+    </div>
+  </div>
+
+  <div class="callout"><strong>3 ways to solve a quadratic (pick the easiest):</strong>
+    <ol style="margin-top:0.4rem;">
+      <li><strong>Factor</strong> if it factors easily (whole-number roots). Set each factor to 0.</li>
+      <li><strong>Square root</strong> if there's no middle x term (just ax² + c = 0). Isolate, take ±√.</li>
+      <li><strong>Quadratic formula</strong> always works: x = (−b ± √(b² − 4ac)) / (2a).</li>
+    </ol>
+  </div>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <a href="#sec-a">A. The 3 forms of a quadratic</a>
+    <a href="#sec-b">B. The parabola: vertex, axis, intercepts</a>
+    <a href="#sec-c">C. Solving by factoring</a>
+    <a href="#sec-d">D. Solving by square root</a>
+    <a href="#sec-e">E. The quadratic formula + discriminant</a>
+    <a href="#sec-f">F. Completing the square</a>
+    <a href="#sec-g">G. Transformations: f(x) = a(x − h)<sup>2</sup> + k</a>
+    <a href="#sec-h">H. Word problems: height, area, projectile</a>
+    <a href="#sec-prac">I. Practice (15 problems)</a>
+    <a href="#sec-cheat">J. The cheat sheet</a>
+  </div>
+
+  <h2 id="sec-a">A. The 3 forms of a quadratic</h2>
+  <table>
+    <tr><th>Form</th><th>Looks like</th><th>Best for reading off…</th></tr>
+    <tr><td>Standard</td><td><code>f(x) = ax<sup>2</sup> + bx + c</code></td><td>y-intercept (= c) and using the quadratic formula</td></tr>
+    <tr><td>Vertex</td><td><code>f(x) = a(x − h)<sup>2</sup> + k</code></td><td>vertex (h, k) and axis of symmetry x = h</td></tr>
+    <tr><td>Factored</td><td><code>f(x) = a(x − r<sub>1</sub>)(x − r<sub>2</sub>)</code></td><td>roots / x-intercepts r<sub>1</sub>, r<sub>2</sub></td></tr>
+  </table>
+  <div class="tip-box"><strong>Same parabola, three views.</strong> The form you want depends on what the question asks. Convert between them when needed.</div>
+
+  <h2 id="sec-b">B. The parabola — vertex, axis, intercepts</h2>
+  <p>Every quadratic graph is a <strong>parabola</strong>: a U-shape. If a &gt; 0 it opens up; if a &lt; 0 it opens down.</p>
+  <ul>
+    <li><strong>Vertex:</strong> the highest or lowest point. x-coordinate = <strong>−b/(2a)</strong> (from standard form), then plug back in to get y.</li>
+    <li><strong>Axis of symmetry:</strong> the vertical line through the vertex, <strong>x = −b/(2a)</strong>.</li>
+    <li><strong>y-intercept:</strong> set x = 0 → f(0) = c.</li>
+    <li><strong>x-intercepts (roots):</strong> set f(x) = 0 and solve.</li>
+    <li><strong>Maximum vs minimum:</strong> a &gt; 0 → vertex is a MINIMUM; a &lt; 0 → vertex is a MAXIMUM.</li>
+  </ul>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Find the vertex of <code>f(x) = 2x<sup>2</sup> − 8x + 5</code>.</p>
+    <ul>
+      <li>a = 2, b = −8 → x-coordinate = −(−8)/(2·2) = 8/4 = <strong>2</strong>.</li>
+      <li>y-coordinate: f(2) = 2(4) − 8(2) + 5 = 8 − 16 + 5 = <strong>−3</strong>.</li>
+      <li>Vertex: <strong>(2, −3)</strong>. Axis of symmetry: x = 2. a &gt; 0 → opens up, so this is a MIN.</li>
+    </ul>
+  </div>
+
+  <h2 id="sec-c">C. Solving by factoring</h2>
+  <p>If the quadratic factors with nice integers, this is fastest. Use everything you learned in Module 7.</p>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Solve <code>x<sup>2</sup> + 5x − 14 = 0</code>.</p>
+    <ol>
+      <li>Factor: (x + 7)(x − 2) = 0.</li>
+      <li>Zero product property: x + 7 = 0 or x − 2 = 0.</li>
+      <li>Solutions: <strong>x = −7 or x = 2</strong>.</li>
+    </ol>
+  </div>
+  <div class="callout"><strong>Zero product property:</strong> if A·B = 0, then A = 0 or B = 0 (or both). This is why factoring solves equations.</div>
+
+  <h2 id="sec-d">D. Solving by square root</h2>
+  <p>When there's NO middle x term (only ax² and a constant), isolate x² and take ±√ of both sides.</p>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Solve <code>3x<sup>2</sup> − 48 = 0</code>.</p>
+    <ol>
+      <li>Add 48: 3x² = 48.</li>
+      <li>Divide by 3: x² = 16.</li>
+      <li>Take ±√: x = ±4. (Don't forget the negative root!)</li>
+      <li>Solutions: <strong>x = 4 or x = −4</strong>.</li>
+    </ol>
+  </div>
+  <div class="example">
+    <span class="ex-tag">Worked example — vertex form</span>
+    <p>Solve <code>(x − 3)<sup>2</sup> = 25</code>.</p>
+    <ol>
+      <li>Take ±√: x − 3 = ±5.</li>
+      <li>Add 3: x = 3 ± 5 → x = 8 or x = −2.</li>
+    </ol>
+  </div>
+
+  <h2 id="sec-e">E. The quadratic formula + discriminant</h2>
+  <div class="callout" style="background:rgba(220,38,38,0.12); border-left-color:#DC2626;"><strong>Memorize this:</strong><br>
+    For <code>ax<sup>2</sup> + bx + c = 0</code>:<br>
+    <span style="display:block; text-align:center; font-size:1.15rem; margin-top:0.4rem;"><strong>x = (−b ± √(b<sup>2</sup> − 4ac)) / (2a)</strong></span>
+  </div>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Solve <code>2x<sup>2</sup> + 3x − 5 = 0</code> with the formula.</p>
+    <ol>
+      <li>a = 2, b = 3, c = −5.</li>
+      <li>b² − 4ac = 9 − 4(2)(−5) = 9 + 40 = 49.</li>
+      <li>x = (−3 ± √49) / (2·2) = (−3 ± 7) / 4.</li>
+      <li>Two solutions: x = (−3 + 7)/4 = 1, and x = (−3 − 7)/4 = −5/2.</li>
+      <li>Solutions: <strong>x = 1 or x = −5/2</strong>.</li>
+    </ol>
+  </div>
+
+  <h3>The discriminant: b² − 4ac</h3>
+  <p>Just the part under the square root. It tells you how many real solutions exist <em>without</em> finishing the formula.</p>
+  <table>
+    <tr><th>b² − 4ac</th><th>Real solutions</th><th>Graph crosses x-axis…</th></tr>
+    <tr><td>&gt; 0</td><td>2 different real</td><td>twice</td></tr>
+    <tr><td>= 0</td><td>1 real (double root)</td><td>touches once (tangent)</td></tr>
+    <tr><td>&lt; 0</td><td>0 real (complex)</td><td>doesn't cross</td></tr>
+  </table>
+
+  <h2 id="sec-f">F. Completing the square</h2>
+  <p>Converts standard form → vertex form. Used when the question asks for the vertex but the quadratic isn't already there.</p>
+  <div class="example">
+    <span class="ex-tag">Worked example (a = 1)</span>
+    <p>Rewrite <code>x<sup>2</sup> + 6x + 5</code> in vertex form.</p>
+    <ol>
+      <li>Take half of b (= 6/2 = 3), square it (= 9).</li>
+      <li>Add and subtract 9 inside: x² + 6x + 9 − 9 + 5.</li>
+      <li>Group the perfect square: (x + 3)² − 4.</li>
+      <li>Vertex form: <strong>(x + 3)<sup>2</sup> − 4</strong>. Vertex: <strong>(−3, −4)</strong>.</li>
+    </ol>
+  </div>
+  <div class="tip-box"><strong>Shortcut for vertex form from standard form:</strong> if you only need the vertex, use x = −b/(2a) and y = f(x). Completing the square is for when the question wants the FORM, not just the point.</div>
+
+  <h2 id="sec-g">G. Transformations: f(x) = a(x − h)<sup>2</sup> + k</h2>
+  <p>Vertex form is also a transformation of the parent function y = x²:</p>
+  <ul>
+    <li><strong>h</strong> shifts the parabola RIGHT by h (note: (x − h) shifts right by h, not left).</li>
+    <li><strong>k</strong> shifts the parabola UP by k.</li>
+    <li><strong>a</strong> stretches vertically (|a| &gt; 1 = narrower; 0 &lt; |a| &lt; 1 = wider). If a &lt; 0, the parabola also flips (opens down).</li>
+  </ul>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Describe <code>f(x) = −2(x − 4)<sup>2</sup> + 7</code> as a transformation of y = x².</p>
+    <ul>
+      <li>a = −2: stretched (narrower) AND flipped (opens down).</li>
+      <li>h = 4: shifted RIGHT 4.</li>
+      <li>k = 7: shifted UP 7.</li>
+      <li>Vertex: (4, 7), opens down, so the vertex is a MAXIMUM at y = 7.</li>
+    </ul>
+  </div>
+
+  <h2 id="sec-h">H. Word problems</h2>
+
+  <h3>Projectile / height (the classic): h(t) = −16t² + v₀t + h₀</h3>
+  <p>Standard physics setup (feet/seconds): −16 is half of gravity, v₀ is initial upward velocity (ft/s), h₀ is initial height (ft).</p>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>A ball is launched from a 5-ft platform at 64 ft/s upward: <code>h(t) = −16t<sup>2</sup> + 64t + 5</code>. When does it reach max height? What's the max height?</p>
+    <ol>
+      <li>Vertex t-coordinate: t = −b/(2a) = −64/(2·(−16)) = 64/32 = <strong>2 seconds</strong> (time of max).</li>
+      <li>Max height: h(2) = −16(4) + 64(2) + 5 = −64 + 128 + 5 = <strong>69 feet</strong>.</li>
+    </ol>
+  </div>
+  <div class="example">
+    <span class="ex-tag">Worked example — when does it hit the ground?</span>
+    <p>Same h(t). Set h(t) = 0 and solve.</p>
+    <ol>
+      <li>−16t² + 64t + 5 = 0. Use the quadratic formula.</li>
+      <li>a = −16, b = 64, c = 5. b² − 4ac = 4096 + 320 = 4416.</li>
+      <li>t = (−64 ± √4416) / (−32) ≈ (−64 ± 66.45) / (−32).</li>
+      <li>Take the positive root: t ≈ <strong>4.08 seconds</strong>. (The negative root is meaningless here.)</li>
+    </ol>
+  </div>
+
+  <h3>Area problems</h3>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>A rectangular garden has length (x + 4) and width (x + 2). The area is 24 sq ft. Find x.</p>
+    <ol>
+      <li>Area = (x + 4)(x + 2) = 24 → x² + 6x + 8 = 24 → x² + 6x − 16 = 0.</li>
+      <li>Factor: (x + 8)(x − 2) = 0 → x = −8 or x = 2.</li>
+      <li>Length must be positive → <strong>x = 2</strong>.</li>
+    </ol>
+  </div>
+
+  <h2 id="sec-prac">I. Practice (15 problems)</h2>
+
+  <div class="practice">
+    <span class="p-tag">Problem 1 · Vertex</span>
+    <p class="q">Find the vertex of <code>f(x) = x<sup>2</sup> − 6x + 11</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">(3, 2).</span> x = −(−6)/(2·1) = 3; f(3) = 9 − 18 + 11 = 2.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 2 · Axis</span>
+    <p class="q">Axis of symmetry for <code>f(x) = −x<sup>2</sup> + 4x − 7</code>?</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">x = 2.</span> x = −4/(2·−1) = 2.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 3 · Factor</span>
+    <p class="q">Solve <code>x<sup>2</sup> − 7x + 12 = 0</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">x = 3 or x = 4.</span> (x − 3)(x − 4) = 0.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 4 · Factor</span>
+    <p class="q">Solve <code>2x<sup>2</sup> + 5x − 3 = 0</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">x = −3 or x = 1/2.</span> Factor with AC method: (2x − 1)(x + 3) = 0.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 5 · Square root</span>
+    <p class="q">Solve <code>x<sup>2</sup> = 81</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">x = ±9.</span> Both ±! Don't drop the negative.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 6 · Square root</span>
+    <p class="q">Solve <code>(x + 2)<sup>2</sup> = 49</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">x = 5 or x = −9.</span> x + 2 = ±7 → x = −2 ± 7.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 7 · Quadratic formula</span>
+    <p class="q">Solve <code>x<sup>2</sup> + 3x − 10 = 0</code> using the quadratic formula.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">x = 2 or x = −5.</span> a=1, b=3, c=−10. b² − 4ac = 9 + 40 = 49. x = (−3 ± 7)/2.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 8 · Quadratic formula</span>
+    <p class="q">Solve <code>2x<sup>2</sup> − 4x + 1 = 0</code> (the roots are not integers).</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">x = (4 ± √8)/4 = 1 ± (√2)/2.</span> b² − 4ac = 16 − 8 = 8.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 9 · Discriminant</span>
+    <p class="q">How many real solutions does <code>x<sup>2</sup> + 4x + 9 = 0</code> have?</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">0 real (the discriminant is negative).</span> b² − 4ac = 16 − 36 = −20 &lt; 0. The graph never crosses the x-axis.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 10 · Completing the square</span>
+    <p class="q">Write <code>x<sup>2</sup> − 8x + 3</code> in vertex form.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">(x − 4)<sup>2</sup> − 13.</span> Half of −8 = −4; squared = 16. x² − 8x + 16 − 16 + 3 = (x − 4)² − 13. Vertex (4, −13).</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 11 · Vertex form</span>
+    <p class="q">What's the vertex of <code>f(x) = 3(x + 2)<sup>2</sup> − 5</code>?</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">(−2, −5).</span> Vertex form a(x − h)² + k: h = −2 (the SIGN flips), k = −5.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 12 · Transformations</span>
+    <p class="q">Describe how <code>f(x) = −(x − 3)<sup>2</sup> + 4</code> transforms y = x².</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">Flipped down, shifted right 3, up 4.</span> a = −1 flips (opens down); vertex moves to (3, 4) which is the maximum.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 13 · Word — height</span>
+    <p class="q">A ball: <code>h(t) = −16t<sup>2</sup> + 48t + 4</code>. Max height?</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">40 feet (at t = 1.5 s).</span> t = −48/(2·−16) = 1.5. h(1.5) = −36 + 72 + 4 = 40.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 14 · Word — area</span>
+    <p class="q">Rectangle with length (x + 3) and width x has area 40. Find x.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">x = 5.</span> x(x + 3) = 40 → x² + 3x − 40 = 0 → (x + 8)(x − 5) = 0. Take positive root.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 15 · Graph</span>
+    <p class="q">Describe <code>f(x) = 2x<sup>2</sup> − 12x + 10</code>: opens up or down, vertex, axis of symmetry, y-intercept.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">Opens UP, vertex (3, −8), axis x = 3, y-intercept 10.</span> a = 2 &gt; 0 → up. x_vertex = 12/(2·2) = 3. f(3) = 18 − 36 + 10 = −8. y-int = c = 10.</div></details>
+  </div>
+
+  <div class="big-final" id="sec-cheat">
+    <h3>🔑 The Module 8 cheat sheet</h3>
+    <div class="flowchart">SOLVING ax² + bx + c = 0
+
+Look at the equation:
+  ├─ No middle x (just ax² + c = 0)?
+  │     → isolate x², take ±√.
+  ├─ Factors with nice integers?
+  │     → factor, set each = 0.
+  └─ Anything else?
+        → quadratic formula:
+          x = (−b ± √(b² − 4ac)) / (2a)
+
+Discriminant b² − 4ac tells you # of real roots:
+  > 0 → 2;   = 0 → 1 (double);   < 0 → 0.
+
+KEY GRAPH FACTS for f(x) = ax² + bx + c:
+  vertex x = −b/(2a),  y = f(x_vertex)
+  axis of symmetry: x = −b/(2a)
+  opens UP if a > 0, DOWN if a < 0
+  y-intercept = c
+
+VERTEX FORM: f(x) = a(x − h)² + k → vertex (h, k)
+  h shifts right (sign flips!), k shifts up</div>
+  </div>
+
+  <footer>
+    <p><a href="module-7-crash-course.html">← Module 7</a> · <a href="index.html">Hub</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 7 Crash Course — Factoring &amp; Graphing Polynomials</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #F59E0B;
+  --accent: #DC2626; --accent-2: #F59E0B;
+  --green: #10B981; --green-soft: rgba(16,185,129,0.18);
+  --red: #EF4444; --red-soft: rgba(239,68,68,0.18);
+  --orange: #F59E0B;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg:#F8FAFC; --bg-card:#FFFFFF; --bg-elevated:#F1F5F9; --text:#1A1A1A; --text-dim:#64748B; --border:#E2E8F0; }
+}
+html, body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:17px; line-height:1.6; }
+.container { max-width:760px; margin:0 auto; padding:1rem 1.1rem 4rem; }
+header.top { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1rem; gap:0.5rem; }
+.logo { font-size:1.2rem; font-weight:800; background:linear-gradient(135deg, #F59E0B, #DC2626); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+.back { color:var(--text-dim); text-decoration:none; font-size:0.88rem; font-weight:600; }
+.hero { background:linear-gradient(135deg, #F59E0B, #DC2626); border-radius:18px; padding:1.3rem 1.4rem; color:white; margin-bottom:1.5rem; }
+.hero h1 { margin:0 0 0.4rem; font-size:1.4rem; font-weight:800; }
+.hero p { margin:0; font-size:0.95rem; opacity:0.95; line-height:1.55; }
+.hero .tags { display:flex; gap:0.4rem; margin-top:0.7rem; flex-wrap:wrap; }
+.hero .tag { background:rgba(255,255,255,0.22); padding:0.25rem 0.7rem; border-radius:999px; font-weight:700; font-size:0.78rem; }
+.toc { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin-bottom:1.5rem; }
+.toc h3 { margin:0 0 0.5rem; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); }
+.toc a { display:block; color:var(--text); text-decoration:none; padding:0.35rem 0; font-size:0.95rem; font-weight:600; }
+.toc a:hover { color:var(--accent); }
+h2 { font-size:1.3rem; margin:2rem 0 0.6rem; color:var(--accent); font-weight:800; padding-top:0.5rem; border-top:1px solid var(--border); }
+h2:first-of-type { border-top:none; padding-top:0; margin-top:1rem; }
+h3 { font-size:1.05rem; margin:1.3rem 0 0.5rem; font-weight:700; color:var(--text); }
+p { margin:0.6rem 0; }
+ul, ol { margin:0.4rem 0; padding-left:1.4rem; }
+li { margin:0.3rem 0; }
+sup { font-size:0.75em; }
+table { border-collapse:collapse; margin:0.6rem 0 1rem; width:100%; font-size:0.92rem; }
+th, td { border:1px solid var(--border); padding:0.4rem 0.7rem; text-align:left; }
+th { background:var(--bg-elevated); font-weight:700; }
+strong { color:var(--text); }
+code { font-family:-apple-system,"SF Mono",Menlo,monospace; background:var(--bg-elevated); padding:0.1rem 0.35rem; border-radius:4px; font-size:0.92em; }
+.callout { background:rgba(245,158,11,0.12); border-left:4px solid var(--orange); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.callout strong { color:var(--orange); }
+.tip-box { background:rgba(220,38,38,0.1); border-left:4px solid var(--accent); padding:0.85rem 1rem; border-radius:0 10px 10px 0; margin:1rem 0; font-size:0.93rem; line-height:1.55; }
+.tip-box strong { color:var(--accent); }
+.example { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.example .ex-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--green); font-weight:700; margin-bottom:0.3rem; }
+.practice { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0; }
+.practice .p-tag { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent); font-weight:700; margin-bottom:0.3rem; }
+.practice .q { font-weight:600; margin:0.2rem 0 0.6rem; }
+.practice details { margin-top:0.7rem; }
+.practice summary { cursor:pointer; padding:0.55rem 0.9rem; background:linear-gradient(135deg, #F59E0B, #DC2626); color:white; border-radius:8px; font-weight:700; font-size:0.9rem; list-style:none; display:inline-block; }
+.practice summary::-webkit-details-marker { display:none; }
+.practice summary::before { content:"👁 "; }
+.practice details[open] summary::before { content:"🙈 "; }
+.practice .answer { margin-top:0.7rem; padding:0.85rem 1rem; background:var(--green-soft); border-left:3px solid var(--green); border-radius:0 10px 10px 0; font-size:0.92rem; line-height:1.55; }
+.practice .answer .ans-label { font-weight:800; color:var(--green); margin-right:0.4rem; }
+.big-final { background:linear-gradient(135deg, rgba(245,158,11,0.15), rgba(220,38,38,0.12)); border:1px solid var(--accent); border-radius:14px; padding:1.1rem 1.3rem; margin:1.5rem 0; }
+.big-final h3 { margin-top:0; color:var(--accent); }
+footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center; font-size:0.83rem; color:var(--text-dim); }
+footer a { color:var(--primary); text-decoration:none; }
+.flowchart { background:var(--bg-elevated); border-radius:10px; padding:0.9rem 1rem; margin:0.8rem 0; font-family:-apple-system,"SF Mono",Menlo,monospace; font-size:0.9rem; line-height:1.5; white-space:pre; overflow-x:auto; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="top">
+    <a class="logo" href="index.html">🔥 Module 7 Crash</a>
+    <a class="back" href="index.html">← Hub</a>
+  </header>
+
+  <div class="hero">
+    <h1>Module 7 — Factoring &amp; Graphing Polynomials (Crash Course)</h1>
+    <p>The whole module in one page. <strong>Factoring is undoing multiplication</strong> — every problem boils down to recognizing one of 4 patterns and applying it. Learn to <em>identify the pattern first</em>, then the method follows.</p>
+    <div class="tags">
+      <span class="tag">5 sub-topics</span>
+      <span class="tag">~45 min</span>
+      <span class="tag">For the final</span>
+    </div>
+  </div>
+
+  <div class="callout"><strong>The factoring decision tree (memorize this):</strong>
+    <ol style="margin-top:0.4rem;">
+      <li>Always try <strong>GCF</strong> first.</li>
+      <li>If 2 terms → try <strong>difference of squares</strong>: a² − b² = (a−b)(a+b).</li>
+      <li>If 3 terms → try <strong>factoring trinomials</strong> (find two numbers).</li>
+      <li>If 4 terms → try <strong>factoring by grouping</strong>.</li>
+    </ol>
+  </div>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <a href="#sec-a">A. 7.01 Greatest Common Factor (GCF)</a>
+    <a href="#sec-b">B. 7.02 Factoring by grouping (4 terms)</a>
+    <a href="#sec-c">C. 7.03 Factoring trinomials (a = 1)</a>
+    <a href="#sec-d">D. 7.03 Factoring trinomials (a ≠ 1) — AC method</a>
+    <a href="#sec-e">E. 7.04 Difference of perfect squares</a>
+    <a href="#sec-f">F. 7.05 Graphing polynomial functions</a>
+    <a href="#sec-prac">G. Practice (15 problems)</a>
+    <a href="#sec-cheat">H. The cheat sheet</a>
+  </div>
+
+  <h2 id="sec-a">A. 7.01 — Greatest Common Factor (GCF)</h2>
+  <p>The GCF of a polynomial is the largest monomial that divides every term. Factor it out and write the polynomial as <code>GCF · (what's left)</code>.</p>
+  <h3>How to find the GCF</h3>
+  <ol>
+    <li>For coefficients: take the largest number that divides all of them.</li>
+    <li>For each variable: take the LOWEST power that appears in every term.</li>
+  </ol>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Factor <code>12x<sup>3</sup>y + 18x<sup>2</sup>y<sup>2</sup> − 6xy</code>.</p>
+    <ul>
+      <li>Coefficients 12, 18, 6 → GCF = 6.</li>
+      <li>x appears as x³, x², x¹ → lowest power x¹.</li>
+      <li>y appears as y¹, y², y¹ → lowest power y¹.</li>
+      <li>GCF = <strong>6xy</strong>.</li>
+      <li>Divide each term by 6xy: <code>6xy(2x<sup>2</sup>y + 3xy − 1)</code>.</li>
+    </ul>
+  </div>
+  <div class="tip-box"><strong>Always check first:</strong> after pulling out a GCF, look at what's inside the parentheses — it might factor further (by one of the patterns below).</div>
+
+  <h2 id="sec-b">B. 7.02 — Factoring by grouping (4 terms)</h2>
+  <p>When you have 4 terms, group them in pairs, factor each pair, and look for a common binomial.</p>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Factor <code>x<sup>3</sup> + 3x<sup>2</sup> + 2x + 6</code>.</p>
+    <ol>
+      <li>Group: <code>(x<sup>3</sup> + 3x<sup>2</sup>) + (2x + 6)</code></li>
+      <li>Factor each group: <code>x<sup>2</sup>(x + 3) + 2(x + 3)</code></li>
+      <li>Both pieces have (x + 3) — factor it out: <code>(x + 3)(x<sup>2</sup> + 2)</code></li>
+    </ol>
+  </div>
+  <div class="example">
+    <span class="ex-tag">Worked example with a negative</span>
+    <p>Factor <code>2x<sup>3</sup> − 6x<sup>2</sup> + 5x − 15</code>.</p>
+    <ol>
+      <li>Group: <code>(2x<sup>3</sup> − 6x<sup>2</sup>) + (5x − 15)</code></li>
+      <li>Factor each: <code>2x<sup>2</sup>(x − 3) + 5(x − 3)</code></li>
+      <li>Factor out (x − 3): <code>(x − 3)(2x<sup>2</sup> + 5)</code></li>
+    </ol>
+  </div>
+  <div class="callout"><strong>If the binomials don't match after step 2,</strong> the second group may need a negative sign factored out. Example: x³ − 3x² − 4x + 12 → x²(x − 3) + (−4)(x − 3) = (x − 3)(x² − 4) = (x − 3)(x − 2)(x + 2).</div>
+
+  <h2 id="sec-c">C. 7.03 — Factoring trinomials when <em>a</em> = 1</h2>
+  <p>For <code>x<sup>2</sup> + bx + c</code>: find two numbers that <strong>multiply to c</strong> AND <strong>add to b</strong>. Write the answer as <code>(x + p)(x + q)</code>.</p>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Factor <code>x<sup>2</sup> + 7x + 12</code>.</p>
+    <ul>
+      <li>Need two numbers: multiply to <strong>12</strong>, add to <strong>7</strong>.</li>
+      <li>Pairs of 12: 1·12, 2·6, 3·4. Which adds to 7? <strong>3 + 4 = 7</strong> ✓</li>
+      <li>Answer: <strong>(x + 3)(x + 4)</strong>.</li>
+    </ul>
+  </div>
+  <div class="example">
+    <span class="ex-tag">Worked example with negatives</span>
+    <p>Factor <code>x<sup>2</sup> − 5x + 6</code>.</p>
+    <ul>
+      <li>Multiply to <strong>+6</strong> (positive), add to <strong>−5</strong> (negative) → both numbers are negative.</li>
+      <li>Pairs of 6: −1·−6, −2·−3. Which adds to −5? <strong>−2 + −3 = −5</strong> ✓</li>
+      <li>Answer: <strong>(x − 2)(x − 3)</strong>.</li>
+    </ul>
+  </div>
+  <div class="example">
+    <span class="ex-tag">Worked example with c &lt; 0</span>
+    <p>Factor <code>x<sup>2</sup> + 2x − 15</code>.</p>
+    <ul>
+      <li>Multiply to <strong>−15</strong>, add to <strong>+2</strong> → one positive, one negative.</li>
+      <li>Pairs: 5·−3 (5 + −3 = 2) ✓</li>
+      <li>Answer: <strong>(x + 5)(x − 3)</strong>.</li>
+    </ul>
+  </div>
+  <div class="tip-box"><strong>Sign cheat sheet:</strong>
+    <ul style="margin-top:0.3rem;">
+      <li>c &gt; 0, b &gt; 0 → both factors are positive (+, +)</li>
+      <li>c &gt; 0, b &lt; 0 → both factors are negative (−, −)</li>
+      <li>c &lt; 0 → factors have opposite signs (+, −); the larger absolute value gets b's sign</li>
+    </ul>
+  </div>
+
+  <h2 id="sec-d">D. 7.03 — Factoring trinomials when <em>a</em> ≠ 1 (AC method)</h2>
+  <p>For <code>ax<sup>2</sup> + bx + c</code> with a ≠ 1: find two numbers that <strong>multiply to a·c</strong> AND <strong>add to b</strong>. Use them to split bx, then factor by grouping.</p>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Factor <code>2x<sup>2</sup> + 7x + 3</code>.</p>
+    <ol>
+      <li>a·c = 2·3 = 6. Need two numbers: multiply to 6, add to 7. → <strong>1 and 6</strong>.</li>
+      <li>Split 7x as 1x + 6x: <code>2x<sup>2</sup> + 1x + 6x + 3</code>.</li>
+      <li>Factor by grouping: <code>x(2x + 1) + 3(2x + 1) = (2x + 1)(x + 3)</code>.</li>
+      <li>Answer: <strong>(2x + 1)(x + 3)</strong>.</li>
+    </ol>
+  </div>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Factor <code>3x<sup>2</sup> − 10x + 8</code>.</p>
+    <ol>
+      <li>a·c = 3·8 = 24. Two numbers: multiply to 24, add to −10 → <strong>−4 and −6</strong>.</li>
+      <li>Split: <code>3x<sup>2</sup> − 4x − 6x + 8</code>.</li>
+      <li>Group: <code>x(3x − 4) − 2(3x − 4) = (3x − 4)(x − 2)</code>.</li>
+      <li>Answer: <strong>(3x − 4)(x − 2)</strong>.</li>
+    </ol>
+  </div>
+
+  <h2 id="sec-e">E. 7.04 — Difference of perfect squares</h2>
+  <p>Pattern: <strong>a<sup>2</sup> − b<sup>2</sup> = (a − b)(a + b)</strong>. Recognize it by two terms separated by a minus, both perfect squares.</p>
+  <div class="example">
+    <span class="ex-tag">Examples</span>
+    <p><code>x<sup>2</sup> − 9 = (x − 3)(x + 3)</code> &nbsp;&nbsp; <code>4x<sup>2</sup> − 25 = (2x − 5)(2x + 5)</code></p>
+    <p><code>16y<sup>2</sup> − 49 = (4y − 7)(4y + 7)</code> &nbsp;&nbsp; <code>x<sup>4</sup> − 16 = (x<sup>2</sup> − 4)(x<sup>2</sup> + 4) = (x − 2)(x + 2)(x<sup>2</sup> + 4)</code></p>
+  </div>
+  <div class="callout"><strong>Watch for:</strong> a SUM of squares (a² + b²) does NOT factor over the real numbers — it stays as is. Only the difference factors.</div>
+
+  <h2 id="sec-f">F. 7.05 — Graphing polynomial functions</h2>
+
+  <h3>Roots / zeros / x-intercepts</h3>
+  <p>The <strong>roots</strong> of a polynomial are the x-values where it equals 0 — i.e., the x-intercepts of the graph. <strong>Factor → set each factor to 0 → solve.</strong></p>
+  <div class="example">
+    <span class="ex-tag">Worked example</span>
+    <p>Find the roots of <code>f(x) = x<sup>2</sup> − x − 6</code>.</p>
+    <ol>
+      <li>Factor: x² − x − 6 = (x − 3)(x + 2).</li>
+      <li>Set each factor = 0: x − 3 = 0 → x = 3. x + 2 = 0 → x = −2.</li>
+      <li>Roots: <strong>x = 3 and x = −2</strong>.</li>
+    </ol>
+  </div>
+
+  <h3>End behavior</h3>
+  <p>The leading term (the highest-degree term) controls the end behavior.</p>
+  <table>
+    <tr><th>Degree</th><th>Leading coeff</th><th>Left end</th><th>Right end</th></tr>
+    <tr><td>Even</td><td>Positive</td><td>↑</td><td>↑</td></tr>
+    <tr><td>Even</td><td>Negative</td><td>↓</td><td>↓</td></tr>
+    <tr><td>Odd</td><td>Positive</td><td>↓</td><td>↑</td></tr>
+    <tr><td>Odd</td><td>Negative</td><td>↑</td><td>↓</td></tr>
+  </table>
+  <div class="tip-box"><strong>Memory aid:</strong> even-degree polynomials look like parabolas (both ends same direction). Odd-degree polynomials look like an "S" or backward-S (ends go opposite directions).</div>
+
+  <h3>Multiplicity</h3>
+  <p>If a factor (x − r) appears <strong>n times</strong>, the root x = r has multiplicity n.</p>
+  <ul>
+    <li><strong>Odd multiplicity</strong> (1, 3, 5…): graph CROSSES the x-axis at that root.</li>
+    <li><strong>Even multiplicity</strong> (2, 4…): graph TOUCHES and bounces off the x-axis (doesn't cross).</li>
+  </ul>
+
+  <h2 id="sec-prac">G. Practice (15 problems)</h2>
+
+  <div class="practice">
+    <span class="p-tag">Problem 1 · GCF</span>
+    <p class="q">Factor: <code>10x<sup>3</sup> − 15x<sup>2</sup> + 5x</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">5x(2x<sup>2</sup> − 3x + 1).</span> Then check the trinomial — it factors further: 5x(2x − 1)(x − 1).</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 2 · GCF</span>
+    <p class="q">Factor: <code>12x<sup>2</sup>y − 8xy<sup>2</sup> + 4xy</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">4xy(3x − 2y + 1).</span> Coeffs GCF 4; x lowest x¹; y lowest y¹.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 3 · Grouping</span>
+    <p class="q">Factor: <code>x<sup>3</sup> + 2x<sup>2</sup> + 5x + 10</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">(x + 2)(x<sup>2</sup> + 5).</span> Group: x²(x + 2) + 5(x + 2).</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 4 · Grouping</span>
+    <p class="q">Factor: <code>x<sup>3</sup> − 4x<sup>2</sup> + 3x − 12</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">(x − 4)(x<sup>2</sup> + 3).</span> Group: x²(x − 4) + 3(x − 4).</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 5 · Trinomial (a=1)</span>
+    <p class="q">Factor: <code>x<sup>2</sup> + 9x + 20</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">(x + 4)(x + 5).</span> 4·5 = 20, 4+5 = 9.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 6 · Trinomial (a=1)</span>
+    <p class="q">Factor: <code>x<sup>2</sup> − 8x + 15</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">(x − 3)(x − 5).</span> Both negative (c &gt; 0, b &lt; 0): −3 · −5 = 15, −3 + −5 = −8.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 7 · Trinomial (a=1)</span>
+    <p class="q">Factor: <code>x<sup>2</sup> + 3x − 28</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">(x + 7)(x − 4).</span> Opposite signs (c &lt; 0): 7 · −4 = −28, 7 + −4 = 3.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 8 · Trinomial (a≠1)</span>
+    <p class="q">Factor: <code>3x<sup>2</sup> + 11x + 6</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">(3x + 2)(x + 3).</span> a·c = 18; need 9 + 2 = 11 → split: 3x² + 9x + 2x + 6 → 3x(x + 3) + 2(x + 3).</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 9 · Trinomial (a≠1)</span>
+    <p class="q">Factor: <code>2x<sup>2</sup> − 7x + 6</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">(2x − 3)(x − 2).</span> a·c = 12; need −3 + −4 = −7 → split: 2x² − 3x − 4x + 6 → x(2x − 3) − 2(2x − 3).</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 10 · Difference of squares</span>
+    <p class="q">Factor: <code>x<sup>2</sup> − 49</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">(x − 7)(x + 7).</span> 49 = 7².</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 11 · Difference of squares</span>
+    <p class="q">Factor: <code>9x<sup>2</sup> − 64</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">(3x − 8)(3x + 8).</span> 9x² = (3x)², 64 = 8².</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 12 · Combined (GCF + DOS)</span>
+    <p class="q">Factor completely: <code>2x<sup>3</sup> − 18x</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">2x(x − 3)(x + 3).</span> GCF 2x first → 2x(x² − 9), then difference of squares.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 13 · Roots</span>
+    <p class="q">Find the roots of <code>f(x) = x<sup>2</sup> + 5x − 14</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">x = −7 and x = 2.</span> Factor: (x + 7)(x − 2) = 0 → x = −7 or x = 2.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 14 · End behavior</span>
+    <p class="q">Describe the end behavior of <code>f(x) = −2x<sup>3</sup> + 5x</code>.</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">Left end ↑, right end ↓.</span> Odd degree (3), negative leading coefficient → backward-S shape.</div></details>
+  </div>
+
+  <div class="practice">
+    <span class="p-tag">Problem 15 · Multiplicity</span>
+    <p class="q">Where does <code>f(x) = (x − 2)<sup>2</sup>(x + 1)</code> cross or touch the x-axis?</p>
+    <details><summary>Show answer</summary><div class="answer"><span class="ans-label">Touches at x = 2 (multiplicity 2, even — bounces), crosses at x = −1 (multiplicity 1, odd — crosses).</span></div></details>
+  </div>
+
+  <div class="big-final" id="sec-cheat">
+    <h3>🔑 The Module 7 cheat sheet</h3>
+    <div class="flowchart">FACTORING DECISION TREE
+
+Step 1: Pull out the GCF first (always).
+Step 2: Count terms in what's left.
+  ├─ 2 terms? Try difference of squares: a² − b² = (a−b)(a+b)
+  ├─ 3 terms? Factor trinomial.
+  │           ├─ a = 1: find p, q so p·q = c, p+q = b. Answer: (x+p)(x+q)
+  │           └─ a ≠ 1: AC method. Find numbers that
+  │                     multiply to a·c, add to b. Split bx, group.
+  └─ 4 terms? Try factoring by grouping.
+
+Step 3: Check each piece — can anything factor further?</div>
+    <ul>
+      <li><strong>Roots</strong> = solutions of f(x) = 0 = x-intercepts. Factor first, then set each factor to 0.</li>
+      <li><strong>End behavior:</strong> even degree → same direction both ends; odd → opposite ends. Positive leading coeff → right end up.</li>
+      <li><strong>Multiplicity:</strong> odd = crosses; even = bounces (touches and turns back).</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p><a href="index.html">← Hub</a> · <a href="lesson-6-05.html">6.05</a> · <a href="module-8-crash-course.html">Module 8 →</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
