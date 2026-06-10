@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Exam Study Guide — June 11, 11 AM</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #6366F1; --primary-2: #EC4899;
+  --m5: #3B82F6; --m6: #14B8A6; --m7: #F59E0B; --m8: #DC2626;
+  --green: #10B981; --green-soft: rgba(16,185,129,0.18);
+  --red: #EF4444; --red-soft: rgba(239,68,68,0.18);
+  --orange: #F59E0B;
+  --border: #334155;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg:#F8FAFC; --bg-card:#FFFFFF; --bg-elevated:#F1F5F9; --text:#1A1A1A; --text-dim:#64748B; --border:#E2E8F0; }
+}
+html, body { margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:17px; line-height:1.6; }
+.container { max-width:760px; margin:0 auto; padding:1rem 1.1rem 4rem; }
+header.top { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0 1rem; gap:0.5rem; }
+.logo { font-size:1.2rem; font-weight:800; background:linear-gradient(135deg, var(--primary), var(--primary-2)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-decoration:none; }
+.back { color:var(--text-dim); text-decoration:none; font-size:0.88rem; font-weight:600; }
+.hero { background:linear-gradient(135deg, var(--primary), var(--primary-2)); border-radius:18px; padding:1.3rem 1.4rem; color:white; margin-bottom:1.5rem; }
+.hero h1 { margin:0 0 0.4rem; font-size:1.5rem; font-weight:800; }
+.hero p { margin:0; font-size:0.95rem; opacity:0.95; line-height:1.55; }
+.hero .tags { display:flex; gap:0.4rem; margin-top:0.7rem; flex-wrap:wrap; }
+.hero .tag { background:rgba(255,255,255,0.22); padding:0.25rem 0.7rem; border-radius:999px; font-weight:700; font-size:0.78rem; }
+.toc { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin-bottom:1.5rem; }
+.toc h3 { margin:0 0 0.5rem; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); }
+.toc a { display:block; color:var(--text); text-decoration:none; padding:0.35rem 0; font-size:0.95rem; font-weight:600; }
+.toc a:hover { color:var(--primary); }
+.mod-section { background:var(--bg-card); border:1px solid var(--border); border-radius:18px; padding:1.2rem 1.4rem; margin-bottom:1.5rem; border-left:6px solid var(--primary); }
+.mod-section.m5 { border-left-color:var(--m5); }
+.mod-section.m6 { border-left-color:var(--m6); }
+.mod-section.m7 { border-left-color:var(--m7); }
+.mod-section.m8 { border-left-color:var(--m8); }
+.mod-section h2 { margin:0 0 0.4rem; font-size:1.3rem; color:var(--m5); font-weight:800; }
+.mod-section.m6 h2 { color:var(--m6); }
+.mod-section.m7 h2 { color:var(--m7); }
+.mod-section.m8 h2 { color:var(--m8); }
+.mod-section h3 { font-size:1rem; margin:1rem 0 0.4rem; font-weight:700; color:var(--text); }
+.mod-section p, .mod-section ul, .mod-section ol { margin:0.4rem 0; }
+.mod-section ul, .mod-section ol { padding-left:1.4rem; }
+.mod-section li { margin:0.25rem 0; }
+table { border-collapse:collapse; margin:0.5rem 0 0.8rem; width:100%; font-size:0.9rem; }
+th, td { border:1px solid var(--border); padding:0.35rem 0.6rem; text-align:left; }
+th { background:var(--bg-elevated); font-weight:700; font-size:0.85rem; }
+sup { font-size:0.75em; }
+strong { color:var(--text); }
+code { font-family:-apple-system,"SF Mono",Menlo,monospace; background:var(--bg-elevated); padding:0.1rem 0.35rem; border-radius:4px; font-size:0.92em; }
+.trap { background:rgba(220,38,38,0.12); border-left:4px solid #DC2626; padding:0.75rem 0.9rem; border-radius:0 8px 8px 0; margin:0.7rem 0; font-size:0.92rem; line-height:1.55; }
+.trap strong { color:#EF4444; }
+.formula { background:var(--bg-elevated); padding:0.7rem 1rem; border-radius:8px; margin:0.5rem 0; font-family:-apple-system,"SF Mono",Menlo,monospace; font-size:0.95rem; }
+.day-of { background:linear-gradient(135deg, rgba(99,102,241,0.15), rgba(236,72,153,0.1)); border:1px solid var(--primary); border-radius:14px; padding:1.1rem 1.3rem; margin:1.5rem 0; }
+.day-of h3 { margin:0 0 0.4rem; color:var(--primary); }
+footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center; font-size:0.83rem; color:var(--text-dim); }
+footer a { color:var(--primary); text-decoration:none; }
+.countdown { display:inline-block; background:rgba(255,255,255,0.22); padding:0.4rem 0.85rem; border-radius:999px; margin-top:0.5rem; font-weight:800; font-size:0.85rem; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="top">
+    <a class="logo" href="index.html">🎯 Final Cheat Sheet</a>
+    <a class="back" href="index.html">← Hub</a>
+  </header>
+
+  <div class="hero">
+    <h1>Final Exam Cheat Sheet — Modules 5–8</h1>
+    <p>Every formula and the traps that cost the most points, in one page. Skim before the exam. Read each module's "traps" box — those are the patterns that show up wrong on practice tests.</p>
+    <div class="countdown" id="cd"></div>
+  </div>
+
+  <div class="toc">
+    <h3>Jump to a module</h3>
+    <a href="#m5">Module 5 — Statistics (5.01–5.07)</a>
+    <a href="#m6">Module 6 — Polynomial Operations (6.01–6.05)</a>
+    <a href="#m7">Module 7 — Factoring &amp; Graphing (7.01–7.05)</a>
+    <a href="#m8">Module 8 — Quadratic Functions</a>
+    <a href="#day-of">Day-of-exam routine</a>
+  </div>
+
+  <!-- =============== MODULE 5 =============== -->
+  <div class="mod-section m5" id="m5">
+    <h2>Module 5 — Statistics</h2>
+
+    <h3>Reading data</h3>
+    <ul>
+      <li><strong>Dot plot:</strong> stack dots above each value to show frequency.</li>
+      <li><strong>Histogram:</strong> bars over intervals; height = frequency. <strong>Build the frequency table FIRST</strong>, then match the heights.</li>
+      <li><strong>Box plot:</strong> shows five-number summary: min, Q1, median, Q3, max. The box spans Q1 to Q3 with the median line inside.</li>
+    </ul>
+
+    <h3>Measures of center &amp; spread</h3>
+    <ul>
+      <li><strong>Mean</strong> = sum ÷ count. Affected by outliers.</li>
+      <li><strong>Median</strong> = middle value when sorted. Resistant to outliers.</li>
+      <li><strong>Range</strong> = max − min. <strong>IQR</strong> = Q3 − Q1 (width of the box only, NOT max − min).</li>
+      <li><strong>Standard deviation</strong> measures spread around the mean.</li>
+    </ul>
+    <div class="trap"><strong>Choosing between mean and median:</strong> if the data is <em>symmetric and no outliers</em> → use the MEAN. If the data is <em>skewed or has an outlier</em> → use the MEDIAN. The median resists distortion.</div>
+
+    <h3>Outliers (5.04)</h3>
+    <p><strong>Outlier rule:</strong> a value is an outlier if it's below Q1 − 1.5·IQR or above Q3 + 1.5·IQR.</p>
+    <div class="trap"><strong>Effect of removing an outlier:</strong> removing a value <em>below</em> the mean pulls the mean UP; removing a value <em>above</em> the mean pulls the mean DOWN. (The median barely shifts.)</div>
+
+    <h3>Two-way frequency tables (5.05)</h3>
+    <ul>
+      <li><strong>Joint</strong> frequency = a single inner cell.</li>
+      <li><strong>Marginal</strong> frequency = a row or column TOTAL.</li>
+      <li><strong>Marginal relative</strong> = row/column total ÷ grand total.</li>
+      <li><strong>Conditional relative (row)</strong> = cell ÷ ROW total. Each row sums to 1.</li>
+      <li><strong>Conditional relative (column)</strong> = cell ÷ COLUMN total. Each column sums to 1.</li>
+    </ul>
+    <div class="trap"><strong>Pick the denominator carefully.</strong> "Of dog owners, what % own cats?" → divide by dog-owner ROW total. "Of cat owners, what % own dogs?" → divide by cat-owner COLUMN total. Same cell, different denominators → different answers.</div>
+
+    <h3>Scatter plots, LOBF, residuals (5.06)</h3>
+    <ul>
+      <li><strong>Line of best fit:</strong> straight line through the middle of the data.</li>
+      <li><strong>Slope</strong> = rate of change in context (e.g., "$ per item").</li>
+      <li><strong>y-intercept</strong> = value when x = 0 (the starting value in context).</li>
+      <li><strong>Residual</strong> = actual − predicted. Small residuals → good fit.</li>
+    </ul>
+    <div class="trap"><strong>"Good fit" criterion:</strong> residuals should <em>sum to ≈ 0</em> with a random scatter — NOT "every residual must be small." A line where residuals are 40, −10, 40, −10, 40, −20 (sum = 80) is a BAD fit.</div>
+
+    <h3>Correlation vs. causation (5.07)</h3>
+    <ul>
+      <li><strong>r</strong> ranges from −1 to +1. Sign matches slope, magnitude matches "how close to the line."</li>
+      <li>|r| near 1 = strong; near 0 = weak/none.</li>
+      <li><strong>Correlation ≠ causation.</strong> Strong r only means the variables move together; a third "confounding variable" might explain both.</li>
+    </ul>
+
+    <h3>⭐ Average rate of change (recurring weak spot)</h3>
+    <div class="formula"><strong>Average rate of change from x₁ to x₂ = (y₂ − y₁) / (x₂ − x₁)</strong></div>
+    <div class="trap"><strong>The trap Neil hit twice:</strong> dividing by Δx is required. If the question gives "profit at hour 2 = $30, at hour 6 = $98," the answer is (98 − 30) / (6 − 2) = 68/4 = <strong>$17 per hour</strong>, NOT $68. Always divide AND include units.</div>
+  </div>
+
+  <!-- =============== MODULE 6 =============== -->
+  <div class="mod-section m6" id="m6">
+    <h2>Module 6 — Polynomial Operations</h2>
+
+    <h3>Classifying (6.01)</h3>
+    <ul>
+      <li><strong>Term count names:</strong> 1 = monomial, 2 = binomial, 3 = trinomial, 4+ = polynomial.</li>
+      <li><strong>Degree names:</strong> 0 = constant, 1 = linear, 2 = quadratic, 3 = cubic, 4 = quartic.</li>
+      <li><strong>Standard form</strong> = terms in DESCENDING degree order.</li>
+    </ul>
+    <div class="trap"><strong>Multi-variable degree:</strong> ADD the exponents in each term. 3y<sup>3</sup>x has degree 3 + 1 = <strong>4</strong>, not 3.</div>
+    <div class="trap"><strong>Not a polynomial:</strong> variable in a denominator (or negative exponent), under a root (or fractional exponent), or in the exponent (e.g., 2<sup>x</sup>).</div>
+
+    <h3>Add/subtract + closure (6.02)</h3>
+    <ul>
+      <li>Combine like terms (same variables, same exponents).</li>
+      <li><strong>(f + g)(a) = f(a) + g(a);</strong> (f − g)(a) = f(a) − g(a).</li>
+      <li><strong>Closure:</strong> +, −, × of polynomials always give a polynomial. ÷ does not.</li>
+    </ul>
+    <div class="trap"><strong>Subtracting polynomials:</strong> distribute the minus to EVERY term in the second polynomial. <code>(5x² + 2x − 6) − (3x² − 6x + 2) = 5x² + 2x − 6 − 3x² + 6x − 2 = 2x² + 8x − 8</code>. The #1 mistake is forgetting to flip the +6x and the +2.</div>
+    <div class="trap"><strong>"A subtracted FROM B"</strong> = B − A, not A − B.</div>
+    <div class="trap"><strong>Profit = revenue − cost.</strong> When a word problem subtracts two functions, name the result (profit, deficit) — don't write "cost."</div>
+
+    <h3>Exponent rules (6.03)</h3>
+    <table>
+      <tr><th>Rule</th><th>Formula</th></tr>
+      <tr><td>Product (same base)</td><td><code>a<sup>m</sup> · a<sup>n</sup> = a<sup>m+n</sup></code></td></tr>
+      <tr><td>Quotient</td><td><code>a<sup>m</sup> / a<sup>n</sup> = a<sup>m−n</sup></code></td></tr>
+      <tr><td>Power of a power</td><td><code>(a<sup>m</sup>)<sup>n</sup> = a<sup>m·n</sup></code></td></tr>
+      <tr><td>Power of product</td><td><code>(ab)<sup>n</sup> = a<sup>n</sup>b<sup>n</sup></code></td></tr>
+      <tr><td>Power of quotient</td><td><code>(a/b)<sup>n</sup> = a<sup>n</sup>/b<sup>n</sup></code></td></tr>
+      <tr><td>Negative exponent</td><td><code>a<sup>−n</sup> = 1/a<sup>n</sup></code> (flip across the bar)</td></tr>
+      <tr><td>Zero exponent</td><td><code>a<sup>0</sup> = 1</code> (a ≠ 0)</td></tr>
+    </table>
+    <div class="trap"><strong>Apply power-of-a-product to EVERY factor — including the coefficient.</strong> <code>(3x)<sup>4</sup> = 81x<sup>4</sup>, not 3x<sup>4</sup></code>.</div>
+
+    <h3>Multiplying polynomials (6.04)</h3>
+    <ul>
+      <li><strong>Distribute</strong> a monomial across each term.</li>
+      <li><strong>FOIL</strong> two binomials: F, O, I, L.</li>
+      <li><strong>Difference of squares:</strong> (a − b)(a + b) = a<sup>2</sup> − b<sup>2</sup> (no middle term).</li>
+      <li><strong>Perfect square:</strong> (a ± b)<sup>2</sup> = a<sup>2</sup> ± 2ab + b<sup>2</sup>. <strong>Don't drop the 2ab middle term.</strong></li>
+    </ul>
+    <div class="trap"><strong>The perfect-square trap:</strong> <code>(3x − 8)<sup>2</sup> = 9x<sup>2</sup> − 48x + 64</code>, NOT 9x<sup>2</sup> − 64 and NOT 9x<sup>2</sup> + 64.</div>
+
+    <h3>Function composition (6.05)</h3>
+    <ul>
+      <li><strong>f(g(x))</strong> means do g first, then f. INSIDE function runs first.</li>
+      <li><strong>f(g(x)) ≠ g(f(x))</strong> in general — order matters.</li>
+      <li>Word problems: the action that happens FIRST is the INNERMOST function. ("30% off then $5 coupon" → discount c is inside, coupon g is outside: g(c(p)).)</li>
+      <li><strong>Units chain:</strong> composite input units = innermost input; output units = outermost output. The middle unit cancels.</li>
+    </ul>
+  </div>
+
+  <!-- =============== MODULE 7 =============== -->
+  <div class="mod-section m7" id="m7">
+    <h2>Module 7 — Factoring &amp; Graphing Polynomials</h2>
+
+    <h3>Factoring decision tree (memorize)</h3>
+    <ol>
+      <li><strong>Always pull out the GCF first.</strong></li>
+      <li>Look at how many terms are left:
+        <ul>
+          <li><strong>2 terms</strong> → try <strong>difference of squares</strong>: a<sup>2</sup> − b<sup>2</sup> = (a − b)(a + b).</li>
+          <li><strong>3 terms</strong> → factor the trinomial.</li>
+          <li><strong>4 terms</strong> → try <strong>factoring by grouping</strong>.</li>
+        </ul>
+      </li>
+      <li>Check each piece — can anything factor further?</li>
+    </ol>
+
+    <h3>Factoring trinomials</h3>
+    <p><strong>When a = 1:</strong> <code>x<sup>2</sup> + bx + c</code> → find two numbers multiplying to <strong>c</strong>, adding to <strong>b</strong>. Answer: (x + p)(x + q).</p>
+    <p><strong>When a ≠ 1 (AC method):</strong> find two numbers multiplying to <strong>a·c</strong>, adding to <strong>b</strong>. Split bx into those two terms, then factor by grouping.</p>
+    <table>
+      <tr><th>Sign of c</th><th>Sign of b</th><th>Factor signs</th></tr>
+      <tr><td>+</td><td>+</td><td>both +</td></tr>
+      <tr><td>+</td><td>−</td><td>both −</td></tr>
+      <tr><td>−</td><td>any</td><td>opposite signs; larger absolute value gets b's sign</td></tr>
+    </table>
+
+    <h3>Graphing polynomials (7.05)</h3>
+    <ul>
+      <li><strong>Roots / zeros / x-intercepts</strong> — factor f(x), set each factor to 0, solve.</li>
+      <li><strong>End behavior</strong> — controlled by leading term.
+        <ul>
+          <li>Even degree: both ends same direction. Odd degree: opposite ends.</li>
+          <li>Positive leading coefficient: right end UP. Negative: right end DOWN.</li>
+        </ul>
+      </li>
+      <li><strong>Multiplicity:</strong> if (x − r)<sup>n</sup> appears, root r has multiplicity n. <strong>Odd multiplicity = crosses; even multiplicity = touches and bounces.</strong></li>
+    </ul>
+  </div>
+
+  <!-- =============== MODULE 8 =============== -->
+  <div class="mod-section m8" id="m8">
+    <h2>Module 8 — Quadratic Functions</h2>
+
+    <h3>The 3 forms</h3>
+    <table>
+      <tr><th>Form</th><th>Equation</th><th>Best for</th></tr>
+      <tr><td>Standard</td><td><code>ax<sup>2</sup> + bx + c</code></td><td>y-intercept (= c) and the quadratic formula</td></tr>
+      <tr><td>Vertex</td><td><code>a(x − h)<sup>2</sup> + k</code></td><td>vertex (h, k) and axis of symmetry x = h</td></tr>
+      <tr><td>Factored</td><td><code>a(x − r<sub>1</sub>)(x − r<sub>2</sub>)</code></td><td>roots r<sub>1</sub>, r<sub>2</sub></td></tr>
+    </table>
+
+    <h3>The parabola</h3>
+    <ul>
+      <li><strong>Vertex x-coordinate:</strong> x = −b / (2a). Plug back in for y.</li>
+      <li><strong>Axis of symmetry:</strong> x = −b / (2a).</li>
+      <li><strong>y-intercept:</strong> f(0) = c.</li>
+      <li>If a &gt; 0 → opens UP, vertex is a <strong>minimum</strong>.</li>
+      <li>If a &lt; 0 → opens DOWN, vertex is a <strong>maximum</strong>.</li>
+    </ul>
+
+    <h3>3 ways to solve ax<sup>2</sup> + bx + c = 0</h3>
+    <ol>
+      <li><strong>Factor</strong> if the quadratic factors. Zero product property: set each factor to 0.</li>
+      <li><strong>Square root</strong> if there's no middle x. Isolate x², take ±√.</li>
+      <li><strong>Quadratic formula</strong> (always works):
+        <div class="formula" style="text-align:center;"><strong>x = (−b ± √(b<sup>2</sup> − 4ac)) / (2a)</strong></div>
+      </li>
+    </ol>
+
+    <h3>The discriminant: b<sup>2</sup> − 4ac</h3>
+    <table>
+      <tr><th>Discriminant</th><th>Real solutions</th></tr>
+      <tr><td>&gt; 0</td><td>2 distinct real</td></tr>
+      <tr><td>= 0</td><td>1 real (double root)</td></tr>
+      <tr><td>&lt; 0</td><td>0 real (complex)</td></tr>
+    </table>
+
+    <h3>Vertex form &amp; transformations</h3>
+    <p>For <code>f(x) = a(x − h)<sup>2</sup> + k</code>: vertex is (h, k). Compared to y = x<sup>2</sup>:</p>
+    <ul>
+      <li><strong>h shifts RIGHT</strong> (note: the sign in (x − h) flips — (x − 5) shifts right 5).</li>
+      <li><strong>k shifts UP.</strong></li>
+      <li><strong>|a| stretches vertically;</strong> if a &lt; 0, the parabola flips (opens down).</li>
+    </ul>
+
+    <h3>Word problems</h3>
+    <p><strong>Projectile height:</strong> typical equation <code>h(t) = −16t<sup>2</sup> + v<sub>0</sub>t + h<sub>0</sub></code> (feet, seconds).</p>
+    <ul>
+      <li><strong>Max height</strong> → vertex t = −b/(2a) = v<sub>0</sub>/32. Then plug back to get h.</li>
+      <li><strong>Hits ground</strong> → set h(t) = 0 and solve (use quadratic formula). Take only the positive t.</li>
+    </ul>
+    <div class="trap"><strong>±√ has two answers — keep both.</strong> Common drop: x² = 49 → x = ±7, not just 7.</div>
+  </div>
+
+  <!-- =============== DAY OF =============== -->
+  <div class="day-of" id="day-of">
+    <h3>📋 Day-of-exam routine</h3>
+    <ol>
+      <li><strong>Bring:</strong> calculator (the one allowed), pencils, ID, water. Photo ID even if it's a known test center.</li>
+      <li><strong>Before you walk in (5 min):</strong> skim THIS page top to bottom. Don't try to learn anything new — just refresh.</li>
+      <li><strong>First pass:</strong> answer every question you can do quickly. Skip and mark the hard ones — don't burn time getting stuck.</li>
+      <li><strong>Second pass:</strong> come back to the marked ones with whatever time remains.</li>
+      <li><strong>Read carefully:</strong> "subtracted FROM" reverses order, "of cat owners" sets the denominator, "average rate of change" needs ÷Δx with units. Most mistakes come from misreading, not misunderstanding.</li>
+      <li><strong>Show work where space allows.</strong> Even on MC, writing the steps helps catch sign errors.</li>
+      <li><strong>If you get stuck:</strong> try the next one. Coming back later with a clear head usually unsticks you.</li>
+      <li><strong>Last 2 minutes:</strong> make sure every question has SOME answer. Educated guess beats blank.</li>
+    </ol>
+  </div>
+
+  <footer>
+    <p><a href="index.html">← Hub</a> · <a href="module-5-review.html">Module 5 review</a> · <a href="sim-quiz-6-00.html">Module 6 sim</a> · <a href="sim-quiz-7-final.html">Module 7 sim</a> · <a href="sim-quiz-8-final.html">Module 8 sim</a></p>
+  </footer>
+
+</div>
+
+<script>
+const exam = new Date('2026-06-11T11:00:00');
+const now = new Date('2026-06-09T12:00:00');
+const days = Math.max(0, Math.ceil((exam - now) / 86400000));
+const el = document.getElementById('cd');
+if (el) el.textContent = days === 0 ? '🚨 EXAM DAY' : `${days} day${days===1?'':'s'} until exam · June 11, 11 AM`;
+</script>
+</body>
+</html>
