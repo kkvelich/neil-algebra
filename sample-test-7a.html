@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 7 Sample Test A — Factoring</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{--bg:#0F172A;--bg-card:#1E293B;--bg-elevated:#334155;--text:#F1F5F9;--text-dim:#94A3B8;--primary:#F59E0B;--primary-2:#DC2626;--green:#10B981;--green-soft:rgba(16,185,129,0.18);--red:#EF4444;--red-soft:rgba(239,68,68,0.18);--border:#334155;}
+@media (prefers-color-scheme:light){:root{--bg:#F8FAFC;--bg-card:#FFFFFF;--bg-elevated:#F1F5F9;--text:#1A1A1A;--text-dim:#64748B;--border:#E2E8F0;}}
+html,body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:17px;line-height:1.6;}
+.container{max-width:760px;margin:0 auto;padding:1rem 1.1rem 4rem;}
+header.top{display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0 1rem;}
+.logo{font-size:1.2rem;font-weight:800;background:linear-gradient(135deg,#F59E0B,#DC2626);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;}
+.back{color:var(--text-dim);text-decoration:none;font-size:0.88rem;font-weight:600;}
+.hero{background:linear-gradient(135deg,#F59E0B,#DC2626);border-radius:18px;padding:1.2rem 1.3rem;color:white;margin-bottom:1.3rem;}
+.hero h1{margin:0 0 0.3rem;font-size:1.3rem;font-weight:800;}
+.hero p{margin:0;font-size:0.92rem;opacity:0.95;line-height:1.55;}
+.hero .tags{display:flex;gap:0.4rem;margin-top:0.6rem;flex-wrap:wrap;}
+.hero .tag{background:rgba(255,255,255,0.22);padding:0.25rem 0.7rem;border-radius:999px;font-weight:700;font-size:0.78rem;}
+.score-bar{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:0.85rem 1rem;margin-bottom:1rem;display:flex;justify-content:space-between;align-items:center;}
+.score-bar .label{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);font-weight:700;}
+.score-bar .progress-num{font-size:1.4rem;font-weight:800;color:var(--primary);}
+.q-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:1.1rem 1.3rem;margin-bottom:1rem;}
+.q-card.correct{border-color:var(--green);background:linear-gradient(180deg,var(--green-soft),var(--bg-card));}
+.q-card.wrong{border-color:var(--red);background:linear-gradient(180deg,var(--red-soft),var(--bg-card));}
+.q-num{font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);font-weight:700;margin-bottom:0.3rem;}
+.skill-tag{display:inline-block;font-size:0.62rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;background:rgba(245,158,11,0.18);color:var(--primary);padding:0.1rem 0.45rem;border-radius:4px;margin-left:0.4rem;}
+.q-text{font-size:1.04rem;font-weight:600;margin-bottom:0.7rem;line-height:1.55;}
+.q-text sup,.choice sup,.solution sup{font-size:0.72em;}
+.choices{display:flex;flex-direction:column;gap:0.45rem;}
+.choice{display:flex;align-items:flex-start;gap:0.65rem;background:var(--bg-elevated);border:2px solid transparent;border-radius:10px;padding:0.7rem 0.9rem;cursor:pointer;font-size:0.95rem;line-height:1.5;transition:all 0.15s;}
+.choice:hover{border-color:var(--primary);}
+.choice input{margin-top:0.3rem;cursor:pointer;flex-shrink:0;accent-color:var(--primary);}
+.choice .letter{font-weight:800;color:var(--text-dim);margin-right:0.2rem;}
+.choice.selected{border-color:var(--primary);background:rgba(245,158,11,0.12);}
+.choice.disabled{cursor:not-allowed;opacity:0.85;}
+.choice.disabled.selected{border-color:var(--primary);}
+.choice.show-correct{border-color:var(--green);background:var(--green-soft);}
+.choice.show-wrong{border-color:var(--red);background:var(--red-soft);}
+.solution{margin-top:0.7rem;padding:0.75rem 1rem;background:var(--bg-elevated);border-left:3px solid var(--primary);border-radius:0 8px 8px 0;font-size:0.9rem;line-height:1.55;}
+.solution .sol-head{font-weight:800;color:var(--primary);margin-bottom:0.25rem;}
+.bottom-bar{display:flex;gap:0.55rem;margin-top:1.5rem;}
+.btn{flex:1;border:none;border-radius:12px;cursor:pointer;font-family:inherit;padding:0.95rem;font-size:1rem;font-weight:800;}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:white;}
+.btn-secondary{background:var(--bg-elevated);color:var(--text);border:1px solid var(--border);}
+.btn:disabled{opacity:0.5;cursor:not-allowed;}
+.result-banner{background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(220,38,38,0.1));border:1px solid var(--primary);border-radius:14px;padding:1.1rem 1.3rem;margin:1.5rem 0;}
+.result-banner.pass{background:linear-gradient(135deg,rgba(16,185,129,0.18),rgba(245,158,11,0.1));border-color:var(--green);}
+.result-banner.fail{background:linear-gradient(135deg,rgba(239,68,68,0.18),rgba(245,158,11,0.1));border-color:var(--red);}
+.result-banner h2{margin:0 0 0.3rem;font-size:1.3rem;color:var(--primary);}
+.result-banner.pass h2{color:var(--green);} .result-banner.fail h2{color:var(--red);}
+.result-banner .big-score{font-size:3rem;font-weight:900;margin:0.3rem 0;line-height:1;}
+.result-banner.pass .big-score{color:var(--green);} .result-banner.fail .big-score{color:var(--red);}
+footer{margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border);text-align:center;font-size:0.83rem;color:var(--text-dim);}
+footer a{color:var(--primary);text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="top"><a class="logo" href="index.html">🧨 Mod 7 Test A</a><a class="back" href="index.html">← Hub</a></header>
+  <div class="hero"><h1>Module 7 Sample Test A — Factoring</h1><p>15-question mock test on factoring + graphing polynomials. Aim 12+/15.</p><div class="tags"><span class="tag">15 MC</span><span class="tag">~25 min</span><span class="tag">Final prep</span></div></div>
+  <div class="score-bar"><div><div class="label">Selected</div><div class="progress-num"><span id="selectedCount">0</span> / 15</div></div><div style="text-align:right;"><div class="label">Status</div><div id="quizStatus" style="font-size:0.9rem;font-weight:700;">In progress</div></div></div>
+  <div id="quiz"></div>
+  <div class="bottom-bar"><button class="btn btn-secondary" onclick="resetQuiz()">🔄 Reset</button><button class="btn btn-primary" id="submitBtn" onclick="submitQuiz()" disabled>Submit all</button></div>
+  <footer><p><a href="sample-test-7b.html">Test B →</a> · <a href="module-7-crash-course.html">Crash Course</a> · <a href="index.html">Hub</a></p></footer>
+</div>
+<script>
+const QUESTIONS = [
+  { skill:"GCF", q:`<p>Factor: <code>8x<sup>2</sup> − 12x</code></p>`, choices:["4x(2x − 3)", "2(4x<sup>2</sup> − 6x)", "4(2x<sup>2</sup> − 3x)", "x(8x − 12)"], ans:0, sol:"GCF: coefficients 4, variable x. → 4x(2x − 3)." },
+  { skill:"GCF", q:`<p>Factor completely: <code>15x<sup>3</sup>y − 25xy<sup>2</sup> + 10xy</code></p>`, choices:["5(3x<sup>3</sup>y − 5xy<sup>2</sup> + 2xy)", "5xy(3x<sup>2</sup> − 5y + 2)", "xy(15x<sup>2</sup> − 25y + 10)", "5xy(3x<sup>2</sup> − 5y)"], ans:1, sol:"Coeff GCF 5. x lowest power 1, y lowest power 1 → 5xy. Divide: (3x²)(−5y)(+2). Don't drop the +2." },
+  { skill:"Grouping", q:`<p>Factor: <code>x<sup>3</sup> − 2x<sup>2</sup> + 4x − 8</code></p>`, choices:["(x + 2)(x<sup>2</sup> − 4)", "(x − 4)(x<sup>2</sup> + 2)", "(x − 2)(x<sup>2</sup> + 4)", "(x + 4)(x<sup>2</sup> − 2)"], ans:2, sol:"Group: x²(x − 2) + 4(x − 2) = (x − 2)(x² + 4)." },
+  { skill:"Trinomial (a=1)", q:`<p>Factor: <code>x<sup>2</sup> + 6x + 8</code></p>`, choices:["(x − 2)(x − 4)", "(x + 1)(x + 8)", "(x + 6)(x + 2)", "(x + 2)(x + 4)"], ans:3, sol:"Need: multiply to 8, add to 6 → 2 and 4." },
+  { skill:"Trinomial (a=1)", q:`<p>Factor: <code>x<sup>2</sup> − 11x + 24</code></p>`, choices:["(x − 3)(x − 8)", "(x + 3)(x + 8)", "(x − 4)(x − 6)", "(x + 4)(x + 6)"], ans:0, sol:"Multiply to 24, add to −11 → both negative: −3 and −8." },
+  { skill:"Trinomial (a=1)", q:`<p>Factor: <code>x<sup>2</sup> − 2x − 15</code></p>`, choices:["(x − 5)(x − 3)", "(x − 5)(x + 3)", "(x + 5)(x − 3)", "(x + 5)(x + 3)"], ans:1, sol:"Multiply to −15 (opposite signs), add to −2 → −5 and +3." },
+  { skill:"Trinomial (a≠1)", q:`<p>Factor: <code>3x<sup>2</sup> + 8x + 4</code></p>`, choices:["(3x + 4)(x + 1)", "(3x + 1)(x + 4)", "(3x + 2)(x + 2)", "(3x − 2)(x − 2)"], ans:2, sol:"AC = 12. Numbers: 6 and 2 (sum 8). Split: 3x² + 6x + 2x + 4 → 3x(x + 2) + 2(x + 2) → (3x + 2)(x + 2)." },
+  { skill:"Trinomial (a≠1)", q:`<p>Factor: <code>2x<sup>2</sup> − 11x + 5</code></p>`, choices:["(2x − 5)(x + 1)", "(2x + 1)(x + 5)", "(2x − 5)(x − 1)", "(2x − 1)(x − 5)"], ans:3, sol:"AC = 10. Numbers: −10 and −1. Split: 2x² − 10x − x + 5 → 2x(x − 5) − 1(x − 5) → (2x − 1)(x − 5)." },
+  { skill:"Difference of squares", q:`<p>Factor: <code>x<sup>2</sup> − 121</code></p>`, choices:["(x − 11)(x + 11)", "(x − 11)<sup>2</sup>", "(x + 11)<sup>2</sup>", "Prime"], ans:0, sol:"121 = 11². a² − b² → (x − 11)(x + 11)." },
+  { skill:"Difference of squares", q:`<p>Factor: <code>4x<sup>2</sup> − 81</code></p>`, choices:["(4x − 9)(4x + 9)", "(2x − 9)(2x + 9)", "(2x + 9)<sup>2</sup>", "Prime"], ans:1, sol:"4x² = (2x)², 81 = 9² → (2x − 9)(2x + 9)." },
+  { skill:"Combined", q:`<p>Factor completely: <code>3x<sup>2</sup> − 27</code></p>`, choices:["3(x − 3)<sup>2</sup>", "(3x − 9)(x + 3)", "3(x − 3)(x + 3)", "3(x<sup>2</sup> − 9)"], ans:2, sol:"GCF 3 first → 3(x² − 9), then difference of squares → 3(x − 3)(x + 3)." },
+  { skill:"Combined", q:`<p>Factor completely: <code>5x<sup>3</sup> − 20x</code></p>`, choices:["5x(x<sup>2</sup> − 4)", "(5x − 10)(x + 2)", "5x(x − 4)(x + 4)", "5x(x − 2)(x + 2)"], ans:3, sol:"GCF 5x → 5x(x² − 4) → 5x(x − 2)(x + 2)." },
+  { skill:"Roots", q:`<p>Find the roots of <code>f(x) = x<sup>2</sup> + x − 6</code>.</p>`, choices:["x = −3 or x = 2", "x = 3 or x = −2", "x = 6 or x = −1", "x = 1 or x = −6"], ans:0, sol:"Factor: (x + 3)(x − 2) = 0 → x = −3 or x = 2." },
+  { skill:"End behavior", q:`<p>Describe the end behavior of <code>f(x) = −2x<sup>3</sup> + 5x</code>.</p>`, choices:["Both ends ↑", "Left ↑, right ↓", "Left ↓, right ↑", "Both ends ↓"], ans:1, sol:"Odd degree, negative leading coefficient → left end UP, right end DOWN." },
+  { skill:"Multiplicity", q:`<p>For <code>f(x) = (x − 3)<sup>2</sup>(x + 1)</code>, how does the graph interact with the x-axis?</p>`, choices:["Crosses at both roots", "Touches at x = 3, crosses at x = −1", "Crosses at x = 3, touches at x = −1", "Touches at both"], ans:1, sol:"x = 3 multiplicity 2 (even) → TOUCHES. x = −1 multiplicity 1 (odd) → CROSSES." }
+];
+let userAnswers = new Array(QUESTIONS.length).fill(null);
+let submitted = false;
+function render() { const quizEl = document.getElementById('quiz'); let html = ''; QUESTIONS.forEach((q, i) => { let cardCls = 'q-card'; if (submitted) cardCls += userAnswers[i] === q.ans ? ' correct' : ' wrong'; html += `<div class="${cardCls}"><div class="q-num">Question ${i + 1} of ${QUESTIONS.length}<span class="skill-tag">${q.skill}</span></div><div class="q-text">${q.q}</div><div class="choices">`; q.choices.forEach((c, j) => { let choiceCls = 'choice'; if (submitted) { choiceCls += ' disabled'; if (j === q.ans) choiceCls += ' show-correct'; else if (userAnswers[i] === j) choiceCls += ' show-wrong'; } else if (userAnswers[i] === j) { choiceCls += ' selected'; } html += `<label class="${choiceCls}"><input type="radio" name="q${i}" value="${j}" ${userAnswers[i] === j ? 'checked' : ''} ${submitted ? 'disabled' : ''} onchange="selectAnswer(${i}, ${j})"><span><span class="letter">${'ABCD'[j]}.</span> ${c}</span></label>`; }); html += `</div>`; if (submitted) { html += `<div class="solution"><div class="sol-head">${userAnswers[i] === q.ans ? '✓ Correct' : '✗ Correct answer: ' + 'ABCD'[q.ans]}</div>${q.sol}</div>`; } html += `</div>`; }); quizEl.innerHTML = html; updateScoreBar(); }
+function updateScoreBar() { const selected = userAnswers.filter(a => a !== null).length; document.getElementById('selectedCount').textContent = selected; document.getElementById('quizStatus').textContent = submitted ? 'Submitted' : (selected === QUESTIONS.length ? 'Ready to submit' : 'In progress'); document.getElementById('submitBtn').disabled = submitted || selected < QUESTIONS.length; }
+function selectAnswer(i,j){if(submitted)return;userAnswers[i]=j;render();}
+function submitQuiz(){if(submitted)return;if(userAnswers.includes(null)&&!confirm("You haven't answered every question. Submit anyway?"))return;submitted=true;render();showResults();}
+function showResults(){const c=userAnswers.filter((a,i)=>a===QUESTIONS[i].ans).length;const t=QUESTIONS.length;const p=Math.round(c/t*100);const pass=p>=80;const b=document.createElement('div');b.className='result-banner '+(pass?'pass':'fail');b.innerHTML=`<h2>${pass?'🎯 Ready for the final':'📚 Keep drilling'}</h2><div class="big-score">${c} / ${t} <span style="font-size:1.5rem;">(${p}%)</span></div><p>${pass?'Above 80%. Real final only needs 60%.':'Read the solutions; revisit the crash course; try Sample Test B.'}</p>`;document.querySelector('.score-bar').after(b);window.scrollTo({top:b.offsetTop-20,behavior:'smooth'});}
+function resetQuiz(){if(!confirm("Clear answers and start over?"))return;userAnswers=new Array(QUESTIONS.length).fill(null);submitted=false;document.querySelectorAll('.result-banner').forEach(e=>e.remove());render();window.scrollTo({top:0,behavior:'smooth'});}
+render();
+</script>
+</body>
+</html>

@@ -7,147 +7,49 @@
 <style>
 * { box-sizing: border-box; }
 :root {
-  --bg: #0F172A;
-  --bg-card: #1E293B;
-  --bg-elevated: #334155;
-  --text: #F1F5F9;
-  --text-dim: #94A3B8;
-  --primary: #6366F1;
-  --gold: #FBBF24;
-  --green: #10B981;
-  --pink: #EC4899;
+  --bg: #0F172A; --bg-card: #1E293B; --bg-elevated: #334155;
+  --text: #F1F5F9; --text-dim: #94A3B8;
+  --primary: #6366F1; --gold: #FBBF24; --green: #10B981; --pink: #EC4899;
+  --m5: #3B82F6; --m6: #14B8A6; --m7: #F59E0B; --m8: #DC2626;
   --border: #334155;
 }
 @media (prefers-color-scheme: light) {
-  :root {
-    --bg: #F8FAFC;
-    --bg-card: #FFFFFF;
-    --bg-elevated: #F1F5F9;
-    --text: #1A1A1A;
-    --text-dim: #64748B;
-    --border: #E2E8F0;
-  }
+  :root { --bg: #F8FAFC; --bg-card: #FFFFFF; --bg-elevated: #F1F5F9; --text: #1A1A1A; --text-dim: #64748B; --border: #E2E8F0; }
 }
-html, body {
-  margin: 0; padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.55;
-}
+html, body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.55; }
 .container { max-width: 760px; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
-.hero {
-  background: linear-gradient(135deg, #6366F1, #EC4899);
-  border-radius: 24px;
-  padding: 2rem 1.5rem;
-  text-align: center;
-  color: white;
-  margin: 0.5rem 0 2rem;
-  box-shadow: 0 8px 28px rgba(99,102,241,0.3);
-}
+.hero { background: linear-gradient(135deg, #6366F1, #EC4899); border-radius: 24px; padding: 2rem 1.5rem; text-align: center; color: white; margin: 0.5rem 0 2rem; box-shadow: 0 8px 28px rgba(99,102,241,0.3); }
 .hero h1 { font-size: 2rem; margin: 0 0 0.5rem; font-weight: 800; }
 .hero p { margin: 0; opacity: 0.92; font-size: 1.05rem; }
-.countdown {
-  display: inline-block;
-  background: rgba(255,255,255,0.2);
-  padding: 0.5rem 1rem;
-  border-radius: 999px;
-  margin-top: 0.8rem;
-  font-weight: 700;
-}
-
-h2 {
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-dim);
-  margin: 2rem 0 0.75rem 0.25rem;
-  font-weight: 700;
-}
-.featured {
-  background: linear-gradient(135deg, #6366F1, #EC4899);
-  border-radius: 18px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  text-decoration: none;
-  color: white;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-  transition: transform 0.15s;
-}
+.countdown { display: inline-block; background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 999px; margin-top: 0.8rem; font-weight: 700; }
+h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin: 2rem 0 0.75rem 0.25rem; font-weight: 700; }
+.module-section h2 { color: var(--module-color); font-size: 1.1rem; text-transform: none; letter-spacing: 0; font-weight: 800; margin-bottom: 0.5rem; }
+.module-section { border-left: 4px solid var(--module-color); padding-left: 1rem; margin-bottom: 2rem; }
+.module-section.m5 { --module-color: var(--m5); }
+.module-section.m6 { --module-color: var(--m6); }
+.module-section.m7 { --module-color: var(--m7); }
+.module-section.m8 { --module-color: var(--m8); }
+.module-section p.subtitle { color: var(--text-dim); font-size: 0.85rem; margin: 0 0 0.75rem; }
+.featured { background: linear-gradient(135deg, #6366F1, #EC4899); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; text-decoration: none; color: white; box-shadow: 0 4px 20px rgba(0,0,0,0.2); transition: transform 0.15s; }
 .featured:hover { transform: translateY(-2px); }
 .featured-emoji { font-size: 3rem; }
 .featured-text { flex: 1; }
 .featured h3 { margin: 0 0 0.3rem; font-size: 1.3rem; font-weight: 800; }
 .featured p { margin: 0; opacity: 0.92; font-size: 0.95rem; }
-
-.card-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+.card-grid { display: grid; grid-template-columns: 1fr; gap: 0.6rem; }
 @media (min-width: 600px) { .card-grid { grid-template-columns: 1fr 1fr; } }
-.card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 1rem 1.2rem;
-  text-decoration: none;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  transition: transform 0.1s, border-color 0.15s;
-}
+.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 0.85rem 1.1rem; text-decoration: none; color: var(--text); display: flex; align-items: center; gap: 0.7rem; transition: transform 0.1s, border-color 0.15s; }
 .card:hover { transform: translateY(-2px); border-color: var(--primary); }
-.card-emoji { font-size: 1.8rem; }
+.card-emoji { font-size: 1.6rem; }
 .card-text { flex: 1; }
-.card-title { font-weight: 700; font-size: 0.95rem; margin: 0 0 0.15rem; }
-.card-desc { color: var(--text-dim); font-size: 0.8rem; margin: 0; line-height: 1.4; }
-.card-tag {
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: var(--bg-elevated);
-  padding: 0.15rem 0.4rem;
-  border-radius: 4px;
-  color: var(--text-dim);
-}
-
-.study-list {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 0.5rem 0;
-}
-.study-row {
-  padding: 0.7rem 1rem;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.study-row:last-child { border-bottom: none; }
-.study-row a { color: var(--text); text-decoration: none; flex: 1; font-size: 0.92rem; font-weight: 500; }
-.study-row a:hover { color: var(--primary); }
-.study-row .badge {
-  font-size: 0.65rem;
-  font-weight: 700;
-  background: var(--bg-elevated);
-  padding: 0.15rem 0.45rem;
-  border-radius: 4px;
-  color: var(--text-dim);
-  text-transform: uppercase;
-}
-.study-row .key { background: rgba(16,185,129,0.18); color: var(--green); }
-
-footer {
-  margin-top: 3rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--border);
-  color: var(--text-dim);
-  font-size: 0.85rem;
-  text-align: center;
-}
+.card-title { font-weight: 700; font-size: 0.92rem; margin: 0 0 0.15rem; }
+.card-desc { color: var(--text-dim); font-size: 0.78rem; margin: 0; line-height: 1.4; }
+.tier { font-size: 0.62rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.1rem 0.4rem; border-radius: 4px; margin-right: 0.3rem; vertical-align: middle; }
+.tier-crash { background: rgba(245,158,11,0.18); color: #F59E0B; }
+.tier-sim { background: rgba(99,102,241,0.18); color: #818CF8; }
+.tier-test { background: rgba(220,38,38,0.18); color: #F87171; }
+.tier-lesson { background: rgba(20,184,166,0.18); color: #2DD4BF; }
+footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.85rem; text-align: center; }
 </style>
 </head>
 <body>
@@ -155,33 +57,24 @@ footer {
 
   <div class="hero">
     <h1>🦉 Neil's COA Prep Hub</h1>
-    <p>COA Algebra 1 Semester 2 — Modules 5-8 only. Final on June 11 at 11 AM.</p>
+    <p>COA Algebra 1 Semester 2 — Modules 5–8. Final on <b>Friday, June 12 at 11 AM</b>.</p>
     <div class="countdown" id="cd"></div>
   </div>
 
-  <a class="featured" href="final-review-answer-key.html" style="background: linear-gradient(135deg, #6366F1, #EC4899);">
-    <div class="featured-emoji">📘</div>
-    <div class="featured-text">
-      <h3>Final Review — Worked Answer Key</h3>
-      <p><b>The actual review Mrs. Goldstein gave</b> with worked answers for every problem (#1–12, 26–62 — polynomial ops, factoring, quadratics, transformations, projectile word problems). Try each problem yourself first, then check.</p>
-    </div>
-    <div style="font-size:1.5rem;">→</div>
-  </a>
-
-  <a class="featured" href="final-exam-study-guide.html" style="background: linear-gradient(135deg, #8B5CF6, #F59E0B);">
+  <a class="featured" href="final-exam-study-guide.html" style="background: linear-gradient(135deg, #6366F1, #EC4899);">
     <div class="featured-emoji">🎯</div>
     <div class="featured-text">
-      <h3>Final Exam Cheat Sheet — June 11, 11 AM</h3>
-      <p>Every formula + trap for Modules 5/6/7/8 in one page. <b>Skim this the morning of the exam.</b></p>
+      <h3>Final Exam Cheat Sheet</h3>
+      <p>Every formula + trap for Modules 5/6/7/8 in one page. <b>Read this Thursday night and Friday morning.</b></p>
     </div>
     <div style="font-size:1.5rem;">→</div>
   </a>
 
-  <a class="featured" href="sim-quiz-6-00.html" style="background: linear-gradient(135deg, #14B8A6, #2563EB);">
-    <div class="featured-emoji">🧮</div>
+  <a class="featured" href="final-review-answer-key.html" style="background: linear-gradient(135deg, #8B5CF6, #DC2626);">
+    <div class="featured-emoji">📘</div>
     <div class="featured-text">
-      <h3>Module 6 — Polynomial Operations</h3>
-      <p>16 fresh questions covering all of Module 6 (6.01–6.05): classifying polynomials, add/subtract &amp; closure, exponent rules, multiplying, and composite functions. Worked solutions on every item.</p>
+      <h3>Goldstein's Final Review — Worked Answer Key</h3>
+      <p>The actual review with worked answers for problems 1–12 and 26–62 (polynomials, factoring, quadratics).</p>
     </div>
     <div style="font-size:1.5rem;">→</div>
   </a>
@@ -190,204 +83,130 @@ footer {
     <div class="featured-emoji">⚔️</div>
     <div class="featured-text">
       <h3>Math Quest — Adaptive (MC)</h3>
-      <p>Daily driver. Multiple-choice adaptive engine for COA Modules 5-8 (Statistics, Polynomial Ops, Factoring, Quadratics). Miss a problem → engine queues two more on the same skill. Tap <b>📖 Show me how</b> on any skill for a worked-example lesson.</p>
+      <p>Daily driver. Adaptive engine for Ch 5/7/8/9. Tap <b>📖 Show me how</b> on any skill for a worked example.</p>
     </div>
     <div style="font-size:1.5rem;">→</div>
   </a>
 
-  <a class="featured" href="module-5-review.html" style="background: linear-gradient(135deg, #6366F1, #8B5CF6);">
-    <div class="featured-emoji">🎯</div>
-    <div class="featured-text">
-      <h3>Module 5 Final Review — Targeted Drill</h3>
-      <p>15 questions on the exact spots to lock down for the final: <b>box plots</b> and <b>average rate of change</b> first, plus mean vs. median, outliers, conditional frequency, and intercept/slope meaning. Every answer has a worked solution. <b>Aim for 12+/15.</b></p>
+  <!-- ============= MODULE 5 ============= -->
+  <div class="module-section m5">
+    <h2>📊 Module 5 — Statistics</h2>
+    <p class="subtitle">Dot plots, box plots, mean vs median, outliers, two-way tables, scatter plots, correlation vs causation.</p>
+    <div class="card-grid">
+      <a class="card" href="module-5-crash-course.html">
+        <span class="card-emoji">🔥</span>
+        <div class="card-text"><div class="card-title"><span class="tier tier-crash">CRASH</span>Module 5 Crash Course</div><p class="card-desc">All sub-topics on one page</p></div>
+      </a>
+      <a class="card" href="module-5-review.html">
+        <span class="card-emoji">🎯</span>
+        <div class="card-text"><div class="card-title"><span class="tier tier-sim">SIM</span>Targeted Drill</div><p class="card-desc">15 Q on the biggest traps</p></div>
+      </a>
+      <a class="card" href="sample-test-5a.html">
+        <span class="card-emoji">📝</span>
+        <div class="card-text"><div class="card-title"><span class="tier tier-test">TEST A</span>Sample Test A</div><p class="card-desc">15 mock-final questions</p></div>
+      </a>
+      <a class="card" href="sample-test-5b.html">
+        <span class="card-emoji">📝</span>
+        <div class="card-text"><div class="card-title"><span class="tier tier-test">TEST B</span>Sample Test B</div><p class="card-desc">15 more mock-final questions</p></div>
+      </a>
+      <a class="card" href="lesson.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>5.00 + 5.01</div><p class="card-desc">Representing data</p></div></a>
+      <a class="card" href="lesson-5-02.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>5.02</div><p class="card-desc">Comparing data sets</p></div></a>
+      <a class="card" href="lesson-5-04.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>5.04</div><p class="card-desc">Outliers</p></div></a>
+      <a class="card" href="lesson-5-05.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>5.05</div><p class="card-desc">Two-way frequency tables</p></div></a>
+      <a class="card" href="lesson-5-06.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>5.06</div><p class="card-desc">Scatter plots &amp; LOBF</p></div></a>
+      <a class="card" href="lesson-5-07.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>5.07</div><p class="card-desc">Correlation &amp; causation</p></div></a>
     </div>
-    <div style="font-size:1.5rem;">→</div>
-  </a>
-
-  <h2>Module 5 Lessons (Statistics)</h2>
-  <div class="card-grid">
-    <a class="card" href="lesson.html">
-      <span class="card-emoji">📊</span>
-      <div class="card-text">
-        <div class="card-title">5.00 + 5.01 — Representing Data</div>
-        <p class="card-desc">Dot plots, histograms, box plots</p>
-      </div>
-    </a>
-    <a class="card" href="lesson-5-02.html">
-      <span class="card-emoji">📈</span>
-      <div class="card-text">
-        <div class="card-title">5.02 — Comparing Data Sets</div>
-        <p class="card-desc">Mean vs median, σ vs IQR, normal distribution</p>
-      </div>
-    </a>
-    <a class="card" href="lesson-5-04.html">
-      <span class="card-emoji">🎯</span>
-      <div class="card-text">
-        <div class="card-title">5.04 — Outliers</div>
-        <p class="card-desc">Spot, classify, and account for outliers</p>
-      </div>
-    </a>
-    <a class="card" href="lesson-5-05.html">
-      <span class="card-emoji">📋</span>
-      <div class="card-text">
-        <div class="card-title">5.05 — Two-Way Frequency Tables</div>
-        <p class="card-desc">Joint, marginal, conditional frequencies</p>
-      </div>
-    </a>
-    <a class="card" href="lesson-5-06.html">
-      <span class="card-emoji">📉</span>
-      <div class="card-text">
-        <div class="card-title">5.06 — Scatter Plots & LOBF</div>
-        <p class="card-desc">Line of best fit, residuals, predictions</p>
-      </div>
-    </a>
-    <a class="card" href="lesson-5-07.html">
-      <span class="card-emoji">🔗</span>
-      <div class="card-text">
-        <div class="card-title">5.07 — Correlation & Causation</div>
-        <p class="card-desc">Slope/intercept interpretation, r, confounders</p>
-      </div>
-    </a>
   </div>
 
-  <h2>Simulated Quizzes (no retry on the real ones!)</h2>
-  <p style="margin:0 0 0.75rem 0.25rem; font-size:0.88rem; color:var(--text-dim);">Take these BEFORE the Buzz quiz to know if you're ready. Hit 8+/10 here = take the real one.</p>
-  <div class="card-grid">
-    <a class="card" href="sim-quiz-5-01.html">
-      <span class="card-emoji">🎯</span>
-      <div class="card-text">
-        <div class="card-title">Sim Quiz — 5.01</div>
-        <p class="card-desc">Representing data · 10 MC · with SVG visuals</p>
-      </div>
-    </a>
-    <a class="card" href="sim-quiz-5-02.html">
-      <span class="card-emoji">🎯</span>
-      <div class="card-text">
-        <div class="card-title">Sim Quiz — 5.02</div>
-        <p class="card-desc">Comparing data sets · 10 MC</p>
-      </div>
-    </a>
-    <a class="card" href="sim-quiz-5-04.html">
-      <span class="card-emoji">🎯</span>
-      <div class="card-text">
-        <div class="card-title">Sim Quiz — 5.04</div>
-        <p class="card-desc">Outliers · 10 MC</p>
-      </div>
-    </a>
-    <a class="card" href="sim-quiz-5-05.html">
-      <span class="card-emoji">🎯</span>
-      <div class="card-text">
-        <div class="card-title">Sim Quiz — 5.05</div>
-        <p class="card-desc">Two-way frequency tables · 10 MC</p>
-      </div>
-    </a>
-    <a class="card" href="sim-quiz-5-07.html">
-      <span class="card-emoji">🎯</span>
-      <div class="card-text">
-        <div class="card-title">Sim Quiz — 5.07</div>
-        <p class="card-desc">Correlation & causation · 10 MC</p>
-      </div>
-    </a>
+  <!-- ============= MODULE 6 ============= -->
+  <div class="module-section m6">
+    <h2>🧮 Module 6 — Polynomial Operations</h2>
+    <p class="subtitle">Classify, add/subtract + closure, exponent rules, multiplying polynomials, function composition.</p>
+    <div class="card-grid">
+      <a class="card" href="module-6-crash-course.html">
+        <span class="card-emoji">🔥</span>
+        <div class="card-text"><div class="card-title"><span class="tier tier-crash">CRASH</span>Module 6 Crash Course</div><p class="card-desc">All 6.01–6.05 in one page</p></div>
+      </a>
+      <a class="card" href="sim-quiz-6-00.html">
+        <span class="card-emoji">🎯</span>
+        <div class="card-text"><div class="card-title"><span class="tier tier-sim">SIM</span>Module 6 Sim Quiz</div><p class="card-desc">16 MC across the module</p></div>
+      </a>
+      <a class="card" href="sample-test-6a.html">
+        <span class="card-emoji">📝</span>
+        <div class="card-text"><div class="card-title"><span class="tier tier-test">TEST A</span>Sample Test A</div><p class="card-desc">15 mock-final questions</p></div>
+      </a>
+      <a class="card" href="sample-test-6b.html">
+        <span class="card-emoji">📝</span>
+        <div class="card-text"><div class="card-title"><span class="tier tier-test">TEST B</span>Sample Test B</div><p class="card-desc">15 more mock-final questions</p></div>
+      </a>
+      <a class="card" href="lesson-6-01.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>6.01</div><p class="card-desc">Characteristics of polynomials</p></div></a>
+      <a class="card" href="lesson-6-02.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>6.02</div><p class="card-desc">Adding/subtracting + closure</p></div></a>
+      <a class="card" href="lesson-6-03.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>6.03</div><p class="card-desc">Exponent rules</p></div></a>
+      <a class="card" href="lesson-6-04.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>6.04</div><p class="card-desc">Multiplying polynomials</p></div></a>
+      <a class="card" href="lesson-6-05.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>6.05</div><p class="card-desc">Function composition</p></div></a>
+      <a class="card" href="dba-6-07-prep.html"><span class="card-emoji">✍️</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">DBA</span>6.07 Written DBA</div><p class="card-desc">4 typed reflection questions</p></div></a>
+    </div>
   </div>
 
-  <h2>Module 6 — Polynomial Operations</h2>
-  <p style="margin:0 0 0.75rem 0.25rem; font-size:0.88rem; color:var(--text-dim);">Covers 6.01 classifying · 6.02 add/subtract &amp; closure · 6.03 exponent rules · 6.04 multiplying · 6.05 composite functions. The Buzz pretest is retry-allowed — practice here first.</p>
-  <div class="card-grid">
-    <a class="card" href="lesson-6-01.html">
-      <span class="card-emoji">🏷️</span>
-      <div class="card-text">
-        <div class="card-title">6.01 — Characteristics of Polynomials</div>
-        <p class="card-desc">Terms, degree (multi-var trap), standard form, non-examples</p>
-      </div>
-    </a>
-    <a class="card" href="lesson-6-02.html">
-      <span class="card-emoji">➕</span>
-      <div class="card-text">
-        <div class="card-title">6.02 — Adding &amp; Subtracting Polynomials</div>
-        <p class="card-desc">Like terms, the minus-distribution trap, closure, (f±g)(x)</p>
-      </div>
-    </a>
-    <a class="card" href="lesson-6-03.html">
-      <span class="card-emoji">✖️</span>
-      <div class="card-text">
-        <div class="card-title">6.03 — Multiplying &amp; Dividing Monomials</div>
-        <p class="card-desc">The 7 exponent rules: product, quotient, power, negative</p>
-      </div>
-    </a>
-    <a class="card" href="lesson-6-04.html">
-      <span class="card-emoji">🟦</span>
-      <div class="card-text">
-        <div class="card-title">6.04 — Multiplying &amp; Dividing Polynomials</div>
-        <p class="card-desc">FOIL, difference of squares, perfect square trap, area</p>
-      </div>
-    </a>
-    <a class="card" href="lesson-6-05.html">
-      <span class="card-emoji">🔗</span>
-      <div class="card-text">
-        <div class="card-title">6.05 — Function Composition</div>
-        <p class="card-desc">f(g(x)), order matters, word problems, unit chains</p>
-      </div>
-    </a>
-    <a class="card" href="dba-6-07-prep.html">
-      <span class="card-emoji">✍️</span>
-      <div class="card-text">
-        <div class="card-title">6.07 DBA — Written Reflection</div>
-        <p class="card-desc">4 typed questions · 2–4 sentences each · model answers</p>
-      </div>
-    </a>
-    <a class="card" href="sim-quiz-6-00.html">
-      <span class="card-emoji">🧮</span>
-      <div class="card-text">
-        <div class="card-title">Sim Quiz — 6.00 Pretest</div>
-        <p class="card-desc">All of Module 6 · 16 MC · worked solutions</p>
-      </div>
-    </a>
+  <!-- ============= MODULE 7 ============= -->
+  <div class="module-section m7">
+    <h2>🧨 Module 7 — Factoring &amp; Graphing Polynomials</h2>
+    <p class="subtitle">GCF → grouping → trinomials → difference of squares → graphing (roots, end behavior, multiplicity).</p>
+    <div class="card-grid">
+      <a class="card" href="module-7-crash-course.html">
+        <span class="card-emoji">🔥</span>
+        <div class="card-text"><div class="card-title"><span class="tier tier-crash">CRASH</span>Module 7 Crash Course</div><p class="card-desc">Decision tree + worked examples</p></div>
+      </a>
+      <a class="card" href="sim-quiz-7-final.html">
+        <span class="card-emoji">🎯</span>
+        <div class="card-text"><div class="card-title"><span class="tier tier-sim">SIM</span>Module 7 Sim Quiz</div><p class="card-desc">15 MC across all sub-topics</p></div>
+      </a>
+      <a class="card" href="sample-test-7a.html">
+        <span class="card-emoji">📝</span>
+        <div class="card-text"><div class="card-title"><span class="tier tier-test">TEST A</span>Sample Test A</div><p class="card-desc">15 mock-final questions</p></div>
+      </a>
+      <a class="card" href="sample-test-7b.html">
+        <span class="card-emoji">📝</span>
+        <div class="card-text"><div class="card-title"><span class="tier tier-test">TEST B</span>Sample Test B</div><p class="card-desc">15 more mock-final questions</p></div>
+      </a>
+    </div>
   </div>
 
-  <h2>🔥 For the Final (Thursday June 11)</h2>
-  <p style="margin:0 0 0.75rem 0.25rem; font-size:0.88rem; color:var(--text-dim);">Crash-course pages covering Modules 7 (Factoring) and 8 (Quadratics) — the parts not yet covered in COA. Read both before the exam.</p>
-  <div class="card-grid">
-    <a class="card" href="module-7-crash-course.html" style="border-color:#F59E0B;">
-      <span class="card-emoji">🧨</span>
-      <div class="card-text">
-        <div class="card-title">Module 7 Crash Course</div>
-        <p class="card-desc">Factoring decision tree · GCF, grouping, trinomials, DOS, graphing · 15 practice</p>
-      </div>
-    </a>
-    <a class="card" href="module-8-crash-course.html" style="border-color:#DC2626;">
-      <span class="card-emoji">📐</span>
-      <div class="card-text">
-        <div class="card-title">Module 8 Crash Course</div>
-        <p class="card-desc">Parabolas, 3 ways to solve, quadratic formula, vertex form · 15 practice</p>
-      </div>
-    </a>
-    <a class="card" href="sim-quiz-7-final.html" style="border-color:#F59E0B;">
-      <span class="card-emoji">🎯</span>
-      <div class="card-text">
-        <div class="card-title">Sim Quiz — Module 7</div>
-        <p class="card-desc">15 MC across factoring + graphing · worked solutions · aim 12+/15</p>
-      </div>
-    </a>
-    <a class="card" href="sim-quiz-8-final.html" style="border-color:#DC2626;">
-      <span class="card-emoji">🎯</span>
-      <div class="card-text">
-        <div class="card-title">Sim Quiz — Module 8</div>
-        <p class="card-desc">15 MC across quadratics · worked solutions · aim 12+/15</p>
-      </div>
-    </a>
+  <!-- ============= MODULE 8 ============= -->
+  <div class="module-section m8">
+    <h2>📐 Module 8 — Quadratic Functions</h2>
+    <p class="subtitle">3 forms, parabolas, 3 ways to solve, discriminant, completing the square, vertex form, transformations, projectile word problems.</p>
+    <div class="card-grid">
+      <a class="card" href="module-8-crash-course.html">
+        <span class="card-emoji">🔥</span>
+        <div class="card-text"><div class="card-title"><span class="tier tier-crash">CRASH</span>Module 8 Crash Course</div><p class="card-desc">All quadratic skills + cheat sheet</p></div>
+      </a>
+      <a class="card" href="sim-quiz-8-final.html">
+        <span class="card-emoji">🎯</span>
+        <div class="card-text"><div class="card-title"><span class="tier tier-sim">SIM</span>Module 8 Sim Quiz</div><p class="card-desc">15 MC across quadratics</p></div>
+      </a>
+      <a class="card" href="sample-test-8a.html">
+        <span class="card-emoji">📝</span>
+        <div class="card-text"><div class="card-title"><span class="tier tier-test">TEST A</span>Sample Test A</div><p class="card-desc">15 mock-final questions</p></div>
+      </a>
+      <a class="card" href="sample-test-8b.html">
+        <span class="card-emoji">📝</span>
+        <div class="card-text"><div class="card-title"><span class="tier tier-test">TEST B</span>Sample Test B</div><p class="card-desc">15 more mock-final questions</p></div>
+      </a>
+    </div>
   </div>
 
   <footer>
-    <p>Goal: <b>≥80% on the COA Sem 2 final, June 11, 2026 at 11 AM.</b></p>
-    <p>Open this page on your iPhone/iPad and tap Share → Add to Home Screen for one-tap access.</p>
+    <p>Goal: <b>≥60% to pass the final · ≥80% to be safely above bar.</b></p>
+    <p>Add to home screen on iPhone/iPad: Share → Add to Home Screen.</p>
   </footer>
 
 </div>
 
 <script>
-const exam = new Date('2026-06-11T08:00:00');
+const exam = new Date('2026-06-12T11:00:00');
 const days = Math.max(0, Math.ceil((exam - new Date()) / 86400000));
-document.getElementById('cd').textContent = days === 0 ? 'EXAM DAY!' : `${days} days until the exam`;
+document.getElementById('cd').textContent = days === 0 ? 'EXAM DAY!' : `${days} day${days === 1 ? '' : 's'} until the exam · Friday June 12, 11 AM`;
 </script>
 </body>
 </html>

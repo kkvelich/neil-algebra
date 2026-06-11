@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Module 5 Crash Course — Statistics</title>
+<style>*{box-sizing:border-box;}:root{--bg:#0F172A;--bg-card:#1E293B;--bg-elevated:#334155;--text:#F1F5F9;--text-dim:#94A3B8;--primary:#3B82F6;--accent:#06B6D4;--green:#10B981;--orange:#F59E0B;--border:#334155;}@media (prefers-color-scheme:light){:root{--bg:#F8FAFC;--bg-card:#FFFFFF;--bg-elevated:#F1F5F9;--text:#1A1A1A;--text-dim:#64748B;--border:#E2E8F0;}}html,body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:17px;line-height:1.6;}.container{max-width:760px;margin:0 auto;padding:1rem 1.1rem 4rem;}header.top{display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0 1rem;}.logo{font-size:1.2rem;font-weight:800;background:linear-gradient(135deg,#3B82F6,#06B6D4);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;}.back{color:var(--text-dim);text-decoration:none;font-size:0.88rem;font-weight:600;}.hero{background:linear-gradient(135deg,#3B82F6,#06B6D4);border-radius:18px;padding:1.3rem 1.4rem;color:white;margin-bottom:1.5rem;}.hero h1{margin:0 0 0.4rem;font-size:1.4rem;font-weight:800;}.hero p{margin:0;font-size:0.95rem;opacity:0.95;line-height:1.55;}.hero .tags{display:flex;gap:0.4rem;margin-top:0.7rem;flex-wrap:wrap;}.hero .tag{background:rgba(255,255,255,0.22);padding:0.25rem 0.7rem;border-radius:999px;font-weight:700;font-size:0.78rem;}.toc{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1.5rem;}.toc h3{margin:0 0 0.5rem;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);}.toc a{display:block;color:var(--text);text-decoration:none;padding:0.35rem 0;font-size:0.95rem;font-weight:600;}.toc a:hover{color:var(--accent);}h2{font-size:1.3rem;margin:2rem 0 0.6rem;color:var(--accent);font-weight:800;padding-top:0.5rem;border-top:1px solid var(--border);}h2:first-of-type{border-top:none;padding-top:0;margin-top:1rem;}h3{font-size:1.05rem;margin:1.3rem 0 0.5rem;font-weight:700;color:var(--text);}p{margin:0.6rem 0;}ul,ol{margin:0.4rem 0;padding-left:1.4rem;}li{margin:0.3rem 0;}sup{font-size:0.75em;}table{border-collapse:collapse;margin:0.6rem 0 1rem;width:100%;font-size:0.92rem;}th,td{border:1px solid var(--border);padding:0.4rem 0.7rem;text-align:left;}th{background:var(--bg-elevated);font-weight:700;}strong{color:var(--text);}code{font-family:-apple-system,"SF Mono",Menlo,monospace;background:var(--bg-elevated);padding:0.1rem 0.35rem;border-radius:4px;font-size:0.92em;}.callout{background:rgba(245,158,11,0.12);border-left:4px solid var(--orange);padding:0.85rem 1rem;border-radius:0 10px 10px 0;margin:1rem 0;font-size:0.93rem;line-height:1.55;}.callout strong{color:var(--orange);}.example{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1rem 1.2rem;margin:1rem 0;}.example .ex-tag{display:inline-block;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--green);font-weight:700;margin-bottom:0.3rem;}.big-final{background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(6,182,212,0.1));border:1px solid var(--accent);border-radius:14px;padding:1.1rem 1.3rem;margin:1.5rem 0;}.big-final h3{margin-top:0;color:var(--accent);}footer{margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border);text-align:center;font-size:0.83rem;color:var(--text-dim);}footer a{color:var(--primary);text-decoration:none;}</style>
+</head><body><div class="container">
+<header class="top"><a class="logo" href="index.html">📊 Mod 5 Crash</a><a class="back" href="index.html">← Hub</a></header>
+<div class="hero"><h1>Module 5 — Statistics (Crash Course)</h1><p>All of Module 5 in one page: data displays, center vs spread, outliers, two-way tables, scatter plots, correlation vs causation. Read top to bottom, then take the Sample Tests.</p><div class="tags"><span class="tag">6 sub-topics</span><span class="tag">~30 min</span><span class="tag">Final prep</span></div></div>
+
+<div class="toc"><h3>Contents</h3>
+<a href="#a">A. Representing data (5.01)</a>
+<a href="#b">B. Comparing data sets (5.02)</a>
+<a href="#c">C. Outliers (5.04)</a>
+<a href="#d">D. Two-way frequency tables (5.05)</a>
+<a href="#e">E. Scatter plots &amp; LOBF (5.06)</a>
+<a href="#f">F. Correlation vs causation (5.07)</a>
+<a href="#cheat">G. Cheat sheet</a>
+</div>
+
+<h2 id="a">A. Representing data (5.01)</h2>
+<p>Three main displays for one-variable data:</p>
+<ul>
+<li><strong>Dot plot:</strong> one dot per value, stacked on a number line.</li>
+<li><strong>Histogram:</strong> bars over INTERVALS; height = frequency in that bin.</li>
+<li><strong>Box plot:</strong> visual of the five-number summary (min, Q1, median, Q3, max). Box is Q1→Q3 with a line at the median; whiskers reach to min/max (outliers shown as separate dots).</li>
+</ul>
+<div class="callout"><strong>Building a histogram from raw data:</strong> count each value (frequency table) FIRST, then match the bar heights to the frequencies. Don't eyeball.</div>
+
+<h3>Median, Q1, Q3 from a small data set</h3>
+<p>Sort first. With <em>n</em> values:</p>
+<ul>
+<li>Odd n → median = middle value.</li>
+<li>Even n → median = average of the two middle values.</li>
+<li>Q1 = median of the lower half. Q3 = median of the upper half.</li>
+</ul>
+<div class="example"><span class="ex-tag">Example</span>
+<p>Data: 6, 9, 12, 12, 15, 18, 21, 24. n=8 → median = (12+15)/2 = 13.5.</p>
+<p>Lower half [6,9,12,12] → Q1 = (9+12)/2 = 10.5. Upper half [15,18,21,24] → Q3 = (18+21)/2 = 19.5.</p>
+<p><strong>IQR = Q3 − Q1 = 19.5 − 10.5 = 9.</strong></p></div>
+
+<h2 id="b">B. Comparing data sets (5.02)</h2>
+<table>
+<tr><th>Measure</th><th>What it tells you</th><th>Robust to outliers?</th></tr>
+<tr><td>Mean</td><td>Average (typical) value</td><td>No</td></tr>
+<tr><td>Median</td><td>Middle value</td><td>Yes</td></tr>
+<tr><td>Range</td><td>max − min (spread)</td><td>No</td></tr>
+<tr><td>IQR</td><td>Q3 − Q1 (middle 50%)</td><td>Yes</td></tr>
+<tr><td>Std dev (σ)</td><td>Average distance from mean</td><td>No</td></tr>
+</table>
+<div class="callout"><strong>Mean vs median rule:</strong> symmetric, no outliers → MEAN. Skewed or has outliers → MEDIAN. The median resists distortion.</div>
+<p><strong>Comparing two sets:</strong> compare centers (mean/median) and spreads (IQR/σ) separately.</p>
+
+<h2 id="c">C. Outliers (5.04)</h2>
+<p><strong>1.5·IQR rule:</strong> a value is an outlier if it falls below <code>Q1 − 1.5·IQR</code> or above <code>Q3 + 1.5·IQR</code>.</p>
+<div class="example"><span class="ex-tag">Example</span>
+<p>Q1=10, Q3=30, IQR=20. Lower fence = 10 − 30 = −20. Upper fence = 30 + 30 = 60. Any value &lt; −20 or &gt; 60 is an outlier.</p></div>
+<div class="callout"><strong>Effect of removing an outlier:</strong>
+<ul style="margin-top:0.3rem;">
+<li>Removing a <strong>low</strong> outlier → mean <strong>increases</strong>.</li>
+<li>Removing a <strong>high</strong> outlier → mean <strong>decreases</strong>.</li>
+<li>Median barely shifts in either case.</li>
+</ul></div>
+
+<h2 id="d">D. Two-way frequency tables (5.05)</h2>
+<table>
+<tr><th>Term</th><th>What to divide by</th></tr>
+<tr><td><strong>Joint frequency</strong></td><td>cell count (no division)</td></tr>
+<tr><td><strong>Marginal frequency</strong></td><td>row OR column total (no division by grand total)</td></tr>
+<tr><td><strong>Marginal relative</strong></td><td>row/column total ÷ grand total</td></tr>
+<tr><td><strong>Joint relative</strong></td><td>cell ÷ grand total</td></tr>
+<tr><td><strong>Conditional (row)</strong></td><td>cell ÷ ROW total (each row sums to 1)</td></tr>
+<tr><td><strong>Conditional (column)</strong></td><td>cell ÷ COLUMN total (each column sums to 1)</td></tr>
+</table>
+<div class="callout"><strong>The denominator trap:</strong> "Of dog owners, % who own cats" → divide by DOG ROW total. "Of cat owners, % who own dogs" → divide by CAT COLUMN total. Same cell, different denominators → different answers.</div>
+
+<h2 id="e">E. Scatter plots &amp; line of best fit (5.06)</h2>
+<p>Scatter plot = dots for (x, y) pairs. Look for: shape (linear / curved), direction (positive / negative), strength (tight / loose).</p>
+<h3>Slope &amp; y-intercept in context</h3>
+<p>For <code>y = mx + b</code>:</p>
+<ul>
+<li><strong>Slope m</strong> = rate of change (e.g., "cost rises $6 per item").</li>
+<li><strong>y-intercept b</strong> = value at x = 0 (starting/initial value).</li>
+</ul>
+<h3>Building a line from two points</h3>
+<p>Slope = (y₂ − y₁) / (x₂ − x₁). Then use y − y₁ = m(x − x₁) → solve for y = mx + b form.</p>
+<h3>Residuals</h3>
+<p><strong>Residual = actual − predicted</strong>. Small residuals = good fit.</p>
+<div class="callout"><strong>"Good fit" criterion:</strong> residuals should scatter RANDOMLY around zero and their SUM should be ≈ 0. A pattern or one-sided residuals = poor fit. "Every residual must be small" is NOT the criterion (some can be larger as long as they balance).</div>
+
+<h2 id="f">F. Correlation vs causation (5.07)</h2>
+<p><strong>Correlation coefficient r</strong> ranges from −1 to +1.</p>
+<table>
+<tr><th>r value</th><th>What it means</th></tr>
+<tr><td>+1</td><td>Perfect positive linear</td></tr>
+<tr><td>~+0.7 to +0.9</td><td>Strong positive</td></tr>
+<tr><td>~0</td><td>No linear relationship</td></tr>
+<tr><td>~−0.7 to −0.9</td><td>Strong negative</td></tr>
+<tr><td>−1</td><td>Perfect negative linear</td></tr>
+</table>
+<div class="callout"><strong>Correlation ≠ causation.</strong> Strong r means the variables move together, but a third <em>confounding variable</em> may explain both. Classic example: ice cream sales and drowning incidents both rise — because both are driven by hot weather, not by each other.</div>
+
+<h3>⭐ Average rate of change (recurring weak spot)</h3>
+<p>For values at two x-points:</p>
+<p style="text-align:center;"><code>average rate of change = (y₂ − y₁) / (x₂ − x₁)</code></p>
+<div class="example"><span class="ex-tag">Example</span>
+<p>Profit at hour 2 = $30; at hour 6 = $98. Rate of change = (98 − 30)/(6 − 2) = 68/4 = <strong>$17 per hour</strong>.</p>
+<p>⚠ <strong>$68 is the TOTAL change</strong>, not the rate. Always divide by Δx, AND include units.</p></div>
+
+<div class="big-final" id="cheat">
+<h3>🔑 The Module 5 cheat sheet</h3>
+<ul>
+<li><strong>IQR = Q3 − Q1</strong> (the BOX width). Range = max − min. Don't mix them up.</li>
+<li><strong>Median for skewed/outliers; mean for symmetric.</strong></li>
+<li><strong>1.5·IQR rule:</strong> outlier if &lt; Q1 − 1.5·IQR or &gt; Q3 + 1.5·IQR.</li>
+<li><strong>Two-way:</strong> pick the right denominator. Row vs column conditional is the trap.</li>
+<li><strong>Slope = rate of change in context, intercept = starting value.</strong></li>
+<li><strong>Good fit:</strong> residuals random, sum ≈ 0. NOT "every residual small."</li>
+<li><strong>Correlation ≠ causation</strong> — watch for confounding variables.</li>
+<li><strong>Average rate of change = Δy/Δx</strong> WITH UNITS. Don't forget to divide.</li>
+</ul>
+</div>
+
+<footer><p><a href="sample-test-5a.html">Sample Test A</a> · <a href="sample-test-5b.html">Sample Test B</a> · <a href="module-5-review.html">Targeted Review Drill</a> · <a href="index.html">Hub</a></p></footer>
+</div></body></html>

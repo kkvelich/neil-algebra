@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Module 6 Crash Course — Polynomial Operations</title>
+<style>*{box-sizing:border-box;}:root{--bg:#0F172A;--bg-card:#1E293B;--bg-elevated:#334155;--text:#F1F5F9;--text-dim:#94A3B8;--primary:#14B8A6;--accent:#2563EB;--green:#10B981;--orange:#F59E0B;--border:#334155;}@media (prefers-color-scheme:light){:root{--bg:#F8FAFC;--bg-card:#FFFFFF;--bg-elevated:#F1F5F9;--text:#1A1A1A;--text-dim:#64748B;--border:#E2E8F0;}}html,body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:17px;line-height:1.6;}.container{max-width:760px;margin:0 auto;padding:1rem 1.1rem 4rem;}header.top{display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0 1rem;}.logo{font-size:1.2rem;font-weight:800;background:linear-gradient(135deg,#14B8A6,#2563EB);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;}.back{color:var(--text-dim);text-decoration:none;font-size:0.88rem;font-weight:600;}.hero{background:linear-gradient(135deg,#14B8A6,#2563EB);border-radius:18px;padding:1.3rem 1.4rem;color:white;margin-bottom:1.5rem;}.hero h1{margin:0 0 0.4rem;font-size:1.4rem;font-weight:800;}.hero p{margin:0;font-size:0.95rem;opacity:0.95;line-height:1.55;}.hero .tags{display:flex;gap:0.4rem;margin-top:0.7rem;flex-wrap:wrap;}.hero .tag{background:rgba(255,255,255,0.22);padding:0.25rem 0.7rem;border-radius:999px;font-weight:700;font-size:0.78rem;}.toc{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1.5rem;}.toc h3{margin:0 0 0.5rem;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);}.toc a{display:block;color:var(--text);text-decoration:none;padding:0.35rem 0;font-size:0.95rem;font-weight:600;}.toc a:hover{color:var(--accent);}h2{font-size:1.3rem;margin:2rem 0 0.6rem;color:var(--accent);font-weight:800;padding-top:0.5rem;border-top:1px solid var(--border);}h2:first-of-type{border-top:none;padding-top:0;margin-top:1rem;}h3{font-size:1.05rem;margin:1.3rem 0 0.5rem;font-weight:700;color:var(--text);}p{margin:0.6rem 0;}ul,ol{margin:0.4rem 0;padding-left:1.4rem;}li{margin:0.3rem 0;}sup{font-size:0.75em;}table{border-collapse:collapse;margin:0.6rem 0 1rem;width:100%;font-size:0.92rem;}th,td{border:1px solid var(--border);padding:0.4rem 0.7rem;text-align:left;}th{background:var(--bg-elevated);font-weight:700;}strong{color:var(--text);}code{font-family:-apple-system,"SF Mono",Menlo,monospace;background:var(--bg-elevated);padding:0.1rem 0.35rem;border-radius:4px;font-size:0.92em;}.callout{background:rgba(245,158,11,0.12);border-left:4px solid var(--orange);padding:0.85rem 1rem;border-radius:0 10px 10px 0;margin:1rem 0;font-size:0.93rem;line-height:1.55;}.callout strong{color:var(--orange);}.example{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1rem 1.2rem;margin:1rem 0;}.example .ex-tag{display:inline-block;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--green);font-weight:700;margin-bottom:0.3rem;}.big-final{background:linear-gradient(135deg,rgba(20,184,166,0.15),rgba(37,99,235,0.1));border:1px solid var(--accent);border-radius:14px;padding:1.1rem 1.3rem;margin:1.5rem 0;}.big-final h3{margin-top:0;color:var(--accent);}footer{margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border);text-align:center;font-size:0.83rem;color:var(--text-dim);}footer a{color:var(--primary);text-decoration:none;}</style>
+</head><body><div class="container">
+<header class="top"><a class="logo" href="index.html">🧮 Mod 6 Crash</a><a class="back" href="index.html">← Hub</a></header>
+<div class="hero"><h1>Module 6 — Polynomial Operations (Crash Course)</h1><p>All of Module 6 in one page: classify, add/subtract, exponent rules, multiply, compose. Read top to bottom, then take the Sample Tests.</p><div class="tags"><span class="tag">5 sub-topics</span><span class="tag">~30 min</span><span class="tag">Final prep</span></div></div>
+
+<div class="toc"><h3>Contents</h3>
+<a href="#a">A. Classify polynomials (6.01)</a>
+<a href="#b">B. Add/subtract + closure (6.02)</a>
+<a href="#c">C. Exponent rules (6.03)</a>
+<a href="#d">D. Multiplying polynomials (6.04)</a>
+<a href="#e">E. Function composition (6.05)</a>
+<a href="#f">F. Cheat sheet</a>
+</div>
+
+<h2 id="a">A. Classify polynomials (6.01)</h2>
+<p>Terms are separated by + or −. Name by COUNT and DEGREE.</p>
+<table>
+<tr><th>Terms</th><th>Name</th><th>Example</th></tr>
+<tr><td>1</td><td>Monomial</td><td><code>7x<sup>3</sup></code></td></tr>
+<tr><td>2</td><td>Binomial</td><td><code>2x + 5</code></td></tr>
+<tr><td>3</td><td>Trinomial</td><td><code>x<sup>2</sup> + 3x − 4</code></td></tr>
+<tr><td>4+</td><td>Polynomial</td><td><code>x<sup>3</sup> − 2x<sup>2</sup> + x − 6</code></td></tr>
+</table>
+<table>
+<tr><th>Degree</th><th>Name</th></tr>
+<tr><td>0</td><td>Constant</td></tr>
+<tr><td>1</td><td>Linear</td></tr>
+<tr><td>2</td><td>Quadratic</td></tr>
+<tr><td>3</td><td>Cubic</td></tr>
+<tr><td>4</td><td>Quartic</td></tr>
+</table>
+<div class="callout"><strong>Multi-variable degree = SUM of exponents.</strong> 3y<sup>3</sup>x has degree 3 + 1 = <strong>4</strong>, not 3.</div>
+<p><strong>Standard form:</strong> descending degree order.</p>
+<p><strong>NOT a polynomial:</strong> variable in denominator, fractional/negative exponent on a variable, variable in a root, or variable in the exponent (2<sup>x</sup>).</p>
+
+<h2 id="b">B. Add/subtract polynomials + closure (6.02)</h2>
+<div class="example"><span class="ex-tag">Add</span>
+<p>(3x<sup>3</sup> + 5x − 2) + (x<sup>3</sup> − 4x + 7) = 4x<sup>3</sup> + x + 5. Just combine like terms.</p></div>
+<div class="example"><span class="ex-tag">Subtract — the trap</span>
+<p>(6x<sup>2</sup> + 2x<sup>3</sup> − 3) − (4x<sup>3</sup> − x<sup>2</sup> + 5) = 6x<sup>2</sup> + 2x<sup>3</sup> − 3 <strong>− 4x<sup>3</sup> + x<sup>2</sup> − 5</strong> = −2x<sup>3</sup> + 7x<sup>2</sup> − 8.</p>
+<p><strong>Distribute the minus to EVERY term of the second polynomial.</strong> The +5 becomes −5; the −x² becomes +x².</p></div>
+<p><strong>Closure:</strong> + and − and × of polynomials always give a polynomial. Division does NOT (can introduce variables in denominators).</p>
+<p><strong>(f + g)(a) = f(a) + g(a);</strong> (f − g)(a) = f(a) − g(a).</p>
+<div class="callout"><strong>Word problems:</strong> "profit = revenue − cost" → answer is a PROFIT, not a cost. "Subtracted FROM" reverses the order: "A subtracted FROM B" means B − A.</div>
+
+<h2 id="c">C. Exponent rules (6.03)</h2>
+<table>
+<tr><th>Rule</th><th>Formula</th><th>Example</th></tr>
+<tr><td>Product (same base)</td><td><code>a<sup>m</sup> · a<sup>n</sup> = a<sup>m+n</sup></code></td><td><code>x<sup>2</sup>·x<sup>5</sup> = x<sup>7</sup></code></td></tr>
+<tr><td>Quotient</td><td><code>a<sup>m</sup>/a<sup>n</sup> = a<sup>m−n</sup></code></td><td><code>x<sup>7</sup>/x<sup>3</sup> = x<sup>4</sup></code></td></tr>
+<tr><td>Power of a power</td><td><code>(a<sup>m</sup>)<sup>n</sup> = a<sup>m·n</sup></code></td><td><code>(x<sup>3</sup>)<sup>4</sup> = x<sup>12</sup></code></td></tr>
+<tr><td>Power of a product</td><td><code>(ab)<sup>n</sup> = a<sup>n</sup>b<sup>n</sup></code></td><td><code>(3x)<sup>4</sup> = 81x<sup>4</sup></code></td></tr>
+<tr><td>Power of a quotient</td><td><code>(a/b)<sup>n</sup> = a<sup>n</sup>/b<sup>n</sup></code></td><td><code>(2/x)<sup>3</sup> = 8/x<sup>3</sup></code></td></tr>
+<tr><td>Negative exponent</td><td><code>a<sup>−n</sup> = 1/a<sup>n</sup></code></td><td><code>x<sup>−2</sup> = 1/x<sup>2</sup></code></td></tr>
+<tr><td>Zero exponent</td><td><code>a<sup>0</sup> = 1</code></td><td><code>7<sup>0</sup> = 1</code></td></tr>
+</table>
+<div class="callout"><strong>Power of a product applies to the COEFFICIENT too.</strong> (3x)<sup>4</sup> = 81x<sup>4</sup>, NOT 3x<sup>4</sup>.</div>
+
+<h2 id="d">D. Multiplying polynomials (6.04)</h2>
+<div class="example"><span class="ex-tag">Distribute a monomial</span>
+<p>−3x<sup>2</sup>(5x − 4x<sup>2</sup> − 6) = −15x<sup>3</sup> + 12x<sup>4</sup> + 18x<sup>2</sup> = <strong>12x<sup>4</sup> − 15x<sup>3</sup> + 18x<sup>2</sup></strong> (standard form).</p></div>
+<div class="example"><span class="ex-tag">FOIL two binomials</span>
+<p>(2x − 3)(x + 4) = 2x<sup>2</sup> + 8x − 3x − 12 = 2x<sup>2</sup> + 5x − 12.</p></div>
+<h3>Two special products (memorize these)</h3>
+<div class="example"><span class="ex-tag">Difference of squares</span>
+<p>(a − b)(a + b) = a<sup>2</sup> − b<sup>2</sup>. Middle terms cancel.</p>
+<p>(8x − 4)(8x + 4) = 64x<sup>2</sup> − 16.</p></div>
+<div class="example"><span class="ex-tag">Perfect square — the trap</span>
+<p>(a ± b)<sup>2</sup> = a<sup>2</sup> ± 2ab + b<sup>2</sup>.</p>
+<p>(3x − 8)<sup>2</sup> = 9x<sup>2</sup> − 48x + 64 — <strong>don't drop the −48x middle term!</strong> Common wrong answer: 9x<sup>2</sup> − 64.</p></div>
+<p><strong>Binomial × trinomial:</strong> distribute each term of the binomial across the whole trinomial → 6 products → combine like terms.</p>
+
+<h2 id="e">E. Function composition (6.05)</h2>
+<p>f(g(x)) means: do g first, then apply f to the result. <strong>Inside function runs first.</strong></p>
+<div class="example"><span class="ex-tag">Numeric: f[g(7)]</span>
+<p>f(x) = 4x + 21, g(x) = 2x + 2. g(7) = 16. f(16) = 4(16) + 21 = <strong>85</strong>.</p></div>
+<div class="example"><span class="ex-tag">Algebraic: f[g(x)]</span>
+<p>f(x) = 6x + 11, g(x) = x + 6. f[g(x)] = f(x + 6) = 6(x + 6) + 11 = <strong>6x + 47</strong>.</p></div>
+<div class="callout"><strong>Order matters: f(g(x)) ≠ g(f(x))</strong> in general.</div>
+<h3>Word problems — pick the right order</h3>
+<p><strong>Sale then tax:</strong> discount c(p) = 0.7p happens FIRST → c is INSIDE. Tax f(c) = 1.12c on top → f outside. Composition: f[c(p)] = 1.12(0.7p) = 0.784p.</p>
+<h3>Units of a composite</h3>
+<p>Chain the units. If g goes weeks→hours and f goes hours→signs, then s(w(h)) goes weeks→signs, i.e., signs per week.</p>
+<div class="callout"><strong>Squared-binomial trap:</strong> k(p(x)) where k has x<sup>2</sup>. <code>k(x − 4) = 2(x − 4)<sup>2</sup> − 8 = 2(x<sup>2</sup> − 8x + 16) − 8 = 2x<sup>2</sup> − 16x + 24</code>. Keep the −16x middle term.</div>
+
+<div class="big-final" id="f">
+<h3>🔑 The Module 6 cheat sheet</h3>
+<ul>
+<li><strong>Multi-var degree:</strong> SUM of exponents in each term.</li>
+<li><strong>Subtract:</strong> distribute the minus to every term of the second polynomial. ALL signs flip.</li>
+<li><strong>Closure:</strong> +, −, × of polynomials always give a polynomial. ÷ does not.</li>
+<li><strong>Exponent rules:</strong> same base × → ADD exponents; ÷ → SUBTRACT; (a<sup>m</sup>)<sup>n</sup> → MULTIPLY. Power of a product applies to the coefficient too.</li>
+<li><strong>Perfect square:</strong> (a ± b)<sup>2</sup> = a<sup>2</sup> ± 2ab + b<sup>2</sup>. Don't drop 2ab.</li>
+<li><strong>Difference of squares:</strong> (a − b)(a + b) = a<sup>2</sup> − b<sup>2</sup>. No middle term.</li>
+<li><strong>Composition:</strong> inside function first. Order matters. Word problems: the action that happens FIRST is innermost.</li>
+</ul>
+</div>
+
+<footer><p><a href="sample-test-6a.html">Sample Test A</a> · <a href="sample-test-6b.html">Sample Test B</a> · <a href="sim-quiz-6-00.html">Sim Quiz</a> · <a href="index.html">Hub</a></p></footer>
+</div></body></html>
