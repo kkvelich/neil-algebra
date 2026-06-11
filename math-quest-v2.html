@@ -1807,7 +1807,7 @@ function renderGoalBanner() {
   const banner = document.getElementById('goalBanner');
   banner.innerHTML = `<div class="goal-banner">
     <div class="goal-label">🎯 Goal · ${days === 0 ? 'EXAM TODAY' : days + ' days to COA exam'}</div>
-    <div class="goal-target">≥80% on June 11 COA final</div>
+    <div class="goal-target">≥80% on June 12 COA final</div>
     <div class="goal-bar"><div class="goal-bar-fill" style="width:${r.pct}%"></div></div>
     <div class="goal-readiness">Readiness: <strong>${r.goodCount} of ${r.total}</strong> in-scope skills at practicing/mastered (${r.pct}%). ${r.label}</div>
   </div>`;
@@ -2120,7 +2120,7 @@ function escapeAttr(s) {
 }
 
 // Countdown
-const exam = new Date('2026-06-11T08:00:00');
+const exam = new Date('2026-06-12T14:00:00');
 const days = Math.max(0, Math.ceil((exam - new Date()) / 86400000));
 document.getElementById('cd').textContent = days === 0 ? 'COA EXAM TODAY' : `${days} days to COA exam`;
 

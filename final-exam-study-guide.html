@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Final Exam Study Guide — June 11, 11 AM</title>
+<title>Final Exam Study Guide — June 12, 2 PM</title>
 <style>
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 :root {
@@ -332,11 +332,11 @@ footer a { color:var(--primary); text-decoration:none; }
 </div>
 
 <script>
-const exam = new Date('2026-06-11T11:00:00');
+const exam = new Date('2026-06-12T14:00:00');
 const now = new Date('2026-06-09T12:00:00');
 const days = Math.max(0, Math.ceil((exam - now) / 86400000));
 const el = document.getElementById('cd');
-if (el) el.textContent = days === 0 ? '🚨 EXAM DAY' : `${days} day${days===1?'':'s'} until exam · June 11, 11 AM`;
+if (el) el.textContent = days === 0 ? '🚨 EXAM DAY' : `${days} day${days===1?'':'s'} until exam · June 12, 2 PM`;
 </script>
 </body>
 </html>

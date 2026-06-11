@@ -54,7 +54,7 @@ footer { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--bord
 
   <div class="hero">
     <h1>🦉 Neil's COA Prep Hub</h1>
-    <p>COA Algebra 1 Semester 2 — Final on <b>Friday, June 12 at 11 AM</b>. Pass bar 60%.</p>
+    <p>COA Algebra 1 Semester 2 — Final on <b>Friday, June 12 at 2 PM</b>. Pass bar 60%.</p>
     <div class="countdown" id="cd"></div>
   </div>
 
@@ -177,9 +177,9 @@ footer { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--bord
 </div>
 
 <script>
-const exam = new Date('2026-06-12T11:00:00');
+const exam = new Date('2026-06-12T14:00:00');
 const days = Math.max(0, Math.ceil((exam - new Date()) / 86400000));
-document.getElementById('cd').textContent = days === 0 ? 'EXAM DAY!' : `${days} day${days === 1 ? '' : 's'} until the exam · Friday June 12, 11 AM`;
+document.getElementById('cd').textContent = days === 0 ? 'EXAM DAY!' : `${days} day${days === 1 ? '' : 's'} until the exam · Friday June 12, 2 PM`;
 </script>
 </body>
 </html>
