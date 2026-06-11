@@ -22,34 +22,31 @@ html, body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFo
 .hero h1 { font-size: 2rem; margin: 0 0 0.5rem; font-weight: 800; }
 .hero p { margin: 0; opacity: 0.92; font-size: 1.05rem; }
 .countdown { display: inline-block; background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 999px; margin-top: 0.8rem; font-weight: 700; }
-h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin: 2rem 0 0.75rem 0.25rem; font-weight: 700; }
-.module-section h2 { color: var(--module-color); font-size: 1.1rem; text-transform: none; letter-spacing: 0; font-weight: 800; margin-bottom: 0.5rem; }
-.module-section { border-left: 4px solid var(--module-color); padding-left: 1rem; margin-bottom: 2rem; }
-.module-section.m5 { --module-color: var(--m5); }
-.module-section.m6 { --module-color: var(--m6); }
-.module-section.m7 { --module-color: var(--m7); }
-.module-section.m8 { --module-color: var(--m8); }
-.module-section p.subtitle { color: var(--text-dim); font-size: 0.85rem; margin: 0 0 0.75rem; }
-.featured { background: linear-gradient(135deg, #6366F1, #EC4899); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; text-decoration: none; color: white; box-shadow: 0 4px 20px rgba(0,0,0,0.2); transition: transform 0.15s; }
+h2.section { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin: 2rem 0 0.75rem 0.25rem; font-weight: 700; }
+.featured { background: linear-gradient(135deg, #6366F1, #EC4899); border-radius: 18px; padding: 1.4rem 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; text-decoration: none; color: white; box-shadow: 0 4px 20px rgba(0,0,0,0.2); transition: transform 0.15s; }
 .featured:hover { transform: translateY(-2px); }
-.featured-emoji { font-size: 3rem; }
+.featured-emoji { font-size: 2.7rem; flex-shrink: 0; }
 .featured-text { flex: 1; }
-.featured h3 { margin: 0 0 0.3rem; font-size: 1.3rem; font-weight: 800; }
-.featured p { margin: 0; opacity: 0.92; font-size: 0.95rem; }
-.card-grid { display: grid; grid-template-columns: 1fr; gap: 0.6rem; }
-@media (min-width: 600px) { .card-grid { grid-template-columns: 1fr 1fr; } }
-.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 0.85rem 1.1rem; text-decoration: none; color: var(--text); display: flex; align-items: center; gap: 0.7rem; transition: transform 0.1s, border-color 0.15s; }
-.card:hover { transform: translateY(-2px); border-color: var(--primary); }
-.card-emoji { font-size: 1.6rem; }
-.card-text { flex: 1; }
-.card-title { font-weight: 700; font-size: 0.92rem; margin: 0 0 0.15rem; }
-.card-desc { color: var(--text-dim); font-size: 0.78rem; margin: 0; line-height: 1.4; }
-.tier { font-size: 0.62rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.1rem 0.4rem; border-radius: 4px; margin-right: 0.3rem; vertical-align: middle; }
-.tier-crash { background: rgba(245,158,11,0.18); color: #F59E0B; }
-.tier-sim { background: rgba(99,102,241,0.18); color: #818CF8; }
-.tier-test { background: rgba(220,38,38,0.18); color: #F87171; }
-.tier-lesson { background: rgba(20,184,166,0.18); color: #2DD4BF; }
-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.85rem; text-align: center; }
+.featured h3 { margin: 0 0 0.3rem; font-size: 1.2rem; font-weight: 800; }
+.featured p { margin: 0; opacity: 0.92; font-size: 0.92rem; line-height: 1.45; }
+.featured .arrow { font-size: 1.4rem; opacity: 0.85; }
+.module-row { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1rem 1.2rem; margin-bottom: 0.8rem; border-left: 6px solid var(--mc); }
+.module-row.m5 { --mc: var(--m5); }
+.module-row.m6 { --mc: var(--m6); }
+.module-row.m7 { --mc: var(--m7); }
+.module-row.m8 { --mc: var(--m8); }
+.module-title { font-size: 1.05rem; font-weight: 800; color: var(--mc); margin: 0 0 0.25rem; }
+.module-subtitle { font-size: 0.83rem; color: var(--text-dim); margin: 0 0 0.7rem; }
+.tile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; }
+.tile { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 10px; padding: 0.7rem 0.9rem; text-decoration: none; color: var(--text); display: flex; align-items: center; gap: 0.55rem; transition: border-color 0.15s, transform 0.1s; }
+.tile:hover { border-color: var(--mc); transform: translateY(-1px); }
+.tile-emoji { font-size: 1.4rem; flex-shrink: 0; }
+.tile-text { flex: 1; min-width: 0; }
+.tile-title { font-weight: 700; font-size: 0.88rem; margin: 0; line-height: 1.3; }
+.tile-desc { color: var(--text-dim); font-size: 0.74rem; margin: 0.1rem 0 0; line-height: 1.35; }
+.archive-link { display: block; text-align: center; margin-top: 2rem; padding: 0.85rem 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; color: var(--text-dim); text-decoration: none; font-weight: 600; font-size: 0.92rem; }
+.archive-link:hover { color: var(--text); border-color: var(--primary); }
+footer { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.85rem; text-align: center; }
 </style>
 </head>
 <body>
@@ -57,144 +54,120 @@ footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--bord
 
   <div class="hero">
     <h1>🦉 Neil's COA Prep Hub</h1>
-    <p>COA Algebra 1 Semester 2 — Modules 5–8. Final on <b>Friday, June 12 at 11 AM</b>.</p>
+    <p>COA Algebra 1 Semester 2 — Final on <b>Friday, June 12 at 11 AM</b>. Pass bar 60%.</p>
     <div class="countdown" id="cd"></div>
   </div>
 
-  <a class="featured" href="final-exam-study-guide.html" style="background: linear-gradient(135deg, #6366F1, #EC4899);">
+  <h2 class="section">🎯 For the final</h2>
+
+  <a class="featured" href="sample-final-a.html" style="background: linear-gradient(135deg, #6366F1, #EC4899);">
+    <div class="featured-emoji">📘</div>
+    <div class="featured-text">
+      <h3>Sample Final Exam A</h3>
+      <p>25 questions, mock-final format across all 4 modules. Aim 20+/25 (80%).</p>
+    </div>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="featured" href="sample-final-b.html" style="background: linear-gradient(135deg, #8B5CF6, #DC2626);">
+    <div class="featured-emoji">📗</div>
+    <div class="featured-text">
+      <h3>Sample Final Exam B</h3>
+      <p>25 different questions, same skills. Take after Sample Final A.</p>
+    </div>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="featured" href="final-exam-study-guide.html" style="background: linear-gradient(135deg, #F59E0B, #DC2626);">
     <div class="featured-emoji">🎯</div>
     <div class="featured-text">
       <h3>Final Exam Cheat Sheet</h3>
-      <p>Every formula + trap for Modules 5/6/7/8 in one page. <b>Read this Thursday night and Friday morning.</b></p>
+      <p>Every formula + trap for Modules 5/6/7/8. <b>Read this Friday morning.</b></p>
     </div>
-    <div style="font-size:1.5rem;">→</div>
+    <div class="arrow">→</div>
   </a>
 
-  <a class="featured" href="final-review-answer-key.html" style="background: linear-gradient(135deg, #8B5CF6, #DC2626);">
-    <div class="featured-emoji">📘</div>
+  <a class="featured" href="final-review-answer-key.html" style="background: linear-gradient(135deg, #14B8A6, #2563EB);">
+    <div class="featured-emoji">📋</div>
     <div class="featured-text">
       <h3>Goldstein's Final Review — Worked Answer Key</h3>
-      <p>The actual review with worked answers for problems 1–12 and 26–62 (polynomials, factoring, quadratics).</p>
+      <p>The actual review document with worked answers for every problem.</p>
     </div>
-    <div style="font-size:1.5rem;">→</div>
+    <div class="arrow">→</div>
   </a>
 
   <a class="featured" href="math-quest-v2.html" style="background: linear-gradient(135deg, #06B6D4, #8B5CF6);">
     <div class="featured-emoji">⚔️</div>
     <div class="featured-text">
-      <h3>Math Quest — Adaptive (MC)</h3>
-      <p>Daily driver. Adaptive engine for Ch 5/7/8/9. Tap <b>📖 Show me how</b> on any skill for a worked example.</p>
+      <h3>Math Quest — Adaptive Drill</h3>
+      <p>Daily driver. Tap <b>📖 Show me how</b> on any skill for a worked example.</p>
     </div>
-    <div style="font-size:1.5rem;">→</div>
+    <div class="arrow">→</div>
   </a>
 
-  <!-- ============= MODULE 5 ============= -->
-  <div class="module-section m5">
-    <h2>📊 Module 5 — Statistics</h2>
-    <p class="subtitle">Dot plots, box plots, mean vs median, outliers, two-way tables, scatter plots, correlation vs causation.</p>
-    <div class="card-grid">
-      <a class="card" href="module-5-crash-course.html">
-        <span class="card-emoji">🔥</span>
-        <div class="card-text"><div class="card-title"><span class="tier tier-crash">CRASH</span>Module 5 Crash Course</div><p class="card-desc">All sub-topics on one page</p></div>
-      </a>
-      <a class="card" href="module-5-review.html">
-        <span class="card-emoji">🎯</span>
-        <div class="card-text"><div class="card-title"><span class="tier tier-sim">SIM</span>Targeted Drill</div><p class="card-desc">15 Q on the biggest traps</p></div>
-      </a>
-      <a class="card" href="sample-test-5a.html">
-        <span class="card-emoji">📝</span>
-        <div class="card-text"><div class="card-title"><span class="tier tier-test">TEST A</span>Sample Test A</div><p class="card-desc">15 mock-final questions</p></div>
-      </a>
-      <a class="card" href="sample-test-5b.html">
-        <span class="card-emoji">📝</span>
-        <div class="card-text"><div class="card-title"><span class="tier tier-test">TEST B</span>Sample Test B</div><p class="card-desc">15 more mock-final questions</p></div>
-      </a>
-      <a class="card" href="lesson.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>5.00 + 5.01</div><p class="card-desc">Representing data</p></div></a>
-      <a class="card" href="lesson-5-02.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>5.02</div><p class="card-desc">Comparing data sets</p></div></a>
-      <a class="card" href="lesson-5-04.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>5.04</div><p class="card-desc">Outliers</p></div></a>
-      <a class="card" href="lesson-5-05.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>5.05</div><p class="card-desc">Two-way frequency tables</p></div></a>
-      <a class="card" href="lesson-5-06.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>5.06</div><p class="card-desc">Scatter plots &amp; LOBF</p></div></a>
-      <a class="card" href="lesson-5-07.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>5.07</div><p class="card-desc">Correlation &amp; causation</p></div></a>
-    </div>
-  </div>
+  <h2 class="section">📚 By module — crash course + sim quiz</h2>
 
-  <!-- ============= MODULE 6 ============= -->
-  <div class="module-section m6">
-    <h2>🧮 Module 6 — Polynomial Operations</h2>
-    <p class="subtitle">Classify, add/subtract + closure, exponent rules, multiplying polynomials, function composition.</p>
-    <div class="card-grid">
-      <a class="card" href="module-6-crash-course.html">
-        <span class="card-emoji">🔥</span>
-        <div class="card-text"><div class="card-title"><span class="tier tier-crash">CRASH</span>Module 6 Crash Course</div><p class="card-desc">All 6.01–6.05 in one page</p></div>
+  <div class="module-row m5">
+    <h3 class="module-title">📊 Module 5 — Statistics</h3>
+    <p class="module-subtitle">Box plots, mean vs median, outliers, two-way tables, scatter plots, correlation vs causation.</p>
+    <div class="tile-grid">
+      <a class="tile" href="module-5-crash-course.html">
+        <span class="tile-emoji">🔥</span>
+        <div class="tile-text"><p class="tile-title">Crash Course</p><p class="tile-desc">All sub-topics, one page</p></div>
       </a>
-      <a class="card" href="sim-quiz-6-00.html">
-        <span class="card-emoji">🎯</span>
-        <div class="card-text"><div class="card-title"><span class="tier tier-sim">SIM</span>Module 6 Sim Quiz</div><p class="card-desc">16 MC across the module</p></div>
-      </a>
-      <a class="card" href="sample-test-6a.html">
-        <span class="card-emoji">📝</span>
-        <div class="card-text"><div class="card-title"><span class="tier tier-test">TEST A</span>Sample Test A</div><p class="card-desc">15 mock-final questions</p></div>
-      </a>
-      <a class="card" href="sample-test-6b.html">
-        <span class="card-emoji">📝</span>
-        <div class="card-text"><div class="card-title"><span class="tier tier-test">TEST B</span>Sample Test B</div><p class="card-desc">15 more mock-final questions</p></div>
-      </a>
-      <a class="card" href="lesson-6-01.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>6.01</div><p class="card-desc">Characteristics of polynomials</p></div></a>
-      <a class="card" href="lesson-6-02.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>6.02</div><p class="card-desc">Adding/subtracting + closure</p></div></a>
-      <a class="card" href="lesson-6-03.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>6.03</div><p class="card-desc">Exponent rules</p></div></a>
-      <a class="card" href="lesson-6-04.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>6.04</div><p class="card-desc">Multiplying polynomials</p></div></a>
-      <a class="card" href="lesson-6-05.html"><span class="card-emoji">📘</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">LESSON</span>6.05</div><p class="card-desc">Function composition</p></div></a>
-      <a class="card" href="dba-6-07-prep.html"><span class="card-emoji">✍️</span><div class="card-text"><div class="card-title"><span class="tier tier-lesson">DBA</span>6.07 Written DBA</div><p class="card-desc">4 typed reflection questions</p></div></a>
-    </div>
-  </div>
-
-  <!-- ============= MODULE 7 ============= -->
-  <div class="module-section m7">
-    <h2>🧨 Module 7 — Factoring &amp; Graphing Polynomials</h2>
-    <p class="subtitle">GCF → grouping → trinomials → difference of squares → graphing (roots, end behavior, multiplicity).</p>
-    <div class="card-grid">
-      <a class="card" href="module-7-crash-course.html">
-        <span class="card-emoji">🔥</span>
-        <div class="card-text"><div class="card-title"><span class="tier tier-crash">CRASH</span>Module 7 Crash Course</div><p class="card-desc">Decision tree + worked examples</p></div>
-      </a>
-      <a class="card" href="sim-quiz-7-final.html">
-        <span class="card-emoji">🎯</span>
-        <div class="card-text"><div class="card-title"><span class="tier tier-sim">SIM</span>Module 7 Sim Quiz</div><p class="card-desc">15 MC across all sub-topics</p></div>
-      </a>
-      <a class="card" href="sample-test-7a.html">
-        <span class="card-emoji">📝</span>
-        <div class="card-text"><div class="card-title"><span class="tier tier-test">TEST A</span>Sample Test A</div><p class="card-desc">15 mock-final questions</p></div>
-      </a>
-      <a class="card" href="sample-test-7b.html">
-        <span class="card-emoji">📝</span>
-        <div class="card-text"><div class="card-title"><span class="tier tier-test">TEST B</span>Sample Test B</div><p class="card-desc">15 more mock-final questions</p></div>
+      <a class="tile" href="module-5-review.html">
+        <span class="tile-emoji">🎯</span>
+        <div class="tile-text"><p class="tile-title">Sim Quiz</p><p class="tile-desc">15 Q on the traps</p></div>
       </a>
     </div>
   </div>
 
-  <!-- ============= MODULE 8 ============= -->
-  <div class="module-section m8">
-    <h2>📐 Module 8 — Quadratic Functions</h2>
-    <p class="subtitle">3 forms, parabolas, 3 ways to solve, discriminant, completing the square, vertex form, transformations, projectile word problems.</p>
-    <div class="card-grid">
-      <a class="card" href="module-8-crash-course.html">
-        <span class="card-emoji">🔥</span>
-        <div class="card-text"><div class="card-title"><span class="tier tier-crash">CRASH</span>Module 8 Crash Course</div><p class="card-desc">All quadratic skills + cheat sheet</p></div>
+  <div class="module-row m6">
+    <h3 class="module-title">🧮 Module 6 — Polynomial Operations</h3>
+    <p class="module-subtitle">Classify, add/subtract + closure, exponent rules, multiplying, function composition.</p>
+    <div class="tile-grid">
+      <a class="tile" href="module-6-crash-course.html">
+        <span class="tile-emoji">🔥</span>
+        <div class="tile-text"><p class="tile-title">Crash Course</p><p class="tile-desc">All 6.01–6.05, one page</p></div>
       </a>
-      <a class="card" href="sim-quiz-8-final.html">
-        <span class="card-emoji">🎯</span>
-        <div class="card-text"><div class="card-title"><span class="tier tier-sim">SIM</span>Module 8 Sim Quiz</div><p class="card-desc">15 MC across quadratics</p></div>
-      </a>
-      <a class="card" href="sample-test-8a.html">
-        <span class="card-emoji">📝</span>
-        <div class="card-text"><div class="card-title"><span class="tier tier-test">TEST A</span>Sample Test A</div><p class="card-desc">15 mock-final questions</p></div>
-      </a>
-      <a class="card" href="sample-test-8b.html">
-        <span class="card-emoji">📝</span>
-        <div class="card-text"><div class="card-title"><span class="tier tier-test">TEST B</span>Sample Test B</div><p class="card-desc">15 more mock-final questions</p></div>
+      <a class="tile" href="sim-quiz-6-00.html">
+        <span class="tile-emoji">🎯</span>
+        <div class="tile-text"><p class="tile-title">Sim Quiz</p><p class="tile-desc">16 MC across the module</p></div>
       </a>
     </div>
   </div>
+
+  <div class="module-row m7">
+    <h3 class="module-title">🧨 Module 7 — Factoring &amp; Graphing</h3>
+    <p class="module-subtitle">GCF → grouping → trinomials → difference of squares → graphing.</p>
+    <div class="tile-grid">
+      <a class="tile" href="module-7-crash-course.html">
+        <span class="tile-emoji">🔥</span>
+        <div class="tile-text"><p class="tile-title">Crash Course</p><p class="tile-desc">Decision tree + worked examples</p></div>
+      </a>
+      <a class="tile" href="sim-quiz-7-final.html">
+        <span class="tile-emoji">🎯</span>
+        <div class="tile-text"><p class="tile-title">Sim Quiz</p><p class="tile-desc">15 MC across sub-topics</p></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="module-row m8">
+    <h3 class="module-title">📐 Module 8 — Quadratic Functions</h3>
+    <p class="module-subtitle">3 forms, parabolas, 3 ways to solve, discriminant, completing the square, transformations, projectile problems.</p>
+    <div class="tile-grid">
+      <a class="tile" href="module-8-crash-course.html">
+        <span class="tile-emoji">🔥</span>
+        <div class="tile-text"><p class="tile-title">Crash Course</p><p class="tile-desc">All quadratic skills + cheat</p></div>
+      </a>
+      <a class="tile" href="sim-quiz-8-final.html">
+        <span class="tile-emoji">🎯</span>
+        <div class="tile-text"><p class="tile-title">Sim Quiz</p><p class="tile-desc">15 MC across quadratics</p></div>
+      </a>
+    </div>
+  </div>
+
+  <a class="archive-link" href="archive.html">🗄️ Archive — older lessons &amp; per-module sample tests →</a>
 
   <footer>
     <p>Goal: <b>≥60% to pass the final · ≥80% to be safely above bar.</b></p>
